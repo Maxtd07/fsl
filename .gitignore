@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+
+# Build and compilation output
+dist/
+dist-ssr/
+build/
+out/
+.next/
+.nuxt/
+.svelte-kit/
+.cache/
+.turbo/
+coverage/
+*.tsbuildinfo
+target/
+*.class
+
+# Java and JVM tooling
+.gradle/
+.classpath
+.project
+.settings/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Local environment files
+.env
+.env.*
+*.local
+
+# Editor and OS files
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
