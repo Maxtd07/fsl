@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom'
 
 const navItems = [
   { to: '/', label: 'Home', end: true },
+  { to: '/eventi', label: 'Eventi' },
   { to: '/galleria', label: 'Galleria' },
   { to: '/chi-siamo', label: 'Chi siamo' },
   { to: '/donazioni', label: 'Donazioni' },
@@ -10,24 +11,33 @@ const navItems = [
 
 function Navbar() {
   return (
-    <nav className="flex flex-wrap gap-3" aria-label="Main navigation">
-      {navItems.map((item) => (
-        <NavLink
-          key={item.to}
-          to={item.to}
-          end={item.end}
-          className={({ isActive }) =>
-            `rounded-lg border px-4 py-2 text-sm transition-colors ${
-              isActive
-                ? 'border-slate-800 bg-slate-800 text-white'
-                : 'border-slate-300 bg-white text-slate-800 hover:bg-slate-100'
-            }`
-          }
-        >
-          {item.label}
-        </NavLink>
-      ))}
-    </nav>
+    <div className="border-b border-slate-200 pb-4">
+      <NavLink
+        to="/"
+        className="mb-4 inline-block text-sm font-semibold tracking-[0.14em] text-slate-900 uppercase"
+      >
+        Associazione La Crisalide
+      </NavLink>
+
+      <nav className="flex flex-wrap gap-x-5 gap-y-2" aria-label="Main navigation">
+        {navItems.map((item) => (
+          <NavLink
+            key={item.to}
+            to={item.to}
+            end={item.end}
+            className={({ isActive }) =>
+              `text-sm leading-6 transition-colors ${
+                isActive
+                  ? 'text-slate-950 underline decoration-1 underline-offset-4'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`
+            }
+          >
+            {item.label}
+          </NavLink>
+        ))}
+      </nav>
+    </div>
   )
 }
 

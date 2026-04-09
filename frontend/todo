@@ -1,8 +1,3 @@
-Setup
- Create React app (Vite)
- Install Tailwind
- Setup folders: components/, pages/, services/
-
 Layout
  Navbar (responsive)
  Footer
@@ -42,3 +37,11 @@ Accessibility
 Final
  npm run build
  No console errors
+
+ page contents:
+ home: hero section, piccola introduzione ad ogni pagina.
+ eventi: elenco delgi eventi, sia passati che arrivanti.
+ galleria: foto, e solo foto, filtrabile per periodo.
+ chi siamo: introduzione elaborata alla squadra e membri
+ donazioni: pagina complicata che abilita i visitatori a donare all'associazione
+ contatti: un elenco di contatti, con un form per gli mail
