@@ -17,6 +17,7 @@ Pages
 
 API
  services/api.js
+
 getEvents()
 
 sendContactForm()
@@ -34,14 +35,10 @@ UI / UX
 
 Accessibility
  Alt text images
-
  Proper headings
-
  Keyboard navigation
-
  Focus states
 
 Final
  npm run build
-
  No console errors
