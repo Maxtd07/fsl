@@ -1,193 +1,153 @@
 <a id="readme-top"></a>
-
-[![Contributors][contributors-shield]][contributors-url]
-[![Issues][issues-shield]][issues-url]
-[![project_license][license-shield]][license-url]
-
-
-
 <br />
 <div align="center">
 
 <h3 align="center">FSL Internship Project – Associazione La Crisalide</h3>
 
-  <p align="center">
-    A student internship project focused on building a modern, accessible website for a local association.
-    <br />
-    <br />
-    <a href="#">View Demo</a>
-    &middot;
-    <a href="#">Report Bug</a>
-    &middot;
-    <a href="#">Request Feature</a>
-  </p>
+<p align="center">
+A full-stack internship project focused on building a modern and accessible website for a local association.
+<br /><br />
+<a href="#">View Demo</a>
+&middot;
+<a href="#">Report Bug</a>
+&middot;
+<a href="#">Request Feature</a>
+</p>
+
 </div>
 
-
-
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li><a href="#about-the-project">About The Project</a></li>
-    <li><a href="#built-with">Built With</a></li>
-    <li><a href="#getting-started">Getting Started</a></li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ol>
-</details>
-
-
+---
 
 ## About The Project
 
-This project was developed during a **2-week internship (9 working days)** at FSL by:
+This project was developed during a two-week internship (9 working days) at FSL by **Max Ten Dam** and **Daniele Soldi**.
 
-- **Max Ten Dam** – Frontend  
-- **Daniele Soldi** – Backend & Database  
+The objective is to design and build a modern, responsive, and accessible website for *Associazione La Crisalide*, enabling the organization to promote its events and activities to a broader audience, including users who do not actively use social media.
 
-The goal is to build a modern, responsive, and accessible website for *Associazione La Crisalide*, helping promote events and activities to users who may not rely on social media.
+The project represents an early-stage transition from static web development (HTML, CSS, JavaScript) to a structured full-stack architecture. It emphasizes separation of concerns between frontend and backend systems and introduces core architectural principles such as the Single Responsibility Principle.
 
-This repository represents the **early development phase** and focuses heavily on the **learning journey**, transitioning from basic static websites to a full-stack architecture.
+Max Ten Dam is responsible for the frontend, focusing on UI structure and styling, while Daniele Soldi handles backend logic and database design.
 
-### Key Points
+The primary challenges encountered were related to adopting new technologies, understanding full-stack system design, and integrating multiple layers of a web application.
 
-- Status: **In progress (early-stage)**
-- Deployment: **Not deployed**
-- Domain (planned): http://associazionelacrisalide.it/
-- Type: **Private internship project**
-
-### Learning Focus
-
-- Transition from HTML/CSS/JS → full-stack development  
-- Working with structured frameworks  
-- Applying backend principles such as **Single Responsibility**  
-
-### Main Challenges
-
-- Adapting to new technologies and frameworks  
-- Understanding frontend/backend separation  
-- Learning modern development workflows  
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
+---
 
 ## Built With
 
-### Frontend
-- [![React][React.js]][React-url]
-- Tailwind CSS
+### Core Technologies
 
-### Backend
-- Spring Boot  
-- Lombok  
-- Hibernate  
+<div align="center">
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+[![React][React.js]][React-url]
+[![TailwindCSS][TailwindCSS]][Tailwind-url]
+[![SpringBoot][SpringBoot-badge]][SpringBoot-url]
+[![MySQL][MySQL-badge]][MySQL-url]
 
+</div>
 
+### Supporting Technologies
+
+<div align="center">
+
+[![Hibernate][Hibernate-badge]][Hibernate-url]
+[![Lombok][Lombok-badge]][Lombok-url]
+
+</div>
+
+The frontend is planned to be developed using React with Tailwind CSS to ensure a responsive and modular interface.  
+The backend will be built with Spring Boot, using Hibernate for ORM-based data persistence and Lombok to streamline code by reducing boilerplate.
+
+---
+
+## Project Status
+
+The project is currently in an early development phase. No features have been implemented yet, and the application is not deployed.
+
+The domain `associazionelacrisalide.it` is planned but not yet registered.
+
+---
+
+## Planned Features
+
+The application structure has been defined but not implemented.
+
+It will include core pages such as Home, Gallery, About, Donations, and Contact. A central component of the system will be an event management feature, allowing users to view events, add them to personal calendars, and receive notifications via email.
+
+An administrative area is planned to allow authorized users to manage events and update gallery content.
+
+Accessibility is a core requirement. The site is intended to follow best practices, including proper contrast ratios, semantic HTML structure, keyboard navigation, and descriptive content for assistive technologies. Validation is planned using tools such as Google Lighthouse and Silktide.
+
+---
 
 ## Getting Started
 
-> ⚠️ Project is still in early development. Setup instructions will be added once structure is finalized.
+The project is not yet ready for local setup. Installation and configuration instructions will be added once the base structure is implemented.
 
-### Prerequisites
+Planned prerequisites include Node.js for the frontend environment and Java for the backend.
 
-Planned requirements:
-- Node.js (version TBD)
-- Java (version TBD)
-
-### Installation
-
-Not available yet.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
+---
 
 ## Usage
 
-Currently not available.
+Not available at this stage.
 
-Planned usage:
-- Browse association content  
-- View and track events  
-- Receive notifications via email/calendar  
+The intended usage is to provide visitors with access to information about the association and its events, while offering notification features for upcoming activities.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
+---
 
 ## Roadmap
 
-### Core Structure
-- [ ] Setup React + Tailwind frontend  
-- [ ] Setup Spring Boot backend  
+Development will begin with environment setup for both frontend and backend, followed by implementation of core pages and the event system. Later stages will include the administrative interface, notification features, and accessibility validation.
 
-### Pages
-- [ ] Home  
-- [ ] Gallery  
-- [ ] About (Chi siamo)  
-- [ ] Donations  
-- [ ] Contact  
-
-### Features
-- [ ] Event system (view + manage events)  
-- [ ] Calendar integration  
-- [ ] Email notifications  
-
-### Admin Area
-- [ ] Manage events  
-- [ ] Edit gallery  
-
-### Accessibility
-- [ ] Keyboard navigation  
-- [ ] Proper heading structure  
-- [ ] Alt text for images  
-- [ ] Testing with Lighthouse / Silktide  
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
+---
 
 ## Contributing
 
-This is a **private internship project**.  
-Contributions are currently not open.
+This is a private internship project and is not open to external contributions.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
+---
 
 ## License
 
-Not defined.
+This project is licensed under the MIT License – see the [LICENSE](LICENSE.txt) file for details.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
+---
 
 ## Contact
 
 Max Ten Dam  
 Daniele Soldi  
 
-Project Link: https://github.com/github_username/repo_name
+[Project Link](https://github.com/Maxtd07/fsl)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
+---
 
 <!-- MARKDOWN LINKS -->
 [contributors-shield]: https://img.shields.io/github/contributors/github_username/repo_name.svg?style=for-the-badge
 [contributors-url]: https://github.com/github_username/repo_name/graphs/contributors
+
 [issues-shield]: https://img.shields.io/github/issues/github_username/repo_name.svg?style=for-the-badge
 [issues-url]: https://github.com/github_username/repo_name/issues
+
 [license-shield]: https://img.shields.io/github/license/github_username/repo_name.svg?style=for-the-badge
 [license-url]: https://github.com/github_username/repo_name/blob/master/LICENSE.txt
 
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
+
+[TailwindCSS]: https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white
+[Tailwind-url]: https://tailwindcss.com/
+
+[SpringBoot-badge]: https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white
+[SpringBoot-url]: https://spring.io/projects/spring-boot
+
+[MySQL-badge]: https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white
+[MySQL-url]: https://www.mysql.com/
+
+[Hibernate-badge]: https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=hibernate&logoColor=white
+[Hibernate-url]: https://hibernate.org/
+
+[Lombok-badge]: https://img.shields.io/badge/Lombok-BC4521?style=for-the-badge
+[Lombok-url]: https://projectlombok.org/
