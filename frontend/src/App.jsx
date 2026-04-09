@@ -1,36 +1,18 @@
 import { useEffect, useState } from 'react'
-import './App.css'
+import Navbar from './components/Navbar.jsx'
+import AboutPage from './pages/AboutPage.jsx'
+import ContattiPage from './pages/ContattiPage.jsx'
+import DonazioniPage from './pages/DonazioniPage.jsx'
+import GalleriaPage from './pages/GalleriaPage.jsx'
+import HomePage from './pages/HomePage.jsx'
 
 const pages = {
-  home: {
-    title: 'Home',
-    description: 'Pagina principale del sito.',
-  },
-  galleria: {
-    title: 'Galleria',
-    description: 'Spazio riservato a foto, video e contenuti visivi.',
-  },
-  about: {
-    title: 'Chi siamo',
-    description: 'Una breve presentazione dell\'associazione e della sua missione.',
-  },
-  donazioni: {
-    title: 'Donazioni',
-    description: 'Pagina base per raccogliere informazioni e link per donare.',
-  },
-  contatti: {
-    title: 'Contatti',
-    description: 'Informazioni utili per contattarci.',
-  },
+  home: HomePage,
+  galleria: GalleriaPage,
+  about: AboutPage,
+  donazioni: DonazioniPage,
+  contatti: ContattiPage,
 }
-
-const navItems = [
-  { key: 'home', label: 'Home' },
-  { key: 'galleria', label: 'Galleria' },
-  { key: 'about', label: 'About (Chi siamo)' },
-  { key: 'donazioni', label: 'Donazioni' },
-  { key: 'contatti', label: 'Contatti' },
-]
 
 function getPageFromHash() {
   const key = window.location.hash.replace('#/', '').toLowerCase()
@@ -56,30 +38,18 @@ function App() {
     }
   }, [])
 
-  const page = pages[currentPage]
+  const CurrentPage = pages[currentPage]
 
   return (
-    <div className="app-shell">
-      <header className="site-header">
-        <h1>Associazione La Crisalide</h1>
-        <nav className="site-nav" aria-label="Main navigation">
-          {navItems.map((item) => (
-            <a
-              key={item.key}
-              href={`#/${item.key}`}
-              className={item.key === currentPage ? 'active' : ''}
-            >
-              {item.label}
-            </a>
-          ))}
-        </nav>
+    <div className="mx-auto w-full max-w-5xl px-4 py-6 sm:px-6 sm:py-12">
+      <header className="mb-8 flex flex-col gap-6">
+        <h1 className="text-3xl font-semibold text-slate-900 sm:text-4xl">
+          Associazione La Crisalide
+        </h1>
+        <Navbar currentPage={currentPage} />
       </header>
 
-      <main className="page-card">
-        <p className="page-label">Pagina</p>
-        <h2>{page.title}</h2>
-        <p>{page.description}</p>
-      </main>
+      <CurrentPage />
     </div>
   )
 }
