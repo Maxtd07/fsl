@@ -10,11 +10,13 @@ function App() {
   return (
     <div className="mx-auto w-full max-w-5xl px-4 py-6 sm:px-6 sm:py-12">
       <header className="mb-8 flex flex-col gap-6">
-        <h1 className="text-3xl font-semibold text-slate-900 sm:text-4xl">
+        <div>
+          <h1 className="text-3xl font-semibold text-slate-900 sm:text-4xl">
           Associazione La Crisalide
         </h1>
         <Navbar />
-      </header>
+      </div>
+        </header>
 
       <Routes>
         <Route path="/" element={<HomePage />} />
