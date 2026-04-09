@@ -1,0 +1,47 @@
+Setup
+ Create React app (Vite)
+ Install Tailwind
+ Setup folders: components/, pages/, services/
+
+Layout
+ Navbar (responsive)
+ Footer
+ Main layout wrapper
+
+Pages
+ Home (hero + intro)
+ About
+ Events (fetch /api/events)
+ Gallery (static images or Instagram)
+ Contact (form → /api/contact)
+
+API
+ services/api.js
+getEvents()
+
+sendContactForm()
+ Use /api/... (no localhost)
+
+Components
+ EventCard
+ Button
+ Inputs
+
+UI / UX
+ Responsive (mobile-first)
+ Clean spacing + typography
+ Loading + error states
+
+Accessibility
+ Alt text images
+
+ Proper headings
+
+ Keyboard navigation
+
+ Focus states
+
+Final
+ npm run build
+
+ No console errors
