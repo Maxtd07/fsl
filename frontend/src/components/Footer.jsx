@@ -17,8 +17,8 @@ function Footer() {
           </p>
         </div>
 
-        {/* Links Grid - 2 cols on mobile, 3 cols on desktop */}
-        <div className="grid gap-8 grid-cols-2 lg:grid-cols-3 mb-12">
+        {/* Links Grid - 2 cols on mobile, 2 cols on desktop */}
+        <div className="grid gap-8 grid-cols-2 mb-12">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/92 mb-4">
               Social
@@ -35,20 +35,6 @@ function Footer() {
 
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/92 mb-4">
-              Link
-            </p>
-            <div className="flex flex-col gap-2">
-              <NavLink className={footerLinkClasses} to="/">
-                Home
-              </NavLink>
-              <NavLink className={footerLinkClasses} to="/chi-siamo">
-                Chi Siamo
-              </NavLink>
-            </div>
-          </div>
-
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/92 mb-4">
               Contatti
             </p>
             <div className="flex flex-col gap-2">
@@ -58,7 +44,7 @@ function Footer() {
               <a className={footerLinkClasses} href="tel:+393479177811">
                 +39 347 917 7811
               </a>
-              <div className="text-xs text-white/70 mt-2">
+              <div className="text-xs text-white/85 mt-2">
                 Via del Palo 10<br />
                 Porto Sant'Elpidio (FM) - 63821
               </div>
@@ -67,7 +53,7 @@ function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="border-t border-white/10 pt-6 text-xs text-white/50">
+        <div className="border-t border-white/10 pt-6 text-xs text-white/60">
           <p>Copyright 2026 Associazione La Crisalide. Tutti i diritti riservati.</p>
         </div>
       </div>
