@@ -5,7 +5,7 @@ import SectionHeading from '../components/SectionHeading.jsx'
 function AdminLoginPage() {
   return (
     <main className="space-y-8">
-      <section className="grid gap-8 rounded-[2rem] border border-primary/15 bg-primary/10 p-6 shadow-[0_24px_50px_rgba(76,130,169,0.08)] sm:p-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(360px,1.05fr)] lg:items-center lg:gap-10">
+      <section className="grid gap-8 rounded-[2rem] border border-primary/12 bg-primary/10 p-6 shadow-[0_24px_50px_rgba(76,130,169,0.08)] sm:p-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(360px,1.05fr)] lg:items-center lg:gap-10">
         <div>
           <SectionHeading
             eyebrow="Admin"
@@ -20,7 +20,7 @@ function AdminLoginPage() {
           </div>
         </div>
 
-        <div className="rounded-[1.8rem] border border-primary/15 bg-base p-6 shadow-[0_18px_40px_rgba(76,130,169,0.10)] sm:p-7">
+        <div className="rounded-[1.8rem] border border-primary/12 bg-base p-6 shadow-[0_18px_40px_rgba(76,130,169,0.10)] sm:p-7">
           <p className="mb-5 text-xs font-semibold uppercase tracking-[0.22em] text-primary">
             Login amministratori
           </p>
@@ -29,24 +29,30 @@ function AdminLoginPage() {
             <label className="block">
               <span className="mb-2 block text-sm font-medium text-text">Email</span>
               <input
-                className="w-full rounded-2xl border border-primary/15 bg-background px-4 py-3 text-sm text-text outline-none transition focus:border-primary"
+                autoComplete="username"
+                className="w-full rounded-2xl border border-primary/15 bg-background px-4 py-3 text-sm text-text outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/12"
+                name="email"
                 type="email"
                 placeholder="admin@example.com"
+                required
               />
             </label>
 
             <label className="block">
               <span className="mb-2 block text-sm font-medium text-text">Password</span>
               <input
-                className="w-full rounded-2xl border border-primary/15 bg-background px-4 py-3 text-sm text-text outline-none transition focus:border-primary"
+                autoComplete="current-password"
+                className="w-full rounded-2xl border border-primary/15 bg-background px-4 py-3 text-sm text-text outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/12"
+                name="password"
                 type="password"
-                placeholder="••••••••"
+                placeholder="********"
+                required
               />
             </label>
 
             <button
-              className="inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-base shadow-[0_14px_30px_rgba(76,130,169,0.22)] transition hover:bg-primary/90"
-              type="button"
+              className="inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(76,130,169,0.22)] transition duration-200 hover:bg-primary/92 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/18 focus-visible:ring-offset-2 focus-visible:ring-offset-base"
+              type="submit"
             >
               Accedi
             </button>
@@ -54,10 +60,10 @@ function AdminLoginPage() {
         </div>
       </section>
 
-      <section className="grid gap-6 rounded-[2rem] border border-primary/15 bg-base p-6 shadow-[0_18px_40px_rgba(76,130,169,0.06)] sm:p-8 lg:grid-cols-[minmax(280px,0.9fr)_minmax(0,1.1fr)] lg:items-center">
+      <section className="grid gap-6 rounded-[2rem] border border-primary/12 bg-base p-6 shadow-[0_18px_40px_rgba(76,130,169,0.06)] sm:p-8 lg:grid-cols-[minmax(280px,0.9fr)_minmax(0,1.1fr)] lg:items-center">
         <PlaceholderImage alt="Admin preview" className="h-72 sm:h-80 lg:h-full lg:min-h-96" />
         <div className="grid gap-4">
-          <div className="rounded-[1.4rem] bg-secondary/10 p-5">
+          <div className="rounded-[1.4rem] border border-secondary/20 bg-secondary/10 p-5">
             <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-secondary">
               Gestione eventi
             </p>
@@ -66,7 +72,7 @@ function AdminLoginPage() {
               eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </p>
           </div>
-          <div className="rounded-[1.4rem] bg-accent/25 p-5">
+          <div className="rounded-[1.4rem] border border-accent/30 bg-accent/25 p-5">
             <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-text">
               Gestione contenuti
             </p>

@@ -25,8 +25,7 @@ function ContattiPage() {
         eyebrow="Contatti"
         title="Lorem ipsum dolor sit amet, consectetur adipiscing elit ut labore."
         description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
-        imageAlt="Contatti hero"
-        tone="bg-background"
+        tone="neutral"
         actions={
           <>
             <ActionLink to="/eventi">Scopri eventi</ActionLink>
@@ -51,7 +50,7 @@ function ContattiPage() {
         ))}
       </section>
 
-      <section className="grid gap-6 rounded-[2rem] border border-primary/15 bg-base p-6 shadow-[0_18px_40px_rgba(76,130,169,0.06)] sm:p-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)] lg:items-center">
+      <section className="grid gap-6 rounded-[2rem] border border-primary/12 bg-base p-6 shadow-[0_18px_40px_rgba(76,130,169,0.06)] sm:p-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)] lg:items-center">
         <div>
           <SectionHeading
             eyebrow="Scrivici"
@@ -60,7 +59,7 @@ function ContattiPage() {
           />
 
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
-            <div className="rounded-[1.4rem] bg-primary/10 p-5">
+            <div className="rounded-[1.4rem] border border-primary/12 bg-primary/10 p-5">
               <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-primary">
                 Lorem
               </p>
@@ -69,7 +68,7 @@ function ContattiPage() {
                 eiusmod tempor incididunt.
               </p>
             </div>
-            <div className="rounded-[1.4rem] bg-secondary/10 p-5">
+            <div className="rounded-[1.4rem] border border-secondary/20 bg-secondary/10 p-5">
               <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-secondary">
                 Ipsum
               </p>

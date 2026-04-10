@@ -38,7 +38,7 @@ function AboutPage() {
         eyebrow="Chi siamo"
         title="Lorem ipsum dolor sit amet, consectetur adipiscing elit ut labore."
         description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur."
-        tone="bg-primary"
+        tone="primary"
         actions={
           <>
             <ActionLink to="/contatti">Contattaci</ActionLink>
@@ -66,7 +66,10 @@ function AboutPage() {
 
         <div className="space-y-5">
           {values.map((text, index) => (
-            <div key={text} className="border-l-2 border-primary pl-5">
+            <div
+              key={text}
+              className="rounded-[1.5rem] border border-primary/12 bg-base px-5 py-5 shadow-[0_14px_30px_rgba(76,130,169,0.05)]"
+            >
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
                 Valore {index + 1}
               </p>
@@ -86,7 +89,7 @@ function AboutPage() {
               description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
             />
             <div className="mt-6 grid gap-5 sm:grid-cols-2">
-              <div className="border-t border-secondary pt-4">
+              <div className="rounded-[1.4rem] border border-secondary/20 bg-secondary/10 p-5">
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-secondary">
                   Lorem
                 </p>
@@ -94,7 +97,7 @@ function AboutPage() {
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.
                 </p>
               </div>
-              <div className="border-t border-accent pt-4">
+              <div className="rounded-[1.4rem] border border-accent/30 bg-accent/18 p-5">
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-text">
                   Ipsum
                 </p>

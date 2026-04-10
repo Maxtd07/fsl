@@ -21,8 +21,7 @@ function DonazioniPage() {
         eyebrow="Donazioni"
         title="Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod."
         description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae."
-        imageAlt="Donazioni hero"
-        tone="bg-secondary/10"
+        tone="secondary"
         actions={
           <>
             <ActionLink to="/contatti">Richiedi dettagli</ActionLink>
@@ -55,7 +54,7 @@ function DonazioniPage() {
         </div>
       </section>
 
-      <section className="grid gap-6 rounded-[2rem] border border-primary/15 bg-base p-6 shadow-[0_18px_40px_rgba(76,130,169,0.06)] sm:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(300px,0.9fr)] lg:items-center">
+      <section className="grid gap-6 rounded-[2rem] border border-primary/12 bg-base p-6 shadow-[0_18px_40px_rgba(76,130,169,0.06)] sm:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(300px,0.9fr)] lg:items-center">
         <div>
           <SectionHeading
             eyebrow="Impatto"
@@ -65,7 +64,10 @@ function DonazioniPage() {
 
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             {impactCards.map((text) => (
-              <div key={text} className="rounded-[1.4rem] bg-accent/25 p-5">
+              <div
+                key={text}
+                className="rounded-[1.4rem] border border-accent/30 bg-accent/25 p-5"
+              >
                 <p className="text-sm leading-7 text-text/80">{text}</p>
               </div>
             ))}

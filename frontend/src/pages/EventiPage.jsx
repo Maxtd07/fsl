@@ -38,7 +38,7 @@ function EventiPage() {
         eyebrow="Eventi"
         title="Lorem ipsum dolor sit amet, consectetur adipiscing elit ut labore."
         description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
-        tone="bg-primary"
+        tone="primary"
         actions={
           <>
             <ActionLink to="/contatti">Prenota ora</ActionLink>
@@ -79,7 +79,10 @@ function EventiPage() {
             />
             <div className="mt-6 space-y-5">
               {scheduleRows.map((text, index) => (
-                <div key={text} className="border-l-2 border-primary pl-5">
+                <div
+                  key={text}
+                  className="rounded-[1.5rem] border border-primary/12 bg-base px-5 py-5 shadow-[0_14px_30px_rgba(76,130,169,0.05)]"
+                >
                   <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
                     Step {index + 1}
                   </p>

@@ -25,8 +25,7 @@ function GalleriaPage() {
         eyebrow="Galleria"
         title="Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do."
         description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt."
-        imageAlt="Galleria hero"
-        tone="bg-accent/25"
+        tone="accent"
         actions={
           <>
             <ActionLink to="/eventi">Esplora eventi</ActionLink>
@@ -49,13 +48,13 @@ function GalleriaPage() {
             <PlaceholderImage
               key={`${height}-${index}`}
               alt={`Galleria ${index + 1}`}
-              className={height}
+              className={`${height} shadow-[0_16px_34px_rgba(76,130,169,0.08)]`}
             />
           ))}
         </div>
       </section>
 
-      <section className="grid gap-6 rounded-[2rem] border border-primary/15 bg-base p-6 shadow-[0_18px_40px_rgba(76,130,169,0.06)] sm:p-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)] lg:items-center">
+      <section className="grid gap-6 rounded-[2rem] border border-primary/12 bg-base p-6 shadow-[0_18px_40px_rgba(76,130,169,0.06)] sm:p-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)] lg:items-center">
         <div>
           <SectionHeading
             eyebrow="Racconto"
@@ -65,7 +64,10 @@ function GalleriaPage() {
 
           <div className="mt-6 grid gap-4 sm:grid-cols-3">
             {galleryCards.map((text) => (
-              <div key={text} className="rounded-[1.4rem] bg-background p-5">
+              <div
+                key={text}
+                className="rounded-[1.4rem] border border-primary/10 bg-background p-5"
+              >
                 <p className="text-sm leading-7 text-text/80">{text}</p>
               </div>
             ))}

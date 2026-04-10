@@ -11,12 +11,19 @@ import HomePage from './pages/HomePage.jsx'
 
 function App() {
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 py-5 sm:px-6 sm:py-8 lg:px-8">
-      <header className="mb-10">
+    <div className="mx-auto flex min-h-screen w-full max-w-[78rem] flex-col px-4 py-4 sm:px-6 sm:py-8 lg:px-8">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-text focus:px-4 focus:py-3 focus:text-sm focus:font-semibold focus:text-white"
+      >
+        Vai al contenuto principale
+      </a>
+
+      <header className="mb-8">
         <Navbar />
       </header>
 
-      <div className="flex-1">
+      <div id="main-content" tabIndex="-1" className="flex-1 focus:outline-none">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/admin/login" element={<AdminLoginPage />} />
