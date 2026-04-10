@@ -109,7 +109,13 @@ This is a private internship project and is not open to external contributions.
 
 ## License
 
-This project is licensed under the MIT License – see the [LICENSE](LICENSE.txt) file for details.
+This project is proprietary and is not open source.
+
+The source code is made available publicly for viewing purposes only. No permission is granted to use, copy, modify, or distribute any part of this codebase.
+
+See the [LICENSE](./license.txt) file for full terms.
+
+For licensing inquiries, contact: maxtd2007@protonmail.com
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -118,6 +124,8 @@ This project is licensed under the MIT License – see the [LICENSE](LICENSE.txt
 ## Contact
 
 Max Ten Dam - maxtd2007@protonmail.com
+
+
 Daniele Soldi - soldi.daniele2008@gmail.com 
 
 [Project Link](https://github.com/Maxtd07/fsl)

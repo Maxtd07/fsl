@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom'
+import ActionLink from './ActionLink.jsx'
 
 const navItems = [
   { to: '/', label: 'Home', end: true },
@@ -11,25 +12,36 @@ const navItems = [
 
 function Navbar() {
   return (
-    <div className="border-b border-slate-200 pb-4">
-      <NavLink
-        to="/"
-        className="mb-4 inline-block text-sm font-semibold tracking-[0.14em] text-slate-900 uppercase"
-      >
-        Associazione La Crisalide
-      </NavLink>
+    <div className="border-b border-primary/15 pb-4">
+      <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="max-w-xl">
+          <NavLink
+            to="/"
+            className="inline-block text-xs font-semibold uppercase tracking-[0.22em] text-primary"
+          >
+            Associazione La Crisalide
+          </NavLink>
+          <p className="mt-2 text-sm leading-6 text-text/70">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.
+          </p>
+        </div>
 
-      <nav className="flex flex-wrap gap-x-5 gap-y-2" aria-label="Main navigation">
+        <ActionLink to="/admin/login" variant="admin">
+          Admin login
+        </ActionLink>
+      </div>
+
+      <nav className="flex flex-wrap gap-x-6 gap-y-3 border-t border-primary/10 pt-3" aria-label="Main navigation">
         {navItems.map((item) => (
           <NavLink
             key={item.to}
             to={item.to}
             end={item.end}
             className={({ isActive }) =>
-              `text-sm leading-6 transition-colors ${
+              `border-b-2 pb-2 text-sm font-medium leading-6 transition-colors ${
                 isActive
-                  ? 'text-slate-950 underline decoration-1 underline-offset-4'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'border-secondary text-primary'
+                  : 'border-transparent text-text/78 hover:border-accent/70 hover:text-text'
               }`
             }
           >
