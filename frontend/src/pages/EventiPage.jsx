@@ -1,13 +1,95 @@
+import ActionLink from '../components/ActionLink.jsx'
+import MediaTile from '../components/MediaTile.jsx'
+import PageHero from '../components/PageHero.jsx'
+import PlaceholderImage from '../components/PlaceholderImage.jsx'
+import SectionHeading from '../components/SectionHeading.jsx'
+
+const eventItems = [
+  {
+    title: 'Lorem ipsum dolor sit amet consectetur.',
+    meta: '12 Aprile',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
+  },
+  {
+    title: 'Sed ut perspiciatis unde omnis iste.',
+    meta: '26 Aprile',
+    description:
+      'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.',
+  },
+  {
+    title: 'Quis autem vel eum iure reprehenderit.',
+    meta: '10 Maggio',
+    description:
+      'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.',
+  },
+]
+
+const scheduleRows = [
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
+  'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.',
+  'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+]
+
 function EventiPage() {
   return (
-    <main className="rounded-2xl border border-slate-300 bg-white p-6 shadow-sm sm:p-8">
-      <p className="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-slate-500">
-        Pagina
-      </p>
-      <h2 className="mb-3 text-2xl font-semibold text-slate-900">Eventi</h2>
-      <p className="text-base text-slate-600">
-        Una pagina semplice per presentare eventi, incontri e iniziative future.
-      </p>
+    <main>
+      <PageHero
+        eyebrow="Eventi"
+        title="Lorem ipsum dolor sit amet, consectetur adipiscing elit ut labore."
+        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+        tone="bg-primary"
+        actions={
+          <>
+            <ActionLink to="/contatti">Prenota ora</ActionLink>
+            <ActionLink to="/galleria" variant="secondary">
+              Vedi la galleria
+            </ActionLink>
+          </>
+        }
+      />
+
+      <section className="border-t border-primary/12 px-6 py-10 sm:px-8 sm:py-12">
+        <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <SectionHeading
+            eyebrow="Prossimi eventi"
+            title="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt."
+          />
+          <ActionLink to="/contatti" variant="secondary">
+            Chiedi informazioni
+          </ActionLink>
+        </div>
+
+        <div className="grid gap-6 lg:grid-cols-3">
+          {eventItems.map((item, index) => (
+            <MediaTile key={item.title} alt={`Evento ${index + 1}`} {...item} />
+          ))}
+        </div>
+      </section>
+
+      <section className="border-t border-primary/12 bg-background px-6 py-10 sm:px-8 sm:py-12">
+        <div className="grid gap-8 lg:grid-cols-[minmax(300px,0.9fr)_minmax(0,1.1fr)] lg:items-center">
+          <PlaceholderImage alt="Programma eventi" className="aspect-[4/3] w-full" />
+          <div>
+            <SectionHeading
+              eyebrow="Programma"
+              title="Sed ut perspiciatis unde omnis iste natus error sit voluptatem."
+              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            />
+            <div className="mt-6 space-y-5">
+              {scheduleRows.map((text, index) => (
+                <div key={text} className="border-l-2 border-primary pl-5">
+                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+                    Step {index + 1}
+                  </p>
+                  <p className="mt-3 text-sm leading-7 text-text/78">{text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   )
 }

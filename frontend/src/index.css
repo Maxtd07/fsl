@@ -19,5 +19,6 @@ body,
 body {
   margin: 0;
   min-width: 320px;
-  background: #f1f5f9;
+  background: #f9faf7;
+  color: #1f2933;
 }
