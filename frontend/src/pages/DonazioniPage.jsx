@@ -43,18 +43,18 @@ function DonazioniPage() {
           {donationCards.map((text, index) => (
             <article
               key={text}
-              className="rounded-[1.6rem] border border-primary/15 bg-base p-6 shadow-[0_14px_30px_rgba(76,130,169,0.05)]"
+              className="rounded-[1.6rem] border-2 border-gray-300 bg-base p-6 shadow-[0_8px_18px_rgba(0,0,0,0.08)]"
             >
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-secondary">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-text">
                 Opzione {index + 1}
               </p>
-              <p className="text-sm leading-7 text-text/80">{text}</p>
+              <p className="text-sm leading-7 text-text">{text}</p>
             </article>
           ))}
         </div>
       </section>
 
-      <section className="grid gap-6 rounded-[2rem] border border-primary/12 bg-base p-6 shadow-[0_18px_40px_rgba(76,130,169,0.06)] sm:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(300px,0.9fr)] lg:items-center">
+      <section className="grid gap-6 rounded-[2rem] border-2 border-gray-300 bg-base p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] sm:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(300px,0.9fr)] lg:items-center">
         <div>
           <SectionHeading
             eyebrow="Impatto"
@@ -66,9 +66,9 @@ function DonazioniPage() {
             {impactCards.map((text) => (
               <div
                 key={text}
-                className="rounded-[1.4rem] border border-accent/30 bg-accent/25 p-5"
+                className="rounded-[1.4rem] border-2 border-gray-300 bg-gray-100 p-5 shadow-[0_6px_14px_rgba(0,0,0,0.06)]"
               >
-                <p className="text-sm leading-7 text-text/80">{text}</p>
+                <p className="text-sm leading-7 text-text">{text}</p>
               </div>
             ))}
           </div>

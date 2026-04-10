@@ -1,59 +1,75 @@
 import { NavLink } from 'react-router-dom'
 
 const footerLinkClasses =
-  'transition-colors duration-200 hover:text-accent focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/20 focus-visible:ring-offset-2 focus-visible:ring-offset-text'
+  'transition-colors duration-200 hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/20 focus-visible:ring-offset-2 focus-visible:ring-offset-text'
 
 function Footer() {
   return (
-    <footer className="mt-16 overflow-hidden rounded-[2rem] border border-text/10 bg-text px-6 py-10 text-sm text-white/72 shadow-[0_24px_54px_rgba(15,23,32,0.16)] sm:px-8">
-      <div className="grid gap-8 lg:grid-cols-[1.1fr_0.8fr_0.9fr]">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-secondary">
+    <footer className="w-full bg-text px-6 py-12 text-sm text-white/80 sm:px-8">
+      <div className="mx-auto w-[90vw] max-w-[90vw]">
+        {/* About Section */}
+        <div className="mb-12">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/92">
             La Crisalide
           </p>
           <p className="mt-4 max-w-sm leading-6">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua.
+            La crisalide rappresenta una fase di trasformazione profonda, crescita interiore e passaggio. È il periodo sospeso tra ciò che si era e ciò che si diventerà.
           </p>
         </div>
 
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/92">
-            Link rapidi
-          </p>
-          <div className="mt-4 flex flex-col gap-2">
-            <NavLink className={footerLinkClasses} to="/">
-              Home
-            </NavLink>
-            <NavLink className={footerLinkClasses} to="/eventi">
-              Eventi
-            </NavLink>
-            <NavLink className={footerLinkClasses} to="/galleria">
-              Galleria
-            </NavLink>
+        {/* Links Grid - 2 cols on mobile, 3 cols on desktop */}
+        <div className="grid gap-8 grid-cols-2 lg:grid-cols-3 mb-12">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/92 mb-4">
+              Social
+            </p>
+            <div className="flex flex-col gap-2">
+              <a className={footerLinkClasses} href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                Facebook
+              </a>
+              <a className={footerLinkClasses} href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                Instagram
+              </a>
+            </div>
           </div>
-        </div>
 
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/92">
-            Contatti
-          </p>
-          <div className="mt-4 flex flex-col gap-2">
-            <NavLink className={footerLinkClasses} to="/contatti">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/92 mb-4">
+              Link
+            </p>
+            <div className="flex flex-col gap-2">
+              <NavLink className={footerLinkClasses} to="/">
+                Home
+              </NavLink>
+              <NavLink className={footerLinkClasses} to="/chi-siamo">
+                Chi Siamo
+              </NavLink>
+            </div>
+          </div>
+
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/92 mb-4">
               Contatti
-            </NavLink>
-            <a className={footerLinkClasses} href="mailto:lorem@ipsum.it">
-              lorem@ipsum.it
-            </a>
-            <a className={footerLinkClasses} href="tel:+390000000000">
-              +39 000 000 0000
-            </a>
+            </p>
+            <div className="flex flex-col gap-2">
+              <a className={footerLinkClasses} href="mailto:la_crisalide@yahoo.it">
+                la_crisalide@yahoo.it
+              </a>
+              <a className={footerLinkClasses} href="tel:+393479177811">
+                +39 347 917 7811
+              </a>
+              <div className="text-xs text-white/70 mt-2">
+                Via del Palo 10<br />
+                Porto Sant'Elpidio (FM) - 63821
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="mt-8 border-t border-white/10 pt-5 text-xs text-white/50">
-        <p>Copyright 2026 Associazione La Crisalide. Tutti i diritti riservati.</p>
+        {/* Copyright */}
+        <div className="border-t border-white/10 pt-6 text-xs text-white/50">
+          <p>Copyright 2026 Associazione La Crisalide. Tutti i diritti riservati.</p>
+        </div>
       </div>
     </footer>
   )

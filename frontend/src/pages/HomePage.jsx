@@ -63,20 +63,20 @@ const previewSections = [
 ]
 
 const previewTones = {
-  neutral: 'border-primary/12 bg-background',
-  secondary: 'border-secondary/20 bg-secondary/12',
-  accent: 'border-accent/35 bg-accent/22',
+  neutral: 'border-gray-300 bg-background',
+  secondary: 'border-gray-300 bg-gray-100',
+  accent: 'border-gray-300 bg-gray-100',
 }
 
 function PreviewBand({ eyebrow, title, description, to, action, tone }) {
   return (
     <section
-      className={`relative overflow-hidden rounded-[2rem] border px-6 py-8 shadow-[0_18px_40px_rgba(76,130,169,0.06)] sm:px-8 sm:py-10 ${previewTones[tone] ?? previewTones.neutral}`}
+      className={`relative overflow-hidden rounded-[2rem] border-2 px-6 py-8 shadow-[0_12px_28px_rgba(0,0,0,0.08)] sm:px-8 sm:py-10 ${previewTones[tone] ?? previewTones.neutral}`}
     >
-      <div aria-hidden="true" className="absolute inset-x-6 bottom-6 h-px bg-primary/10" />
+      <div aria-hidden="true" className="absolute inset-x-6 bottom-6 h-px bg-gray-200" />
       <div className="relative grid gap-6 lg:grid-cols-[minmax(0,1.25fr)_minmax(260px,0.75fr)] lg:items-start">
         <div>
-          <p className="mb-3 inline-flex rounded-full bg-base/75 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+          <p className="mb-3 inline-flex rounded-full bg-gray-200 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-text">
             {eyebrow}
           </p>
           <h3 className="max-w-3xl text-3xl font-semibold tracking-[-0.03em] text-text">
@@ -104,14 +104,6 @@ function HomePage() {
         title="Benvenuti in La Crisalide"
         description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc fermentum tellus in consequat, proprio congue urna tristique eleifend et dui."
         tone="primary"
-        actions={
-          <>
-            <ActionLink to="/eventi">Scopri gli eventi</ActionLink>
-            <ActionLink to="/chi-siamo" variant="secondary">
-              Chi siamo
-            </ActionLink>
-          </>
-        }
       />
 
       <section className="px-6 py-10 sm:px-8 sm:py-12">
@@ -135,19 +127,19 @@ function HomePage() {
           </div>
 
           <div className="grid gap-5">
-            <div className="rounded-[1.5rem] border border-secondary/20 bg-secondary/10 px-5 py-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-secondary">
+            <div className="rounded-[1.5rem] border-2 border-gray-300 bg-gray-100 px-5 py-5 shadow-[0_8px_18px_rgba(0,0,0,0.06)]">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-text">
                 Curabitur
               </p>
-              <p className="mt-3 text-sm leading-7 text-text/78">
+              <p className="mt-3 text-sm leading-7 text-text">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               </p>
             </div>
-            <div className="rounded-[1.5rem] border border-accent/30 bg-accent/18 px-5 py-5">
+            <div className="rounded-[1.5rem] border-2 border-gray-300 bg-gray-100 px-5 py-5 shadow-[0_8px_18px_rgba(0,0,0,0.06)]">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-text">
                 Eget nisl
               </p>
-              <p className="mt-3 text-sm leading-7 text-text/78">
+              <p className="mt-3 text-sm leading-7 text-text">
                 Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
               </p>
             </div>
@@ -155,7 +147,7 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="border-t border-primary/12 px-6 py-10 sm:px-8 sm:py-12">
+      <section className="border-t-2 border-gray-200 px-6 py-10 sm:px-8 sm:py-12">
         <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <SectionHeading
             eyebrow="Prossimi eventi"
@@ -178,7 +170,7 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="border-t border-primary/12 bg-background px-6 py-10 sm:px-8 sm:py-12">
+      <section className="border-t-2 border-gray-200 bg-background px-6 py-10 sm:px-8 sm:py-12">
         <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <SectionHeading
             eyebrow="Galleria"
@@ -206,7 +198,7 @@ function HomePage() {
         ))}
       </div>
 
-      <section className="mt-6 rounded-[2rem] border border-secondary/18 bg-secondary/8 px-6 py-14 text-center shadow-[0_18px_40px_rgba(141,193,51,0.08)] sm:px-8">
+      <section className="mt-6 rounded-[2rem] border-2 border-gray-300 bg-gray-100 px-6 py-14 text-center shadow-[0_12px_28px_rgba(0,0,0,0.08)] sm:px-8">
         <p className="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-primary">
           Sostieni
         </p>
@@ -225,7 +217,7 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="mt-6 rounded-[2rem] bg-text px-6 py-14 text-center text-white shadow-[0_24px_54px_rgba(15,23,32,0.16)] sm:px-8">
+      <section className="mt-6 rounded-[2rem] border-2 border-gray-800 bg-text px-6 py-14 text-center text-white shadow-[0_16px_40px_rgba(0,0,0,0.15)] sm:px-8">
         <p className="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-accent">
           Resta in contatto
         </p>

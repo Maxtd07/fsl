@@ -54,7 +54,7 @@ function GalleriaPage() {
         </div>
       </section>
 
-      <section className="grid gap-6 rounded-[2rem] border border-primary/12 bg-base p-6 shadow-[0_18px_40px_rgba(76,130,169,0.06)] sm:p-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)] lg:items-center">
+      <section className="grid gap-6 rounded-[2rem] border-2 border-gray-300 bg-base p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] sm:p-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)] lg:items-center">
         <div>
           <SectionHeading
             eyebrow="Racconto"
@@ -66,9 +66,9 @@ function GalleriaPage() {
             {galleryCards.map((text) => (
               <div
                 key={text}
-                className="rounded-[1.4rem] border border-primary/10 bg-background p-5"
+                className="rounded-[1.4rem] border-2 border-gray-300 bg-background p-5 shadow-[0_6px_14px_rgba(0,0,0,0.06)]"
               >
-                <p className="text-sm leading-7 text-text/80">{text}</p>
+                <p className="text-sm leading-7 text-text">{text}</p>
               </div>
             ))}
           </div>

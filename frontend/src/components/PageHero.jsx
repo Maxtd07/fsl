@@ -1,27 +1,27 @@
 const heroTones = {
   primary: {
-    surface: 'border-primary/15 bg-primary/12',
-    eyebrow: 'text-primary',
-    accent: 'bg-primary/18',
-    support: 'bg-secondary/22',
+    surface: 'border-gray-300 bg-gray-100',
+    eyebrow: 'text-text',
+    accent: 'bg-gray-200',
+    support: 'bg-gray-150',
   },
   secondary: {
-    surface: 'border-secondary/20 bg-secondary/12',
-    eyebrow: 'text-secondary',
-    accent: 'bg-secondary/18',
-    support: 'bg-primary/16',
+    surface: 'border-gray-300 bg-gray-100',
+    eyebrow: 'text-text',
+    accent: 'bg-gray-200',
+    support: 'bg-gray-150',
   },
   accent: {
-    surface: 'border-accent/40 bg-accent/24',
-    eyebrow: 'text-primary',
-    accent: 'bg-accent/40',
-    support: 'bg-secondary/20',
+    surface: 'border-gray-300 bg-gray-100',
+    eyebrow: 'text-text',
+    accent: 'bg-gray-200',
+    support: 'bg-gray-150',
   },
   neutral: {
-    surface: 'border-primary/12 bg-background',
-    eyebrow: 'text-primary',
-    accent: 'bg-primary/12',
-    support: 'bg-accent/30',
+    surface: 'border-gray-300 bg-background',
+    eyebrow: 'text-text',
+    accent: 'bg-gray-200',
+    support: 'bg-gray-150',
   },
 }
 
@@ -30,7 +30,7 @@ function PageHero({ eyebrow, title, description, actions, tone = 'primary' }) {
 
   return (
     <section
-      className={`relative overflow-hidden rounded-[2rem] border px-6 py-12 shadow-[0_24px_54px_rgba(76,130,169,0.08)] sm:px-8 sm:py-16 ${styles.surface}`}
+      className={`relative overflow-hidden rounded-[2rem] border-2 border-gray-300 px-6 py-12 shadow-[0_16px_40px_rgba(0,0,0,0.10)] sm:px-8 sm:py-16 ${styles.surface}`}
     >
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         <div className={`absolute -right-16 top-0 h-48 w-48 rounded-full blur-3xl ${styles.accent}`} />

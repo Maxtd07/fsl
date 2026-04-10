@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+@theme {
+  --color-primary: rgb(76 130 169);
+  --color-secondary: rgb(141 193 51);
+  --color-accent: rgb(253 196 155);
+  --color-base: rgb(255 255 255);
+  --color-dark: rgb(0 0 0);
+  --color-text: rgb(31 41 51);
+  --color-background: rgb(249 250 247);
+}
+
 :root {
   color-scheme: light;
   font-family: "Aptos", "Trebuchet MS", "Segoe UI", sans-serif;

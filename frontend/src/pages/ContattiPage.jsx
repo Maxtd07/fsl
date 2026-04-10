@@ -40,17 +40,17 @@ function ContattiPage() {
         {contactCards.map((card) => (
           <article
             key={card.label}
-            className="rounded-[1.6rem] border border-primary/15 bg-base p-6 shadow-[0_14px_30px_rgba(76,130,169,0.05)]"
+            className="rounded-[1.6rem] border-2 border-gray-300 bg-base p-6 shadow-[0_8px_18px_rgba(0,0,0,0.08)]"
           >
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-text">
               {card.label}
             </p>
-            <p className="text-sm leading-7 text-text/80">{card.text}</p>
+            <p className="text-sm leading-7 text-text">{card.text}</p>
           </article>
         ))}
       </section>
 
-      <section className="grid gap-6 rounded-[2rem] border border-primary/12 bg-base p-6 shadow-[0_18px_40px_rgba(76,130,169,0.06)] sm:p-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)] lg:items-center">
+      <section className="grid gap-6 rounded-[2rem] border-2 border-gray-300 bg-base p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] sm:p-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)] lg:items-center">
         <div>
           <SectionHeading
             eyebrow="Scrivici"
@@ -59,20 +59,20 @@ function ContattiPage() {
           />
 
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
-            <div className="rounded-[1.4rem] border border-primary/12 bg-primary/10 p-5">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+            <div className="rounded-[1.4rem] border-2 border-gray-300 bg-gray-100 p-5 shadow-[0_6px_14px_rgba(0,0,0,0.06)]">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-text">
                 Lorem
               </p>
-              <p className="text-sm leading-7 text-text/80">
+              <p className="text-sm leading-7 text-text">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt.
               </p>
             </div>
-            <div className="rounded-[1.4rem] border border-secondary/20 bg-secondary/10 p-5">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-secondary">
+            <div className="rounded-[1.4rem] border-2 border-gray-300 bg-gray-100 p-5 shadow-[0_6px_14px_rgba(0,0,0,0.06)]">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-text">
                 Ipsum
               </p>
-              <p className="text-sm leading-7 text-text/80">
+              <p className="text-sm leading-7 text-text">
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco
                 laboris nisi ut aliquip.
               </p>
