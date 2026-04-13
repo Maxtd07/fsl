@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import ActionLink from '../components/ActionLink.jsx'
 import PageHero from '../components/PageHero.jsx'
 import PlaceholderImage from '../components/PlaceholderImage.jsx'
@@ -19,6 +20,37 @@ const galleryCards = [
 ]
 
 function GalleriaPage() {
+  const [facebookPosts, setFacebookPosts] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    fetchFacebookPosts()
+  }, [])
+
+  const fetchFacebookPosts = async () => {
+    try {
+      setLoading(true)
+      const response = await fetch('http://localhost:8080/api/facebook/posts')
+      if (!response.ok) {
+        throw new Error('Errore nel caricamento dei post da Facebook')
+      }
+      const data = await response.json()
+      setFacebookPosts(data || [])
+    } catch (err) {
+      setError(err.message)
+      console.error('Errore:', err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const formatDate = (dateString) => {
+    if (!dateString) return ''
+    const date = new Date(dateString)
+    return date.toLocaleDateString('it-IT', { year: 'numeric', month: 'long', day: 'numeric' })
+  }
+
   return (
     <main className="space-y-8">
       <PageHero
@@ -75,6 +107,84 @@ function GalleriaPage() {
         </div>
 
         <PlaceholderImage alt="Galleria racconto" className="h-72 md:h-80 lg:h-full lg:min-h-96" />
+      </section>
+
+      {/* Facebook Posts Section */}
+      <section className="space-y-5">
+        <SectionHeading
+          eyebrow="I nostri post"
+          title="Ultimi post da Facebook"
+          description="Scopri i nostri ultimi aggiornamenti sul nostro profilo Facebook."
+        />
+
+        {loading && (
+          <div className="flex justify-center items-center py-12">
+            <p className="text-text/70">Caricamento post in corso...</p>
+          </div>
+        )}
+
+        {error && (
+          <div className="rounded-lg border-2 border-red-200 bg-red-50 p-4">
+            <p className="text-red-700">Errore nel caricamento dei post: {error}</p>
+          </div>
+        )}
+
+        {!loading && !error && facebookPosts.length === 0 && (
+          <div className="rounded-lg border-2 border-primary/20 bg-base p-6">
+            <p className="text-center text-text/70">Nessun post disponibile al momento.</p>
+          </div>
+        )}
+
+        {!loading && !error && facebookPosts.length > 0 && (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {facebookPosts.map((post) => (
+              <div
+                key={post.id}
+                className="overflow-hidden rounded-[1.4rem] border-2 border-primary/20 bg-base shadow-[0_6px_14px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.12)] transition-shadow duration-300"
+              >
+                {/* Image */}
+                {post.fullPicture ? (
+                  <img
+                    src={post.fullPicture}
+                    alt={post.message || 'Facebook post'}
+                    className="w-full h-48 object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-48 bg-primary/10 flex items-center justify-center">
+                    <PlaceholderImage alt="Placeholder" className="w-full h-full" />
+                  </div>
+                )}
+
+                {/* Content */}
+                <div className="p-4 md:p-5">
+                  {/* Message */}
+                  {post.message && (
+                    <p className="text-sm md:text-base font-medium leading-6 md:leading-7 text-text/85 line-clamp-3 mb-3">
+                      {post.message}
+                    </p>
+                  )}
+
+                  {/* Date */}
+                  {post.createdTime && (
+                    <p className="text-xs text-text/60 mb-4">{formatDate(post.createdTime)}</p>
+                  )}
+
+                  {/* Link to Facebook */}
+                  {post.permalinkUrl && (
+                    <a
+                      href={post.permalinkUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block text-sm font-semibold text-primary hover:text-primary/80 transition-colors duration-200"
+                    >
+                      Vedi su Facebook →
+                    </a>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </section>
     </main>
   )

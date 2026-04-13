@@ -20,6 +20,7 @@ public class SecurityConfig {
      .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
      .requestMatchers(HttpMethod.GET, "/events/**").permitAll()
      .requestMatchers("/auth/**").permitAll()
+     .requestMatchers("/api/facebook/**").permitAll()
      .anyRequest().authenticated())
    .httpBasic(Customizer.withDefaults());
 
