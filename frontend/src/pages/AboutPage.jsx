@@ -86,7 +86,7 @@ function AboutPage() {
             title="Ascolto, partecipazione e tutela dei diritti nella vita di tutti i giorni."
             description="La nostra attivita unisce sostegno diretto, formazione e collaborazione con il territorio per costruire risposte piu umane, competenti e continuative."
           />
-          <div className="mt-5 md:mt-6 max-w-3xl space-y-3 md:space-y-4 text-xs md:text-sm leading-7 text-text/85 md:text-text/80">
+          <div className="mt-5 md:mt-6 max-w-3xl space-y-3 md:space-y-4 text-xs md:text-sm font-medium leading-7 text-text/85 md:text-text/80">
             <p>
               La Crisalide offre un servizio di ascolto delle problematiche,
               sostegno e consulenza, accompagnando famiglie e persone con
@@ -109,10 +109,10 @@ function AboutPage() {
               key={item.label}
               className={`rounded-[1.5rem] border p-5 shadow-[0_14px_30px_rgba(76,130,169,0.05)] ${areaStyles[item.tone]}`}
             >
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary">
                 {item.label}
               </p>
-              <p className="mt-3 text-sm leading-7 text-text/80">{item.text}</p>
+              <p className="mt-3 text-sm font-medium leading-7 text-text/80 md:text-text/85">{item.text}</p>
             </article>
           ))}
         </div>
@@ -162,13 +162,13 @@ function AboutPage() {
               key={item.title}
               className="rounded-[1.75rem] border border-primary/12 bg-base p-6 shadow-[0_16px_36px_rgba(76,130,169,0.06)]"
             >
-              <p className="mb-2 md:mb-3 inline-flex rounded-full bg-primary/8 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+              <p className="mb-2 md:mb-3 inline-flex rounded-full bg-accent/15 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-accent">
                 {item.meta}
               </p>
-              <h3 className="text-base md:text-lg font-semibold tracking-[-0.02em] text-text">
+              <h3 className="text-base md:text-lg font-bold tracking-[-0.02em] text-text">
                 {item.title}
               </h3>
-              <p className="mt-2 md:mt-3 text-xs md:text-sm leading-6 md:leading-7 text-text/85 md:text-text/80">
+              <p className="mt-2 md:mt-3 text-xs md:text-sm font-medium leading-6 md:leading-7 text-text/85 md:text-text/80">
                 {item.description}
               </p>
             </article>

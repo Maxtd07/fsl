@@ -49,7 +49,7 @@ function EventiPage() {
         }
       />
 
-      <section className="border-t-2 border-gray-200 px-6 py-8 md:py-10 lg:py-12">
+      <section className="border-t-2 border-primary/15 px-6 py-8 md:py-10 lg:py-12">
         <div className="mb-4 md:mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <SectionHeading
             eyebrow="Prossimi eventi"
@@ -68,7 +68,7 @@ function EventiPage() {
         </div>
       </section>
 
-      <section className="border-t-2 border-gray-200 bg-background px-6 py-8 md:py-10 lg:py-12">
+      <section className="border-t-2 border-primary/15 bg-background px-6 py-8 md:py-10 lg:py-12">
         <div className="grid gap-6 md:gap-8 lg:grid-cols-[minmax(300px,0.9fr)_minmax(0,1.1fr)] lg:items-center">
           <PlaceholderImage alt="Programma eventi" className="aspect-[4/3] w-full" />
           <div>
@@ -81,12 +81,12 @@ function EventiPage() {
               {scheduleRows.map((text, index) => (
                 <div
                   key={text}
-                  className="rounded-[1.5rem] border-2 border-gray-300 bg-base px-4 md:px-5 py-4 md:py-5 shadow-[0_8px_18px_rgba(0,0,0,0.08)]"
+                  className="rounded-[1.5rem] border-2 border-primary/20 bg-base px-4 md:px-5 py-4 md:py-5 shadow-[0_8px_18px_rgba(0,0,0,0.08)]"
                 >
-                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-text">
+                  <p className="text-xs font-bold uppercase tracking-[0.22em] text-secondary">
                     Step {index + 1}
                   </p>
-                  <p className="mt-2 md:mt-3 text-xs md:text-sm leading-6 md:leading-7 text-text/85 md:text-text/80">{text}</p>
+                  <p className="mt-2 md:mt-3 text-xs md:text-sm font-medium leading-6 md:leading-7 text-text/85 md:text-text/80">{text}</p>
                 </div>
               ))}
             </div>

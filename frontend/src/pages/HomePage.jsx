@@ -63,33 +63,33 @@ const previewSections = [
 ]
 
 const previewTones = {
-  neutral: 'border-gray-300 bg-background',
-  secondary: 'border-gray-300 bg-gray-100',
-  accent: 'border-gray-300 bg-gray-100',
+  neutral: 'border-primary/20 bg-background',
+  secondary: 'border-primary/20 bg-background',
+  accent: 'border-primary/20 bg-background',
 }
 
 function PreviewBand({ eyebrow, title, description, to, action, tone }) {
   return (
     <section
-      className={`relative overflow-hidden rounded-[2rem] border-2 px-6 py-8 shadow-[0_12px_28px_rgba(0,0,0,0.08)] md:px-8 md:py-10 ${previewTones[tone] ?? previewTones.neutral}`}
+      className={`relative overflow-hidden rounded-[2rem] border-2 px-6 py-8 shadow-[0_12px_28px_rgba(0,0,0,0.08)] md:px-8 md:py-10 border-primary/20 bg-background`}
     >
-      <div aria-hidden="true" className="absolute inset-x-6 bottom-6 h-px bg-gray-200" />
+      <div aria-hidden="true" className="absolute inset-x-6 bottom-6 h-px bg-primary/12" />
       <div className="relative grid gap-4 md:gap-6 lg:grid-cols-[minmax(0,1.25fr)_minmax(260px,0.75fr)] lg:items-start">
         <div>
-          <p className="mb-2 md:mb-3 inline-flex rounded-full bg-gray-200 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-text">
+          <p className="mb-2 md:mb-3 inline-flex rounded-full bg-primary/12 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-primary">
             {eyebrow}
           </p>
-          <h3 className="max-w-3xl text-xl md:text-2xl lg:text-3xl font-semibold tracking-[-0.03em] text-text">
+          <h3 className="max-w-3xl text-xl md:text-2xl lg:text-3xl font-bold tracking-[-0.03em] text-slate-900">
             {title}
           </h3>
-          <p className="mt-3 md:mt-4 lg:mt-5 max-w-3xl text-xs md:text-sm lg:text-base leading-6 md:leading-7 text-text/85 md:text-text/80">
+          <p className="mt-3 md:mt-4 lg:mt-5 max-w-3xl text-xs md:text-sm lg:text-slate-800 font-medium leading-6 md:leading-7 text-slate-800">
             {description}
           </p>
         </div>
 
         <div className="flex flex-col items-start gap-3 md:gap-4 lg:items-end">
           <PlaceholderImage alt={eyebrow} className="aspect-[16/10] w-full" />
-          <ActionLink to={to}>{action}</ActionLink>
+          <ActionLink to={to} variant="surface" className="whitespace-nowrap">{action}</ActionLink>
         </div>
       </div>
     </section>
@@ -114,32 +114,32 @@ function HomePage() {
               title="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
               description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
             />
-            <p className="mt-5 md:mt-6 max-w-3xl text-xs md:text-sm leading-7 text-text/85 md:text-text/80">
+            <p className="mt-5 md:mt-6 max-w-3xl text-xs md:text-sm font-medium leading-7 text-slate-900">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
               tempor incididunt ut labore et dolore magna aliqua. Quis nostrud
               exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
             </p>
             <div className="mt-6">
-              <ActionLink to="/chi-siamo" variant="secondary">
+              <ActionLink to="/chi-siamo" variant="secondary" className="text-sm md:text-base">
                 Leggi di piu
               </ActionLink>
             </div>
           </div>
 
           <div className="grid gap-5">
-            <div className="rounded-[1.5rem] border-2 border-gray-300 bg-gray-100 px-4 md:px-5 py-4 md:py-5 shadow-[0_8px_18px_rgba(0,0,0,0.06)]">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-text">
+            <div className="rounded-[1.5rem] border-2 border-primary/20 bg-background px-4 md:px-5 py-4 md:py-5 shadow-[0_8px_18px_rgba(0,0,0,0.06)]">
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-secondary">
                 Curabitur
               </p>
-              <p className="mt-2 md:mt-3 text-xs md:text-sm leading-6 md:leading-7 text-text/85 md:text-text/80">
+              <p className="mt-2 md:mt-3 text-xs md:text-sm font-medium leading-6 md:leading-7 text-slate-900">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               </p>
             </div>
-            <div className="rounded-[1.5rem] border-2 border-gray-300 bg-gray-100 px-4 md:px-5 py-4 md:py-5 shadow-[0_8px_18px_rgba(0,0,0,0.06)]">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-text">
+            <div className="rounded-[1.5rem] border-2 border-secondary/30 bg-secondary/8 px-4 md:px-5 py-4 md:py-5 shadow-[0_8px_18px_rgba(0,0,0,0.06)]">
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-secondary">
                 Eget nisl
               </p>
-              <p className="mt-2 md:mt-3 text-xs md:text-sm leading-6 md:leading-7 text-text/85 md:text-text/80">
+              <p className="mt-2 md:mt-3 text-xs md:text-sm font-medium leading-6 md:leading-7 text-slate-900">
                 Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
               </p>
             </div>
@@ -147,14 +147,14 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="border-t-2 border-gray-200 px-6 py-10 md:px-8 md:py-12">
-        <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+      <section className="border-t-2 border-primary/15 px-6 py-10 md:px-8 md:py-12">
+        <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between lg:flex-nowrap">
           <SectionHeading
             eyebrow="Prossimi eventi"
             title="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
             description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt."
           />
-          <ActionLink to="/eventi" variant="secondary">
+          <ActionLink to="/eventi" variant="secondary" className="whitespace-nowrap flex-shrink-0">
             Vedi tutti
           </ActionLink>
         </div>
@@ -170,14 +170,14 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="border-t-2 border-gray-200 bg-background px-6 py-10 md:px-8 md:py-12">
-        <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+      <section className="border-t-2 border-primary/15 px-6 py-10 md:px-8 md:py-12">
+        <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between lg:flex-nowrap">
           <SectionHeading
             eyebrow="Galleria"
             title="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
             description="Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod."
           />
-          <ActionLink to="/galleria" variant="secondary">
+          <ActionLink to="/galleria" variant="secondary" className="whitespace-nowrap flex-shrink-0">
             Vedi tutto
           </ActionLink>
         </div>
@@ -186,7 +186,7 @@ function HomePage() {
           {galleryItems.map((title) => (
             <div key={title} className="flex flex-col gap-3">
               <PlaceholderImage alt={title} className="aspect-[4/3] w-full" />
-              <p className="text-sm font-medium text-text">{title}</p>
+              <p className="text-sm font-semibold text-primary">{title}</p>
             </div>
           ))}
         </div>
@@ -198,38 +198,38 @@ function HomePage() {
         ))}
       </div>
 
-      <section className="mt-6 rounded-[2rem] border-2 border-gray-300 bg-gray-100 px-4 md:px-6 lg:px-8 py-10 md:py-12 lg:py-14 text-center shadow-[0_12px_28px_rgba(0,0,0,0.08)]">
+      <section className="mt-6 rounded-[2rem] border-2 border-primary/20 bg-background px-4 md:px-6 lg:px-8 py-10 md:py-12 lg:py-14 text-center shadow-[0_12px_28px_rgba(0,0,0,0.08)]">
         <p className="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-primary">
           Sostieni
         </p>
-        <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold tracking-[-0.03em] text-text">
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-[-0.03em] text-slate-900">
           Sostieni La Crisalide
         </h2>
-        <p className="mx-auto mt-4 md:mt-5 max-w-2xl text-xs md:text-sm leading-6 md:leading-7 text-text/85 md:text-text/80">
+        <p className="mx-auto mt-4 md:mt-5 max-w-2xl text-xs md:text-sm font-medium leading-6 md:leading-7 text-slate-700">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
           tempor incididunt ut labore et dolore magna aliqua.
         </p>
         <div className="mt-6 md:mt-7 flex flex-wrap justify-center gap-2 md:gap-3">
-          <ActionLink to="/donazioni">Dona ora</ActionLink>
+          <ActionLink to="/donazioni" variant="secondary">Dona ora</ActionLink>
           <ActionLink to="/contatti" variant="secondary">
             Richiedi informazioni
           </ActionLink>
         </div>
       </section>
 
-      <section className="mt-6 rounded-[2rem] border-2 border-gray-800 bg-text px-4 md:px-6 lg:px-8 py-10 md:py-12 lg:py-14 text-center text-white shadow-[0_16px_40px_rgba(0,0,0,0.15)]">
+      <section className="mt-6 rounded-[2rem] border-2 border-accent/20 bg-text px-4 md:px-6 lg:px-8 py-10 md:py-12 lg:py-14 text-center text-white shadow-[0_16px_40px_rgba(0,0,0,0.15)]">
         <p className="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-accent">
           Resta in contatto
         </p>
-        <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold tracking-[-0.03em]">
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-[-0.03em]">
           Lorem ipsum dolor sit amet
         </h2>
-        <p className="mx-auto mt-4 md:mt-5 max-w-2xl text-xs md:text-sm lg:text-base leading-6 md:leading-7 text-white/85 md:text-white/80">
+        <p className="mx-auto mt-4 md:mt-5 max-w-2xl text-xs md:text-sm lg:text-base font-medium leading-6 md:leading-7 text-white/85 md:text-white/80">
           Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
           enim ad minim veniam, quis nostrud exercitation ullamco laboris.
         </p>
         <div className="mt-6 md:mt-7 flex justify-center">
-          <ActionLink to="/contatti" variant="light">
+          <ActionLink to="/contatti" variant="dark">
             Scrivici
           </ActionLink>
         </div>

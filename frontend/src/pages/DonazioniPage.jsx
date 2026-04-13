@@ -43,18 +43,18 @@ function DonazioniPage() {
           {donationCards.map((text, index) => (
             <article
               key={text}
-              className="rounded-[1.6rem] border-2 border-gray-300 bg-base p-4 md:p-5 lg:p-6 shadow-[0_8px_18px_rgba(0,0,0,0.08)]"
+              className="rounded-[1.6rem] border-2 border-primary/20 bg-base p-4 md:p-5 lg:p-6 shadow-[0_8px_18px_rgba(0,0,0,0.08)]"
             >
-              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-text">
+              <p className="mb-2 text-xs font-bold uppercase tracking-[0.22em] text-primary">
                 Opzione {index + 1}
               </p>
-              <p className="text-xs md:text-sm leading-6 md:leading-7 text-text/85 md:text-text/80">{text}</p>
+              <p className="text-xs md:text-sm font-medium leading-6 md:leading-7 text-text/85 md:text-text/80">{text}</p>
             </article>
           ))}
         </div>
       </section>
 
-      <section className="grid gap-6 rounded-[2rem] border-2 border-gray-300 bg-base p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] md:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(300px,0.9fr)] lg:items-center">
+      <section className="grid gap-6 rounded-[2rem] border-2 border-primary/20 bg-base p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] md:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(300px,0.9fr)] lg:items-center">
         <div>
           <SectionHeading
             eyebrow="Impatto"
@@ -66,9 +66,9 @@ function DonazioniPage() {
             {impactCards.map((text) => (
               <div
                 key={text}
-                className="rounded-[1.4rem] border-2 border-gray-300 bg-gray-100 p-4 md:p-5 shadow-[0_6px_14px_rgba(0,0,0,0.06)]"
+                className="rounded-[1.4rem] border-2 border-primary/20 bg-background p-4 md:p-5 shadow-[0_6px_14px_rgba(0,0,0,0.06)]"
               >
-                <p className="text-xs md:text-sm leading-6 md:leading-7 text-text/85 md:text-text/80">{text}</p>
+                <p className="text-xs md:text-sm font-medium leading-6 md:leading-7 text-text/85 md:text-text/80">{text}</p>
               </div>
             ))}
           </div>

@@ -21,19 +21,19 @@ function AdminLoginPage() {
         </div>
 
         <div className="rounded-[1.8rem] border border-primary/12 bg-base p-6 shadow-[0_18px_40px_rgba(76,130,169,0.10)] md:p-7">
-          <p className="mb-5 text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+          <p className="mb-5 text-xs font-bold uppercase tracking-[0.22em] text-primary">
             Login amministratori
           </p>
 
           <form className="space-y-4">
             <label className="block">
-              <span className="mb-2 block text-sm font-medium text-text">Email</span>
+              <span className="mb-2 block text-sm font-medium text-text">Username</span>
               <input
                 autoComplete="username"
                 className="w-full rounded-2xl border border-primary/15 bg-background px-4 py-3 text-sm text-text outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/12"
-                name="email"
-                type="email"
-                placeholder="admin@example.com"
+                name="username"
+                type="text"
+                placeholder="admin"
                 required
               />
             </label>
@@ -63,20 +63,20 @@ function AdminLoginPage() {
       <section className="grid gap-6 rounded-[2rem] border border-primary/12 bg-base p-6 shadow-[0_18px_40px_rgba(76,130,169,0.06)] md:p-8 lg:grid-cols-[minmax(280px,0.9fr)_minmax(0,1.1fr)] lg:items-center">
         <PlaceholderImage alt="Admin preview" className="h-72 md:h-80 lg:h-full lg:min-h-96" />
         <div className="grid gap-4">
-          <div className="rounded-[1.4rem] border border-gray-300 bg-gray-100 p-4 md:p-5">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-text">
+          <div className="rounded-[1.4rem] border border-secondary/30 bg-secondary/10 p-4 md:p-5">
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.22em] text-secondary">
               Gestione eventi
             </p>
-            <p className="text-xs md:text-sm leading-6 md:leading-7 text-text/85 md:text-text/80">
+            <p className="text-xs md:text-sm font-medium leading-6 md:leading-7 text-text/85 md:text-text/80">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </p>
           </div>
-          <div className="rounded-[1.4rem] border border-gray-300 bg-gray-100 p-4 md:p-5">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-text">
+          <div className="rounded-[1.4rem] border border-accent/30 bg-accent/10 p-4 md:p-5">
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.22em] text-accent">
               Gestione contenuti
             </p>
-            <p className="text-xs md:text-sm leading-6 md:leading-7 text-text/85 md:text-text/80">
+            <p className="text-xs md:text-sm font-medium leading-6 md:leading-7 text-text/85 md:text-text/80">
               Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
               nisi ut aliquip ex ea commodo consequat.
             </p>
