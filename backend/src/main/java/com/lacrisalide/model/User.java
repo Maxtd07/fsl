@@ -6,6 +6,8 @@ import lombok.*;
 
 @Entity
 @Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
@@ -13,7 +15,6 @@ public class User {
  private Long id;
  private String nome;
  @Column(unique=true)
- private String email;
  private String password;
  private String ruolo;
 }

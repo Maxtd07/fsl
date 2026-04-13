@@ -1,8 +1,35 @@
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import ActionLink from '../components/ActionLink.jsx'
 import PlaceholderImage from '../components/PlaceholderImage.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
+import { useAuth } from '../context/AuthContext.jsx'
+import { loginAdmin } from '../lib/api.js'
 
 function AdminLoginPage() {
+  const navigate = useNavigate()
+  const { login } = useAuth()
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    setError('')
+    setIsLoading(true)
+
+    try {
+      const response = await loginAdmin(username, password)
+      login(username, response.token || 'admin-token')
+      navigate('/admin/dashboard')
+    } catch (err) {
+      setError('Username o password non corretti.')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return (
     <main className="space-y-8">
       <section className="grid gap-8 rounded-[2rem] border border-primary/12 bg-primary/10 p-6 shadow-[0_24px_50px_rgba(76,130,169,0.08)] md:p-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(360px,1.05fr)] lg:items-center lg:gap-10">
@@ -25,7 +52,7 @@ function AdminLoginPage() {
             Login amministratori
           </p>
 
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <label className="block">
               <span className="mb-2 block text-sm font-medium text-text">Username</span>
               <input
@@ -34,6 +61,8 @@ function AdminLoginPage() {
                 name="username"
                 type="text"
                 placeholder="admin"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 required
               />
             </label>
@@ -46,15 +75,24 @@ function AdminLoginPage() {
                 name="password"
                 type="password"
                 placeholder="********"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </label>
 
+            {error && (
+              <div className="rounded-lg border border-accent/30 bg-accent/10 px-4 py-3 text-sm font-medium text-accent">
+                {error}
+              </div>
+            )}
+
             <button
-              className="inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(76,130,169,0.22)] transition duration-200 hover:bg-primary/92 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/18 focus-visible:ring-offset-2 focus-visible:ring-offset-base"
+              className="inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(76,130,169,0.22)] transition duration-200 hover:bg-primary/92 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/18 focus-visible:ring-offset-2 focus-visible:ring-offset-base disabled:opacity-50"
               type="submit"
+              disabled={isLoading}
             >
-              Accedi
+              {isLoading ? 'Accesso in corso...' : 'Accedi'}
             </button>
           </form>
         </div>

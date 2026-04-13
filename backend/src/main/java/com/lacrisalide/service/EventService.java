@@ -14,4 +14,5 @@ public class EventService {
 
  public Event create(Event e){ return repo.save(e); }
  public List<Event> list(){ return repo.findAll(); }
+ public void delete(Long id){ repo.deleteById(id); }
 }
