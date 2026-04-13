@@ -18,8 +18,8 @@ function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <div className="rounded-[1.75rem] border-2 border-gray-300 bg-base/90 px-5 py-5 shadow-[0_12px_28px_rgba(0,0,0,0.08)] backdrop-blur-sm sm:px-6">
-      <div className="mb-4 flex flex-col gap-4 sm:mb-5 sm:flex-row sm:items-center sm:justify-between">
+    <div className="rounded-[1.75rem] border-2 border-gray-300 bg-base/90 px-5 py-5 shadow-[0_12px_28px_rgba(0,0,0,0.08)] backdrop-blur-sm md:px-6">
+      <div className="mb-4 flex flex-col gap-4 md:mb-5 md:flex-row md:items-center md:justify-between">
         <div className="flex items-center justify-between">
           <div className="max-w-2xl">
             <NavLink
@@ -43,14 +43,14 @@ function Navbar() {
                 </span>
               </span>
             </NavLink>
-            <p className="mt-2 text-sm leading-6 text-text/70">
+            <p className="mt-2 text-xs md:text-sm leading-6 text-text/80 md:text-text/75">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.
             </p>
           </div>
 
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="ml-4 flex sm:hidden flex-col gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 rounded-lg p-2"
+            className="ml-4 flex md:hidden flex-col gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 rounded-lg p-2"
             aria-label="Toggle menu"
           >
             <span className={`h-0.5 w-6 bg-text transition-transform origin-center ${isOpen ? 'rotate-45 translate-y-2' : ''}`} />
@@ -59,7 +59,7 @@ function Navbar() {
           </button>
         </div>
 
-        <div className="hidden sm:block">
+        <div className="hidden md:block">
           <ActionLink to="/admin/login" variant="admin">
             Admin login
           </ActionLink>
@@ -67,8 +67,8 @@ function Navbar() {
       </div>
 
       <nav
-        className={`flex flex-col gap-2 border-t border-gray-200 pt-4 sm:flex-wrap sm:flex-row ${
-          isOpen ? 'block' : 'hidden sm:flex'
+        className={`flex flex-col gap-2 border-t border-gray-200 pt-4 md:flex-wrap md:flex-row ${
+          isOpen ? 'block' : 'hidden md:flex'
         }`}
         aria-label="Main navigation"
       >
@@ -82,14 +82,14 @@ function Navbar() {
               `${navLinkClasses} ${
                 isActive
                   ? 'border-gray-400 bg-gray-200 text-text'
-                  : 'border-gray-200 text-text/70 hover:border-gray-300 hover:bg-gray-100 hover:text-text'
+                  : 'border-gray-200 text-text/75 hover:border-gray-300 hover:bg-gray-100 hover:text-text'
               }`
             }
           >
             {item.label}
           </NavLink>
         ))}
-        <div className="mt-2 sm:hidden">
+        <div className="mt-2 md:hidden">
           <ActionLink to="/admin/login" variant="admin">
             Admin login
           </ActionLink>

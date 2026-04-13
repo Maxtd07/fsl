@@ -1,4 +1,5 @@
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
 import Footer from './components/Footer.jsx'
 import Navbar from './components/Navbar.jsx'
 import AdminLoginPage from './pages/AdminLoginPage.jsx'
@@ -9,10 +10,21 @@ import EventiPage from './pages/EventiPage.jsx'
 import GalleriaPage from './pages/GalleriaPage.jsx'
 import HomePage from './pages/HomePage.jsx'
 
+function ScrollToTop() {
+  const location = useLocation()
+  
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [location.pathname])
+  
+  return null
+}
+
 function App() {
   return (
     <>
-      <div className="mx-auto flex min-h-screen w-[90vw] max-w-[90vw] flex-col px-4 py-4 sm:px-6 sm:py-8 lg:px-8">
+      <ScrollToTop />
+      <div className="mx-auto flex min-h-screen w-[90vw] max-w-[90vw] flex-col px-4 py-4 md:px-6 md:py-8 lg:px-8">
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-text focus:px-4 focus:py-3 focus:text-sm focus:font-semibold focus:text-white"

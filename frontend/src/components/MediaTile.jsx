@@ -10,9 +10,9 @@ function MediaTile({ title, meta, description, alt }) {
             {meta}
           </p>
         ) : null}
-        <h3 className="text-lg font-semibold tracking-[-0.02em] text-text">{title}</h3>
+        <h3 className="text-base md:text-lg font-semibold tracking-[-0.02em] text-text">{title}</h3>
         {description ? (
-          <p className="mt-2 text-sm leading-6 text-text/72">{description}</p>
+          <p className="mt-2 text-xs md:text-sm leading-6 text-text/80">{description}</p>
         ) : null}
       </div>
     </article>

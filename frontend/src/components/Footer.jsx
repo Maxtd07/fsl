@@ -5,7 +5,7 @@ const footerLinkClasses =
 
 function Footer() {
   return (
-    <footer className="w-full bg-text px-6 py-12 text-sm text-white/80 sm:px-8">
+    <footer className="w-full bg-text px-6 py-12 text-sm text-white/80 md:px-8">
       <div className="mx-auto w-[90vw] max-w-[90vw]">
         {/* About Section */}
         <div className="mb-12">

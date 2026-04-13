@@ -4,12 +4,12 @@ import PlaceholderImage from '../components/PlaceholderImage.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
 
 const galleryBlocks = [
-  'h-72 sm:h-80',
-  'h-60 sm:h-72',
-  'h-60 sm:h-72',
-  'h-72 sm:h-80',
-  'h-64 sm:h-72',
-  'h-64 sm:h-72',
+  'h-72 md:h-80',
+  'h-60 md:h-72',
+  'h-60 md:h-72',
+  'h-72 md:h-80',
+  'h-64 md:h-72',
+  'h-64 md:h-72',
 ]
 
 const galleryCards = [
@@ -54,7 +54,7 @@ function GalleriaPage() {
         </div>
       </section>
 
-      <section className="grid gap-6 rounded-[2rem] border-2 border-gray-300 bg-base p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] sm:p-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)] lg:items-center">
+      <section className="grid gap-6 rounded-[2rem] border-2 border-gray-300 bg-base p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] md:p-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)] lg:items-center">
         <div>
           <SectionHeading
             eyebrow="Racconto"
@@ -62,19 +62,19 @@ function GalleriaPage() {
             description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
           />
 
-          <div className="mt-6 grid gap-4 sm:grid-cols-3">
+          <div className="mt-6 grid gap-4 md:grid-cols-3">
             {galleryCards.map((text) => (
               <div
                 key={text}
-                className="rounded-[1.4rem] border-2 border-gray-300 bg-background p-5 shadow-[0_6px_14px_rgba(0,0,0,0.06)]"
+                className="rounded-[1.4rem] border-2 border-gray-300 bg-background p-4 md:p-5 shadow-[0_6px_14px_rgba(0,0,0,0.06)]"
               >
-                <p className="text-sm leading-7 text-text">{text}</p>
+                <p className="text-xs md:text-sm leading-6 md:leading-7 text-text/85 md:text-text/80">{text}</p>
               </div>
             ))}
           </div>
         </div>
 
-        <PlaceholderImage alt="Galleria racconto" className="h-72 sm:h-80 lg:h-full lg:min-h-96" />
+        <PlaceholderImage alt="Galleria racconto" className="h-72 md:h-80 lg:h-full lg:min-h-96" />
       </section>
     </main>
   )
