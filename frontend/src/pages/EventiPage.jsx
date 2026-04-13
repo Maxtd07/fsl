@@ -1,29 +1,10 @@
+import { useEffect, useState } from 'react'
 import ActionLink from '../components/ActionLink.jsx'
 import MediaTile from '../components/MediaTile.jsx'
 import PageHero from '../components/PageHero.jsx'
 import PlaceholderImage from '../components/PlaceholderImage.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
-
-const eventItems = [
-  {
-    title: 'Lorem ipsum dolor sit amet consectetur.',
-    meta: '12 Aprile',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
-  },
-  {
-    title: 'Sed ut perspiciatis unde omnis iste.',
-    meta: '26 Aprile',
-    description:
-      'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.',
-  },
-  {
-    title: 'Quis autem vel eum iure reprehenderit.',
-    meta: '10 Maggio',
-    description:
-      'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.',
-  },
-]
+import { fetchEvents } from '../lib/api.js'
 
 const scheduleRows = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
@@ -31,7 +12,65 @@ const scheduleRows = [
   'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
 ]
 
+const eventDateFormatter = new Intl.DateTimeFormat('it-IT', {
+  day: '2-digit',
+  month: 'long',
+  year: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+})
+
+function formatEventMeta(event) {
+  const metaParts = []
+
+  if (event.data) {
+    metaParts.push(eventDateFormatter.format(new Date(event.data)))
+  }
+
+  if (event.luogo) {
+    metaParts.push(event.luogo)
+  }
+
+  return metaParts.join(' | ')
+}
+
 function EventiPage() {
+  const [events, setEvents] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [errorMessage, setErrorMessage] = useState('')
+
+  useEffect(() => {
+    let isMounted = true
+
+    async function loadEvents() {
+      try {
+        const data = await fetchEvents()
+
+        if (!isMounted) {
+          return
+        }
+
+        setEvents(Array.isArray(data) ? data : [])
+      } catch {
+        if (!isMounted) {
+          return
+        }
+
+        setErrorMessage('Impossibile caricare gli eventi dal backend.')
+      } finally {
+        if (isMounted) {
+          setIsLoading(false)
+        }
+      }
+    }
+
+    loadEvents()
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
   return (
     <main>
       <PageHero
@@ -53,19 +92,45 @@ function EventiPage() {
         <div className="mb-4 md:mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <SectionHeading
             eyebrow="Prossimi eventi"
-            title="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt."
+            title="Eventi caricati direttamente dal backend."
+            description="La lista qui sotto arriva dall'endpoint Spring Boot `/events`."
           />
           <ActionLink to="/contatti" variant="secondary">
             Chiedi informazioni
           </ActionLink>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-3">
-          {eventItems.map((item, index) => (
-            <MediaTile key={item.title} alt={`Evento ${index + 1}`} {...item} />
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="rounded-[1.5rem] border-2 border-primary/20 bg-base px-5 py-6 text-sm font-medium text-text/80 shadow-[0_8px_18px_rgba(0,0,0,0.08)]">
+            Caricamento eventi in corso...
+          </div>
+        ) : null}
+
+        {errorMessage ? (
+          <div className="rounded-[1.5rem] border-2 border-accent/30 bg-accent/10 px-5 py-6 text-sm font-medium text-text shadow-[0_8px_18px_rgba(0,0,0,0.08)]">
+            {errorMessage}
+          </div>
+        ) : null}
+
+        {!isLoading && !errorMessage && events.length === 0 ? (
+          <div className="rounded-[1.5rem] border-2 border-primary/20 bg-base px-5 py-6 text-sm font-medium text-text/80 shadow-[0_8px_18px_rgba(0,0,0,0.08)]">
+            Nessun evento disponibile al momento nel backend.
+          </div>
+        ) : null}
+
+        {!isLoading && !errorMessage && events.length > 0 ? (
+          <div className="grid gap-6 lg:grid-cols-3">
+            {events.map((event, index) => (
+              <MediaTile
+                key={event.id ?? `${event.titolo}-${index}`}
+                alt={`Evento ${index + 1}`}
+                title={event.titolo}
+                meta={formatEventMeta(event)}
+                description={event.descrizione}
+              />
+            ))}
+          </div>
+        ) : null}
       </section>
 
       <section className="border-t-2 border-primary/15 bg-background px-6 py-8 md:py-10 lg:py-12">
