@@ -12,16 +12,15 @@ import com.lacrisalide.model.Event;
 @RequiredArgsConstructor
 public class EventController {
 
- private final EventService eventService;
+ private final EventService service;
 
  @PostMapping
  public Event create(@RequestBody Event e){
-  return eventService.create(e);
+  return service.create(e);
  }
 
  @GetMapping
  public List<Event> list(){
-  return eventService.list();
+  return service.list();
  }
-
 }

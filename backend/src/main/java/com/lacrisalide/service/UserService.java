@@ -9,11 +9,9 @@ import com.lacrisalide.model.User;
 @Service
 @RequiredArgsConstructor
 public class UserService {
+ private final UserRepository repo;
 
- private final UserRepository userRepository;
-
- public User register(User user){
-  return userRepository.save(user);
+ public User register(User u){
+  return repo.save(u);
  }
-
 }

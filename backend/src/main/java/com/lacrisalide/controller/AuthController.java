@@ -11,11 +11,15 @@ import com.lacrisalide.model.User;
 @RequiredArgsConstructor
 public class AuthController {
 
- private final UserService userService;
+ private final UserService service;
 
  @PostMapping("/register")
- public User register(@RequestBody User user){
-  return userService.register(user);
+ public User register(@RequestBody User u){
+  return service.register(u);
  }
 
+ @GetMapping("/hello")
+ public String hello(){
+  return "Backend OK";
+ }
 }

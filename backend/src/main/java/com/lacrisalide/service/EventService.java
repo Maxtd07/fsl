@@ -10,15 +10,8 @@ import com.lacrisalide.model.Event;
 @Service
 @RequiredArgsConstructor
 public class EventService {
+ private final EventRepository repo;
 
- private final EventRepository eventRepository;
-
- public Event create(Event e){
-  return eventRepository.save(e);
- }
-
- public List<Event> list(){
-  return eventRepository.findAll();
- }
-
+ public Event create(Event e){ return repo.save(e); }
+ public List<Event> list(){ return repo.findAll(); }
 }
