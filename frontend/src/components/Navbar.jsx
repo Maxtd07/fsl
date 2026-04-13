@@ -35,22 +35,19 @@ function Navbar() {
                 <span className="absolute bottom-2.5 left-1/2 h-2.5 w-5 -translate-x-1/2 rounded-full bg-accent/60" />
               </span>
               <span>
-                <span className="block text-xs font-semibold uppercase tracking-[0.22em] text-text">
-                  Associazione
-                </span>
                 <span className="mt-1 block text-lg font-semibold tracking-[-0.02em] text-text">
-                  La Crisalide
+                  Associazione La Crisalide
+                </span>
+                <span className="block text-xs font-semibold uppercase text-text">
+                  Famiglie di Disabili
                 </span>
               </span>
             </NavLink>
-            <p className="mt-2 text-xs md:text-sm font-medium leading-6 text-text/80 md:text-text/75">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.
-            </p>
           </div>
 
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="ml-4 flex md:hidden flex-col gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded-lg p-2"
+            className="ml-4 flex md:hidden flex-col gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded-lg p-2 transition-all:300ms"
             aria-label="Toggle menu"
           >
             <span className={`h-0.5 w-6 bg-text transition-transform origin-center ${isOpen ? 'rotate-45 translate-y-2' : ''}`} />

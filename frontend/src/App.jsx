@@ -16,7 +16,10 @@ function ScrollToTop() {
   const location = useLocation()
   
   useEffect(() => {
-    window.scrollTo(0, 0)
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
   }, [location.pathname])
   
   return null
@@ -39,7 +42,7 @@ function App() {
           <Navbar />
         </header>
 
-        <div id="main-content" tabIndex="-1" className="flex-1 focus:outline-none">
+        <div id="main-content" tabIndex="-1" className="flex-1 focus:outline-none transition-opacity duration-150">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/admin/login" element={<AdminLoginPage />} />
