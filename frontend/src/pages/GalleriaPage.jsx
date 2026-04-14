@@ -19,31 +19,39 @@ const galleryCards = [
   'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.',
 ]
 
-function GalleriaPage() {
+/* ---------------------------
+   Safe Instagram embed
+----------------------------*/
+function InstagramFeed() {
   useEffect(() => {
-    // Carica lo script Elfsight
-    const script = document.createElement('script')
-    script.src = 'https://elfsightcdn.com/platform.js'
-    script.async = true
-    document.body.appendChild(script)
-
-    return () => {
-      // Cleanup opzionale
+    if (!document.querySelector('#elfsight-platform-script')) {
+      const script = document.createElement('script')
+      script.id = 'elfsight-platform-script'
+      script.src = 'https://elfsightcdn.com/platform.js'
+      script.async = true
+      document.body.appendChild(script)
     }
   }, [])
 
-  const formatDate = (dateString) => {
-    if (!dateString) return ''
-    const date = new Date(dateString)
-    return date.toLocaleDateString('it-IT', { year: 'numeric', month: 'long', day: 'numeric' })
-  }
+  return (
+    <div
+      className="elfsight-app-614ff7dd-13fe-40be-841d-0b9e0c186e97"
+      data-elfsight-app-lazy
+    />
+  )
+}
 
+/* ---------------------------
+   Page
+----------------------------*/
+function GalleriaPage() {
   return (
     <main className="space-y-8">
+      {/* HERO */}
       <PageHero
         eyebrow="Galleria"
         title="Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do."
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt."
+        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
         tone="accent"
         actions={
           <>
@@ -55,7 +63,8 @@ function GalleriaPage() {
         }
       />
 
-      <section className="space-y-5">
+      {/* PREVIEW GRID */}
+      <section className="space-y-5 px-6">
         <SectionHeading
           eyebrow="Anteprima"
           title="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
@@ -73,7 +82,8 @@ function GalleriaPage() {
         </div>
       </section>
 
-      <section className="grid gap-6 rounded-[2rem] border-2 border-primary/20 bg-base p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] md:p-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)] lg:items-center">
+      {/* STORY SECTION */}
+      <section className="grid gap-6 rounded-[2rem] border-2 border-primary/20 bg-base p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] md:p-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
         <div>
           <SectionHeading
             eyebrow="Racconto"
@@ -87,25 +97,30 @@ function GalleriaPage() {
                 key={text}
                 className="rounded-[1.4rem] border-2 border-primary/20 bg-background p-4 md:p-5 shadow-[0_6px_14px_rgba(0,0,0,0.06)]"
               >
-                <p className="text-xs md:text-sm font-medium leading-6 md:leading-7 text-text/85 md:text-text/80">{text}</p>
+                <p className="text-xs md:text-sm font-medium leading-6 md:leading-7 text-text/85 md:text-text/80">
+                  {text}
+                </p>
               </div>
             ))}
           </div>
         </div>
 
-        <PlaceholderImage alt="Galleria racconto" className="h-72 md:h-80 lg:h-full lg:min-h-96" />
+        <PlaceholderImage
+          alt="Galleria racconto"
+          className="h-72 md:h-80 lg:h-full lg:min-h-96"
+        />
       </section>
 
-      {/* Elfsight Instagram Feed Section */}
-      <section className="space-y-5">
+      {/* INSTAGRAM */}
+      <section className="border-t-2 border-primary/15 px-6 py-10 lg:py-12">
         <SectionHeading
-          eyebrow="I nostri post"
-          title="Ultimi post da Instagram"
-          description="Scopri i nostri ultimi aggiornamenti sul nostro profilo Instagram."
+          eyebrow="Social"
+          title="Seguici su Instagram"
+          description="Aggiornamenti, eventi e attività in tempo reale."
         />
 
-        <div className="rounded-[2rem] border-2 border-primary/20 bg-base p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] md:p-8">
-          <div className="elfsight-app-614ff7dd-13fe-40be-841d-0b9e0c186e97" data-elfsight-app-lazy></div>
+        <div className="mt-6">
+          <InstagramFeed />
         </div>
       </section>
     </main>
