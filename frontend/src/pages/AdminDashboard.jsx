@@ -251,14 +251,18 @@ function AdminDashboard() {
         </section>
 
         {/* Events List */}
-        <section className="rounded-[2rem] border-2 border-primary/20 bg-base p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] md:p-8">
-          <h2 className="text-xl md:text-2xl font-bold text-slate-900 mb-6">Eventi Existing</h2>
+        <section className="rounded-4xl border-2 border-primary/20 bg-base p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] md:p-8">
+          <h2 className="text-xl md:text-2xl font-bold text-slate-900 mb-6">Eventi Esistenti</h2>
 
-          {isLoading ? (
+          {isLoading && (
             <div className="text-center py-8 text-slate-700">Caricamento eventi...</div>
-          ) : events.length === 0 ? (
+          )}
+
+          {!isLoading && events.length === 0 && (
             <div className="text-center py-8 text-slate-700">Nessun evento disponibile</div>
-          ) : (
+          )}
+
+          {!isLoading && events.length > 0 && (
             <div className="space-y-4">
               {events.map((event) => (
                 <div
