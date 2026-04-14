@@ -1,8 +1,9 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import ActionLink from '../components/ActionLink.jsx'
 import PageHero from '../components/PageHero.jsx'
 import PlaceholderImage from '../components/PlaceholderImage.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
+import { fetchPhotos } from '../lib/api.js'
 
 const galleryBlocks = [
   'h-72 md:h-80',
@@ -45,6 +46,26 @@ function InstagramFeed() {
    Page
 ----------------------------*/
 function GalleriaPage() {
+  const [photos, setPhotos] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [selectedPhoto, setSelectedPhoto] = useState(null)
+
+  useEffect(() => {
+    async function loadPhotos() {
+      try {
+        const data = await fetchPhotos()
+        setPhotos(Array.isArray(data) ? data : [])
+      } catch (err) {
+        console.error('Errore caricamento foto:', err)
+        setPhotos([])
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadPhotos()
+  }, [])
+
   return (
     <main className="space-y-8">
       {/* HERO */}
@@ -62,6 +83,70 @@ function GalleriaPage() {
           </>
         }
       />
+
+      {/* UPLOADED PHOTOS */}
+      {!isLoading && photos.length > 0 && (
+        <section className="space-y-5 px-6">
+          <SectionHeading
+            eyebrow="Foto Caricate"
+            title="Ultimi scatti dalla nostra community"
+            description="Momenti speciali catturati dai nostri partecipanti."
+          />
+
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {photos.map((photo) => (
+              <button
+                key={photo.id}
+                onClick={() => setSelectedPhoto(photo)}
+                className="group relative overflow-hidden rounded-[1.4rem] border-2 border-primary/20 shadow-[0_6px_14px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.12)] transition-all duration-300 hover:scale-105 text-left"
+              >
+                {photo.immagine && (
+                  <>
+                    <img
+                      src={photo.immagine}
+                      alt={photo.titolo}
+                      className="w-full h-64 object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
+                  </>
+                )}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/40 to-transparent p-4">
+                  <h3 className="text-sm font-bold text-white">{photo.titolo}</h3>
+                </div>
+              </button>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Photo Modal */}
+      {selectedPhoto && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
+          onClick={() => setSelectedPhoto(null)}
+        >
+          <div
+            className="relative max-w-lg w-full rounded-[2rem] overflow-hidden bg-black shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setSelectedPhoto(null)}
+              className="absolute top-4 right-4 z-10 text-white text-3xl font-bold hover:opacity-70 transition"
+            >
+              ✕
+            </button>
+            <img
+              src={selectedPhoto.immagine}
+              alt={selectedPhoto.titolo}
+              className="w-full h-auto max-h-[70vh] object-contain"
+            />
+            <div className="bg-base p-4">
+              <h2 className="text-lg font-bold text-text mb-1">{selectedPhoto.titolo}</h2>
+              <p className="text-sm text-text/75">{selectedPhoto.descrizione}</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* PREVIEW GRID */}
       <section className="space-y-5 px-6">

@@ -1,7 +1,9 @@
+import { useEffect, useState, useRef } from 'react'
 import ActionLink from '../components/ActionLink.jsx'
 import PageHero from '../components/PageHero.jsx'
 import PlaceholderImage from '../components/PlaceholderImage.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
+import { createDonation } from '../lib/api.js'
 
 const donationCards = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
@@ -15,6 +17,90 @@ const impactCards = [
 ]
 
 function DonazioniPage() {
+  const [donationAmount, setDonationAmount] = useState('25')
+  const [donationForm, setDonationForm] = useState({
+    nome: '',
+    email: '',
+  })
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [message, setMessage] = useState('')
+  const paypalButtonRef = useRef(null)
+
+  // Load PayPal script
+  useEffect(() => {
+    if (!document.querySelector('#paypal-script')) {
+      const script = document.createElement('script')
+      script.id = 'paypal-script'
+      script.src = 'https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=EUR'
+      script.async = true
+      script.onload = () => {
+        if (window.paypal) {
+          renderPayPalButton()
+        }
+      }
+      document.body.appendChild(script)
+    } else if (window.paypal) {
+      renderPayPalButton()
+    }
+  }, [donationAmount, donationForm])
+
+  const renderPayPalButton = () => {
+    if (!window.paypal || !paypalButtonRef.current) return
+
+    // Clear previous buttons
+    paypalButtonRef.current.innerHTML = ''
+
+    window.paypal.Buttons({
+      createOrder: async (data, actions) => {
+        if (!donationForm.nome || !donationForm.email) {
+          setMessage('❌ Compila nome ed email')
+          return
+        }
+
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              value: donationAmount,
+              currency_code: 'EUR'
+            },
+            description: `Donazione Franco Rossi - ${donationForm.nome}`
+          }],
+          payer: {
+            name: { given_name: donationForm.nome },
+            email_address: donationForm.email
+          }
+        })
+      },
+      onApprove: async (data, actions) => {
+        setIsProcessing(true)
+        try {
+          const result = await actions.order.capture()
+          
+          // Save donation to backend
+          await createDonation({
+            nome: donationForm.nome,
+            email: donationForm.email,
+            importo: parseFloat(donationAmount),
+            paypalId: result.id
+          })
+
+          setMessage('✅ Donazione completata con successo! Grazie mille 🙏')
+          setDonationForm({ nome: '', email: '' })
+          setDonationAmount('25')
+          setTimeout(() => setMessage(''), 5000)
+        } catch (err) {
+          setMessage('❌ Errore nel salvataggio della donazione')
+        } finally {
+          setIsProcessing(false)
+        }
+      },
+      onError: () => {
+        setMessage('❌ Errore nella transazione PayPal')
+        setIsProcessing(false)
+      }
+    }).render(paypalButtonRef.current)
+  }
+
   return (
     <main className="space-y-8">
       <PageHero
@@ -75,6 +161,92 @@ function DonazioniPage() {
         </div>
 
         <PlaceholderImage alt="Impatto donazioni" className="h-72 md:h-80 lg:h-full lg:min-h-96" />
+      </section>
+
+      {/* Donation Form */}
+      <section className="rounded-[2rem] border-2 border-primary/20 bg-base p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] md:p-8 max-w-2xl mx-auto w-full">
+        <h2 className="text-2xl md:text-3xl font-bold text-text mb-6 text-center">Fai una Donazione</h2>
+
+        <div className="space-y-5">
+          {/* Donation Amount */}
+          <div>
+            <label className="block mb-3 text-sm font-medium text-text">Importo (€)</label>
+            <div className="grid grid-cols-4 gap-2 mb-4">
+              {['10', '25', '50', '100'].map((amount) => (
+                <button
+                  key={amount}
+                  onClick={() => setDonationAmount(amount)}
+                  className={`rounded-lg py-2 text-sm font-semibold transition ${
+                    donationAmount === amount
+                      ? 'bg-primary text-white'
+                      : 'border-2 border-primary/20 text-primary hover:bg-primary/5'
+                  }`}
+                >
+                  €{amount}
+                </button>
+              ))}
+            </div>
+            <div>
+              <input
+                type="number"
+                min="1"
+                step="0.01"
+                value={donationAmount}
+                onChange={(e) => setDonationAmount(e.target.value)}
+                className="w-full rounded-xl border-2 border-primary/20 bg-background px-4 py-3 text-sm text-text outline-none focus:border-primary focus:ring-4 focus:ring-primary/12 transition"
+                placeholder="Importo personalizzato"
+              />
+            </div>
+          </div>
+
+          {/* Name */}
+          <div>
+            <label className="block mb-2 text-sm font-medium text-text">Nome</label>
+            <input
+              type="text"
+              value={donationForm.nome}
+              onChange={(e) => setDonationForm({ ...donationForm, nome: e.target.value })}
+              className="w-full rounded-xl border-2 border-primary/20 bg-background px-4 py-3 text-sm text-text outline-none focus:border-primary focus:ring-4 focus:ring-primary/12 transition"
+              placeholder="Il tuo nome"
+            />
+          </div>
+
+          {/* Email */}
+          <div>
+            <label className="block mb-2 text-sm font-medium text-text">Email</label>
+            <input
+              type="email"
+              value={donationForm.email}
+              onChange={(e) => setDonationForm({ ...donationForm, email: e.target.value })}
+              className="w-full rounded-xl border-2 border-primary/20 bg-background px-4 py-3 text-sm text-text outline-none focus:border-primary focus:ring-4 focus:ring-primary/12 transition"
+              placeholder="La tua email"
+            />
+          </div>
+
+          {/* Message */}
+          {message && (
+            <div className={`rounded-lg border-2 px-4 py-3 text-sm font-medium ${
+              message.includes('✅')
+                ? 'border-green-200 bg-green-50 text-green-700'
+                : 'border-accent/30 bg-accent/10 text-accent'
+            }`}>
+              {message}
+            </div>
+          )}
+
+          {/* PayPal Button */}
+          <div className="mt-6">
+            <div
+              ref={paypalButtonRef}
+              className="paypal-button-container"
+              style={{ minHeight: '80px' }}
+            />
+          </div>
+
+          <p className="text-xs text-text/60 text-center">
+            Powered by PayPal • I tuoi dati sono al sicuro
+          </p>
+        </div>
       </section>
     </main>
   )

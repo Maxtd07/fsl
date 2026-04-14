@@ -184,3 +184,78 @@ export async function getEventCalendarLink(eventId) {
   // Genera un link di calendario (.ics)
   return buildApiUrl(`/events/${eventId}/calendar`)
 }
+
+// Photos Gallery
+export async function uploadPhoto(photoData) {
+  const response = await fetch(buildApiUrl('/photos'), {
+    method: 'POST',
+    headers: getAuthHeaders(),
+    body: JSON.stringify(photoData),
+  })
+
+  if (!response.ok) {
+    throw new Error(`Failed to upload photo: ${response.status}`)
+  }
+
+  return response.json()
+}
+
+export async function fetchPhotos() {
+  const response = await fetch(buildApiUrl('/photos'), {
+    headers: {
+      Accept: 'application/json',
+    },
+  })
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch photos: ${response.status}`)
+  }
+
+  return response.json()
+}
+
+export async function deletePhoto(photoId) {
+  const response = await fetch(buildApiUrl(`/photos/${photoId}`), {
+    method: 'DELETE',
+    headers: getAuthHeaders(),
+  })
+
+  if (!response.ok) {
+    throw new Error(`Failed to delete photo: ${response.status}`)
+  }
+
+  return response.ok
+}
+
+// Donations
+export async function createDonation(donationData) {
+  const response = await fetch(buildApiUrl('/donations'), {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify(donationData),
+  })
+
+  if (!response.ok) {
+    throw new Error(`Failed to create donation: ${response.status}`)
+  }
+
+  return response.json()
+}
+
+export async function fetchDonations() {
+  const response = await fetch(buildApiUrl('/donations'), {
+    headers: {
+      Accept: 'application/json',
+    },
+  })
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch donations: ${response.status}`)
+  }
+
+  return response.json()
+}
+
