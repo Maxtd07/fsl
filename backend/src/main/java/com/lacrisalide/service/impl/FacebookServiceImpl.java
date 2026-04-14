@@ -36,14 +36,14 @@ public class FacebookServiceImpl implements FacebookService {
     public List<FacebookPostResponse> getFacebookPosts() {
         List<FacebookPostResponse> posts = new ArrayList<>();
         
-        logger.info("📱 Fetching Facebook posts for page ID: {}", pageId);
+        logger.info("Fetching Facebook posts for page ID: {}", pageId);
         logger.debug("Token length: {} chars", accessToken != null ? accessToken.length() : 0);
         
         try {
             String url = String.format("%s/%s/posts?fields=%s&access_token=%s", 
                 FACEBOOK_API_URL, pageId, FIELDS, accessToken);
             
-            logger.debug("🔗 API Call: {}/{}/posts?fields={}&access_token=[MASKED]", 
+            logger.debug("API Call: {}/{}/posts?fields={}&access_token=[MASKED]", 
                 FACEBOOK_API_URL, pageId, FIELDS);
             
             Map<String, Object> response = restTemplate.getForObject(url, Map.class);
@@ -54,13 +54,13 @@ public class FacebookServiceImpl implements FacebookService {
                 // Check for errors
                 if (response.containsKey("error")) {
                     Map<String, Object> error = (Map<String, Object>) response.get("error");
-                    logger.error("❌ Facebook API Error: {}", error);
+                    logger.error("Facebook API Error: {}", error);
                     return posts;
                 }
                 
                 if (response.containsKey("data")) {
                     List<Map<String, Object>> data = (List<Map<String, Object>>) response.get("data");
-                    logger.info("✅ Found {} posts", data != null ? data.size() : 0);
+                    logger.info("Found {} posts", data != null ? data.size() : 0);
                     
                     if (data != null && !data.isEmpty()) {
                         for (Map<String, Object> post : data) {
@@ -71,20 +71,20 @@ public class FacebookServiceImpl implements FacebookService {
                             facebookPost.setCreatedTime((String) post.get("created_time"));
                             facebookPost.setPermalinkUrl((String) post.get("permalink_url"));
                             
-                            logger.debug("📝 Post added: {} - {}", facebookPost.getId(), facebookPost.getMessage());
+                            logger.debug("Post added: {} - {}", facebookPost.getId(), facebookPost.getMessage());
                             posts.add(facebookPost);
                         }
                     } else {
-                        logger.warn("⚠️ No posts found. Page might be empty or require additional permissions.");
+                        logger.warn("No posts found. Page might be empty or require additional permissions.");
                     }
                 }
             } else {
-                logger.error("❌ Facebook API returned null response");
+                logger.error("Facebook API returned null response");
             }
         } catch (RestClientException e) {
-            logger.error("❌ Error fetching Facebook posts: {}", e.getMessage(), e);
+            logger.error("Error fetching Facebook posts: {}", e.getMessage(), e);
         } catch (Exception e) {
-            logger.error("❌ Unexpected error: {}", e.getMessage(), e);
+            logger.error("Unexpected error: {}", e.getMessage(), e);
         }
         
         return posts;
