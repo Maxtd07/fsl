@@ -28,6 +28,51 @@ export async function fetchEvents() {
   return response.json()
 }
 
+export async function getEventById(eventId) {
+  const response = await fetch(buildApiUrl(`/events/${eventId}`), {
+    headers: {
+      Accept: 'application/json',
+    },
+  })
+
+  if (!response.ok) {
+    throw new Error(`Errore nel caricamento evento: ${response.status}`)
+  }
+
+  return response.json()
+}
+
+export async function createEvent(eventData) {
+  const response = await fetch(buildApiUrl('/events'), {
+    method: 'POST',
+    headers: getAuthHeaders(),
+    body: JSON.stringify(eventData),
+  })
+
+  if (!response.ok) {
+    throw new Error(`Failed to create event: ${response.status}`)
+  }
+
+  return response.json()
+}
+
+export async function updateEvent(eventId, eventData) {
+  const response = await fetch(buildApiUrl(`/events/${eventId}`), {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify(eventData),
+  })
+
+  if (!response.ok) {
+    throw new Error(`Failed to update event: ${response.status}`)
+  }
+
+  return response.json()
+}
+
 export async function loginAdmin(username, password) {
   const response = await fetch(buildApiUrl('/auth/login'), {
     method: 'POST',
@@ -46,20 +91,6 @@ export async function loginAdmin(username, password) {
   return data
 }
 
-export async function createEvent(eventData) {
-  const response = await fetch(buildApiUrl('/events'), {
-    method: 'POST',
-    headers: getAuthHeaders(),
-    body: JSON.stringify(eventData),
-  })
-
-  if (!response.ok) {
-    throw new Error(`Failed to create event: ${response.status}`)
-  }
-
-  return response.json()
-}
-
 export async function deleteEvent(eventId) {
   const response = await fetch(buildApiUrl(`/events/${eventId}`), {
     method: 'DELETE',
@@ -71,4 +102,85 @@ export async function deleteEvent(eventId) {
   }
 
   return response.ok
+}
+
+export async function sendContactEmail(contactData) {
+  const response = await fetch(buildApiUrl('/email/contatti'), {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify(contactData),
+  })
+
+  if (!response.ok) {
+    throw new Error(`Failed to send email: ${response.status}`)
+  }
+
+  return response.json()
+}
+
+// Bookings
+export async function createBooking(eventId, userId) {
+  const response = await fetch(buildApiUrl(`/bookings/${eventId}/users/${userId}`), {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+  })
+
+  if (!response.ok) {
+    throw new Error(`Failed to create booking: ${response.status}`)
+  }
+
+  return response.json()
+}
+
+export async function getBookingsByEvent(eventId) {
+  const response = await fetch(buildApiUrl(`/bookings/event/${eventId}`), {
+    headers: {
+      Accept: 'application/json',
+    },
+  })
+
+  if (!response.ok) {
+    throw new Error(`Failed to get bookings: ${response.status}`)
+  }
+
+  return response.json()
+}
+
+export async function getBookingsByUser(userId) {
+  const response = await fetch(buildApiUrl(`/bookings/user/${userId}`), {
+    headers: {
+      Accept: 'application/json',
+    },
+  })
+
+  if (!response.ok) {
+    throw new Error(`Failed to get bookings: ${response.status}`)
+  }
+
+  return response.json()
+}
+
+export async function deleteBooking(bookingId) {
+  const response = await fetch(buildApiUrl(`/bookings/${bookingId}`), {
+    method: 'DELETE',
+    headers: getAuthHeaders(),
+  })
+
+  if (!response.ok) {
+    throw new Error(`Failed to delete booking: ${response.status}`)
+  }
+
+  return response.ok
+}
+
+// Calendar
+export async function getEventCalendarLink(eventId) {
+  // Genera un link di calendario (.ics)
+  return buildApiUrl(`/events/${eventId}/calendar`)
 }

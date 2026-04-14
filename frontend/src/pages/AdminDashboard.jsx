@@ -16,8 +16,11 @@ function AdminDashboard() {
     descrizione: '',
     data: '',
     luogo: '',
+    volantino: null,
+    volantinPreview: null,
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [successMessage, setSuccessMessage] = useState('')
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -47,6 +50,7 @@ function AdminDashboard() {
   async function handleAddEvent(e) {
     e.preventDefault()
     setError('')
+    setSuccessMessage('')
     setIsSubmitting(true)
 
     try {
@@ -55,14 +59,42 @@ function AdminDashboard() {
         descrizione: formData.descrizione,
         data: new Date(formData.data).toISOString(),
         luogo: formData.luogo,
+        maxPartecipanti: 100,
+        volantino: formData.volantinPreview || null,
       })
       setEvents([...events, newEvent])
-      setFormData({ titolo: '', descrizione: '', data: '', luogo: '' })
+      setFormData({ titolo: '', descrizione: '', data: '', luogo: '', volantino: null, volantinPreview: null })
+      setSuccessMessage('✅ Evento creato con successo!')
+      setTimeout(() => setSuccessMessage(''), 3000)
     } catch (err) {
+      console.error(err)
       setError('Errore nella creazione dell\'evento.')
     } finally {
       setIsSubmitting(false)
     }
+  }
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onload = (event) => {
+        setFormData((prev) => ({
+          ...prev,
+          volantino: file,
+          volantinPreview: event.target.result,
+        }))
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
+  const clearVolantino = () => {
+    setFormData((prev) => ({
+      ...prev,
+      volantino: null,
+      volantinPreview: null,
+    }))
   }
 
   async function handleDeleteEvent(eventId) {
@@ -156,9 +188,55 @@ function AdminDashboard() {
               </div>
             </div>
 
+            {/* Volantino Upload */}
+            <div>
+              <label className="block mb-2 text-sm font-medium text-text">Volantino (facoltativo)</label>
+              <div className="flex items-center gap-4">
+                <label className="flex-1 relative cursor-pointer">
+                  <div className="w-full rounded-xl border-2 border-dashed border-primary/30 bg-primary/5 px-4 py-6 text-center hover:bg-primary/10 transition">
+                    <p className="text-sm font-medium text-primary">Clicca per caricare immagine</p>
+                    <p className="text-xs text-text/60">oppure trascinala qui</p>
+                  </div>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className="hidden"
+                  />
+                </label>
+              </div>
+
+              {/* Preview Volantino */}
+              {formData.volantinPreview && (
+                <div className="mt-4">
+                  <div className="relative inline-block">
+                    <img
+                      src={formData.volantinPreview}
+                      alt="Anteprima volantino"
+                      className="h-40 rounded-lg shadow-lg"
+                    />
+                    <button
+                      type="button"
+                      onClick={clearVolantino}
+                      className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold hover:bg-red-600 transition"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                  <p className="mt-2 text-xs text-text/60">{formData.volantino.name}</p>
+                </div>
+              )}
+            </div>
+
             {error && (
               <div className="rounded-lg border border-accent/30 bg-accent/10 px-4 py-3 text-sm font-medium text-accent">
                 {error}
+              </div>
+            )}
+
+            {successMessage && (
+              <div className="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-700">
+                {successMessage}
               </div>
             )}
 

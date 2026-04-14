@@ -16,4 +16,8 @@ public class Event {
  private String descrizione;
  private LocalDateTime data;
  private String luogo;
+ private Integer maxPartecipanti;
+ 
+ @Column(columnDefinition = "LONGTEXT")
+ private String volantino; // Base64 encoded image or URL
 }

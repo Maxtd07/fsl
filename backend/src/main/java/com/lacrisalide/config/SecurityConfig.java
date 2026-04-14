@@ -18,9 +18,15 @@ public class SecurityConfig {
    .csrf(csrf -> csrf.disable())
    .authorizeHttpRequests(auth -> auth
      .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-     .requestMatchers(HttpMethod.GET, "/events/**").permitAll()
-     .requestMatchers("/auth/**").permitAll()
-     .requestMatchers("/api/facebook/**").permitAll()
+     .requestMatchers(HttpMethod.GET, "/api/events/**").permitAll()
+     .requestMatchers(HttpMethod.GET, "/api/bookings/**").permitAll()
+     .requestMatchers(HttpMethod.POST, "/api/events/**").permitAll()
+     .requestMatchers(HttpMethod.PUT, "/api/events/**").permitAll()
+     .requestMatchers(HttpMethod.POST, "/api/bookings/**").permitAll()
+     .requestMatchers(HttpMethod.DELETE, "/api/events/**").permitAll()
+     .requestMatchers(HttpMethod.DELETE, "/api/bookings/**").permitAll()
+     .requestMatchers("/api/auth/**").permitAll()
+     .requestMatchers("/api/email/**").permitAll()
      .anyRequest().authenticated())
    .httpBasic(Customizer.withDefaults());
 

@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from 'react-router-dom'
+import { Route, Routes, useLocation, Navigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import Footer from './components/Footer.jsx'
 import Navbar from './components/Navbar.jsx'
@@ -45,6 +45,7 @@ function App() {
         <div id="main-content" tabIndex="-1" className="flex-1 focus:outline-none p-0 md:py-0 lg:px-0">
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
             <Route path="/admin/login" element={<AdminLoginPage />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/eventi" element={<EventiPage />} />

@@ -10,7 +10,7 @@ import com.lacrisalide.service.EventService;
 import com.lacrisalide.model.Event;
 
 @RestController
-@RequestMapping("/events")
+@RequestMapping("/api/events")
 @RequiredArgsConstructor
 public class EventController {
 
@@ -24,6 +24,18 @@ public class EventController {
  @GetMapping
  public List<Event> list(){
   return service.list();
+ }
+
+ @GetMapping("/{id}")
+ public ResponseEntity<?> getById(@PathVariable Long id){
+  return service.getById(id)
+   .map(ResponseEntity::ok)
+   .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+ }
+
+ @PutMapping("/{id}")
+ public Event update(@PathVariable Long id, @RequestBody Event eventDetails){
+  return service.update(id, eventDetails);
  }
 
  @DeleteMapping("/{id}")
