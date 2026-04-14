@@ -100,9 +100,10 @@ function HomePage() {
   return (
     <main>
       <PageHero
-        eyebrow="Benvenuti"
-        title="Benvenuti in La Crisalide"
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc fermentum tellus in consequat, proprio congue urna tristique eleifend et dui."
+        eyebrow="Benvenuti in La Crisalide"
+        title="Valorizziamo le abilità, non le mancanze. "
+        description="La Crisalide nasce con un obiettivo chiaro: accompagnare ogni persona in un percorso di crescita e trasformazione, sviluppando autonomia e consapevolezza.
+Come la crisalide che si trasforma in farfalla, crediamo che ogni individuo abbia potenzialità da far emergere e coltivare."
         tone="primary"
       />
 
@@ -111,17 +112,22 @@ function HomePage() {
           <div>
             <SectionHeading
               eyebrow="Chi siamo"
-              title="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+              title="una parola su di noi"
+              description="La Crisalide è un’associazione attiva da oltre vent’anni
+              nel supporto e nell’integrazione delle persone con disabilità e delle loro famiglie.
+              Fin dall’inizio, l’obiettivo è stato quello di valorizzare le abilità individuali,
+              costruendo percorsi personalizzati che tengano conto delle caratteristiche e dei bisogni di ciascuno."
             />
             <p className="mt-5 md:mt-6 max-w-3xl text-xs md:text-sm font-medium leading-7 text-slate-900">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua. Quis nostrud
-              exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              Crediamo che ogni persona abbia potenzialità da sviluppare attraverso opportunità concrete, senza fermarsi davanti alle difficoltà.
+
+Siamo stati tra i primi in Italia a credere nella musicoterapia come strumento educativo e relazionale. Nel tempo abbiamo sviluppato attività orientate all’autonomia, aiutando i ragazzi a vivere esperienze quotidiane come spostarsi, organizzarsi e relazionarsi in modo indipendente.
+
+Gli educatori costruiscono percorsi su misura, accompagnando ogni partecipante in un processo di crescita personale e sociale.
             </p>
             <div className="mt-6">
               <ActionLink to="/chi-siamo" variant="secondary" className="text-sm md:text-base">
-                Leggi di piu
+                Scopri di piu
               </ActionLink>
             </div>
           </div>
@@ -129,18 +135,22 @@ function HomePage() {
           <div className="grid gap-5">
             <div className="rounded-[1.5rem] border-2 border-primary/20 bg-background px-4 md:px-5 py-4 md:py-5 shadow-[0_8px_18px_rgba(0,0,0,0.06)]">
               <p className="text-xs font-bold uppercase tracking-[0.22em] text-secondary">
-                Curabitur
+                Identità e Missione
               </p>
               <p className="mt-2 md:mt-3 text-xs md:text-sm font-medium leading-6 md:leading-7 text-slate-900">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                La Crisalide è un’associazione che da oltre vent’anni promuove l’inclusione e l’autonomia
+                delle persone con disabilità.Crediamo nelle capacità di ogni individuo e lavoriamo per
+                svilupparle attraverso esperienze concrete e percorsi personalizzati.
               </p>
             </div>
             <div className="rounded-[1.5rem] border-2 border-secondary/30 bg-secondary/8 px-4 md:px-5 py-4 md:py-5 shadow-[0_8px_18px_rgba(0,0,0,0.06)]">
               <p className="text-xs font-bold uppercase tracking-[0.22em] text-secondary">
-                Eget nisl
+                Metodo e Attività
               </p>
               <p className="mt-2 md:mt-3 text-xs md:text-sm font-medium leading-6 md:leading-7 text-slate-900">
-                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Costruiamo percorsi su misura che favoriscono la crescita personale e l’indipendenza.
+                Attraverso laboratori, attività di gruppo e progetti di autonomia, accompagniamo ogni
+                persona nel proprio sviluppo, valorizzando le sue potenzialità.
               </p>
             </div>
           </div>
@@ -151,8 +161,8 @@ function HomePage() {
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between lg:flex-nowrap">
           <SectionHeading
             eyebrow="Prossimi eventi"
-            title="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt."
+            title="Scopri qui i nostri prossimi eventi"
+            description="organizzati da La Crisalide e partecipa alle nostre iniziative per sostenere la nostra missione e condividere momenti di crescita e inclusione."
           />
           <ActionLink to="/eventi" variant="secondary" className="whitespace-nowrap flex-shrink-0">
             Vedi tutti

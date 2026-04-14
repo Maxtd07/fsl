@@ -30,7 +30,7 @@ function App() {
     <AuthProvider>
       <>
         <ScrollToTop />
-        <div className="mx-auto flex min-h-screen w-[90vw] max-w-[90vw] flex-col px-4 py-4 md:px-6 md:py-8 lg:px-8">
+        <div className="mx-auto flex min-h-screen w-[90vw] max-w-[90vw] flex-col p-0 md:py-0 lg:px-6">
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-text focus:px-4 focus:py-3 focus:text-sm focus:font-semibold focus:text-white"
@@ -42,7 +42,7 @@ function App() {
           <Navbar />
         </header>
 
-        <div id="main-content" tabIndex="-1" className="flex-1 focus:outline-none transition-opacity duration-150">
+        <div id="main-content" tabIndex="-1" className="flex-1 focus:outline-none p-0 md:py-0 lg:px-0">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/admin/login" element={<AdminLoginPage />} />

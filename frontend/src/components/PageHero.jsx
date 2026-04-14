@@ -30,7 +30,7 @@ function PageHero({ eyebrow, title, description, actions, tone = 'primary' }) {
 
   return (
     <section
-      className={`relative overflow-hidden rounded-[2rem] border-2 border-primary/20 px-6 py-12 shadow-[0_16px_40px_rgba(0,0,0,0.10)] md:px-8 md:py-16 ${styles.surface}`}
+      className={`relative overflow-hidden rounded-4xl border-2 border-primary/20 px-6 py-12 shadow-[0_16px_40px_rgba(0,0,0,0.10)] md:px-8 md:py-16 lg:grid lg:grid-cols-2 lg:gap-8 ${styles.surface}`}
     >
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         <div className={`absolute -right-16 top-0 h-48 w-48 rounded-full blur-3xl ${styles.accent}`} />
@@ -39,7 +39,8 @@ function PageHero({ eyebrow, title, description, actions, tone = 'primary' }) {
         />
       </div>
 
-      <div className="relative max-w-4xl">
+      {/* LEFT (eyebrow + title) */}
+      <div className="relative">
         {eyebrow ? (
           <p
             className={`mb-4 inline-flex rounded-full bg-base/75 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] backdrop-blur-sm ${styles.eyebrow}`}
@@ -47,10 +48,20 @@ function PageHero({ eyebrow, title, description, actions, tone = 'primary' }) {
             {eyebrow}
           </p>
         ) : null}
+
         <h1 className="max-w-3xl text-3xl md:text-4xl lg:text-5xl font-bold tracking-[-0.04em] text-text">
           {title}
         </h1>
-        <p className="mt-5 md:mt-6 max-w-2xl text-sm md:text-base font-medium leading-7 text-text/85 md:text-text/80">
+
+        {/* DESCRIPTION (mobile only stays here) */}
+        <p className="mt-5 md:mt-6 max-w-2xl text-sm font-medium leading-7 text-text/85 md:text-text/80 lg:hidden">
+          {description}
+        </p>
+      </div>
+
+      {/* RIGHT (description only on lg) */}
+      <div className="relative hidden lg:block lg:pl-4">
+        <p className="max-w-xl text-sm font-medium leading-7 text-text/85">
           {description}
         </p>
       </div>

@@ -5,7 +5,7 @@ function PlaceholderImage({ alt, className = '' }) {
 
   return (
     <div
-      className={`relative isolate overflow-hidden rounded-[1.5rem] border-2 border-primary/20 bg-gradient-to-br from-base via-background to-background shadow-[0_12px_28px_rgba(0,0,0,0.08)] ${className}`}
+      className={`relative isolate overflow-hidden rounded-3xl border-2 border-primary/20 bg-linear-to-br from-base via-background to-background shadow-[0_12px_28px_rgba(0,0,0,0.08)] ${className}`}
       {...accessibilityProps}
     >
       <div
@@ -21,8 +21,8 @@ function PlaceholderImage({ alt, className = '' }) {
         className="absolute bottom-6 right-6 h-10 w-20 rounded-full border border-primary/10 bg-base/60"
       />
 
-      <div className="relative flex h-full min-h-[14rem] items-center justify-center p-6">
-        <div className="flex h-24 w-24 items-center justify-center rounded-[1.5rem] border-2 border-primary/20 bg-base/90 shadow-[0_8px_18px_rgba(0,0,0,0.08)] backdrop-blur-sm">
+      <div className="relative flex h-full min-h-56 items-center justify-center p-6">
+        <div className="flex h-24 w-24 items-center justify-center rounded-3xl border-2 border-primary/20 bg-base/90 shadow-[0_8px_18px_rgba(0,0,0,0.08)] backdrop-blur-sm">
           <svg
             className="h-11 w-11"
             viewBox="0 0 48 48"
