@@ -199,7 +199,7 @@ function EventiPage() {
       />
 
       {/* EVENTS */}
-      <section className="border-t-2 border-primary/15 px-6 py-10 lg:py-12">
+      <section className="border-primary/15 px-6 py-10 lg:py-12">
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <SectionHeading
             eyebrow="Prossimi eventi"
@@ -213,19 +213,19 @@ function EventiPage() {
         </div>
 
         {isLoading && (
-          <div className="rounded-[1.5rem] border-2 border-primary/20 bg-base px-5 py-6 text-sm font-medium text-text/80">
+          <div className="rounded-3xl border-2 border-primary/20 bg-base px-5 py-6 text-sm font-medium text-text/80">
             Caricamento eventi in corso...
           </div>
         )}
 
         {!isLoading && error && (
-          <div className="rounded-[1.5rem] border-2 border-accent/30 bg-accent/10 px-5 py-6 text-sm font-medium text-text">
+          <div className="rounded-3xl border-2 border-accent/30 bg-accent/10 px-5 py-6 text-sm font-medium text-text">
             {error}
           </div>
         )}
 
         {!isLoading && !error && events.length === 0 && (
-          <div className="rounded-[1.5rem] border-2 border-primary/20 bg-base px-5 py-6 text-sm font-medium text-text/80">
+          <div className="rounded-3xl border-2 border-primary/20 bg-base px-5 py-6 text-sm font-medium text-text/80">
             Nessun evento disponibile al momento.
           </div>
         )}
@@ -259,22 +259,6 @@ function EventiPage() {
             ))}
           </div>
         )}
-      </section>
-
-      {/* PROGRAMMA */}
-      <section className="border-t-2 border-primary/15 bg-background px-6 py-10 lg:py-12">
-        <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
-          <PlaceholderImage
-            alt="Programma eventi"
-            className="aspect-[4/3] w-full"
-          />
-
-          <SectionHeading
-            eyebrow="Programma"
-            title="Sed ut perspiciatis unde omnis iste natus error."
-            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-          />
-        </div>
       </section>
 
       {/* Modal */}

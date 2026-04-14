@@ -11,7 +11,7 @@ const navItems = [
 ]
 
 const navLinkClasses =
-  'rounded-full border px-4 py-2.5 text-xs font-small leading-6 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30 focus-visible:ring-offset-2 focus-visible:ring-offset-base'
+  'rounded-2xl border-2 px-4 py-2.5 text-xs font-small leading-6 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30 focus-visible:ring-offset-2 focus-visible:ring-offset-base'
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -47,7 +47,6 @@ function Navbar() {
           </NavLink>
         </div>
 
-        {/* Navigation (centered visually) */}
         <nav
           className={`hidden lg:flex items-center justify-center gap-3`}
           aria-label="Main navigation"
@@ -61,7 +60,7 @@ function Navbar() {
                 `${navLinkClasses} ${
                   isActive
                     ? 'border-primary bg-primary/10 text-text'
-                    : 'border-primary/15 text-text/75 hover:border-primary/30 hover:bg-primary/8 hover:text-text'
+                    : 'border-primary/20 text-text/75 hover:border-primary/30 hover:bg-primary/8 hover:text-text'
                 }`
               }
             >

@@ -30,7 +30,7 @@ function PageHero({ eyebrow, title, description, actions, tone = 'primary' }) {
 
   return (
     <section
-      className={`relative overflow-hidden rounded-4xl border-2 border-primary/20 px-6 py-12 shadow-[0_16px_40px_rgba(0,0,0,0.10)] md:px-8 md:py-16 lg:grid lg:grid-cols-2 lg:gap-8 ${styles.surface}`}
+      className={`relative overflow-hidden rounded-4xl border-2 border-primary/20 px-6 py-12 shadow-[0_16px_40px_rgba(0,0,0,0.10)] md:px-8 md:py-16 grid md:grid-cols-2 lg:grid-cols-3 lg:gap-8 ${styles.surface}`}
     >
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         <div className={`absolute -right-16 top-0 h-48 w-48 rounded-full blur-3xl ${styles.accent}`} />
