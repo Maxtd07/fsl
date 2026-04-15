@@ -8,15 +8,15 @@ import { sendContactEmail } from '../lib/api.js'
 const contactCards = [
   {
     label: 'Email',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.',
+    text: 'la_crisalide@yahoo.it',
   },
   {
     label: 'Telefono',
-    text: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.',
+    text: '+39 347 917 7811',
   },
   {
     label: 'Sede',
-    text: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.',
+    text: 'Via del Palo 10, Porto Sant\'Elpidio (FM) 63821',
   },
 ]
 
@@ -49,8 +49,8 @@ function ContattiPage() {
     <main className="space-y-8">
       <PageHero
         eyebrow="Contatti"
-        title="Lorem ipsum dolor sit amet, consectetur adipiscing elit ut labore."
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
+        title="Mettiti in Contatto con il Nostro Team"
+        description="Per informazioni, collaborazioni o partecipazione agli eventi, non esitare a contattarci. Saremo lieti di fornirti tutto il supporto necessario e guidarti nelle attività dell’associazione in modo chiaro e tempestivo."
         tone="neutral"
         actions={
           <>

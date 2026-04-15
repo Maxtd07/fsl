@@ -70,9 +70,9 @@ function GalleriaPage() {
     <main className="space-y-8">
       {/* HERO */}
       <PageHero
-        eyebrow="Galleria"
-        title="Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do."
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        eyebrow="GALLERIA"
+        title="Scopri i momenti della nostra comunità"
+        description="Esplora foto e ricordi delle attività, degli eventi e delle iniziative dell’associazione. Ogni immagine racconta esperienze, partecipazione e condivisione."
         tone="accent"
         actions={
           <>
