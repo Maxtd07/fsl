@@ -271,8 +271,7 @@ Come la crisalide che si trasforma in farfalla, crediamo che ogni individuo abbi
           Sostieni La Crisalide
         </h2>
         <p className="mx-auto mt-4 md:mt-5 max-w-2xl text-xs md:text-sm font-medium leading-6 md:leading-7 text-text/75">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua.
+          Con il tuo contributo ci aiuti a realizzare progetti concreti e a offrire supporto alle famiglie. Dona in modo semplice e sicuro.
         </p>
 
         <div className="mt-6 md:mt-7 flex flex-wrap justify-center gap-2 md:gap-3">
@@ -286,16 +285,15 @@ Come la crisalide che si trasforma in farfalla, crediamo che ogni individuo abbi
       {/* CONTATTI CTA */}
       <section className="mt-6 rounded-lg border border-primary/20 bg-primary px-4 md:px-6 lg:px-8 py-10 md:py-12 lg:py-14 text-center text-white shadow-xl">
         <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-accent">
-          Resta in contatto
+          CONTATTI
         </p>
 
         <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">
-          Rimani sempre aggiornato
+          Siamo qui per aiutarti
         </h2>
 
         <p className="mx-auto mt-4 md:mt-5 max-w-2xl text-xs md:text-sm lg:text-base font-medium leading-6 md:leading-7 text-white/90">
-          Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-          enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+          Hai domande o hai bisogno di informazioni? Contattaci per ricevere supporto, chiarimenti o maggiori dettagli sulle attività e i servizi dell’associazione.
         </p>
 
         <div className="mt-6 md:mt-7 flex justify-center">
