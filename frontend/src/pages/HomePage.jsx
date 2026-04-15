@@ -51,7 +51,7 @@ Come la crisalide che si trasforma in farfalla, crediamo che ogni individuo abbi
               costruendo percorsi personalizzati che tengano conto delle caratteristiche e dei bisogni di ciascuno."
             />
 
-            <p className="mt-5 md:mt-6 max-w-3xl text-xs md:text-sm font-medium leading-7 text-slate-900">
+            <p className="mt-5 md:mt-6 max-w-3xl text-xs md:text-sm font-medium leading-7 text-text">
               Crediamo che ogni persona abbia potenzialità da sviluppare attraverso opportunità concrete, senza fermarsi davanti alle difficoltà.
 
               Siamo stati tra i primi in Italia a credere nella musicoterapia come strumento educativo e relazionale. Nel tempo abbiamo sviluppato attività orientate all’autonomia, aiutando i ragazzi a vivere esperienze quotidiane come spostarsi, organizzarsi e relazionarsi in modo indipendente.
@@ -67,22 +67,22 @@ Come la crisalide che si trasforma in farfalla, crediamo che ogni individuo abbi
           </div>
 
           <div className="grid gap-5">
-            <div className="rounded-[1.5rem] border-2 border-primary/20 bg-background px-4 md:px-5 py-4 md:py-5 shadow-[0_8px_18px_rgba(0,0,0,0.06)]">
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-secondary">
+            <div className="rounded-lg border border-primary/20 bg-background px-4 md:px-5 py-4 md:py-5 shadow-sm">
+              <p className="text-xs font-bold uppercase tracking-widest text-secondary">
                 Identità e Missione
               </p>
-              <p className="mt-2 md:mt-3 text-xs md:text-sm font-medium leading-6 md:leading-7 text-slate-900">
+              <p className="mt-2 md:mt-3 text-xs md:text-sm font-medium leading-6 md:leading-7 text-text">
                 La Crisalide è un’associazione che da oltre vent’anni promuove l’inclusione e l’autonomia
                 delle persone con disabilità.Crediamo nelle capacità di ogni individuo e lavoriamo per
                 svilupparle attraverso esperienze concrete e percorsi personalizzati.
               </p>
             </div>
 
-            <div className="rounded-[1.5rem] border-2 border-secondary/30 bg-secondary/8 px-4 md:px-5 py-4 md:py-5 shadow-[0_8px_18px_rgba(0,0,0,0.06)]">
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-secondary">
+            <div className="rounded-lg border border-secondary/30 bg-secondary/8 px-4 md:px-5 py-4 md:py-5 shadow-sm">
+              <p className="text-xs font-bold uppercase tracking-widest text-secondary">
                 Metodo e Attività
               </p>
-              <p className="mt-2 md:mt-3 text-xs md:text-sm font-medium leading-6 md:leading-7 text-slate-900">
+              <p className="mt-2 md:mt-3 text-xs md:text-sm font-medium leading-6 md:leading-7 text-text">
                 Costruiamo percorsi su misura che favoriscono la crescita personale e l’indipendenza.
                 Attraverso laboratori, attività di gruppo e progetti di autonomia, accompagniamo ogni
                 persona nel proprio sviluppo, valorizzando le sue potenzialità.
@@ -138,14 +138,14 @@ Come la crisalide che si trasforma in farfalla, crediamo che ogni individuo abbi
       </section>
 
       {/* DONAZIONI CTA */}
-      <section className="mt-6 rounded-[2rem] border-2 border-primary/20 bg-background px-4 md:px-6 lg:px-8 py-10 md:py-12 lg:py-14 text-center shadow-[0_12px_28px_rgba(0,0,0,0.08)]">
-        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-primary">
+      <section className="mt-6 rounded-lg border border-primary/20 bg-background px-4 md:px-6 lg:px-8 py-10 md:py-12 lg:py-14 text-center shadow-lg">
+        <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-primary">
           Sostieni
         </p>
-        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-[-0.03em] text-slate-900">
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-text">
           Sostieni La Crisalide
         </h2>
-        <p className="mx-auto mt-4 md:mt-5 max-w-2xl text-xs md:text-sm font-medium leading-6 md:leading-7 text-slate-700">
+        <p className="mx-auto mt-4 md:mt-5 max-w-2xl text-xs md:text-sm font-medium leading-6 md:leading-7 text-text/75">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
           tempor incididunt ut labore et dolore magna aliqua.
         </p>
@@ -159,16 +159,16 @@ Come la crisalide che si trasforma in farfalla, crediamo che ogni individuo abbi
       </section>
 
       {/* CONTATTI CTA */}
-      <section className="mt-6 rounded-[2rem] border-2 border-accent/20 bg-text px-4 md:px-6 lg:px-8 py-10 md:py-12 lg:py-14 text-center text-white shadow-[0_16px_40px_rgba(0,0,0,0.15)]">
-        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-accent">
+      <section className="mt-6 rounded-lg border border-primary/20 bg-primary px-4 md:px-6 lg:px-8 py-10 md:py-12 lg:py-14 text-center text-white shadow-xl">
+        <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-accent">
           Resta in contatto
         </p>
 
-        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-[-0.03em]">
-          Lorem ipsum dolor sit amet
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">
+          Rimani sempre aggiornato
         </h2>
 
-        <p className="mx-auto mt-4 md:mt-5 max-w-2xl text-xs md:text-sm lg:text-base font-medium leading-6 md:leading-7 text-white/85 md:text-white/80">
+        <p className="mx-auto mt-4 md:mt-5 max-w-2xl text-xs md:text-sm lg:text-base font-medium leading-6 md:leading-7 text-white/90">
           Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
           enim ad minim veniam, quis nostrud exercitation ullamco laboris.
         </p>

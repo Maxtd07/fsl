@@ -12,41 +12,43 @@ const navItems = [
 ]
 
 const navLinkClasses =
-  'rounded-2xl border-2 px-4 py-2.5 text-xs font-small leading-6 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30 focus-visible:ring-offset-2 focus-visible:ring-offset-base'
+  'rounded-lg border px-4 py-2.5 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2'
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const { isAuthenticated, isAdmin, logout, user } = useAuth()
 
   return (
-    <div className="rounded-b-[1.75rem] border-2 border-t-0 border-primary/20 bg-base/90 px-5 py-8 shadow-[0_12px_28px_rgba(0,0,0,0.08)] backdrop-blur-sm lg:px-6">
+    <nav className="rounded-lg border border-text/10 bg-base shadow-md lg:px-6 px-5 py-6">
       <div className="flex items-center justify-between gap-4">
+        {/* Logo */}
         <div className="flex items-center gap-4">
           <NavLink
             to="/"
-            className="inline-flex items-center gap-3 rounded-[1.25rem] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30 focus-visible:ring-offset-2 focus-visible:ring-offset-base"
+            className="inline-flex items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
           >
             <span
               aria-hidden="true"
-              className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border-2 border-primary/20 bg-primary/8"
+              className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-primary/20 bg-primary/8"
             >
-              <span className="absolute left-2.5 top-2.5 h-2.5 w-2.5 rounded-full bg-primary/50" />
-              <span className="absolute right-2.5 top-3 h-2 w-2 rounded-full bg-secondary/50" />
-              <span className="absolute bottom-2.5 left-1/2 h-2.5 w-5 -translate-x-1/2 rounded-full bg-accent/60" />
+              <span className="absolute left-2.5 top-2.5 h-2.5 w-2.5 rounded-full bg-primary/70" />
+              <span className="absolute right-2.5 top-3 h-2 w-2 rounded-full bg-secondary/70" />
+              <span className="absolute bottom-2.5 left-1/2 h-2.5 w-5 -translate-x-1/2 rounded-full bg-accent/70" />
             </span>
 
             <span>
-              <span className="block text-xl font-semibold tracking-[-0.02em] text-text">
+              <span className="block text-lg font-bold tracking-tight text-primary">
                 Associazione La Crisalide
               </span>
-              <span className="block text-sm font-semibold uppercase text-text">
+              <span className="block text-xs font-semibold uppercase text-text/70">
                 Famiglie di Disabili
               </span>
             </span>
           </NavLink>
         </div>
 
-        <nav className="hidden items-center justify-center gap-3 lg:flex" aria-label="Main navigation">
+        {/* Desktop Navigation */}
+        <nav className="hidden items-center justify-center gap-2 lg:flex" aria-label="Main navigation">
           {navItems.map((item) => (
             <NavLink
               key={item.to}
@@ -55,8 +57,8 @@ function Navbar() {
               className={({ isActive }) =>
                 `${navLinkClasses} ${
                   isActive
-                    ? 'border-primary bg-primary/10 text-text'
-                    : 'border-primary/20 text-text/75 hover:border-primary/30 hover:bg-primary/8 hover:text-text'
+                    ? 'border-primary/40 bg-primary/8 text-primary'
+                    : 'border-text/10 text-text/75 hover:border-primary/20 hover:bg-primary/5 hover:text-text'
                 }`
               }
             >
@@ -64,18 +66,20 @@ function Navbar() {
             </NavLink>
           ))}
 
+          {/* Auth Section Desktop */}
           {isAuthenticated ? (
             <>
+              <div className="mx-2 h-6 w-px bg-text/10" />
               <NavLink
                 to="/accedi"
-                className="rounded-2xl border border-secondary/30 bg-secondary/10 px-4 py-2.5 text-xs font-semibold text-secondary"
+                className="rounded-lg border border-secondary/30 bg-secondary/8 px-4 py-2.5 text-xs font-semibold text-secondary transition-all duration-200 hover:bg-secondary/12 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-secondary/40 focus-visible:ring-offset-2"
               >
                 {user?.nome}
               </NavLink>
               {isAdmin && (
                 <NavLink
                   to="/admin/dashboard"
-                  className="rounded-2xl border border-primary/20 px-4 py-2.5 text-xs font-semibold text-primary hover:bg-primary/5"
+                  className="rounded-lg border border-primary/30 bg-primary/8 px-4 py-2.5 text-xs font-semibold text-primary transition-all duration-200 hover:bg-primary/12 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
                 >
                   Dashboard
                 </NavLink>
@@ -83,7 +87,7 @@ function Navbar() {
               <button
                 type="button"
                 onClick={logout}
-                className="rounded-2xl border border-accent/30 px-4 py-2.5 text-xs font-semibold text-text hover:bg-accent/10"
+                className="rounded-lg border border-text/20 px-4 py-2.5 text-xs font-semibold text-text transition-all duration-200 hover:bg-text/5 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
               >
                 Esci
               </button>
@@ -91,26 +95,39 @@ function Navbar() {
           ) : (
             <NavLink
               to="/accedi"
-              className="rounded-2xl border border-secondary/30 bg-secondary/10 px-4 py-2.5 text-xs font-semibold text-secondary hover:bg-secondary/15"
+              className="rounded-lg border border-secondary/30 bg-secondary px-4 py-2.5 text-xs font-semibold text-white transition-all duration-200 hover:bg-secondary/90 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-secondary/40 focus-visible:ring-offset-2"
             >
               Accedi
             </NavLink>
           )}
         </nav>
 
+        {/* Mobile Menu Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex flex-col gap-1.5 rounded-lg p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 lg:hidden"
+          className="flex flex-col gap-1.5 rounded-lg p-2 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 lg:hidden"
           aria-label="Toggle menu"
+          aria-expanded={isOpen}
         >
-          <span className={`h-0.5 w-6 bg-text transition-transform origin-center ${isOpen ? 'rotate-45 translate-y-2' : ''}`} />
-          <span className={`h-0.5 w-6 bg-text transition-opacity ${isOpen ? 'opacity-0' : ''}`} />
-          <span className={`h-0.5 w-6 bg-text transition-transform origin-center ${isOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+          <span
+            className={`h-0.5 w-6 bg-text transition-all origin-center duration-300 ${
+              isOpen ? 'rotate-45 translate-y-2' : ''
+            }`}
+          />
+          <span
+            className={`h-0.5 w-6 bg-text transition-opacity duration-300 ${isOpen ? 'opacity-0' : ''}`}
+          />
+          <span
+            className={`h-0.5 w-6 bg-text transition-all origin-center duration-300 ${
+              isOpen ? '-rotate-45 -translate-y-2' : ''
+            }`}
+          />
         </button>
       </div>
 
+      {/* Mobile Navigation */}
       {isOpen && (
-        <nav className="mt-6 flex flex-col gap-3 lg:hidden">
+        <nav className="mt-6 flex flex-col gap-2 border-t border-text/10 pt-4 lg:hidden">
           {navItems.map((item) => (
             <NavLink
               key={item.to}
@@ -119,7 +136,9 @@ function Navbar() {
               onClick={() => setIsOpen(false)}
               className={({ isActive }) =>
                 `${navLinkClasses} text-center ${
-                  isActive ? 'border-primary bg-primary/10 text-text' : 'border-primary/15 text-text/75'
+                  isActive
+                    ? 'border-primary/40 bg-primary/10 text-primary'
+                    : 'border-text/10 text-text/75 hover:bg-primary/5'
                 }`
               }
             >
@@ -127,12 +146,13 @@ function Navbar() {
             </NavLink>
           ))}
 
+          {/* Auth Section Mobile */}
           {isAuthenticated ? (
             <>
               <NavLink
                 to="/accedi"
                 onClick={() => setIsOpen(false)}
-                className="rounded-2xl border border-secondary/30 bg-secondary/10 px-4 py-3 text-center text-xs font-semibold text-secondary"
+                className="rounded-lg border border-secondary/30 bg-secondary/8 px-4 py-3 text-center text-xs font-semibold text-secondary transition-all duration-200 hover:bg-secondary/12"
               >
                 {user?.nome}
               </NavLink>
@@ -140,9 +160,9 @@ function Navbar() {
                 <NavLink
                   to="/admin/dashboard"
                   onClick={() => setIsOpen(false)}
-                  className="rounded-2xl border border-primary/20 px-4 py-3 text-center text-xs font-semibold text-primary"
+                  className="rounded-lg border border-primary/30 bg-primary/8 px-4 py-3 text-center text-xs font-semibold text-primary transition-all duration-200 hover:bg-primary/12"
                 >
-                  Dashboard admin
+                  Dashboard
                 </NavLink>
               )}
               <button
@@ -151,7 +171,7 @@ function Navbar() {
                   logout()
                   setIsOpen(false)
                 }}
-                className="rounded-2xl border border-accent/30 px-4 py-3 text-xs font-semibold text-text"
+                className="rounded-lg border border-text/20 px-4 py-3 text-xs font-semibold text-text transition-all duration-200 hover:bg-text/5"
               >
                 Esci
               </button>
@@ -160,14 +180,14 @@ function Navbar() {
             <NavLink
               to="/accedi"
               onClick={() => setIsOpen(false)}
-              className="rounded-2xl border border-secondary/30 bg-secondary/10 px-4 py-3 text-center text-xs font-semibold text-secondary"
+              className="rounded-lg border border-secondary/30 bg-secondary px-4 py-3 text-center text-xs font-semibold text-white transition-all duration-200 hover:bg-secondary/90"
             >
               Accedi
             </NavLink>
           )}
         </nav>
       )}
-    </div>
+    </nav>
   )
 }
 

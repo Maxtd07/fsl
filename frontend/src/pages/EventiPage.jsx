@@ -49,7 +49,7 @@ function EventModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-[2rem] border-2 border-primary/20 bg-base p-6 shadow-[0_20px_60px_rgba(0,0,0,0.3)] md:p-8">
+      <div className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-lg border border-primary/20 bg-base p-6 shadow-xl md:p-8">
 
         <button
           onClick={onClose}
@@ -77,7 +77,7 @@ function EventModal({
         <p className="text-text/85 mb-6 leading-7">{event.descrizione}</p>
 
         {/* Available seats */}
-        <div className="mb-6 rounded-lg border-2 border-primary/20 bg-primary/5 p-4">
+        <div className="mb-6 rounded-lg border border-primary/20 bg-primary/5 p-4">
 
           <p className="text-sm font-medium text-text">
             Iscritti: {event.registeredParticipants} / {event.maxPartecipanti}
@@ -195,7 +195,7 @@ function EventiPage() {
       />
 
       {isAuthenticated && myBookings.length > 0 && (
-        <section className="rounded-[2rem] border-2 border-secondary/30 bg-secondary/10 px-6 py-6 shadow-[0_10px_20px_rgba(0,0,0,0.06)]">
+        <section className="rounded-lg border border-secondary/30 bg-secondary/10 px-6 py-6 shadow-md">
           <SectionHeading
             eyebrow="Le tue iscrizioni"
             title="Eventi gia prenotati."
@@ -204,7 +204,7 @@ function EventiPage() {
 
           <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {myBookings.map((booking) => (
-              <article key={booking.id} className="rounded-[1.4rem] border border-secondary/30 bg-base p-4 shadow-[0_6px_14px_rgba(0,0,0,0.06)]">
+              <article key={booking.id} className="rounded-lg border border-secondary/30 bg-base p-4 shadow-sm">
                 <p className="text-sm font-bold text-text">{booking.eventTitle}</p>
                 <p className="mt-2 text-sm text-text/75">
                   {booking.eventDate ? eventDateFormatter.format(new Date(booking.eventDate)) : ''}

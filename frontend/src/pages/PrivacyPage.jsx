@@ -62,7 +62,7 @@ function PrivacyPage() {
         tone="neutral"
       />
 
-      <section className="rounded-[2rem] border-2 border-primary/20 bg-base p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] md:p-8">
+      <section className="rounded-lg border border-primary/20 bg-base p-6 shadow-lg md:p-8">
         <SectionHeading
           eyebrow="Sintesi"
           title="Trasparenza, minimizzazione e protezione dei dati."
@@ -73,7 +73,7 @@ function PrivacyPage() {
           {privacySections.map((section) => (
             <article
               key={section.title}
-              className="rounded-[1.5rem] border border-primary/15 bg-background p-5 shadow-[0_6px_14px_rgba(0,0,0,0.06)]"
+              className="rounded-lg border border-primary/15 bg-background p-5 shadow-sm"
             >
               <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary">{section.eyebrow}</p>
               <h2 className="mt-3 text-xl font-bold text-text">{section.title}</h2>
@@ -83,23 +83,23 @@ function PrivacyPage() {
         </div>
       </section>
 
-      <section className="rounded-[2rem] border-2 border-secondary/25 bg-secondary/8 p-6 shadow-[0_12px_28px_rgba(0,0,0,0.06)] md:p-8">
+      <section className="rounded-lg border border-secondary/30 bg-secondary/8 p-6 shadow-md md:p-8">
         <SectionHeading
           eyebrow="Contatti privacy"
           title="Come esercitare i tuoi diritti"
           description="Per domande, richieste di accesso o cancellazione dati puoi contattare l'associazione usando i recapiti pubblicati. La richiesta verra gestita con le procedure standard previste dal GDPR."
         />
         <div className="mt-6 grid gap-4 md:grid-cols-3">
-          <div className="rounded-[1.4rem] border border-primary/15 bg-base p-4">
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary">Email</p>
+          <div className="rounded-lg border border-primary/15 bg-base p-4">
+            <p className="text-xs font-bold uppercase tracking-widest text-primary">Email</p>
             <p className="mt-3 text-sm text-text/80">la_crisalide@yahoo.it</p>
           </div>
-          <div className="rounded-[1.4rem] border border-primary/15 bg-base p-4">
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary">Telefono</p>
+          <div className="rounded-lg border border-primary/15 bg-base p-4">
+            <p className="text-xs font-bold uppercase tracking-widest text-primary">Telefono</p>
             <p className="mt-3 text-sm text-text/80">+39 347 917 7811</p>
           </div>
-          <div className="rounded-[1.4rem] border border-primary/15 bg-base p-4">
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary">Sede</p>
+          <div className="rounded-lg border border-primary/15 bg-base p-4">
+            <p className="text-xs font-bold uppercase tracking-widest text-primary">Sede</p>
             <p className="mt-3 text-sm text-text/80">Via del Palo 10, Porto Sant'Elpidio (FM)</p>
           </div>
         </div>
