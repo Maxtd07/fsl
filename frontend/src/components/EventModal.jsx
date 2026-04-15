@@ -118,11 +118,12 @@ export function EventModal({ event, isOpen, onClose, onBookingChange }) {
     >
       <Card
         variant="elevated"
-        className="w-full max-w-md max-h-[90vh] overflow-hidden flex flex-col"
+        className="w-full max-w-md max-h-[90vh] overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Modal Header */}
-        <div className="flex items-center justify-between border-b border-text/10 pb-4">
+        <div className="flex flex-col h-full">
+          {/* Modal Header */}
+          <div className="flex items-center justify-between border-b border-text/10 pb-4">
           <h2 className="text-xl font-bold text-primary">{event.titolo}</h2>
           <button
             onClick={onClose}
@@ -133,8 +134,8 @@ export function EventModal({ event, isOpen, onClose, onBookingChange }) {
           </button>
         </div>
 
-        {/* Modal Content */}
-        <div className="space-y-4 py-4 overflow-y-auto flex-1">
+          {/* Modal Content */}
+          <div className="space-y-4 py-4 overflow-y-auto flex-1 min-h-0">
           {/* Event Details - Date, Time, Location */}
           <div className="space-y-3">
             <div className="flex items-center gap-3 px-6">
@@ -209,8 +210,8 @@ export function EventModal({ event, isOpen, onClose, onBookingChange }) {
           )}
         </div>
 
-        {/* Modal Actions */}
-        <div className="border-t border-text/10 px-6 py-4 space-y-3 flex-shrink-0">
+          {/* Modal Actions */}
+          <div className="border-t border-text/10 px-6 py-4 space-y-3 flex-shrink-0">
           {isAuthenticated ? (
             <>
               <Button
@@ -250,6 +251,7 @@ export function EventModal({ event, isOpen, onClose, onBookingChange }) {
           >
             Chiudi
           </button>
+        </div>
         </div>
       </Card>
     </div>

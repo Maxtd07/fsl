@@ -36,8 +36,12 @@ function AuthPage() {
     setIsSubmitting(true)
 
     try {
-      await login(loginForm)
-      navigate(redirectTo, { replace: true })
+      const user = await login(loginForm)
+      if (user.ruolo === 'ADMIN') {
+        navigate('/admin/dashboard', { replace: true })
+      } else {
+        navigate(redirectTo, { replace: true })
+      }
     } catch (err) {
       setError(err.message || 'Accesso non riuscito.')
     } finally {
@@ -58,13 +62,17 @@ function AuthPage() {
     setIsSubmitting(true)
 
     try {
-      await register({
+      const user = await register({
         nome: registerForm.nome,
         email: registerForm.email,
         password: registerForm.password,
       })
       setMessage('Profilo creato con successo. Ora puoi iscriverti agli eventi.')
-      navigate(redirectTo, { replace: true })
+      if (user.ruolo === 'ADMIN') {
+        navigate('/admin/dashboard', { replace: true })
+      } else {
+        navigate(redirectTo, { replace: true })
+      }
     } catch (err) {
       setError(err.message || 'Registrazione non riuscita.')
     } finally {
