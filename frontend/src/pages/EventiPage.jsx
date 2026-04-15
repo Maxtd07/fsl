@@ -70,7 +70,7 @@ function EventModal({
 
         {/* Meta info */}
         <p className="text-sm text-text/60 mb-4">
-          📅 {formatEventMeta(event)}
+          {formatEventMeta(event)}
         </p>
 
         {/* Description */}
@@ -110,7 +110,7 @@ function EventModal({
 
           <a
             href={getEventCalendarLink(event.id)}
-            className="rounded-full border-2 border-primary/20 px-5 py-3 text-sm font-semibold text-primary hover:bg-primary/5 transition"
+            className="rounded-full border border-primary/20 px-5 py-3 text-sm font-semibold text-primary hover:bg-primary/5 transition"
           >
             Scarica calendario
           </a>
@@ -235,7 +235,7 @@ function EventiPage() {
                   : 'border border-primary/20 text-text/70 hover:bg-primary/10'
               }`}
             >
-              📅 Calendario
+              Calendario
             </button>
             <button
               onClick={() => setViewMode('list')}
@@ -245,7 +245,7 @@ function EventiPage() {
                   : 'border border-primary/20 text-text/70 hover:bg-primary/10'
               }`}
             >
-              📋 Lista
+              Lista
             </button>
           </div>
         </div>

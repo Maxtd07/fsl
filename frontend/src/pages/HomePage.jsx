@@ -1,33 +1,82 @@
+import { useEffect, useState } from 'react'
 import ActionLink from '../components/ActionLink.jsx'
 import MediaTile from '../components/MediaTile.jsx'
 import PageHero from '../components/PageHero.jsx'
 import PlaceholderImage from '../components/PlaceholderImage.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
+import { fetchEvents, fetchPhotos } from '../lib/api.js'
 
-const eventItems = [
-  {
-    title: 'Lorem ipsum dolor sit amet consectetur.',
-    meta: '12 Aprile',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
-  },
-  {
-    title: 'Sed ut perspiciatis unde omnis iste.',
-    meta: '26 Aprile',
-    description:
-      'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.',
-  },
-  {
-    title: 'Quis autem vel eum iure reprehenderit.',
-    meta: '10 Maggio',
-    description:
-      'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.',
-  },
-]
+const eventDateFormatter = new Intl.DateTimeFormat('it-IT', {
+  day: '2-digit',
+  month: 'long',
+  year: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+})
 
-const galleryItems = ['Galleria 1', 'Galleria 2', 'Galleria 3', 'Galleria 4']
+function formatEventMeta(event) {
+  const meta = []
+
+  if (event?.data) {
+    const date = new Date(event.data)
+    if (!Number.isNaN(date.getTime())) {
+      meta.push(eventDateFormatter.format(date))
+    }
+  }
+
+  if (event?.luogo) {
+    meta.push(event.luogo)
+  }
+
+  return meta.join(' | ')
+}
 
 function HomePage() {
+  const [events, setEvents] = useState([])
+  const [photos, setPhotos] = useState([])
+  const [isLoadingEvents, setIsLoadingEvents] = useState(true)
+  const [isLoadingPhotos, setIsLoadingPhotos] = useState(true)
+  const [errorEvents, setErrorEvents] = useState('')
+  const [selectedPhoto, setSelectedPhoto] = useState(null)
+
+  useEffect(() => {
+    const loadEvents = async () => {
+      setIsLoadingEvents(true)
+      try {
+        const data = await fetchEvents()
+        setEvents(Array.isArray(data) ? data : [])
+      } catch (err) {
+        setErrorEvents(err.message || 'Impossibile caricare gli eventi')
+        setEvents([])
+      } finally {
+        setIsLoadingEvents(false)
+      }
+    }
+
+    loadEvents()
+  }, [])
+
+  useEffect(() => {
+    const loadPhotos = async () => {
+      setIsLoadingPhotos(true)
+      try {
+        const data = await fetchPhotos()
+        setPhotos(Array.isArray(data) ? data : [])
+      } catch (err) {
+        console.error('Errore caricamento foto:', err)
+        setPhotos([])
+      } finally {
+        setIsLoadingPhotos(false)
+      }
+    }
+
+    loadPhotos()
+  }, [])
+
+  // Limita a 3 eventi e 4 foto
+  const displayedEvents = events.slice(0, 3)
+  const displayedPhotos = photos.slice(0, 4)
+
   return (
     <main>
       <PageHero
@@ -106,11 +155,31 @@ Come la crisalide che si trasforma in farfalla, crediamo che ogni individuo abbi
           </ActionLink>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-3">
-          {eventItems.map((item, index) => (
-            <MediaTile key={item.title} alt={`Evento ${index + 1}`} {...item} />
-          ))}
-        </div>
+        {isLoadingEvents ? (
+          <div className="text-center py-8 text-text/60">
+            <p>Caricamento eventi...</p>
+          </div>
+        ) : errorEvents ? (
+          <div className="text-center py-8 text-red-600">
+            <p>{errorEvents}</p>
+          </div>
+        ) : displayedEvents.length > 0 ? (
+          <div className="grid gap-6 lg:grid-cols-3">
+            {displayedEvents.map((event) => (
+              <MediaTile
+                key={event.id}
+                title={event.titolo}
+                meta={formatEventMeta(event)}
+                description={event.descrizione}
+                alt={event.titolo}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-8 text-text/60">
+            <p>Nessun evento disponibile al momento</p>
+          </div>
+        )}
       </section>
 
       {/* GALLERIA */}
@@ -118,8 +187,8 @@ Come la crisalide che si trasforma in farfalla, crediamo che ogni individuo abbi
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between lg:flex-nowrap">
           <SectionHeading
             eyebrow="Galleria"
-            title="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod."
+            title="Ultimi scatti dalla nostra community"
+            description="Momenti speciali catturati dai nostri partecipanti."
           />
 
           <ActionLink to="/galleria" variant="secondary" className="whitespace-nowrap flex-shrink-0">
@@ -127,15 +196,71 @@ Come la crisalide che si trasforma in farfalla, crediamo che ogni individuo abbi
           </ActionLink>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          {galleryItems.map((title) => (
-            <div key={title} className="flex flex-col gap-3">
-              <PlaceholderImage alt={title} className="aspect-[4/3] w-full" />
-              <p className="text-sm font-semibold text-primary">{title}</p>
-            </div>
-          ))}
-        </div>
+        {isLoadingPhotos ? (
+          <div className="text-center py-8 text-text/60">
+            <p>Caricamento galleria...</p>
+          </div>
+        ) : displayedPhotos.length > 0 ? (
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {displayedPhotos.map((photo) => (
+              <button
+                key={photo.id}
+                onClick={() => setSelectedPhoto(photo)}
+                className="group relative overflow-hidden rounded-lg border border-primary/20 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 text-left"
+              >
+                {photo.immagine ? (
+                  <>
+                    <img
+                      src={photo.immagine}
+                      alt={photo.titolo}
+                      className="w-full h-64 object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
+                  </>
+                ) : (
+                  <PlaceholderImage alt={photo.titolo} className="h-64 w-full" />
+                )}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/40 to-transparent p-4">
+                  <h3 className="text-sm font-bold text-white">{photo.titolo}</h3>
+                </div>
+              </button>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-8 text-text/60">
+            <p>Nessuna foto disponibile al momento</p>
+          </div>
+        )}
       </section>
+
+      {/* Photo Modal */}
+      {selectedPhoto && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
+          onClick={() => setSelectedPhoto(null)}
+        >
+          <div
+            className="relative max-w-lg w-full rounded-lg overflow-hidden bg-black shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setSelectedPhoto(null)}
+              className="absolute top-4 right-4 z-10 text-white text-lg font-bold hover:opacity-70 transition"
+            >
+              x
+            </button>
+            <img
+              src={selectedPhoto.immagine}
+              alt={selectedPhoto.titolo}
+              className="w-full h-auto max-h-[70vh] object-contain"
+            />
+            <div className="bg-base p-4">
+              <h2 className="text-lg font-bold text-text mb-1">{selectedPhoto.titolo}</h2>
+              <p className="text-sm text-text/75">{selectedPhoto.descrizione}</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* DONAZIONI CTA */}
       <section className="mt-6 rounded-lg border border-primary/20 bg-background px-4 md:px-6 lg:px-8 py-10 md:py-12 lg:py-14 text-center shadow-lg">

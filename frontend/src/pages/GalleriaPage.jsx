@@ -98,7 +98,7 @@ function GalleriaPage() {
               <button
                 key={photo.id}
                 onClick={() => setSelectedPhoto(photo)}
-                className="group relative overflow-hidden rounded-[1.4rem] border-2 border-primary/20 shadow-[0_6px_14px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.12)] transition-all duration-300 hover:scale-105 text-left"
+                className="group relative overflow-hidden rounded-lg border border-primary/20 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 text-left"
               >
                 {photo.immagine && (
                   <>
@@ -126,14 +126,14 @@ function GalleriaPage() {
           onClick={() => setSelectedPhoto(null)}
         >
           <div
-            className="relative max-w-lg w-full rounded-[2rem] overflow-hidden bg-black shadow-2xl"
+            className="relative max-w-lg w-full rounded-lg overflow-hidden bg-black shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setSelectedPhoto(null)}
-              className="absolute top-4 right-4 z-10 text-white text-3xl font-bold hover:opacity-70 transition"
+              className="absolute top-4 right-4 z-10 text-white text-lg font-bold hover:opacity-70 transition"
             >
-              ✕
+              x
             </button>
             <img
               src={selectedPhoto.immagine}

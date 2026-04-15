@@ -198,13 +198,13 @@ export function EventModal({ event, isOpen, onClose, onBookingChange }) {
           {/* Messages */}
           {error && (
             <div className="mx-6 rounded-lg border border-red-200 bg-red-50 p-3 text-xs text-red-700 font-semibold flex items-center gap-2">
-              ✕ {error}
+              Errore: {error}
             </div>
           )}
 
           {success && (
             <div className="mx-6 rounded-lg border border-secondary/30 bg-secondary/10 p-3 text-xs text-secondary font-semibold flex items-center gap-2 animate-pulse">
-              ✓ {success}
+              OK: {success}
             </div>
           )}
         </div>
