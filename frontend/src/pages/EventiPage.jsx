@@ -186,7 +186,7 @@ function EventiPage() {
 
         actions={
           <>
-            <ActionLink to={isAuthenticated ? '/eventi' : '/accedi'}>{isAuthenticated ? 'La mia area' : 'Accedi ora'}</ActionLink>
+            {!isAuthenticated && <ActionLink to="/accedi">Accedi ora</ActionLink>}
             <ActionLink to="/contatti" variant="secondary">
               Chiedi informazioni
             </ActionLink>

@@ -46,7 +46,7 @@ function Navbar() {
                 logout()
                 navigate('/')
               }}
-              className="rounded-lg border border-text/20 px-4 py-2.5 text-xs font-semibold text-text transition-all duration-200 hover:bg-text/5 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
+              className="rounded-lg bg-accent px-4 py-2.5 text-xs font-bold text-white shadow-[0_8px_18px_rgba(0,0,0,0.12)] transition-all duration-200 hover:bg-accent/90 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-accent/40 focus-visible:ring-offset-2"
             >
               Esci
             </button>
@@ -87,7 +87,7 @@ function Navbar() {
                 setIsOpen(false)
                 navigate('/')
               }}
-              className="rounded-lg border border-text/20 px-4 py-3 text-xs font-semibold text-text transition-all duration-200 hover:bg-text/5 w-full"
+              className="rounded-lg bg-accent px-4 py-3 text-xs font-bold text-white shadow-[0_8px_18px_rgba(0,0,0,0.12)] transition-all duration-200 hover:bg-accent/90 w-full"
             >
               Esci
             </button>

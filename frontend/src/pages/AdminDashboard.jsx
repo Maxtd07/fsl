@@ -239,25 +239,6 @@ function AdminDashboard() {
             <h1 className="text-3xl font-bold text-slate-900 md:text-4xl">Dashboard Admin</h1>
             <p className="mt-2 text-sm text-slate-700">Benvenuto, {user?.nome}.</p>
           </div>
-          <div className="flex flex-wrap gap-3">
-            <button
-              type="button"
-              onClick={() => navigate('/eventi')}
-              className="inline-flex items-center justify-center rounded-full border border-primary/20 bg-background px-5 py-3 text-sm font-semibold text-primary shadow-[0_8px_18px_rgba(0,0,0,0.08)] hover:bg-primary/5 transition"
-            >
-              Vai al sito
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                logout()
-                navigate('/')
-              }}
-              className="inline-flex items-center justify-center rounded-full border border-accent/30 bg-background px-5 py-3 text-sm font-semibold text-text shadow-[0_8px_18px_rgba(0,0,0,0.08)] hover:bg-accent/10 transition"
-            >
-              Esci
-            </button>
-          </div>
         </div>
 
         {error && (

@@ -38,7 +38,9 @@ function AuthPage() {
     try {
       const user = await login(loginForm)
       if (user.ruolo === 'ADMIN') {
-        navigate('/admin/dashboard', { replace: true })
+        setError('Gli amministratori devono accedere dall\'area riservata (/admin/login).')
+        await new Promise(res => setTimeout(res, 2000))
+        window.location.href = '/admin/login'
       } else {
         navigate(redirectTo, { replace: true })
       }
@@ -69,7 +71,9 @@ function AuthPage() {
       })
       setMessage('Profilo creato con successo. Ora puoi iscriverti agli eventi.')
       if (user.ruolo === 'ADMIN') {
-        navigate('/admin/dashboard', { replace: true })
+        setError('Gli amministratori devono accedere dall\'area riservata (/admin/login).')
+        await new Promise(res => setTimeout(res, 2000))
+        window.location.href = '/admin/login'
       } else {
         navigate(redirectTo, { replace: true })
       }
