@@ -181,7 +181,7 @@ function EventiPage() {
       <PageHero
         eyebrow="Eventi"
         title="Partecipa alle attivita dell associazione e iscriviti con il tuo account."
-        description="Gli eventi vengono caricati dal backend Spring Boot. Gli utenti autenticati possono iscriversi, ricevere una conferma email e aggiungere l appuntamento al calendario."
+        description="Scopri le attività dell’associazione, iscriviti agli eventi e gestisci tutto dal tuo account personale. Ricevi aggiornamenti, conferme automatiche e integra facilmente gli appuntamenti nel tuo calendario."
         tone="primary"
 
         actions={

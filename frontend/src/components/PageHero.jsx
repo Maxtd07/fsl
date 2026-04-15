@@ -77,7 +77,7 @@ function PageHero({ eyebrow, title, description, actions, tone = 'primary' }) {
       {/* Right Column - Description on Desktop Only */}
       {description && (
         <div className="relative hidden md:flex flex-col justify-center">
-          <p className="max-w-xl text-base font-medium leading-relaxed text-text/80">
+          <p className="max-w-xl text-base text-xl leading-relaxed text-text/80">
             {description}
           </p>
         </div>

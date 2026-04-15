@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
+import logo from '../assets/logo.png'
 
 const navItems = [
   { to: '/', label: 'Home', end: true },
@@ -27,23 +28,7 @@ function Navbar() {
             to="/"
             className="inline-flex items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
           >
-            <span
-              aria-hidden="true"
-              className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-primary/20 bg-primary/8"
-            >
-              <span className="absolute left-2.5 top-2.5 h-2.5 w-2.5 rounded-full bg-primary/70" />
-              <span className="absolute right-2.5 top-3 h-2 w-2 rounded-full bg-secondary/70" />
-              <span className="absolute bottom-2.5 left-1/2 h-2.5 w-5 -translate-x-1/2 rounded-full bg-accent/70" />
-            </span>
-
-            <span>
-              <span className="block text-lg font-bold tracking-tight text-primary">
-                Associazione La Crisalide
-              </span>
-              <span className="block text-xs font-semibold uppercase text-text/70">
-                Famiglie di Disabili
-              </span>
-            </span>
+            <img src={logo} alt="Logo" className="w-40"/>
           </NavLink>
         </div>
 
