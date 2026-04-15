@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import ActionLink from '../components/ActionLink.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
+import PlaceholderImage from '../components/PlaceholderImage.jsx'
 import { useAuth } from '../context/AuthContext.jsx'
 
 function AdminLoginPage() {
