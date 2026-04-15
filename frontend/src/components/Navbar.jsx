@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../context/AuthContext.jsx";
@@ -19,6 +19,7 @@ const navLinkClasses =
   "rounded-lg border px-4 py-2.5 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2";
 
 function Navbar() {
+  const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false);
   const { isAuthenticated, isAdmin, logout, user } = useAuth();
 
@@ -41,7 +42,10 @@ function Navbar() {
           <div className="hidden items-center gap-2 lg:flex">
             <button
               type="button"
-              onClick={logout}
+              onClick={() => {
+                logout()
+                navigate('/')
+              }}
               className="rounded-lg border border-text/20 px-4 py-2.5 text-xs font-semibold text-text transition-all duration-200 hover:bg-text/5 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
             >
               Esci
@@ -79,8 +83,9 @@ function Navbar() {
             <button
               type="button"
               onClick={() => {
-                logout();
-                setIsOpen(false);
+                logout()
+                setIsOpen(false)
+                navigate('/')
               }}
               className="rounded-lg border border-text/20 px-4 py-3 text-xs font-semibold text-text transition-all duration-200 hover:bg-text/5 w-full"
             >
