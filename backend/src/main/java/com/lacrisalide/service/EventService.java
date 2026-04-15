@@ -7,6 +7,7 @@ import com.lacrisalide.exception.ResourceNotFoundException;
 import com.lacrisalide.model.Event;
 import com.lacrisalide.repository.BookingRepository;
 import com.lacrisalide.repository.EventRepository;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,23 @@ public class EventService {
 
  public List<EventResponse> list() {
   return eventRepository.findAllByOrderByDataAsc().stream().map(this::toResponse).toList();
+ }
+
+ public List<EventResponse> getEventsByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
+  if (startDate.isAfter(endDate)) {
+   throw new BadRequestException("La data di inizio deve essere prima della data di fine");
+  }
+  return eventRepository.findByDataIsAfterAndDataIsBeforeOrderByDataAsc(startDate, endDate)
+   .stream()
+   .map(this::toResponse)
+   .toList();
+ }
+
+ public List<EventResponse> getUpcomingEvents(LocalDateTime fromDate) {
+  return eventRepository.findByDataGreaterThanEqualOrderByDataAsc(fromDate)
+   .stream()
+   .map(this::toResponse)
+   .toList();
  }
 
  public EventResponse getById(Long id) {

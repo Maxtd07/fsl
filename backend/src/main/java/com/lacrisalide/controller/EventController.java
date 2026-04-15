@@ -6,9 +6,11 @@ import com.lacrisalide.model.Event;
 import com.lacrisalide.service.CalendarInviteService;
 import com.lacrisalide.service.EventService;
 import jakarta.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +32,22 @@ public class EventController {
  @GetMapping
  public List<EventResponse> list() {
   return service.list();
+ }
+
+ @GetMapping("/filter")
+ public List<EventResponse> getEventsByDateRange(
+  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
+  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end
+ ) {
+  return service.getEventsByDateRange(start, end);
+ }
+
+ @GetMapping("/upcoming")
+ public List<EventResponse> getUpcomingEvents(
+  @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from
+ ) {
+  LocalDateTime fromDate = from != null ? from : LocalDateTime.now();
+  return service.getUpcomingEvents(fromDate);
  }
 
  @GetMapping("/{id}")

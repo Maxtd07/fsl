@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import ActionLink from '../components/ActionLink.jsx'
 import PageHero from '../components/PageHero.jsx'
 import PlaceholderImage from '../components/PlaceholderImage.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
-import { createBooking, fetchEvents, fetchMyBookings, getEventCalendarLink } from '../lib/api.js'
+import { fetchEvents, fetchMyBookings, getEventCalendarLink } from '../lib/api.js'
 import { useAuth } from '../context/AuthContext.jsx'
+import { Calendar } from '../components/Calendar.jsx'
+import { EventModal as EventDetailsModal } from '../components/EventModal.jsx'
 
 const eventDateFormatter = new Intl.DateTimeFormat('it-IT', {
   day: '2-digit',
@@ -32,84 +33,7 @@ function formatEventMeta(event) {
   return meta.join(' | ')
 }
 
-function EventModal({
-  event,
-  isOpen,
-  onClose,
-  onBooking,
-  isBooking,
-  isAuthenticated,
-  isAlreadyBooked,
-  bookingMessage,
-}) {
-  if (!isOpen || !event) return null
-
-  const isFull = event.availableSeats <= 0
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-[2rem] border-2 border-primary/20 bg-base p-6 shadow-[0_20px_60px_rgba(0,0,0,0.3)] md:p-8">
-        <button
-          onClick={onClose}
-          className="absolute right-4 top-4 text-2xl font-bold text-text/60 transition hover:text-text"
-        >
-          x
-        </button>
-
-        {event.volantino ? (
-          <img src={event.volantino} alt={event.titolo} className="mb-6 h-64 w-full rounded-xl object-cover" />
-        ) : (
-          <PlaceholderImage alt={event.titolo} className="mb-6 h-64 w-full rounded-xl" />
-        )}
-
-        <h2 className="mb-2 text-3xl font-bold text-text md:text-4xl">{event.titolo}</h2>
-        <p className="mb-4 text-sm text-text/60">{formatEventMeta(event)}</p>
-        <p className="mb-6 text-base leading-7 text-text/85">{event.descrizione}</p>
-
-        <div className="mb-4 rounded-lg border-2 border-primary/20 bg-primary/5 p-4">
-          <p className="text-sm font-medium text-text">
-            Iscritti: {event.registeredParticipants} / {event.maxPartecipanti}
-          </p>
-          <p className="mt-1 text-sm font-medium text-text">
-            {isFull ? 'Evento al completo.' : `Posti disponibili: ${event.availableSeats}`}
-          </p>
-        </div>
-
-        {bookingMessage && (
-          <div className="mb-4 rounded-lg border border-secondary/25 bg-secondary/10 px-4 py-3 text-sm font-medium text-text">
-            {bookingMessage}
-          </div>
-        )}
-
-        <div className="flex flex-wrap gap-3">
-          <button
-            onClick={onBooking}
-            disabled={isFull || isBooking || isAlreadyBooked}
-            className="flex-1 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(76,130,169,0.22)] transition duration-200 hover:bg-primary/92 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/18 disabled:opacity-50"
-          >
-            {isAlreadyBooked
-              ? 'Sei gia iscritto'
-              : isBooking
-                ? 'Iscrizione in corso...'
-                : isAuthenticated
-                  ? 'Iscriviti all evento'
-                  : 'Accedi per iscriverti'}
-          </button>
-
-          <a
-            href={getEventCalendarLink(event.id)}
-            className="rounded-full border-2 border-primary/20 px-5 py-3 text-sm font-semibold text-primary hover:bg-primary/5 transition"
-          >
-            Scarica calendario
-          </a>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 function EventiPage() {
-  const navigate = useNavigate()
   const { isAuthenticated } = useAuth()
   const [events, setEvents] = useState([])
   const [myBookings, setMyBookings] = useState([])
@@ -117,57 +41,40 @@ function EventiPage() {
   const [error, setError] = useState('')
   const [selectedEvent, setSelectedEvent] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [isBooking, setIsBooking] = useState(false)
-  const [bookingMessage, setBookingMessage] = useState('')
+  const [selectedDate, setSelectedDate] = useState(null)
+  const [viewMode, setViewMode] = useState('list')
 
-  useEffect(() => {
-    let active = true
+  // Definisci le funzioni fuori da useEffect per riusarle
+  const loadEvents = async () => {
+    setIsLoading(true)
+    try {
+      const data = await fetchEvents()
+      setEvents(Array.isArray(data) ? data : [])
+    } catch (err) {
+      setError(err.message || 'Impossibile caricare gli eventi dal backend.')
+      setEvents([])
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
-    async function loadEvents() {
-      try {
-        const data = await fetchEvents()
-        if (!active) return
-        setEvents(Array.isArray(data) ? data : [])
-      } catch (err) {
-        if (!active) return
-        setError(err.message || 'Impossibile caricare gli eventi dal backend.')
-        setEvents([])
-      } finally {
-        if (active) setIsLoading(false)
-      }
+  const loadBookings = async () => {
+    if (!isAuthenticated) {
+      setMyBookings([])
+      return
     }
 
+    try {
+      const bookings = await fetchMyBookings()
+      setMyBookings(Array.isArray(bookings) ? bookings : [])
+    } catch {
+      setMyBookings([])
+    }
+  }
+
+  useEffect(() => {
     loadEvents()
-    return () => {
-      active = false
-    }
-  }, [])
-
-  useEffect(() => {
-    let active = true
-
-    async function loadBookings() {
-      if (!isAuthenticated) {
-        setMyBookings([])
-        return
-      }
-
-      try {
-        const bookings = await fetchMyBookings()
-        if (active) {
-          setMyBookings(Array.isArray(bookings) ? bookings : [])
-        }
-      } catch {
-        if (active) {
-          setMyBookings([])
-        }
-      }
-    }
-
     loadBookings()
-    return () => {
-      active = false
-    }
   }, [isAuthenticated])
 
   const bookedEventIds = useMemo(() => new Set(myBookings.map((booking) => booking.eventId)), [myBookings])
@@ -175,65 +82,11 @@ function EventiPage() {
   const openModal = (event) => {
     setSelectedEvent(event)
     setIsModalOpen(true)
-    setBookingMessage('')
   }
 
   const closeModal = () => {
     setIsModalOpen(false)
     setSelectedEvent(null)
-    setBookingMessage('')
-  }
-
-  const handleBooking = async () => {
-    if (!selectedEvent) return
-
-    if (!isAuthenticated) {
-      navigate('/accedi', { state: { from: '/eventi' } })
-      return
-    }
-
-    if (bookedEventIds.has(selectedEvent.id)) {
-      setBookingMessage('Risulti gia iscritto a questo evento.')
-      return
-    }
-
-    setIsBooking(true)
-    setBookingMessage('')
-
-    try {
-      const booking = await createBooking(selectedEvent.id)
-
-      setMyBookings((current) => [booking, ...current])
-      setEvents((current) =>
-        current.map((event) =>
-          event.id === selectedEvent.id
-            ? {
-                ...event,
-                registeredParticipants: event.registeredParticipants + 1,
-                availableSeats: Math.max(0, event.availableSeats - 1),
-              }
-            : event
-        )
-      )
-      setSelectedEvent((current) =>
-        current
-          ? {
-              ...current,
-              registeredParticipants: current.registeredParticipants + 1,
-              availableSeats: Math.max(0, current.availableSeats - 1),
-            }
-          : current
-      )
-      setBookingMessage(
-        booking.emailSent
-          ? 'Iscrizione completata. Controlla la tua email per il promemoria e il file calendario.'
-          : 'Iscrizione salvata. In questo ambiente l email potrebbe non essere configurata: puoi scaricare il calendario dal pulsante dedicato.'
-      )
-    } catch (err) {
-      setBookingMessage(err.message || 'Errore durante l iscrizione all evento.')
-    } finally {
-      setIsBooking(false)
-    }
   }
 
   return (
@@ -282,13 +135,32 @@ function EventiPage() {
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <SectionHeading
             eyebrow="Prossimi eventi"
-            title="Eventi sincronizzati con il backend."
-            description="Ogni card mostra disponibilita posti, dettagli e accesso rapido all iscrizione."
+            title="Scopri e iscriviti agli eventi."
+            description="Visualizza gli eventi nel calendario o come lista."
           />
 
-          <ActionLink to="/privacy" variant="secondary">
-            Privacy e dati
-          </ActionLink>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setViewMode('calendar')}
+              className={`rounded-lg px-4 py-2 text-sm font-semibold ${
+                viewMode === 'calendar'
+                  ? 'bg-primary/20 text-primary'
+                  : 'border border-primary/20 text-text/70 hover:bg-primary/10'
+              }`}
+            >
+              📅 Calendario
+            </button>
+            <button
+              onClick={() => setViewMode('list')}
+              className={`rounded-lg px-4 py-2 text-sm font-semibold ${
+                viewMode === 'list'
+                  ? 'bg-primary/20 text-primary'
+                  : 'border border-primary/20 text-text/70 hover:bg-primary/10'
+              }`}
+            >
+              📋 Lista
+            </button>
+          </div>
         </div>
 
         {isLoading && (
@@ -310,7 +182,16 @@ function EventiPage() {
         )}
 
         {!isLoading && !error && events.length > 0 && (
-          <div className="grid gap-6 lg:grid-cols-3">
+          <>
+            {viewMode === 'calendar' ? (
+              <>
+                <Calendar
+                  onDateSelected={setSelectedDate}
+                  onEventClick={openModal}
+                />
+              </>
+            ) : (
+              <div className="grid gap-6 lg:grid-cols-3">
             {events.map((event) => {
               const alreadyBooked = bookedEventIds.has(event.id)
 
@@ -345,19 +226,20 @@ function EventiPage() {
                 </button>
               )
             })}
-          </div>
+            </div>
+            )}
+          </>
         )}
       </section>
 
-      <EventModal
+      <EventDetailsModal
         event={selectedEvent}
         isOpen={isModalOpen}
         onClose={closeModal}
-        onBooking={handleBooking}
-        isBooking={isBooking}
-        isAuthenticated={isAuthenticated}
-        isAlreadyBooked={selectedEvent ? bookedEventIds.has(selectedEvent.id) : false}
-        bookingMessage={bookingMessage}
+        onBookingChange={() => {
+          loadBookings()
+          loadEvents()
+        }}
       />
     </main>
   )
