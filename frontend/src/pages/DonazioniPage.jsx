@@ -7,14 +7,14 @@ import { useAuth } from '../context/AuthContext.jsx'
 import { capturePayment, createDonation, createPayment } from '../lib/api.js'
 
 const donationCards = [
-  'Le donazioni sostengono laboratori inclusivi, attività educative e supporto alle famiglie.',
-  'Ogni contributo aiuta l\'associazione a organizzare eventi, incontri e percorsi personalizzati.',
-  'Il pagamento viene creato e catturato dal backend tramite API REST, con salvataggio finale nel database.',
+  'Inserisci l’importo che desideri donare e compila i tuoi dati nel modulo.',
+  'Conferma la donazione tramite il sistema di pagamento sicuro.',
+  'Ricevi la conferma: la tua donazione viene registrata e destinata alle attività dell’associazione.',
 ]
 
 const impactCards = [
-  'Attività per l\'autonomia e la partecipazione sociale.',
-  'Promemoria, comunicazioni e iniziative per la comunità.',
+  'Ogni donazione contribuisce a sostenere attività dedicate all’autonomia e alla partecipazione sociale, offrendo opportunità concrete per sviluppare competenze, indipendenza e inclusione.',
+  'Allo stesso tempo, supporta comunicazioni e iniziative per la comunità, creando momenti di incontro, condivisione e aggiornamento per rafforzare il legame tra le famiglie.',
 ]
 
 const paypalSdkCache = new Map()
@@ -192,7 +192,6 @@ function DonazioniPage() {
       {/* METODI DI DONAZIONE ALTERNATIVI */}
       <section className="space-y-5 px-6 md:px-8">
         <SectionHeading
-          eyebrow="Altri metodi di donazione"
           title="Scegli come sostenerci"
           description="Offriamo diverse modalità di donazione per adattarci alle tue preferenze."
         />
@@ -249,8 +248,7 @@ function DonazioniPage() {
         <SectionHeading
           eyebrow="Come funziona"
           title="Un flusso standard, chiaro e tracciabile."
-          description="I dati del donatore vengono raccolti dal form e inviati correttamente al backend per creare e finalizzare il pagamento."
-        />
+          />
 
         <div className="grid gap-4 lg:grid-cols-3">
           {donationCards.map((text, index) => (
@@ -269,8 +267,8 @@ function DonazioniPage() {
         <div>
           <SectionHeading
             eyebrow="Impatto"
-            title="Ogni contributo diventa iniziative concrete."
-            description="Le donazioni raccolte aiutano a sostenere eventi inclusivi, attivita educative, strumenti operativi e momenti di incontro per le famiglie."
+            title="Ogni donazione diventa azione concreta."
+            description="Con il tuo supporto possiamo promuovere attività inclusive e laboratori educativi, offrire supporto diretto alle famiglie, organizzare eventi e momenti di condivisione e sviluppare progetti dedicati all’autonomia e alla partecipazione."
           />
 
           <div className="mt-6 grid gap-4 md:grid-cols-2">

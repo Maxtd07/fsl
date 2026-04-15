@@ -175,7 +175,7 @@ function Navbar() {
           ) : (
             <NavLink
               to="/accedi"
-              className="rounded-lg border border-accent/30 bg-primary px-4 py-2.5 text-white transition-all duration-200 hover:bg-accent/90 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-accent/40 focus-visible:ring-offset-2 lg:p-2"
+              className="rounded-lg border border-accent/30 bg-primary/80 px-4 py-2.5 text-white transition-all duration-200 hover:bg-primary focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-accent/40 focus-visible:ring-offset-2 lg:p-2"
               title="Accedi"
             >
               <FontAwesomeIcon icon={faUser} className="text-lg" />
