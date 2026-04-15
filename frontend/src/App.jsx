@@ -5,11 +5,13 @@ import Navbar from './components/Navbar.jsx'
 import AdminLoginPage from './pages/AdminLoginPage.jsx'
 import AdminDashboard from './pages/AdminDashboard.jsx'
 import AboutPage from './pages/AboutPage.jsx'
+import AuthPage from './pages/AuthPage.jsx'
 import ContattiPage from './pages/ContattiPage.jsx'
 import DonazioniPage from './pages/DonazioniPage.jsx'
 import EventiPage from './pages/EventiPage.jsx'
 import GalleriaPage from './pages/GalleriaPage.jsx'
 import HomePage from './pages/HomePage.jsx'
+import PrivacyPage from './pages/PrivacyPage.jsx'
 import { AuthProvider } from './context/AuthContext.jsx'
 
 function ScrollToTop() {
@@ -42,11 +44,13 @@ function App() {
             <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
             <Route path="/admin/login" element={<AdminLoginPage />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/accedi" element={<AuthPage />} />
             <Route path="/eventi" element={<EventiPage />} />
             <Route path="/galleria" element={<GalleriaPage />} />
             <Route path="/chi-siamo" element={<AboutPage />} />
             <Route path="/donazioni" element={<DonazioniPage />} />
             <Route path="/contatti" element={<ContattiPage />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
           </Routes>
         </div>
       </div>

@@ -1,12 +1,17 @@
 package com.lacrisalide.controller;
 
-import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpStatus;
-import lombok.RequiredArgsConstructor;
-import java.util.List;
+import com.lacrisalide.dto.donation.CapturePaymentRequest;
+import com.lacrisalide.dto.donation.CapturePaymentResponse;
+import com.lacrisalide.dto.donation.CreatePaymentRequest;
+import com.lacrisalide.dto.donation.CreatePaymentResponse;
+import com.lacrisalide.dto.donation.DonationRequest;
+import com.lacrisalide.dto.donation.DonationResponse;
 import com.lacrisalide.service.DonationService;
-import com.lacrisalide.model.Donation;
+import jakarta.validation.Valid;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/donations")
@@ -15,26 +20,34 @@ public class DonationController {
 
  private final DonationService service;
 
+ @PostMapping("/create-payment")
+ public ResponseEntity<CreatePaymentResponse> createPayment(@Valid @RequestBody CreatePaymentRequest request) {
+  return ResponseEntity.ok(service.createPayment(request));
+ }
+
+ @PostMapping("/capture-payment")
+ public ResponseEntity<CapturePaymentResponse> capturePayment(@Valid @RequestBody CapturePaymentRequest request) {
+  return ResponseEntity.ok(service.capturePayment(request.orderId()));
+ }
+
  @PostMapping
- public Donation create(@RequestBody Donation donation) {
-  return service.create(donation);
+ public DonationResponse create(@Valid @RequestBody DonationRequest request) {
+  return service.create(request);
  }
 
  @GetMapping
- public List<Donation> list() {
+ public List<DonationResponse> list() {
   return service.list();
  }
 
  @GetMapping("/{id}")
- public ResponseEntity<?> getById(@PathVariable Long id) {
-  return service.getById(id)
-   .map(ResponseEntity::ok)
-   .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+ public DonationResponse getById(@PathVariable Long id) {
+  return service.getById(id);
  }
 
  @DeleteMapping("/{id}")
- public ResponseEntity<?> delete(@PathVariable Long id) {
+ public ResponseEntity<Void> delete(@PathVariable Long id) {
   service.delete(id);
-  return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+  return ResponseEntity.noContent().build();
  }
 }

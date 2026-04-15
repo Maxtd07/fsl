@@ -6,7 +6,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "donations")
-@Data
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Donation {
@@ -17,9 +19,12 @@ public class Donation {
  private String nome;
  private String email;
  private Double importo;
- private String paypalId;
+ private String paypalOrderId;
+ private String payerId;
+ private String captureId;
+ private String paymentStatus;
 
- @Temporal(TemporalType.TIMESTAMP)
+ @Column(nullable = false, updatable = false)
  private LocalDateTime createdAt;
 
  @PrePersist

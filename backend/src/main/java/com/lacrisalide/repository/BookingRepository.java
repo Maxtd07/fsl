@@ -6,6 +6,8 @@ import com.lacrisalide.model.Booking;
 import java.util.List;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
- List<Booking> findByEventId(Long eventId);
- List<Booking> findByUserId(Long userId);
+ List<Booking> findByEventIdOrderByCreatedAtDesc(Long eventId);
+ List<Booking> findByUserIdOrderByCreatedAtDesc(Long userId);
+ boolean existsByUserIdAndEventId(Long userId, Long eventId);
+ long countByEventId(Long eventId);
 }

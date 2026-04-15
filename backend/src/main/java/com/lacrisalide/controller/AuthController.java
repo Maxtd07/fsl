@@ -1,46 +1,36 @@
-
 package com.lacrisalide.controller;
 
-import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpStatus;
-import lombok.RequiredArgsConstructor;
+import com.lacrisalide.dto.auth.AuthResponse;
+import com.lacrisalide.dto.auth.LoginRequest;
+import com.lacrisalide.dto.auth.RegisterRequest;
+import com.lacrisalide.dto.auth.UserResponse;
+import com.lacrisalide.security.AppUserPrincipal;
 import com.lacrisalide.service.UserService;
-import com.lacrisalide.model.User;
-import java.util.Map;
-import java.util.HashMap;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
- private final UserService service;
+ private final UserService userService;
 
  @PostMapping("/register")
- public User register(@RequestBody User u){
-  return service.register(u);
+ public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest request) {
+  return ResponseEntity.ok(userService.register(request));
  }
 
  @PostMapping("/login")
- public ResponseEntity<?> login(@RequestBody Map<String, String> credentials){
-  String username = credentials.get("username");
-  String password = credentials.get("password");
-  
-  User user = service.authenticate(username, password);
-  
-  if(user != null) {
-   Map<String, String> response = new HashMap<>();
-   response.put("token", "Bearer " + user.getId() + "_" + System.currentTimeMillis());
-   response.put("admin", user.getNome());
-   return ResponseEntity.ok(response);
-  }
-  
-  return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Invalid credentials"));
+ public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
+  return ResponseEntity.ok(userService.login(request));
  }
 
- @GetMapping("/hello")
- public String hello(){
-  return "Backend OK";
+ @GetMapping("/me")
+ public ResponseEntity<UserResponse> me(@AuthenticationPrincipal AppUserPrincipal principal) {
+  return ResponseEntity.ok(userService.toUserResponse(principal));
  }
 }

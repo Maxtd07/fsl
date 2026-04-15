@@ -1,30 +1,39 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import ActionLink from '../components/ActionLink.jsx'
 import PlaceholderImage from '../components/PlaceholderImage.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
 import { useAuth } from '../context/AuthContext.jsx'
-import { loginAdmin } from '../lib/api.js'
 
 function AdminLoginPage() {
   const navigate = useNavigate()
-  const { login } = useAuth()
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const { isAuthenticated, isAdmin, login, logout } = useAuth()
+  const [email, setEmail] = useState('admin@lacrisalide.it')
+  const [password, setPassword] = useState('Admin123!')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
 
-  async function handleSubmit(e) {
-    e.preventDefault()
+  if (isAuthenticated && isAdmin) {
+    return <Navigate to="/admin/dashboard" replace />
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault()
     setError('')
     setIsLoading(true)
 
     try {
-      const response = await loginAdmin(username, password)
-      login(username, response.token || 'admin-token')
+      const user = await login({ email, password })
+
+      if (user.ruolo !== 'ADMIN') {
+        logout()
+        setError('Questo account non ha accesso alla dashboard amministrativa.')
+        return
+      }
+
       navigate('/admin/dashboard')
     } catch (err) {
-      setError('Username o password non corretti.')
+      setError(err.message || 'Email o password non corrette.')
     } finally {
       setIsLoading(false)
     }
@@ -36,8 +45,8 @@ function AdminLoginPage() {
         <div>
           <SectionHeading
             eyebrow="Admin"
-            title="Area riservata per la gestione del sito e dei contenuti."
-            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris."
+            title="Area riservata per la gestione di eventi, donazioni e contenuti."
+            description="Questa pagina usa lo stesso sistema JWT del resto dell'applicazione, con accesso consentito solo agli utenti con ruolo amministratore."
           />
 
           <div className="mt-6 flex flex-wrap gap-3">
@@ -48,21 +57,19 @@ function AdminLoginPage() {
         </div>
 
         <div className="rounded-[1.8rem] border border-primary/12 bg-base p-6 shadow-[0_18px_40px_rgba(76,130,169,0.10)] md:p-7">
-          <p className="mb-5 text-xs font-bold uppercase tracking-[0.22em] text-primary">
-            Login amministratori
-          </p>
+          <p className="mb-5 text-xs font-bold uppercase tracking-[0.22em] text-primary">Login amministratori</p>
 
           <form className="space-y-4" onSubmit={handleSubmit}>
             <label className="block">
-              <span className="mb-2 block text-sm font-medium text-text">Username</span>
+              <span className="mb-2 block text-sm font-medium text-text">Email</span>
               <input
-                autoComplete="username"
+                autoComplete="email"
                 className="w-full rounded-2xl border border-primary/15 bg-background px-4 py-3 text-sm text-text outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/12"
-                name="username"
-                type="text"
-                placeholder="admin"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                name="email"
+                type="email"
+                placeholder="admin@lacrisalide.it"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
                 required
               />
             </label>
@@ -76,7 +83,7 @@ function AdminLoginPage() {
                 type="password"
                 placeholder="********"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(event) => setPassword(event.target.value)}
                 required
               />
             </label>
@@ -88,7 +95,7 @@ function AdminLoginPage() {
             )}
 
             <button
-              className="inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(76,130,169,0.22)] transition duration-200 hover:bg-primary/92 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/18 focus-visible:ring-offset-2 focus-visible:ring-offset-base disabled:opacity-50"
+              className="inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(76,130,169,0.22)] transition duration-200 hover:bg-primary/92 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/18 disabled:opacity-50"
               type="submit"
               disabled={isLoading}
             >
@@ -102,21 +109,15 @@ function AdminLoginPage() {
         <PlaceholderImage alt="Admin preview" className="h-72 md:h-80 lg:h-full lg:min-h-96" />
         <div className="grid gap-4">
           <div className="rounded-[1.4rem] border border-secondary/30 bg-secondary/10 p-4 md:p-5">
-            <p className="mb-2 text-xs font-bold uppercase tracking-[0.22em] text-secondary">
-              Gestione eventi
-            </p>
-            <p className="text-xs md:text-sm font-medium leading-6 md:leading-7 text-text/85 md:text-text/80">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.22em] text-secondary">Gestione eventi</p>
+            <p className="text-sm leading-7 text-text/80">
+              Crea, modifica ed elimina gli eventi visibili nel frontend, con capienza, date e calendario scaricabile.
             </p>
           </div>
           <div className="rounded-[1.4rem] border border-accent/30 bg-accent/10 p-4 md:p-5">
-            <p className="mb-2 text-xs font-bold uppercase tracking-[0.22em] text-accent">
-              Gestione contenuti
-            </p>
-            <p className="text-xs md:text-sm font-medium leading-6 md:leading-7 text-text/85 md:text-text/80">
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.22em] text-accent">Monitoraggio donazioni</p>
+            <p className="text-sm leading-7 text-text/80">
+              Consulta il totale raccolto, l'elenco dei donatori e la galleria contenuti protetta dal ruolo admin.
             </p>
           </div>
         </div>

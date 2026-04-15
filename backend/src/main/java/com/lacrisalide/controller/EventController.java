@@ -1,13 +1,18 @@
-
 package com.lacrisalide.controller;
 
-import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpStatus;
-import lombok.RequiredArgsConstructor;
-import java.util.List;
-import com.lacrisalide.service.EventService;
+import com.lacrisalide.dto.event.EventRequest;
+import com.lacrisalide.dto.event.EventResponse;
 import com.lacrisalide.model.Event;
+import com.lacrisalide.service.CalendarInviteService;
+import com.lacrisalide.service.EventService;
+import jakarta.validation.Valid;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/events")
@@ -15,32 +20,41 @@ import com.lacrisalide.model.Event;
 public class EventController {
 
  private final EventService service;
+ private final CalendarInviteService calendarInviteService;
 
  @PostMapping
- public Event create(@RequestBody Event e){
-  return service.create(e);
+ public ResponseEntity<EventResponse> create(@Valid @RequestBody EventRequest request) {
+  return ResponseEntity.ok(service.create(request));
  }
 
  @GetMapping
- public List<Event> list(){
+ public List<EventResponse> list() {
   return service.list();
  }
 
  @GetMapping("/{id}")
- public ResponseEntity<?> getById(@PathVariable Long id){
-  return service.getById(id)
-   .map(ResponseEntity::ok)
-   .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+ public EventResponse getById(@PathVariable Long id) {
+  return service.getById(id);
  }
 
  @PutMapping("/{id}")
- public Event update(@PathVariable Long id, @RequestBody Event eventDetails){
-  return service.update(id, eventDetails);
+ public EventResponse update(@PathVariable Long id, @Valid @RequestBody EventRequest request) {
+  return service.update(id, request);
  }
 
  @DeleteMapping("/{id}")
- public ResponseEntity<?> delete(@PathVariable Long id){
+ public ResponseEntity<Void> delete(@PathVariable Long id) {
   service.delete(id);
-  return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+  return ResponseEntity.noContent().build();
+ }
+
+ @GetMapping("/{id}/calendar")
+ public ResponseEntity<ByteArrayResource> downloadCalendar(@PathVariable Long id) {
+  Event event = service.getEntityById(id);
+  ByteArrayResource resource = new ByteArrayResource(calendarInviteService.buildEventInvite(event));
+  return ResponseEntity.ok()
+   .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + calendarInviteService.buildFileName(event) + "\"")
+   .contentType(MediaType.parseMediaType("text/calendar"))
+   .body(resource);
  }
 }
