@@ -40,7 +40,7 @@ function EventModal({ event, isOpen, onClose, bookingsCount, maxParticipants, on
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className="relative max-w-2xl w-full rounded-[2rem] border-2 border-primary/20 bg-base p-6 shadow-[0_20px_60px_rgba(0,0,0,0.3)] md:p-8 max-h-[90vh] overflow-y-auto">
+      <div className="relative max-w-2xl w-full rounded-4xl border-2 border-primary/20 bg-base p-6 shadow-[0_20px_60px_rgba(0,0,0,0.3)] md:p-8 max-h-[90vh] overflow-y-auto">
         {/* Close button */}
         <button
           onClick={onClose}
@@ -67,7 +67,7 @@ function EventModal({ event, isOpen, onClose, bookingsCount, maxParticipants, on
         </p>
 
         {/* Description */}
-        <p className="text-base text-text/85 mb-6 leading-7">{event.descrizione}</p>
+        <p className="text-text/85 mb-6 leading-7">{event.descrizione}</p>
 
         {/* Available seats */}
         <div className="mb-6 rounded-lg border-2 border-primary/20 bg-primary/5 p-4">
@@ -188,23 +188,14 @@ function EventiPage() {
         title="Lorem ipsum dolor sit amet, consectetur adipiscing elit ut labore."
         description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
         tone="primary"
-        actions={
-          <>
-            <ActionLink to="/contatti">Prenota ora</ActionLink>
-            <ActionLink to="/galleria" variant="secondary">
-              Vedi la galleria
-            </ActionLink>
-          </>
-        }
       />
 
       {/* EVENTS */}
       <section className="border-primary/15 px-6 py-10 lg:py-12">
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <SectionHeading
-            eyebrow="Prossimi eventi"
-            title="Eventi caricati direttamente dal backend."
-            description="La lista arriva dall’endpoint /events."
+            title="I nostri eventi"
+            description="Scopri e iscriviti ai nostri eventi dedicati a famiglie e persone con disabilità."
           />
 
           <ActionLink to="/contatti" variant="secondary">

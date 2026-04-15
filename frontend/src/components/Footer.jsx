@@ -1,3 +1,6 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
+
 const footerLinkClasses =
   "transition-colors duration-200 hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/20 focus-visible:ring-offset-2 focus-visible:ring-offset-text";
 
@@ -11,7 +14,8 @@ function Footer() {
             La Crisalide
           </p>
           <p className="mt-4 max-w-md leading-6">
-            la Crisalide non rimane sempre statica, si trasforma, si evolve, muta fino a diventare farfalla
+            la Crisalide non rimane sempre statica, si trasforma, si evolve,
+            muta fino a diventare farfalla
           </p>
         </div>
 
@@ -21,22 +25,31 @@ function Footer() {
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/92 mb-4">
               Social
             </p>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 text-top">
               <a
-                className={footerLinkClasses}
+                className={`${footerLinkClasses} flex items-center gap-2`}
                 href="https://www.facebook.com/lacrisalideassociazionefamigliedisabili/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Facebook
+                <FontAwesomeIcon
+                  icon={faFacebook}
+                  className="text-white text-xl"
+                />
+                <span>Facebook</span>
               </a>
+
               <a
-                className={footerLinkClasses}
+                className={`${footerLinkClasses} flex items-center gap-2`}
                 href="https://www.instagram.com/lacrisalide_associazione/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Instagram
+                <FontAwesomeIcon
+                  icon={faInstagram}
+                  className="text-white text-xl"
+                />
+                <span>Instagram</span>
               </a>
             </div>
           </div>
@@ -57,7 +70,9 @@ function Footer() {
               <div className="text-xs text-white/85 mt-2"></div>
             </div>
           </div>
-          <div className="text-center mb-0 col-span-2">Via del Palo 10 Porto Sant'Elpidio (FM) 63821</div>
+          <div className="text-center mb-0 col-span-2">
+            Via del Palo 10 Porto Sant'Elpidio (FM) 63821
+          </div>
         </div>
         {/* Copyright */}
         <div className="grid gap-8 grid-cols-2 mb-6 border-t border-white/10 lg:px-10">

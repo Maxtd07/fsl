@@ -148,54 +148,6 @@ function GalleriaPage() {
         </div>
       )}
 
-      {/* PREVIEW GRID */}
-      <section className="space-y-5 px-6">
-        <SectionHeading
-          eyebrow="Anteprima"
-          title="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-        />
-
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {galleryBlocks.map((height, index) => (
-            <PlaceholderImage
-              key={`${height}-${index}`}
-              alt={`Galleria ${index + 1}`}
-              className={`${height} shadow-[0_16px_34px_rgba(76,130,169,0.08)]`}
-            />
-          ))}
-        </div>
-      </section>
-
-      {/* STORY SECTION */}
-      <section className="grid gap-6 rounded-[2rem] border-2 border-primary/20 bg-base p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] md:p-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-        <div>
-          <SectionHeading
-            eyebrow="Racconto"
-            title="Sed ut perspiciatis unde omnis iste natus error sit voluptatem."
-            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
-          />
-
-          <div className="mt-6 grid gap-4 md:grid-cols-3">
-            {galleryCards.map((text) => (
-              <div
-                key={text}
-                className="rounded-[1.4rem] border-2 border-primary/20 bg-background p-4 md:p-5 shadow-[0_6px_14px_rgba(0,0,0,0.06)]"
-              >
-                <p className="text-xs md:text-sm font-medium leading-6 md:leading-7 text-text/85 md:text-text/80">
-                  {text}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <PlaceholderImage
-          alt="Galleria racconto"
-          className="h-72 md:h-80 lg:h-full lg:min-h-96"
-        />
-      </section>
-
       {/* INSTAGRAM */}
       <section className="border-t-2 border-primary/15 px-6 py-10 lg:py-12">
         <SectionHeading

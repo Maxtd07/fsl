@@ -98,29 +98,7 @@ function AdminLoginPage() {
         </div>
       </section>
 
-      <section className="grid gap-6 rounded-[2rem] border border-primary/12 bg-base p-6 shadow-[0_18px_40px_rgba(76,130,169,0.06)] md:p-8 lg:grid-cols-[minmax(280px,0.9fr)_minmax(0,1.1fr)] lg:items-center">
-        <PlaceholderImage alt="Admin preview" className="h-72 md:h-80 lg:h-full lg:min-h-96" />
-        <div className="grid gap-4">
-          <div className="rounded-[1.4rem] border border-secondary/30 bg-secondary/10 p-4 md:p-5">
-            <p className="mb-2 text-xs font-bold uppercase tracking-[0.22em] text-secondary">
-              Gestione eventi
-            </p>
-            <p className="text-xs md:text-sm font-medium leading-6 md:leading-7 text-text/85 md:text-text/80">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-          </div>
-          <div className="rounded-[1.4rem] border border-accent/30 bg-accent/10 p-4 md:p-5">
-            <p className="mb-2 text-xs font-bold uppercase tracking-[0.22em] text-accent">
-              Gestione contenuti
-            </p>
-            <p className="text-xs md:text-sm font-medium leading-6 md:leading-7 text-text/85 md:text-text/80">
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </p>
-          </div>
-        </div>
-      </section>
+      
     </main>
   )
 }
