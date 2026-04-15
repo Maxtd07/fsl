@@ -1,22 +1,60 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import ActionLink from '../components/ActionLink.jsx'
 import PageHero from '../components/PageHero.jsx'
 import PlaceholderImage from '../components/PlaceholderImage.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
-import { createDonation } from '../lib/api.js'
+import { useAuth } from '../context/AuthContext.jsx'
+import { capturePayment, createDonation, createPayment } from '../lib/api.js'
 
 const donationCards = [
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
-  'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.',
-  'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+  'Le donazioni sostengono laboratori inclusivi, attivita educative e supporto alle famiglie.',
+  'Ogni contributo aiuta l associazione a organizzare eventi, incontri e percorsi personalizzati.',
+  'Il pagamento viene creato e catturato dal backend tramite API REST, con salvataggio finale nel database.',
 ]
 
 const impactCards = [
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-  'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+  'Attivita per l autonomia e la partecipazione sociale.',
+  'Promemoria, comunicazioni e iniziative per la comunita.',
 ]
 
+const paypalSdkCache = new Map()
+
+function loadPayPalSdk(clientId) {
+  if (window.paypal) {
+    return Promise.resolve(window.paypal)
+  }
+
+  if (paypalSdkCache.has(clientId)) {
+    return paypalSdkCache.get(clientId)
+  }
+
+  const promise = new Promise((resolve, reject) => {
+    const existingScript = document.querySelector('#paypal-sdk-script')
+
+    if (existingScript) {
+      existingScript.addEventListener('load', () => resolve(window.paypal), { once: true })
+      existingScript.addEventListener('error', () => reject(new Error('Impossibile caricare PayPal SDK')), {
+        once: true,
+      })
+      return
+    }
+
+    const script = document.createElement('script')
+    script.id = 'paypal-sdk-script'
+    script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=EUR`
+    script.async = true
+    script.onload = () => resolve(window.paypal)
+    script.onerror = () => reject(new Error('Impossibile caricare PayPal SDK'))
+    document.body.appendChild(script)
+  })
+
+  paypalSdkCache.set(clientId, promise)
+  return promise
+}
+
 function DonazioniPage() {
+  const { isAuthenticated, user } = useAuth()
+  const paypalClientId = import.meta.env.VITE_PAYPAL_CLIENT_ID ?? ''
   const [donationAmount, setDonationAmount] = useState('25')
   const [donationForm, setDonationForm] = useState({
     nome: '',
@@ -24,95 +62,128 @@ function DonazioniPage() {
   })
   const [isProcessing, setIsProcessing] = useState(false)
   const [message, setMessage] = useState('')
+  const [paypalError, setPaypalError] = useState('')
   const paypalButtonRef = useRef(null)
 
-  // Load PayPal script
   useEffect(() => {
-    if (!document.querySelector('#paypal-script')) {
-      const script = document.createElement('script')
-      script.id = 'paypal-script'
-      script.src = 'https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=EUR'
-      script.async = true
-      script.onload = () => {
-        if (window.paypal) {
-          renderPayPalButton()
-        }
-      }
-      document.body.appendChild(script)
-    } else if (window.paypal) {
-      renderPayPalButton()
+    if (isAuthenticated && user) {
+      setDonationForm((current) => ({
+        nome: current.nome || user.nome || '',
+        email: current.email || user.email || '',
+      }))
     }
-  }, [donationAmount, donationForm])
+  }, [isAuthenticated, user])
 
-  const renderPayPalButton = () => {
-    if (!window.paypal || !paypalButtonRef.current) return
+  useEffect(() => {
+    let disposed = false
 
-    // Clear previous buttons
-    paypalButtonRef.current.innerHTML = ''
-
-    window.paypal.Buttons({
-      createOrder: async (data, actions) => {
-        if (!donationForm.nome || !donationForm.email) {
-          setMessage('❌ Compila nome ed email')
-          return
-        }
-
-        return actions.order.create({
-          purchase_units: [{
-            amount: {
-              value: donationAmount,
-              currency_code: 'EUR'
-            },
-            description: `Donazione Franco Rossi - ${donationForm.nome}`
-          }],
-          payer: {
-            name: { given_name: donationForm.nome },
-            email_address: donationForm.email
-          }
-        })
-      },
-      onApprove: async (data, actions) => {
-        setIsProcessing(true)
-        try {
-          const result = await actions.order.capture()
-          
-          // Save donation to backend
-          await createDonation({
-            nome: donationForm.nome,
-            email: donationForm.email,
-            importo: parseFloat(donationAmount),
-            paypalId: result.id
-          })
-
-          setMessage('✅ Donazione completata con successo! Grazie mille 🙏')
-          setDonationForm({ nome: '', email: '' })
-          setDonationAmount('25')
-          setTimeout(() => setMessage(''), 5000)
-        } catch (err) {
-          setMessage('❌ Errore nel salvataggio della donazione')
-        } finally {
-          setIsProcessing(false)
-        }
-      },
-      onError: () => {
-        setMessage('❌ Errore nella transazione PayPal')
-        setIsProcessing(false)
+    async function renderPayPalButton() {
+      if (!paypalClientId || !paypalButtonRef.current) {
+        return
       }
-    }).render(paypalButtonRef.current)
-  }
+
+      try {
+        const paypal = await loadPayPalSdk(paypalClientId)
+        if (disposed || !paypalButtonRef.current) return
+
+        paypalButtonRef.current.innerHTML = ''
+        setPaypalError('')
+
+        const buttons = paypal.Buttons({
+          style: {
+            shape: 'pill',
+            layout: 'vertical',
+            color: 'gold',
+            label: 'paypal',
+          },
+          createOrder: async () => {
+            const parsedAmount = Number(donationAmount)
+
+            if (!donationForm.nome.trim() || !donationForm.email.trim()) {
+              setMessage('Compila nome ed email prima di procedere.')
+              throw new Error('Dati donatore incompleti')
+            }
+
+            if (!Number.isFinite(parsedAmount) || parsedAmount < 1) {
+              setMessage('Inserisci un importo valido di almeno 1 euro.')
+              throw new Error('Importo non valido')
+            }
+
+            const payment = await createPayment({
+              nome: donationForm.nome.trim(),
+              email: donationForm.email.trim(),
+              importo: parsedAmount,
+            })
+
+            return payment.orderId
+          },
+          onApprove: async (data) => {
+            setIsProcessing(true)
+            setMessage('')
+
+            try {
+              const capturedPayment = await capturePayment(data.orderID)
+
+              await createDonation({
+                nome: donationForm.nome.trim(),
+                email: donationForm.email.trim(),
+                importo: Number(donationAmount),
+                paypalOrderId: capturedPayment.orderId,
+                payerId: capturedPayment.payerId,
+                captureId: capturedPayment.captureId,
+                paymentStatus: capturedPayment.status,
+              })
+
+              setMessage('Donazione completata con successo. Grazie per il tuo sostegno.')
+              setDonationAmount('25')
+              setDonationForm((current) => ({
+                nome: isAuthenticated ? user?.nome ?? current.nome : '',
+                email: isAuthenticated ? user?.email ?? current.email : '',
+              }))
+            } catch (err) {
+              setMessage(err.message || 'Errore durante il completamento della donazione.')
+            } finally {
+              setIsProcessing(false)
+            }
+          },
+          onError: (err) => {
+            setPaypalError(err?.message || 'Errore nella transazione PayPal.')
+            setIsProcessing(false)
+          },
+        })
+
+        if (buttons.isEligible()) {
+          await buttons.render(paypalButtonRef.current)
+        }
+      } catch (err) {
+        if (!disposed) {
+          setPaypalError(err.message || 'Errore durante l inizializzazione di PayPal.')
+        }
+      }
+    }
+
+    renderPayPalButton()
+
+    return () => {
+      disposed = true
+      if (paypalButtonRef.current) {
+        paypalButtonRef.current.innerHTML = ''
+      }
+    }
+  }, [paypalClientId, donationAmount, donationForm.email, donationForm.nome, isAuthenticated, user])
 
   return (
     <main className="space-y-8">
       <PageHero
         eyebrow="Donazioni"
-        title="Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod."
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae."
+        title="Sostieni le attivita dell associazione con una donazione sicura."
+        description="Il pulsante PayPal crea l ordine sul backend, cattura il pagamento tramite API REST e salva la donazione nel database al completamento."
         tone="secondary"
         actions={
           <>
             <ActionLink to="/contatti">Richiedi dettagli</ActionLink>
-            <ActionLink to="/chi-siamo" variant="secondary">
-              Scopri il progetto
+            <ActionLink to="/privacy" variant="secondary">
+              Privacy e trattamento dati
             </ActionLink>
           </>
         }
@@ -120,21 +191,19 @@ function DonazioniPage() {
 
       <section className="space-y-5">
         <SectionHeading
-          eyebrow="Modalita"
-          title="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          eyebrow="Come funziona"
+          title="Un flusso standard, chiaro e tracciabile."
+          description="I dati del donatore vengono raccolti dal form e inviati correttamente al backend per creare e finalizzare il pagamento."
         />
 
         <div className="grid gap-4 lg:grid-cols-3">
           {donationCards.map((text, index) => (
             <article
               key={text}
-              className="rounded-[1.6rem] border-2 border-primary/20 bg-base p-4 md:p-5 lg:p-6 shadow-[0_8px_18px_rgba(0,0,0,0.08)]"
+              className="rounded-[1.6rem] border-2 border-primary/20 bg-base p-4 shadow-[0_8px_18px_rgba(0,0,0,0.08)]"
             >
-              <p className="mb-2 text-xs font-bold uppercase tracking-[0.22em] text-primary">
-                Opzione {index + 1}
-              </p>
-              <p className="text-xs md:text-sm font-medium leading-6 md:leading-7 text-text/85 md:text-text/80">{text}</p>
+              <p className="mb-2 text-xs font-bold uppercase tracking-[0.22em] text-primary">Step {index + 1}</p>
+              <p className="text-sm leading-7 text-text/80">{text}</p>
             </article>
           ))}
         </div>
@@ -144,17 +213,17 @@ function DonazioniPage() {
         <div>
           <SectionHeading
             eyebrow="Impatto"
-            title="Sed ut perspiciatis unde omnis iste natus error sit voluptatem."
-            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
+            title="Ogni contributo diventa iniziative concrete."
+            description="Le donazioni raccolte aiutano a sostenere eventi inclusivi, attivita educative, strumenti operativi e momenti di incontro per le famiglie."
           />
 
           <div className="mt-6 grid gap-4 md:grid-cols-2">
             {impactCards.map((text) => (
               <div
                 key={text}
-                className="rounded-[1.4rem] border-2 border-primary/20 bg-background p-4 md:p-5 shadow-[0_6px_14px_rgba(0,0,0,0.06)]"
+                className="rounded-[1.4rem] border-2 border-primary/20 bg-background p-4 shadow-[0_6px_14px_rgba(0,0,0,0.06)]"
               >
-                <p className="text-xs md:text-sm font-medium leading-6 md:leading-7 text-text/85 md:text-text/80">{text}</p>
+                <p className="text-sm leading-7 text-text/80">{text}</p>
               </div>
             ))}
           </div>
@@ -163,18 +232,17 @@ function DonazioniPage() {
         <PlaceholderImage alt="Impatto donazioni" className="h-72 md:h-80 lg:h-full lg:min-h-96" />
       </section>
 
-      {/* Donation Form */}
-      <section className="rounded-[2rem] border-2 border-primary/20 bg-base p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] md:p-8 max-w-2xl mx-auto w-full">
-        <h2 className="text-2xl md:text-3xl font-bold text-text mb-6 text-center">Fai una Donazione</h2>
+      <section className="mx-auto w-full max-w-2xl rounded-[2rem] border-2 border-primary/20 bg-base p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] md:p-8">
+        <h2 className="mb-6 text-center text-2xl font-bold text-text md:text-3xl">Fai una donazione</h2>
 
         <div className="space-y-5">
-          {/* Donation Amount */}
           <div>
-            <label className="block mb-3 text-sm font-medium text-text">Importo (€)</label>
-            <div className="grid grid-cols-4 gap-2 mb-4">
+            <label className="mb-3 block text-sm font-medium text-text">Importo (EUR)</label>
+            <div className="mb-4 grid grid-cols-4 gap-2">
               {['10', '25', '50', '100'].map((amount) => (
                 <button
                   key={amount}
+                  type="button"
                   onClick={() => setDonationAmount(amount)}
                   className={`rounded-lg py-2 text-sm font-semibold transition ${
                     donationAmount === amount
@@ -182,70 +250,71 @@ function DonazioniPage() {
                       : 'border-2 border-primary/20 text-primary hover:bg-primary/5'
                   }`}
                 >
-                  €{amount}
+                  EUR {amount}
                 </button>
               ))}
             </div>
-            <div>
-              <input
-                type="number"
-                min="1"
-                step="0.01"
-                value={donationAmount}
-                onChange={(e) => setDonationAmount(e.target.value)}
-                className="w-full rounded-xl border-2 border-primary/20 bg-background px-4 py-3 text-sm text-text outline-none focus:border-primary focus:ring-4 focus:ring-primary/12 transition"
-                placeholder="Importo personalizzato"
-              />
-            </div>
+            <input
+              type="number"
+              min="1"
+              step="0.01"
+              value={donationAmount}
+              onChange={(event) => setDonationAmount(event.target.value)}
+              className="w-full rounded-xl border-2 border-primary/20 bg-background px-4 py-3 text-sm text-text outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/12"
+              placeholder="Importo personalizzato"
+            />
           </div>
 
-          {/* Name */}
           <div>
-            <label className="block mb-2 text-sm font-medium text-text">Nome</label>
+            <label className="mb-2 block text-sm font-medium text-text">Nome</label>
             <input
               type="text"
               value={donationForm.nome}
-              onChange={(e) => setDonationForm({ ...donationForm, nome: e.target.value })}
-              className="w-full rounded-xl border-2 border-primary/20 bg-background px-4 py-3 text-sm text-text outline-none focus:border-primary focus:ring-4 focus:ring-primary/12 transition"
+              onChange={(event) => setDonationForm((current) => ({ ...current, nome: event.target.value }))}
+              className="w-full rounded-xl border-2 border-primary/20 bg-background px-4 py-3 text-sm text-text outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/12"
               placeholder="Il tuo nome"
             />
           </div>
 
-          {/* Email */}
           <div>
-            <label className="block mb-2 text-sm font-medium text-text">Email</label>
+            <label className="mb-2 block text-sm font-medium text-text">Email</label>
             <input
               type="email"
               value={donationForm.email}
-              onChange={(e) => setDonationForm({ ...donationForm, email: e.target.value })}
-              className="w-full rounded-xl border-2 border-primary/20 bg-background px-4 py-3 text-sm text-text outline-none focus:border-primary focus:ring-4 focus:ring-primary/12 transition"
+              onChange={(event) => setDonationForm((current) => ({ ...current, email: event.target.value }))}
+              className="w-full rounded-xl border-2 border-primary/20 bg-background px-4 py-3 text-sm text-text outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/12"
               placeholder="La tua email"
             />
           </div>
 
-          {/* Message */}
           {message && (
-            <div className={`rounded-lg border-2 px-4 py-3 text-sm font-medium ${
-              message.includes('✅')
-                ? 'border-green-200 bg-green-50 text-green-700'
-                : 'border-accent/30 bg-accent/10 text-accent'
-            }`}>
+            <div className="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-700">
               {message}
             </div>
           )}
 
-          {/* PayPal Button */}
-          <div className="mt-6">
-            <div
-              ref={paypalButtonRef}
-              className="paypal-button-container"
-              style={{ minHeight: '80px' }}
-            />
-          </div>
+          {paypalError && (
+            <div className="rounded-lg border border-accent/30 bg-accent/10 px-4 py-3 text-sm font-medium text-accent">
+              {paypalError}
+            </div>
+          )}
 
-          <p className="text-xs text-text/60 text-center">
-            Powered by PayPal • I tuoi dati sono al sicuro
+          {!paypalClientId ? (
+            <div className="rounded-lg border border-accent/30 bg-accent/10 px-4 py-3 text-sm font-medium text-text">
+              Configura <span className="font-semibold">VITE_PAYPAL_CLIENT_ID</span> nel frontend per visualizzare il
+              pulsante PayPal.
+            </div>
+          ) : (
+            <div className="mt-6">
+              <div ref={paypalButtonRef} className="paypal-button-container" style={{ minHeight: '80px' }} />
+            </div>
+          )}
+
+          <p className="text-center text-xs text-text/60">
+            PayPal crea e cattura l ordine dal backend. Lo stato della donazione viene salvato solo a pagamento
+            completato.
           </p>
+          {isProcessing && <p className="text-center text-xs font-semibold text-primary">Elaborazione pagamento...</p>}
         </div>
       </section>
     </main>

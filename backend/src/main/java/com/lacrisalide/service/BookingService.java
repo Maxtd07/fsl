@@ -1,41 +1,80 @@
 package com.lacrisalide.service;
 
-import org.springframework.stereotype.Service;
-import lombok.RequiredArgsConstructor;
-import java.util.List;
-import com.lacrisalide.repository.BookingRepository;
-import com.lacrisalide.repository.EventRepository;
-import com.lacrisalide.repository.UserRepository;
+import com.lacrisalide.dto.booking.BookingResponse;
+import com.lacrisalide.exception.BadRequestException;
+import com.lacrisalide.exception.ResourceNotFoundException;
 import com.lacrisalide.model.Booking;
 import com.lacrisalide.model.Event;
 import com.lacrisalide.model.User;
+import com.lacrisalide.repository.BookingRepository;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class BookingService {
- private final BookingRepository bookingRepo;
- private final EventRepository eventRepo;
- private final UserRepository userRepo;
 
- public Booking create(Long eventId, Long userId) {
-  Event event = eventRepo.findById(eventId).orElseThrow(() -> new RuntimeException("Evento non trovato"));
-  User user = userRepo.findById(userId).orElseThrow(() -> new RuntimeException("Utente non trovato"));
-  
-  Booking booking = new Booking();
-  booking.setEvent(event);
-  booking.setUser(user);
-  return bookingRepo.save(booking);
+ private final BookingRepository bookingRepository;
+ private final EventService eventService;
+ private final UserService userService;
+ private final EmailService emailService;
+
+ public BookingResponse create(Long eventId, Long userId) {
+  Event event = eventService.getEntityById(eventId);
+  User user = userService.findById(userId);
+
+  if (bookingRepository.existsByUserIdAndEventId(userId, eventId)) {
+   throw new BadRequestException("Sei già iscritto a questo evento");
+  }
+
+  long currentParticipants = bookingRepository.countByEventId(eventId);
+  if (currentParticipants >= event.getMaxPartecipanti()) {
+   throw new BadRequestException("L'evento è al completo");
+  }
+
+  Booking booking = bookingRepository.save(
+   Booking.builder()
+    .event(event)
+    .user(user)
+    .build()
+  );
+
+  boolean emailSent = emailService.sendBookingConfirmation(user, event);
+  return toResponse(booking, emailSent);
  }
 
- public List<Booking> getByEvent(Long eventId) {
-  return bookingRepo.findByEventId(eventId);
+ public List<BookingResponse> getByUser(Long userId) {
+  return bookingRepository.findByUserIdOrderByCreatedAtDesc(userId).stream()
+   .map(booking -> toResponse(booking, false))
+   .toList();
  }
 
- public List<Booking> getByUser(Long userId) {
-  return bookingRepo.findByUserId(userId);
+ public List<BookingResponse> getByEvent(Long eventId) {
+  eventService.getEntityById(eventId);
+  return bookingRepository.findByEventIdOrderByCreatedAtDesc(eventId).stream()
+   .map(booking -> toResponse(booking, false))
+   .toList();
  }
 
  public void delete(Long id) {
-  bookingRepo.deleteById(id);
+  Booking booking = bookingRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Iscrizione non trovata"));
+  bookingRepository.delete(booking);
+ }
+
+ private BookingResponse toResponse(Booking booking, boolean emailSent) {
+  return new BookingResponse(
+   booking.getId(),
+   booking.getEvent().getId(),
+   booking.getEvent().getTitolo(),
+   booking.getEvent().getData(),
+   booking.getEvent().getLuogo(),
+   booking.getUser().getId(),
+   booking.getUser().getNome(),
+   booking.getUser().getEmail(),
+   booking.getCreatedAt(),
+   emailSent,
+   "/api/events/" + booking.getEvent().getId() + "/calendar"
+  );
  }
 }

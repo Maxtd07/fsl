@@ -1,42 +1,82 @@
-import { createContext, useContext, useState, useEffect } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
+import { fetchCurrentUser, loginUser, registerUser } from '../lib/api.js'
 
 const AuthContext = createContext(null)
+const AUTH_STORAGE_KEY = 'authToken'
 
 export function AuthProvider({ children }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [user, setUser] = useState(null)
+  const [token, setToken] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
-  const [admin, setAdmin] = useState(null)
 
-  // Check if user is already logged in on mount
   useEffect(() => {
-    const token = localStorage.getItem('adminToken')
-    if (token) {
-      setIsAuthenticated(true)
-      const adminData = localStorage.getItem('adminData')
-      if (adminData) {
-        setAdmin(JSON.parse(adminData))
+    const savedToken = localStorage.getItem(AUTH_STORAGE_KEY)
+
+    async function restoreSession() {
+      if (!savedToken) {
+        setIsLoading(false)
+        return
+      }
+
+      try {
+        setToken(savedToken)
+        const currentUser = await fetchCurrentUser()
+        setUser(currentUser)
+      } catch {
+        localStorage.removeItem(AUTH_STORAGE_KEY)
+        setToken(null)
+        setUser(null)
+      } finally {
+        setIsLoading(false)
       }
     }
-    setIsLoading(false)
+
+    restoreSession()
   }, [])
 
-  const login = (username, token) => {
-    setIsAuthenticated(true)
-    const adminData = { username }
-    setAdmin(adminData)
-    localStorage.setItem('adminToken', token)
-    localStorage.setItem('adminData', JSON.stringify(adminData))
+  const persistSession = (authResponse) => {
+    localStorage.setItem(AUTH_STORAGE_KEY, authResponse.token)
+    setToken(authResponse.token)
+    setUser(authResponse.user)
+    return authResponse.user
+  }
+
+  const login = async (credentials) => {
+    const authResponse = await loginUser(credentials)
+    return persistSession(authResponse)
+  }
+
+  const register = async (payload) => {
+    const authResponse = await registerUser(payload)
+    return persistSession(authResponse)
   }
 
   const logout = () => {
-    setIsAuthenticated(false)
-    setAdmin(null)
-    localStorage.removeItem('adminToken')
-    localStorage.removeItem('adminData')
+    localStorage.removeItem(AUTH_STORAGE_KEY)
+    setToken(null)
+    setUser(null)
+  }
+
+  const refreshUser = async () => {
+    const currentUser = await fetchCurrentUser()
+    setUser(currentUser)
+    return currentUser
   }
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, isLoading, admin, login, logout }}>
+    <AuthContext.Provider
+      value={{
+        token,
+        user,
+        isLoading,
+        isAuthenticated: Boolean(user),
+        isAdmin: user?.ruolo === 'ADMIN',
+        login,
+        register,
+        logout,
+        refreshUser,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   )

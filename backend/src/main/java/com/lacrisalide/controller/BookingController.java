@@ -1,15 +1,16 @@
 package com.lacrisalide.controller;
 
-import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpStatus;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import java.util.List;
+import com.lacrisalide.dto.booking.BookingRequest;
+import com.lacrisalide.dto.booking.BookingResponse;
+import com.lacrisalide.security.AppUserPrincipal;
 import com.lacrisalide.service.BookingService;
-import com.lacrisalide.model.Booking;
+import jakarta.validation.Valid;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
-@Slf4j
 @RestController
 @RequestMapping("/api/bookings")
 @RequiredArgsConstructor
@@ -17,34 +18,32 @@ public class BookingController {
 
  private final BookingService service;
 
- // Crea una nuova iscrizione
- @PostMapping("/{eventId}/users/{userId}")
- public ResponseEntity<?> create(@PathVariable Long eventId, @PathVariable Long userId) {
-  try {
-   Booking booking = service.create(eventId, userId);
-   return ResponseEntity.ok(booking);
-  } catch (Exception e) {
-   log.error("Errore creazione booking: ", e);
-   return ResponseEntity.badRequest().body("Errore: " + e.getMessage());
-  }
+ @PostMapping
+ public ResponseEntity<BookingResponse> create(
+  @Valid @RequestBody BookingRequest request,
+  @AuthenticationPrincipal AppUserPrincipal principal
+ ) {
+  return ResponseEntity.ok(service.create(request.eventId(), principal.getId()));
  }
 
- // Ottieni tutte le iscrizioni per un evento
+ @GetMapping("/my")
+ public List<BookingResponse> getMyBookings(@AuthenticationPrincipal AppUserPrincipal principal) {
+  return service.getByUser(principal.getId());
+ }
+
  @GetMapping("/event/{eventId}")
- public List<Booking> getByEvent(@PathVariable Long eventId) {
+ public List<BookingResponse> getByEvent(@PathVariable Long eventId) {
   return service.getByEvent(eventId);
  }
 
- // Ottieni tutte le iscrizioni di un utente
  @GetMapping("/user/{userId}")
- public List<Booking> getByUser(@PathVariable Long userId) {
+ public List<BookingResponse> getByUser(@PathVariable Long userId) {
   return service.getByUser(userId);
  }
 
- // Elimina iscrizione
  @DeleteMapping("/{id}")
- public ResponseEntity<?> delete(@PathVariable Long id) {
+ public ResponseEntity<Void> delete(@PathVariable Long id) {
   service.delete(id);
-  return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+  return ResponseEntity.noContent().build();
  }
 }

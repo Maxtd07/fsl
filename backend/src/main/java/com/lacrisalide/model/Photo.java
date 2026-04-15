@@ -20,7 +20,7 @@ public class Photo {
  @Column(columnDefinition = "LONGTEXT")
  private String immagine; // Base64 encoded image
 
- @Temporal(TemporalType.TIMESTAMP)
+ @Column(nullable = false, updatable = false)
  private LocalDateTime createdAt;
 
  @PrePersist
