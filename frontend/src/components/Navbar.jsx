@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { useAuth } from '../context/AuthContext.jsx'
 import logo from '../assets/logo.png'
 
@@ -57,8 +59,8 @@ function Navbar() {
           <NavLink
             to={sostieniLink.to}
             className={({ isActive }) =>
-              `${navLinkClasses} border-secondary/40 bg-secondary px-5 text-white font-semibold hover:bg-secondary/90 ${
-                isActive ? 'ring-3 ring-secondary/40 ring-offset-2' : ''
+              `${navLinkClasses} border-accent/40 bg-accent px-5 text-white font-semibold hover:bg-accent/90 ${
+                isActive ? 'ring-3 ring-accent/40 ring-offset-2' : ''
               }`
             }
           >
@@ -94,9 +96,10 @@ function Navbar() {
           ) : (
             <NavLink
               to="/accedi"
-              className="rounded-lg border border-secondary/30 bg-secondary px-4 py-2.5 text-xs font-semibold text-white transition-all duration-200 hover:bg-secondary/90 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-secondary/40 focus-visible:ring-offset-2"
+              className="rounded-lg border border-accent/30 bg-accent px-4 py-2.5 text-white transition-all duration-200 hover:bg-accent/90 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-accent/40 focus-visible:ring-offset-2"
+              title="Accedi"
             >
-              Accedi
+              <FontAwesomeIcon icon={faUser} className="text-lg" />
             </NavLink>
           )}
         </nav>
@@ -150,7 +153,7 @@ function Navbar() {
           <NavLink
             to={sostieniLink.to}
             onClick={() => setIsOpen(false)}
-            className="rounded-lg border border-secondary/40 bg-secondary px-4 py-3 text-center text-xs font-semibold text-white transition-all duration-200 hover:bg-secondary/90"
+            className="rounded-lg border border-accent/40 bg-accent px-4 py-3 text-center text-xs font-semibold text-white transition-all duration-200 hover:bg-accent/90"
           >
             {sostieniLink.label}
           </NavLink>
@@ -189,9 +192,10 @@ function Navbar() {
             <NavLink
               to="/accedi"
               onClick={() => setIsOpen(false)}
-              className="rounded-lg border border-secondary/30 bg-secondary px-4 py-3 text-center text-xs font-semibold text-white transition-all duration-200 hover:bg-secondary/90"
+              className="rounded-lg border border-accent/30 bg-accent px-4 py-3 text-center text-white transition-all duration-200 hover:bg-accent/90"
+              title="Accedi"
             >
-              Accedi
+              <FontAwesomeIcon icon={faUser} className="text-lg" />
             </NavLink>
           )}
         </nav>

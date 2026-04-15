@@ -204,7 +204,7 @@ function DonazioniPage() {
             <div className="space-y-3 text-sm text-text/85">
               <p>Nella dichiarazione dei redditi, destina il 5 per mille a La Crisalide.</p>
               <p className="font-semibold text-primary">Codice Fiscale:</p>
-              <p className="font-mono text-base tracking-wide bg-primary/8 p-3 rounded-lg">
+              <p className="font-mono text-base tracking-wide bg-primary/8 p-3 rounded-lg text-text">
                 90034110446
               </p>
               <p className="text-xs text-text/60 pt-2">
@@ -219,7 +219,7 @@ function DonazioniPage() {
             <div className="space-y-3 text-sm text-text/85">
               <p>Verso il conto corrente postale intestato a La Crisalide.</p>
               <p className="font-semibold text-secondary">Numero:</p>
-              <p className="font-mono text-base tracking-wide bg-secondary/8 p-3 rounded-lg">
+              <p className="font-mono text-base tracking-wide bg-secondary/8 p-3 rounded-lg text-text">
                 34201830
               </p>
               <p className="text-xs text-text/60 pt-2">
@@ -233,8 +233,8 @@ function DonazioniPage() {
             <h3 className="mb-4 text-lg font-bold text-text">Bonifico Bancario</h3>
             <div className="space-y-3 text-sm text-text/85">
               <p>Effettua un bonifico diretto sul nostro IBAN.</p>
-              <p className="font-semibold">IBAN:</p>
-              <p className="font-mono text-base tracking-wide bg-accent/8 p-3 rounded-lg break-all">
+              <p className="font-semibold text-text">IBAN:</p>
+              <p className="font-mono text-base tracking-wide bg-accent/8 p-3 rounded-lg break-all text-text">
                 IT76 S076 0113 5000 0000 3420 1830
               </p>
               <p className="text-xs text-text/60 pt-2">

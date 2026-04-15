@@ -51,7 +51,7 @@ function Button({
     secondary:
       'bg-secondary text-white shadow-md hover:bg-secondary/90 active:bg-secondary/80 disabled:bg-secondary',
     accent:
-      'bg-accent text-dark shadow-md hover:bg-accent/90 active:bg-accent/80 disabled:bg-accent',
+      'bg-accent text-white shadow-md hover:bg-accent/90 active:bg-accent/80 disabled:bg-accent',
     outline:
       'border-2 border-primary text-primary bg-transparent hover:bg-primary/5 active:bg-primary/10',
     ghost: 'text-primary hover:bg-primary/10 active:bg-primary/15 bg-transparent',
