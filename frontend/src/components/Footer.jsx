@@ -1,4 +1,7 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { Link } from 'react-router-dom'
+
 
 const footerLinkClasses =
   'transition-colors duration-200 hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/20 focus-visible:ring-offset-2 focus-visible:ring-offset-text'
@@ -10,30 +13,41 @@ function Footer() {
         <div className="mb-6 border-b border-white/10 pb-6 lg:px-10">
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/92">La Crisalide</p>
           <p className="mt-4 max-w-md leading-6">
-            La Crisalide accompagna famiglie e persone con disabilita in percorsi di autonomia, inclusione e
-            partecipazione alla vita sociale.
+            la Crisalide non rimane sempre statica, si trasforma, si evolve,
+            muta fino a diventare farfalla
+
           </p>
         </div>
 
         <div className="grid grid-cols-2 gap-x-8 gap-y-4 lg:px-10">
           <div>
+
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.22em] text-white/92">Social</p>
             <div className="flex flex-col gap-2">
               <a
-                className={footerLinkClasses}
+                className={`${footerLinkClasses} flex items-center gap-2`}
                 href="https://www.facebook.com/lacrisalideassociazionefamigliedisabili/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Facebook
+                <FontAwesomeIcon
+                  icon={faFacebook}
+                  className="text-white text-xl"
+                />
+                <span>Facebook</span>
               </a>
+
               <a
-                className={footerLinkClasses}
+                className={`${footerLinkClasses} flex items-center gap-2`}
                 href="https://www.instagram.com/lacrisalide_associazione/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Instagram
+                <FontAwesomeIcon
+                  icon={faInstagram}
+                  className="text-white text-xl"
+                />
+                <span>Instagram</span>
               </a>
               <Link className={footerLinkClasses} to="/privacy">
                 Privacy e GDPR
@@ -52,6 +66,7 @@ function Footer() {
               </a>
             </div>
           </div>
+
 
           <div className="col-span-2 text-center text-sm text-white/80">
             Via del Palo 10, Porto Sant&apos;Elpidio (FM) 63821

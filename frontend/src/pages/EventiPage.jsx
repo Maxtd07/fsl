@@ -33,6 +33,93 @@ function formatEventMeta(event) {
   return meta.join(' | ')
 }
 
+function EventModal({
+  event,
+  isOpen,
+  onClose,
+  onBooking,
+  isBooking,
+  isAuthenticated,
+  isAlreadyBooked,
+  bookingMessage,
+}) {
+  if (!isOpen || !event) return null
+
+  const isFull = event.availableSeats <= 0
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+      <div className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-[2rem] border-2 border-primary/20 bg-base p-6 shadow-[0_20px_60px_rgba(0,0,0,0.3)] md:p-8">
+
+        <button
+          onClick={onClose}
+          className="absolute right-4 top-4 text-2xl font-bold text-text/60 transition hover:text-text"
+        >
+          x
+        </button>
+
+        {event.volantino ? (
+          <img src={event.volantino} alt={event.titolo} className="mb-6 h-64 w-full rounded-xl object-cover" />
+        ) : (
+          <PlaceholderImage alt={event.titolo} className="mb-6 h-64 w-full rounded-xl" />
+        )}
+
+        <h2 className="mb-2 text-3xl font-bold text-text md:text-4xl">{event.titolo}</h2>
+        <p className="mb-4 text-sm text-text/60">{formatEventMeta(event)}</p>
+        <p className="mb-6 text-base leading-7 text-text/85">{event.descrizione}</p>
+
+        {/* Meta info */}
+        <p className="text-sm text-text/60 mb-4">
+          📅 {formatEventMeta(event)}
+        </p>
+
+        {/* Description */}
+        <p className="text-text/85 mb-6 leading-7">{event.descrizione}</p>
+
+        {/* Available seats */}
+        <div className="mb-6 rounded-lg border-2 border-primary/20 bg-primary/5 p-4">
+
+          <p className="text-sm font-medium text-text">
+            Iscritti: {event.registeredParticipants} / {event.maxPartecipanti}
+          </p>
+          <p className="mt-1 text-sm font-medium text-text">
+            {isFull ? 'Evento al completo.' : `Posti disponibili: ${event.availableSeats}`}
+          </p>
+        </div>
+
+        {bookingMessage && (
+          <div className="mb-4 rounded-lg border border-secondary/25 bg-secondary/10 px-4 py-3 text-sm font-medium text-text">
+            {bookingMessage}
+          </div>
+        )}
+
+        <div className="flex flex-wrap gap-3">
+          <button
+            onClick={onBooking}
+            disabled={isFull || isBooking || isAlreadyBooked}
+            className="flex-1 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(76,130,169,0.22)] transition duration-200 hover:bg-primary/92 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/18 disabled:opacity-50"
+          >
+            {isAlreadyBooked
+              ? 'Sei gia iscritto'
+              : isBooking
+                ? 'Iscrizione in corso...'
+                : isAuthenticated
+                  ? 'Iscriviti all evento'
+                  : 'Accedi per iscriverti'}
+          </button>
+
+          <a
+            href={getEventCalendarLink(event.id)}
+            className="rounded-full border-2 border-primary/20 px-5 py-3 text-sm font-semibold text-primary hover:bg-primary/5 transition"
+          >
+            Scarica calendario
+          </a>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function EventiPage() {
   const { isAuthenticated } = useAuth()
   const [events, setEvents] = useState([])
@@ -96,6 +183,7 @@ function EventiPage() {
         title="Partecipa alle attivita dell associazione e iscriviti con il tuo account."
         description="Gli eventi vengono caricati dal backend Spring Boot. Gli utenti autenticati possono iscriversi, ricevere una conferma email e aggiungere l appuntamento al calendario."
         tone="primary"
+
         actions={
           <>
             <ActionLink to={isAuthenticated ? '/eventi' : '/accedi'}>{isAuthenticated ? 'La mia area' : 'Accedi ora'}</ActionLink>
@@ -134,9 +222,8 @@ function EventiPage() {
       <section className="border-primary/15 px-6 py-10 lg:py-12">
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <SectionHeading
-            eyebrow="Prossimi eventi"
-            title="Scopri e iscriviti agli eventi."
-            description="Visualizza gli eventi nel calendario o come lista."
+            title="I nostri eventi"
+            description="Scopri e iscriviti ai nostri eventi dedicati a famiglie e persone con disabilità."
           />
 
           <div className="flex gap-2">

@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import ActionLink from '../components/ActionLink.jsx'
-import PlaceholderImage from '../components/PlaceholderImage.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
 import { useAuth } from '../context/AuthContext.jsx'
 
@@ -104,7 +103,6 @@ function AdminLoginPage() {
           </form>
         </div>
       </section>
-
       <section className="grid gap-6 rounded-[2rem] border border-primary/12 bg-base p-6 shadow-[0_18px_40px_rgba(76,130,169,0.06)] md:p-8 lg:grid-cols-[minmax(280px,0.9fr)_minmax(0,1.1fr)] lg:items-center">
         <PlaceholderImage alt="Admin preview" className="h-72 md:h-80 lg:h-full lg:min-h-96" />
         <div className="grid gap-4">
