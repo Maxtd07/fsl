@@ -16,11 +16,15 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class EventService {
 
+ private static final String EVENT_NOT_FOUND_MESSAGE = "Evento non trovato";
+ private static final String INVALID_DATE_RANGE_MESSAGE = "La data di inizio deve essere prima della data di fine";
+ private static final String INVALID_END_DATE_MESSAGE = "La data di fine deve essere successiva alla data di inizio";
+
  private final EventRepository eventRepository;
  private final BookingRepository bookingRepository;
 
  public EventResponse create(EventRequest request) {
-  return toResponse(eventRepository.save(toEntity(request)));
+  return toResponse(eventRepository.save(buildEvent(request)));
  }
 
  public List<EventResponse> list() {
@@ -28,9 +32,7 @@ public class EventService {
  }
 
  public List<EventResponse> getEventsByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
-  if (startDate.isAfter(endDate)) {
-   throw new BadRequestException("La data di inizio deve essere prima della data di fine");
-  }
+  validateDateRange(startDate, endDate);
   return eventRepository.findByDataIsAfterAndDataIsBeforeOrderByDataAsc(startDate, endDate)
    .stream()
    .map(this::toResponse)
@@ -49,19 +51,12 @@ public class EventService {
  }
 
  public Event getEntityById(Long id) {
-  return eventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Evento non trovato"));
+  return eventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(EVENT_NOT_FOUND_MESSAGE));
  }
 
  public EventResponse update(Long id, EventRequest request) {
   Event event = getEntityById(id);
-  validateDates(request);
-  event.setTitolo(request.titolo().trim());
-  event.setDescrizione(request.descrizione().trim());
-  event.setData(request.data());
-  event.setDataFine(request.dataFine());
-  event.setLuogo(request.luogo().trim());
-  event.setMaxPartecipanti(request.maxPartecipanti());
-  event.setVolantino(request.volantino());
+  applyRequest(event, request);
   return toResponse(eventRepository.save(event));
  }
 
@@ -71,7 +66,6 @@ public class EventService {
 
  public EventResponse toResponse(Event event) {
   long registeredParticipants = bookingRepository.countByEventId(event.getId());
-  long availableSeats = Math.max(0, event.getMaxPartecipanti() - registeredParticipants);
   return new EventResponse(
    event.getId(),
    event.getTitolo(),
@@ -82,26 +76,40 @@ public class EventService {
    event.getMaxPartecipanti(),
    event.getVolantino(),
    registeredParticipants,
-   availableSeats
+   calculateAvailableSeats(event, registeredParticipants)
   );
  }
 
- private Event toEntity(EventRequest request) {
+ private Event buildEvent(EventRequest request) {
+  Event event = new Event();
+  applyRequest(event, request);
+  return event;
+ }
+
+ private void applyRequest(Event event, EventRequest request) {
   validateDates(request);
-  return Event.builder()
-   .titolo(request.titolo().trim())
-   .descrizione(request.descrizione().trim())
-   .data(request.data())
-   .dataFine(request.dataFine())
-   .luogo(request.luogo().trim())
-   .maxPartecipanti(request.maxPartecipanti())
-   .volantino(request.volantino())
-   .build();
+  event.setTitolo(request.titolo().trim());
+  event.setDescrizione(request.descrizione().trim());
+  event.setData(request.data());
+  event.setDataFine(request.dataFine());
+  event.setLuogo(request.luogo().trim());
+  event.setMaxPartecipanti(request.maxPartecipanti());
+  event.setVolantino(request.volantino());
+ }
+
+ private void validateDateRange(LocalDateTime startDate, LocalDateTime endDate) {
+  if (startDate.isAfter(endDate)) {
+   throw new BadRequestException(INVALID_DATE_RANGE_MESSAGE);
+  }
  }
 
  private void validateDates(EventRequest request) {
   if (request.dataFine() != null && !request.dataFine().isAfter(request.data())) {
-   throw new BadRequestException("La data di fine deve essere successiva alla data di inizio");
+   throw new BadRequestException(INVALID_END_DATE_MESSAGE);
   }
+ }
+
+ private long calculateAvailableSeats(Event event, long registeredParticipants) {
+  return Math.max(0, event.getMaxPartecipanti() - registeredParticipants);
  }
 }

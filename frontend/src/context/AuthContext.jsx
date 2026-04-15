@@ -1,8 +1,19 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { fetchCurrentUser, loginUser, registerUser } from '../lib/api.js'
-
-const AuthContext = createContext(null)
+import AuthContext from './auth-context.js'
 const AUTH_STORAGE_KEY = 'authToken'
+
+function getStoredToken() {
+  return localStorage.getItem(AUTH_STORAGE_KEY)
+}
+
+function clearStoredToken() {
+  localStorage.removeItem(AUTH_STORAGE_KEY)
+}
+
+function storeToken(token) {
+  localStorage.setItem(AUTH_STORAGE_KEY, token)
+}
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
@@ -10,9 +21,9 @@ export function AuthProvider({ children }) {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    const savedToken = localStorage.getItem(AUTH_STORAGE_KEY)
-
     async function restoreSession() {
+      const savedToken = getStoredToken()
+
       if (!savedToken) {
         setIsLoading(false)
         return
@@ -20,12 +31,9 @@ export function AuthProvider({ children }) {
 
       try {
         setToken(savedToken)
-        const currentUser = await fetchCurrentUser()
-        setUser(currentUser)
+        setUser(await fetchCurrentUser())
       } catch {
-        localStorage.removeItem(AUTH_STORAGE_KEY)
-        setToken(null)
-        setUser(null)
+        clearSession()
       } finally {
         setIsLoading(false)
       }
@@ -35,26 +43,29 @@ export function AuthProvider({ children }) {
   }, [])
 
   const persistSession = (authResponse) => {
-    localStorage.setItem(AUTH_STORAGE_KEY, authResponse.token)
+    storeToken(authResponse.token)
     setToken(authResponse.token)
     setUser(authResponse.user)
     return authResponse.user
   }
 
-  const login = async (credentials) => {
-    const authResponse = await loginUser(credentials)
-    return persistSession(authResponse)
-  }
-
-  const register = async (payload) => {
-    const authResponse = await registerUser(payload)
-    return persistSession(authResponse)
-  }
-
-  const logout = () => {
-    localStorage.removeItem(AUTH_STORAGE_KEY)
+  const clearSession = () => {
+    clearStoredToken()
     setToken(null)
     setUser(null)
+  }
+
+  const authenticate = async (request, authAction) => {
+    const authResponse = await authAction(request)
+    return persistSession(authResponse)
+  }
+
+  const login = (credentials) => authenticate(credentials, loginUser)
+
+  const register = (payload) => authenticate(payload, registerUser)
+
+  const logout = () => {
+    clearSession()
   }
 
   const refreshUser = async () => {
@@ -80,12 +91,4 @@ export function AuthProvider({ children }) {
       {children}
     </AuthContext.Provider>
   )
-}
-
-export function useAuth() {
-  const context = useContext(AuthContext)
-  if (!context) {
-    throw new Error('useAuth must be used within AuthProvider')
-  }
-  return context
 }

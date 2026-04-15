@@ -1,10 +1,4 @@
-/**
- * Reusable Input Component
- * - Standardized styling with focus ring and placeholder
- * - Types: text, email, password, number, date, textarea, select
- * - Label, error message, helper text support
- * - Accessibility: aria-label, aria-describedby for errors
- */
+import { useId } from 'react'
 
 function Input({
   label,
@@ -19,29 +13,30 @@ function Input({
   id,
   ...props
 }) {
-  const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`
+  const generatedId = useId()
+  const inputId = id ?? `input-${generatedId.replace(/:/g, '')}`
   const errorId = `${inputId}-error`
   const helperId = `${inputId}-helper`
 
   const baseInputClasses = [
-    'w-full px-4 py-2.5 rounded-lg',
-    'border border-text/20',
-    'bg-base text-text placeholder-text/50',
+    'w-full rounded-lg border border-text/20 bg-base px-4 py-2.5 text-text placeholder-text/50',
     'transition-all duration-200',
-    'focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none',
-    'disabled:bg-background disabled:cursor-not-allowed',
+    'focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20',
+    'disabled:cursor-not-allowed disabled:bg-background',
     error && 'border-red-500 focus:border-red-500 focus:ring-red-500/20',
     className,
   ]
     .filter(Boolean)
     .join(' ')
 
+  const descriptionId = error ? errorId : helperText ? helperId : undefined
+
   return (
     <div className={containerClassName}>
       {label && (
-        <label htmlFor={inputId} className="block mb-2 text-sm font-semibold text-text">
+        <label htmlFor={inputId} className="mb-2 block text-sm font-semibold text-text">
           {label}
-          {required && <span className="text-red-500 ml-1">*</span>}
+          {required && <span className="ml-1 text-red-500">*</span>}
         </label>
       )}
 
@@ -53,7 +48,7 @@ function Input({
           disabled={disabled}
           required={required}
           rows={4}
-          aria-describedby={error ? errorId : helperText ? helperId : undefined}
+          aria-describedby={descriptionId}
           {...props}
         />
       ) : type === 'select' ? (
@@ -62,7 +57,7 @@ function Input({
           className={baseInputClasses}
           disabled={disabled}
           required={required}
-          aria-describedby={error ? errorId : helperText ? helperId : undefined}
+          aria-describedby={descriptionId}
           {...props}
         />
       ) : (
@@ -73,13 +68,13 @@ function Input({
           placeholder={placeholder}
           disabled={disabled}
           required={required}
-          aria-describedby={error ? errorId : helperText ? helperId : undefined}
+          aria-describedby={descriptionId}
           {...props}
         />
       )}
 
       {error && (
-        <p id={errorId} className="mt-2 text-sm text-red-600 font-medium">
+        <p id={errorId} className="mt-2 text-sm font-medium text-red-600">
           {error}
         </p>
       )}

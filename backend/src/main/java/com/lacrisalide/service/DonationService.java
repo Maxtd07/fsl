@@ -18,6 +18,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class DonationService {
 
+ private static final String DONATION_NOT_FOUND_MESSAGE = "Donazione non trovata";
+ private static final String INVALID_PAYMENT_STATUS_MESSAGE = "La donazione puÃ² essere salvata solo dopo una cattura completata";
+ private static final String COMPLETED_PAYMENT_STATUS = "COMPLETED";
+
  private final DonationRepository donationRepository;
  private final PaymentAdapter paymentAdapter;
 
@@ -30,23 +34,8 @@ public class DonationService {
  }
 
  public DonationResponse create(DonationRequest request) {
-  if (request.paymentStatus() != null && !"COMPLETED".equalsIgnoreCase(request.paymentStatus())) {
-   throw new BadRequestException("La donazione può essere salvata solo dopo una cattura completata");
-  }
-
-  Donation donation = donationRepository.save(
-   Donation.builder()
-    .nome(request.nome().trim())
-    .email(request.email().trim().toLowerCase())
-    .importo(request.importo())
-    .paypalOrderId(request.paypalOrderId())
-    .payerId(request.payerId())
-    .captureId(request.captureId())
-    .paymentStatus(request.paymentStatus() == null ? "COMPLETED" : request.paymentStatus())
-    .build()
-  );
-
-  return toResponse(donation);
+  validatePaymentStatus(request.paymentStatus());
+  return toResponse(donationRepository.save(buildDonation(request)));
  }
 
  public List<DonationResponse> list() {
@@ -54,13 +43,33 @@ public class DonationService {
  }
 
  public DonationResponse getById(Long id) {
-  Donation donation = donationRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Donazione non trovata"));
-  return toResponse(donation);
+  return toResponse(findDonationById(id));
  }
 
  public void delete(Long id) {
-  Donation donation = donationRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Donazione non trovata"));
-  donationRepository.delete(donation);
+  donationRepository.delete(findDonationById(id));
+ }
+
+ private void validatePaymentStatus(String paymentStatus) {
+  if (paymentStatus != null && !COMPLETED_PAYMENT_STATUS.equalsIgnoreCase(paymentStatus)) {
+   throw new BadRequestException(INVALID_PAYMENT_STATUS_MESSAGE);
+  }
+ }
+
+ private Donation buildDonation(DonationRequest request) {
+  return Donation.builder()
+   .nome(request.nome().trim())
+   .email(normalizeEmail(request.email()))
+   .importo(request.importo())
+   .paypalOrderId(request.paypalOrderId())
+   .payerId(request.payerId())
+   .captureId(request.captureId())
+   .paymentStatus(resolvePaymentStatus(request.paymentStatus()))
+   .build();
+ }
+
+ private Donation findDonationById(Long id) {
+  return donationRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(DONATION_NOT_FOUND_MESSAGE));
  }
 
  private DonationResponse toResponse(Donation donation) {
@@ -75,5 +84,13 @@ public class DonationService {
    donation.getPaymentStatus(),
    donation.getCreatedAt()
   );
+ }
+
+ private String normalizeEmail(String email) {
+  return email.trim().toLowerCase();
+ }
+
+ private String resolvePaymentStatus(String paymentStatus) {
+  return paymentStatus == null ? COMPLETED_PAYMENT_STATUS : paymentStatus;
  }
 }

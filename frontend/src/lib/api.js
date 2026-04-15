@@ -1,5 +1,30 @@
 const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL ?? '/api').replace(/\/$/, '')
 
+const DEFAULT_HEADERS = {
+  Accept: 'application/json',
+}
+
+function buildQueryString(params) {
+  const searchParams = new URLSearchParams()
+
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== null) {
+      searchParams.append(key, value)
+    }
+  })
+
+  return searchParams.toString()
+}
+
+function withQuery(path, params, { includeEmptyQuery = false } = {}) {
+  const queryString = buildQueryString(params)
+  if (queryString) {
+    return `${path}?${queryString}`
+  }
+
+  return includeEmptyQuery ? `${path}?` : path
+}
+
 export function buildApiUrl(path) {
   const normalizedPath = path.startsWith('/') ? path : `/${path}`
   return `${apiBaseUrl}${normalizedPath}`
@@ -14,11 +39,7 @@ async function parseResponse(response) {
   const data = isJson ? await response.json() : null
 
   if (!response.ok) {
-    const message =
-      data?.message ||
-      data?.error ||
-      data?.title ||
-      `Errore HTTP ${response.status}`
+    const message = [data?.message, data?.error, data?.title].find(Boolean) ?? `Errore HTTP ${response.status}`
     throw new Error(message)
   }
 
@@ -31,7 +52,7 @@ async function parseResponse(response) {
 
 async function apiRequest(path, { method = 'GET', body, auth = false, headers = {} } = {}) {
   const requestHeaders = {
-    Accept: 'application/json',
+    ...DEFAULT_HEADERS,
     ...headers,
   }
 
@@ -55,18 +76,35 @@ async function apiRequest(path, { method = 'GET', body, auth = false, headers = 
   return parseResponse(response)
 }
 
-export function loginUser(credentials) {
-  return apiRequest('/auth/login', {
+function postRequest(path, body, options = {}) {
+  return apiRequest(path, {
+    ...options,
     method: 'POST',
-    body: credentials,
+    body,
   })
 }
 
-export function registerUser(payload) {
-  return apiRequest('/auth/register', {
-    method: 'POST',
-    body: payload,
+function putRequest(path, body, options = {}) {
+  return apiRequest(path, {
+    ...options,
+    method: 'PUT',
+    body,
   })
+}
+
+function deleteRequest(path, options = {}) {
+  return apiRequest(path, {
+    ...options,
+    method: 'DELETE',
+  })
+}
+
+export function loginUser(credentials) {
+  return postRequest('/auth/login', credentials)
+}
+
+export function registerUser(payload) {
+  return postRequest('/auth/register', payload)
 }
 
 export function fetchCurrentUser() {
@@ -84,56 +122,52 @@ export function getEventById(eventId) {
 }
 
 export function getEventsByDateRange(startDate, endDate) {
-  const params = new URLSearchParams()
-  params.append('start', startDate.toISOString())
-  params.append('end', endDate.toISOString())
-  return apiRequest(`/events/filter?${params.toString()}`)
+  return apiRequest(
+    withQuery('/events/filter', {
+      start: startDate.toISOString(),
+      end: endDate.toISOString(),
+    }),
+  )
 }
 
 export function getUpcomingEvents(fromDate) {
-  const params = new URLSearchParams()
-  if (fromDate) {
-    params.append('from', fromDate.toISOString())
-  }
-  return apiRequest(`/events/upcoming?${params.toString()}`)
+  return apiRequest(
+    withQuery('/events/upcoming', {
+      from: fromDate?.toISOString(),
+    }, { includeEmptyQuery: true }),
+  )
 }
 
 export function createEvent(eventData) {
-  return apiRequest('/events', {
-    method: 'POST',
-    body: eventData,
+  return postRequest('/events', eventData, {
     auth: true,
   })
 }
 
 export function updateEvent(eventId, eventData) {
-  return apiRequest(`/events/${eventId}`, {
-    method: 'PUT',
-    body: eventData,
+  return putRequest(`/events/${eventId}`, eventData, {
     auth: true,
   })
 }
 
 export function deleteEvent(eventId) {
-  return apiRequest(`/events/${eventId}`, {
-    method: 'DELETE',
+  return deleteRequest(`/events/${eventId}`, {
     auth: true,
   })
 }
 
 export function sendContactEmail(contactData) {
-  return apiRequest('/email/contatti', {
-    method: 'POST',
-    body: contactData,
-  })
+  return postRequest('/email/contatti', contactData)
 }
 
 export function createBooking(eventId) {
-  return apiRequest('/bookings', {
-    method: 'POST',
-    body: { eventId },
-    auth: true,
-  })
+  return postRequest(
+    '/bookings',
+    { eventId },
+    {
+      auth: true,
+    },
+  )
 }
 
 export function fetchMyBookings() {
@@ -155,8 +189,7 @@ export function getBookingsByUser(userId) {
 }
 
 export function deleteBooking(bookingId) {
-  return apiRequest(`/bookings/${bookingId}`, {
-    method: 'DELETE',
+  return deleteRequest(`/bookings/${bookingId}`, {
     auth: true,
   })
 }
@@ -166,9 +199,7 @@ export function getEventCalendarLink(eventId) {
 }
 
 export function uploadPhoto(photoData) {
-  return apiRequest('/photos', {
-    method: 'POST',
-    body: photoData,
+  return postRequest('/photos', photoData, {
     auth: true,
   })
 }
@@ -178,31 +209,21 @@ export function fetchPhotos() {
 }
 
 export function deletePhoto(photoId) {
-  return apiRequest(`/photos/${photoId}`, {
-    method: 'DELETE',
+  return deleteRequest(`/photos/${photoId}`, {
     auth: true,
   })
 }
 
 export function createPayment(payload) {
-  return apiRequest('/donations/create-payment', {
-    method: 'POST',
-    body: payload,
-  })
+  return postRequest('/donations/create-payment', payload)
 }
 
 export function capturePayment(orderId) {
-  return apiRequest('/donations/capture-payment', {
-    method: 'POST',
-    body: { orderId },
-  })
+  return postRequest('/donations/capture-payment', { orderId })
 }
 
 export function createDonation(donationData) {
-  return apiRequest('/donations', {
-    method: 'POST',
-    body: donationData,
-  })
+  return postRequest('/donations', donationData)
 }
 
 export function fetchDonations() {

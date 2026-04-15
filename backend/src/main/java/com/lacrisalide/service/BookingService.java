@@ -15,6 +15,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class BookingService {
 
+ private static final String BOOKING_NOT_FOUND_MESSAGE = "Iscrizione non trovata";
+ private static final String ALREADY_BOOKED_MESSAGE = "Sei giÃ  iscritto a questo evento";
+ private static final String EVENT_FULL_MESSAGE = "L'evento Ã¨ al completo";
+
  private final BookingRepository bookingRepository;
  private final EventService eventService;
  private final UserService userService;
@@ -23,43 +27,50 @@ public class BookingService {
  public BookingResponse create(Long eventId, Long userId) {
   Event event = eventService.getEntityById(eventId);
   User user = userService.findById(userId);
+  validateBookingAvailability(eventId, event.getMaxPartecipanti(), userId);
 
-  if (bookingRepository.existsByUserIdAndEventId(userId, eventId)) {
-   throw new BadRequestException("Sei già iscritto a questo evento");
-  }
-
-  long currentParticipants = bookingRepository.countByEventId(eventId);
-  if (currentParticipants >= event.getMaxPartecipanti()) {
-   throw new BadRequestException("L'evento è al completo");
-  }
-
-  Booking booking = bookingRepository.save(
-   Booking.builder()
-    .event(event)
-    .user(user)
-    .build()
-  );
-
-  boolean emailSent = emailService.sendBookingConfirmation(user, event);
-  return toResponse(booking, emailSent);
+  Booking booking = bookingRepository.save(buildBooking(event, user));
+  return toResponse(booking, emailService.sendBookingConfirmation(user, event));
  }
 
  public List<BookingResponse> getByUser(Long userId) {
-  return bookingRepository.findByUserIdOrderByCreatedAtDesc(userId).stream()
-   .map(booking -> toResponse(booking, false))
-   .toList();
+  return toResponses(bookingRepository.findByUserIdOrderByCreatedAtDesc(userId));
  }
 
  public List<BookingResponse> getByEvent(Long eventId) {
   eventService.getEntityById(eventId);
-  return bookingRepository.findByEventIdOrderByCreatedAtDesc(eventId).stream()
-   .map(booking -> toResponse(booking, false))
-   .toList();
+  return toResponses(bookingRepository.findByEventIdOrderByCreatedAtDesc(eventId));
  }
 
  public void delete(Long id) {
-  Booking booking = bookingRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Iscrizione non trovata"));
-  bookingRepository.delete(booking);
+  bookingRepository.delete(findBookingById(id));
+ }
+
+ private void validateBookingAvailability(Long eventId, Integer maxParticipants, Long userId) {
+  if (bookingRepository.existsByUserIdAndEventId(userId, eventId)) {
+   throw new BadRequestException(ALREADY_BOOKED_MESSAGE);
+  }
+
+  if (bookingRepository.countByEventId(eventId) >= maxParticipants) {
+   throw new BadRequestException(EVENT_FULL_MESSAGE);
+  }
+ }
+
+ private Booking buildBooking(Event event, User user) {
+  return Booking.builder()
+   .event(event)
+   .user(user)
+   .build();
+ }
+
+ private Booking findBookingById(Long id) {
+  return bookingRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(BOOKING_NOT_FOUND_MESSAGE));
+ }
+
+ private List<BookingResponse> toResponses(List<Booking> bookings) {
+  return bookings.stream()
+   .map(booking -> toResponse(booking, false))
+   .toList();
  }
 
  private BookingResponse toResponse(Booking booking, boolean emailSent) {
@@ -74,7 +85,11 @@ public class BookingService {
    booking.getUser().getEmail(),
    booking.getCreatedAt(),
    emailSent,
-   "/api/events/" + booking.getEvent().getId() + "/calendar"
+   buildCalendarLink(booking)
   );
+ }
+
+ private String buildCalendarLink(Booking booking) {
+  return "/api/events/" + booking.getEvent().getId() + "/calendar";
  }
 }

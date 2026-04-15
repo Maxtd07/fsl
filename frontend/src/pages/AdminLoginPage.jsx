@@ -3,18 +3,48 @@ import { Navigate, useNavigate } from 'react-router-dom'
 import ActionLink from '../components/ActionLink.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
 import PlaceholderImage from '../components/PlaceholderImage.jsx'
-import { useAuth } from '../context/AuthContext.jsx'
+import { useAuth } from '../context/useAuth.js'
+
+const adminLoginFields = [
+  {
+    label: 'Email',
+    name: 'email',
+    type: 'email',
+    autoComplete: 'email',
+    placeholder: 'admin@lacrisalide.it',
+  },
+  {
+    label: 'Password',
+    name: 'password',
+    type: 'password',
+    autoComplete: 'current-password',
+    placeholder: '********',
+  },
+]
+
+const inputClassName =
+  'w-full rounded-2xl border border-primary/15 bg-background px-4 py-3 text-sm text-text outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/12'
+
+const submitButtonClassName =
+  'inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(76,130,169,0.22)] transition duration-200 hover:bg-primary/92 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/18 disabled:opacity-50'
 
 function AdminLoginPage() {
   const navigate = useNavigate()
   const { isAuthenticated, isAdmin, login, logout } = useAuth()
-  const [email, setEmail] = useState('admin@lacrisalide.it')
-  const [password, setPassword] = useState('Admin123!')
+  const [credentials, setCredentials] = useState({
+    email: 'admin@lacrisalide.it',
+    password: 'Admin123!',
+  })
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
 
   if (isAuthenticated && isAdmin) {
     return <Navigate to="/admin/dashboard" replace />
+  }
+
+  const updateCredential = (field) => (event) => {
+    const { value } = event.target
+    setCredentials((current) => ({ ...current, [field]: value }))
   }
 
   async function handleSubmit(event) {
@@ -23,7 +53,7 @@ function AdminLoginPage() {
     setIsLoading(true)
 
     try {
-      const user = await login({ email, password })
+      const user = await login(credentials)
 
       if (user.ruolo !== 'ADMIN') {
         logout()
@@ -60,33 +90,18 @@ function AdminLoginPage() {
           <p className="mb-5 text-xs font-bold uppercase tracking-[0.22em] text-primary">Login amministratori</p>
 
           <form className="space-y-4" onSubmit={handleSubmit}>
-            <label className="block">
-              <span className="mb-2 block text-sm font-medium text-text">Email</span>
-              <input
-                autoComplete="email"
-                className="w-full rounded-2xl border border-primary/15 bg-background px-4 py-3 text-sm text-text outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/12"
-                name="email"
-                type="email"
-                placeholder="admin@lacrisalide.it"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                required
-              />
-            </label>
-
-            <label className="block">
-              <span className="mb-2 block text-sm font-medium text-text">Password</span>
-              <input
-                autoComplete="current-password"
-                className="w-full rounded-2xl border border-primary/15 bg-background px-4 py-3 text-sm text-text outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/12"
-                name="password"
-                type="password"
-                placeholder="********"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                required
-              />
-            </label>
+            {adminLoginFields.map((field) => (
+              <label key={field.name} className="block">
+                <span className="mb-2 block text-sm font-medium text-text">{field.label}</span>
+                <input
+                  {...field}
+                  className={inputClassName}
+                  value={credentials[field.name]}
+                  onChange={updateCredential(field.name)}
+                  required
+                />
+              </label>
+            ))}
 
             {error && (
               <div className="rounded-lg border border-accent/30 bg-accent/10 px-4 py-3 text-sm font-medium text-accent">
@@ -94,16 +109,13 @@ function AdminLoginPage() {
               </div>
             )}
 
-            <button
-              className="inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(76,130,169,0.22)] transition duration-200 hover:bg-primary/92 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/18 disabled:opacity-50"
-              type="submit"
-              disabled={isLoading}
-            >
+            <button className={submitButtonClassName} type="submit" disabled={isLoading}>
               {isLoading ? 'Accesso in corso...' : 'Accedi'}
             </button>
           </form>
         </div>
       </section>
+
       <section className="grid gap-6 rounded-[2rem] border border-primary/12 bg-base p-6 shadow-[0_18px_40px_rgba(76,130,169,0.06)] md:p-8 lg:grid-cols-[minmax(280px,0.9fr)_minmax(0,1.1fr)] lg:items-center">
         <PlaceholderImage alt="Admin preview" className="h-72 md:h-80 lg:h-full lg:min-h-96" />
         <div className="grid gap-4">

@@ -3,7 +3,7 @@ import ActionLink from '../components/ActionLink.jsx'
 import PageHero from '../components/PageHero.jsx'
 import PlaceholderImage from '../components/PlaceholderImage.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
-import { useAuth } from '../context/AuthContext.jsx'
+import { useAuth } from '../context/useAuth.js'
 import { capturePayment, createDonation, createPayment } from '../lib/api.js'
 
 const donationCards = [
@@ -76,17 +76,18 @@ function DonazioniPage() {
 
   useEffect(() => {
     let disposed = false
+    const container = paypalButtonRef.current
 
     async function renderPayPalButton() {
-      if (!paypalClientId || !paypalButtonRef.current) {
+      if (!paypalClientId || !container) {
         return
       }
 
       try {
         const paypal = await loadPayPalSdk(paypalClientId)
-        if (disposed || !paypalButtonRef.current) return
+        if (disposed || !container) return
 
-        paypalButtonRef.current.innerHTML = ''
+        container.innerHTML = ''
         setPaypalError('')
 
         const buttons = paypal.Buttons({
@@ -153,7 +154,7 @@ function DonazioniPage() {
         })
 
         if (buttons.isEligible()) {
-          await buttons.render(paypalButtonRef.current)
+          await buttons.render(container)
         }
       } catch (err) {
         if (!disposed) {
@@ -166,8 +167,8 @@ function DonazioniPage() {
 
     return () => {
       disposed = true
-      if (paypalButtonRef.current) {
-        paypalButtonRef.current.innerHTML = ''
+      if (container) {
+        container.innerHTML = ''
       }
     }
   }, [paypalClientId, donationAmount, donationForm.email, donationForm.nome, isAuthenticated, user])

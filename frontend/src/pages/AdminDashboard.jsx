@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import {
   createEvent,
   deleteEvent,
@@ -10,7 +10,7 @@ import {
   updateEvent,
   uploadPhoto,
 } from '../lib/api.js'
-import { useAuth } from '../context/AuthContext.jsx'
+import { useAuth } from '../context/useAuth.js'
 
 const emptyEventForm = {
   titolo: '',
@@ -36,8 +36,7 @@ function toInputDateTime(value) {
 }
 
 function AdminDashboard() {
-  const navigate = useNavigate()
-  const { isAuthenticated, isAdmin, isLoading: isAuthLoading, logout, user } = useAuth()
+  const { isAuthenticated, isAdmin, isLoading: isAuthLoading, user } = useAuth()
   const [events, setEvents] = useState([])
   const [photos, setPhotos] = useState([])
   const [donations, setDonations] = useState([])
@@ -52,15 +51,6 @@ function AdminDashboard() {
   const [editingEventId, setEditingEventId] = useState(null)
 
   // Redirect se non autenticato o non admin → vai a admin login
-  if (!isAuthLoading && (!isAuthenticated || !isAdmin)) {
-    return <Navigate to="/admin/login" replace />
-  }
-
-  // Se ancora in caricamento, mostra loading
-  if (isAuthLoading) {
-    return <div className="flex items-center justify-center min-h-screen">Caricamento...</div>
-  }
-
   useEffect(() => {
     async function loadData() {
       try {
