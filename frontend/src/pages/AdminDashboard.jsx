@@ -56,6 +56,11 @@ function AdminDashboard() {
     return <Navigate to="/admin/login" replace />
   }
 
+  // Se ancora in caricamento, mostra loading
+  if (isAuthLoading) {
+    return <div className="flex items-center justify-center min-h-screen">Caricamento...</div>
+  }
+
   useEffect(() => {
     async function loadData() {
       try {
