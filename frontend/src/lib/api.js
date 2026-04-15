@@ -83,6 +83,21 @@ export function getEventById(eventId) {
   return apiRequest(`/events/${eventId}`)
 }
 
+export function getEventsByDateRange(startDate, endDate) {
+  const params = new URLSearchParams()
+  params.append('start', startDate.toISOString())
+  params.append('end', endDate.toISOString())
+  return apiRequest(`/events/filter?${params.toString()}`)
+}
+
+export function getUpcomingEvents(fromDate) {
+  const params = new URLSearchParams()
+  if (fromDate) {
+    params.append('from', fromDate.toISOString())
+  }
+  return apiRequest(`/events/upcoming?${params.toString()}`)
+}
+
 export function createEvent(eventData) {
   return apiRequest('/events', {
     method: 'POST',

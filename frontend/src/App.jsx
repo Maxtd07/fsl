@@ -2,6 +2,7 @@ import { Route, Routes, useLocation, Navigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import Footer from './components/Footer.jsx'
 import Navbar from './components/Navbar.jsx'
+import { PrivacyBanner } from './components/PrivacyBanner.jsx'
 import AdminLoginPage from './pages/AdminLoginPage.jsx'
 import AdminDashboard from './pages/AdminDashboard.jsx'
 import AboutPage from './pages/AboutPage.jsx'
@@ -32,6 +33,7 @@ function App() {
     <AuthProvider>
       <>
         <ScrollToTop />
+        <PrivacyBanner />
         <div className="mx-auto flex min-h-screen w-[90vw] max-w-[90vw] flex-col p-0 md:py-0 lg:px-6">
 
         <header className="mb-8">
