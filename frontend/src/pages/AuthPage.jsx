@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
 import ActionLink from '../components/ActionLink.jsx'
 import PageHero from '../components/PageHero.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
@@ -13,7 +13,6 @@ const initialRegisterState = {
 }
 
 function AuthPage() {
-  const navigate = useNavigate()
   const location = useLocation()
   const { isAuthenticated, user, login, register } = useAuth()
   const [mode, setMode] = useState('login')
@@ -26,7 +25,8 @@ function AuthPage() {
   const redirectTo = useMemo(() => location.state?.from ?? '/', [location.state])
 
   if (isAuthenticated) {
-    return <Navigate to={redirectTo} replace />
+    const destination = user?.ruolo === 'ADMIN' ? '/admin/dashboard' : redirectTo
+    return <Navigate to={destination} replace />
   }
 
   const handleLoginSubmit = async (event) => {
@@ -36,17 +36,7 @@ function AuthPage() {
     setIsSubmitting(true)
 
     try {
-      const user = await login(loginForm)
-      if (user.ruolo === 'ADMIN') {
-        // Logout immediatamente
-        logout()
-        setIsSubmitting(false)
-        setError('Gli amministratori devono accedere dall\'area riservata.')
-        navigate('/admin/login', { replace: true })
-        return
-      }
-      // Utente normale → home
-      navigate('/', { replace: true })
+      await login(loginForm)
     } catch (err) {
       setError(err.message || 'Accesso non riuscito.')
       setIsSubmitting(false)
@@ -66,24 +56,12 @@ function AuthPage() {
     setIsSubmitting(true)
 
     try {
-      const user = await register({
+      await register({
         nome: registerForm.nome,
         email: registerForm.email,
         password: registerForm.password,
       })
-      
-      if (user.ruolo === 'ADMIN') {
-        // Logout immediatamente
-        logout()
-        setIsSubmitting(false)
-        setError('Gli amministratori devono accedere dall\'area riservata.')
-        navigate('/admin/login', { replace: true })
-        return
-      }
-      
       setMessage('Profilo creato con successo. Ora puoi iscriverti agli eventi.')
-      // Nuovo utente normale → home
-      navigate('/', { replace: true })
     } catch (err) {
       setError(err.message || 'Registrazione non riuscita.')
       setIsSubmitting(false)
