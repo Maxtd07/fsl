@@ -22,7 +22,7 @@ function Footer() {
         <div className="grid grid-cols-2 gap-x-8 gap-y-6 lg:px-10">
           {/* Social Links */}
           <div>
-            <p className="mb-4 text-xs font-bold uppercase tracking-wider text-white">Social</p>
+            <p className="mb-4 text-xs font-bold uppercase tracking-wider text-white">Social & Privacy</p>
             <div className="flex flex-col gap-3">
               <a
                 className={`${footerLinkClasses} flex items-center gap-2`}
