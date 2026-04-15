@@ -23,7 +23,7 @@ function AuthPage() {
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
 
-  const redirectTo = useMemo(() => location.state?.from ?? '/eventi', [location.state])
+  const redirectTo = useMemo(() => location.state?.from ?? '/', [location.state])
 
   if (isAuthenticated) {
     return <Navigate to={redirectTo} replace />
@@ -45,7 +45,8 @@ function AuthPage() {
         navigate('/admin/login', { replace: true })
         return
       }
-      navigate(redirectTo, { replace: true })
+      // Utente normale → home
+      navigate('/', { replace: true })
     } catch (err) {
       setError(err.message || 'Accesso non riuscito.')
       setIsSubmitting(false)
@@ -81,7 +82,8 @@ function AuthPage() {
       }
       
       setMessage('Profilo creato con successo. Ora puoi iscriverti agli eventi.')
-      navigate(redirectTo, { replace: true })
+      // Nuovo utente normale → home
+      navigate('/', { replace: true })
     } catch (err) {
       setError(err.message || 'Registrazione non riuscita.')
       setIsSubmitting(false)
