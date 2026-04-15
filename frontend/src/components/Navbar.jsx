@@ -9,8 +9,9 @@ const navItems = [
   { to: '/eventi', label: 'Eventi' },
   { to: '/galleria', label: 'Galleria' },
   { to: '/contatti', label: 'Contatti' },
-  { to: '/donazioni', label: 'Donazioni' },
 ]
+
+const sostieniLink = { to: '/donazioni', label: 'Sostienici' }
 
 const navLinkClasses =
   'rounded-lg border px-4 py-2.5 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2'
@@ -50,6 +51,19 @@ function Navbar() {
               {item.label}
             </NavLink>
           ))}
+
+          <div className="mx-1 h-6 w-px bg-text/10" />
+
+          <NavLink
+            to={sostieniLink.to}
+            className={({ isActive }) =>
+              `${navLinkClasses} border-secondary/40 bg-secondary px-5 text-white font-semibold hover:bg-secondary/90 ${
+                isActive ? 'ring-3 ring-secondary/40 ring-offset-2' : ''
+              }`
+            }
+          >
+            {sostieniLink.label}
+          </NavLink>
 
           {/* Auth Section Desktop */}
           {isAuthenticated ? (
@@ -130,6 +144,16 @@ function Navbar() {
               {item.label}
             </NavLink>
           ))}
+
+          <div className="my-2 h-px w-full bg-text/10" />
+
+          <NavLink
+            to={sostieniLink.to}
+            onClick={() => setIsOpen(false)}
+            className="rounded-lg border border-secondary/40 bg-secondary px-4 py-3 text-center text-xs font-semibold text-white transition-all duration-200 hover:bg-secondary/90"
+          >
+            {sostieniLink.label}
+          </NavLink>
 
           {/* Auth Section Mobile */}
           {isAuthenticated ? (

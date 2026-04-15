@@ -7,14 +7,14 @@ import { useAuth } from '../context/AuthContext.jsx'
 import { capturePayment, createDonation, createPayment } from '../lib/api.js'
 
 const donationCards = [
-  'Le donazioni sostengono laboratori inclusivi, attivita educative e supporto alle famiglie.',
-  'Ogni contributo aiuta l associazione a organizzare eventi, incontri e percorsi personalizzati.',
+  'Le donazioni sostengono laboratori inclusivi, attività educative e supporto alle famiglie.',
+  'Ogni contributo aiuta l\'associazione a organizzare eventi, incontri e percorsi personalizzati.',
   'Il pagamento viene creato e catturato dal backend tramite API REST, con salvataggio finale nel database.',
 ]
 
 const impactCards = [
-  'Attivita per l autonomia e la partecipazione sociale.',
-  'Promemoria, comunicazioni e iniziative per la comunita.',
+  'Attività per l\'autonomia e la partecipazione sociale.',
+  'Promemoria, comunicazioni e iniziative per la comunità.',
 ]
 
 const paypalSdkCache = new Map()
@@ -176,8 +176,8 @@ function DonazioniPage() {
     <main className="space-y-8">
       <PageHero
         eyebrow="Donazioni"
-        title="Sostieni le attivita dell associazione con una donazione sicura."
-        description="Il pulsante PayPal crea l ordine sul backend, cattura il pagamento tramite API REST e salva la donazione nel database al completamento."
+        title="Sostieni le attività dell'associazione con una donazione sicura."
+        description="Scegli il metodo che preferisci: online con PayPal, bonifico bancario, conto corrente postale o dona il tuo 5 per mille."
         tone="secondary"
         actions={
           <>
@@ -188,6 +188,62 @@ function DonazioniPage() {
           </>
         }
       />
+
+      {/* METODI DI DONAZIONE ALTERNATIVI */}
+      <section className="space-y-5 px-6 md:px-8">
+        <SectionHeading
+          eyebrow="Altri metodi di donazione"
+          title="Scegli come sostenerci"
+          description="Offriamo diverse modalità di donazione per adattarci alle tue preferenze."
+        />
+
+        <div className="grid gap-6 lg:grid-cols-3">
+          {/* 5x1000 */}
+          <article className="rounded-lg border border-primary/20 bg-base px-6 py-8 shadow-md hover:shadow-lg transition">
+            <h3 className="mb-4 text-lg font-bold text-text">Dona il 5 per mille</h3>
+            <div className="space-y-3 text-sm text-text/85">
+              <p>Nella dichiarazione dei redditi, destina il 5 per mille a La Crisalide.</p>
+              <p className="font-semibold text-primary">Codice Fiscale:</p>
+              <p className="font-mono text-base tracking-wide bg-primary/8 p-3 rounded-lg">
+                90034110446
+              </p>
+              <p className="text-xs text-text/60 pt-2">
+                Non ti costa nulla e aiuti concretamente l'associazione.
+              </p>
+            </div>
+          </article>
+
+          {/* Conto Corrente Postale */}
+          <article className="rounded-lg border border-secondary/20 bg-base px-6 py-8 shadow-md hover:shadow-lg transition">
+            <h3 className="mb-4 text-lg font-bold text-text">Conto Corrente Postale</h3>
+            <div className="space-y-3 text-sm text-text/85">
+              <p>Verso il conto corrente postale intestato a La Crisalide.</p>
+              <p className="font-semibold text-secondary">Numero:</p>
+              <p className="font-mono text-base tracking-wide bg-secondary/8 p-3 rounded-lg">
+                34201830
+              </p>
+              <p className="text-xs text-text/60 pt-2">
+                Disponibile negli uffici postali italiani.
+              </p>
+            </div>
+          </article>
+
+          {/* Bonifico Bancario */}
+          <article className="rounded-lg border border-accent/20 bg-base px-6 py-8 shadow-md hover:shadow-lg transition">
+            <h3 className="mb-4 text-lg font-bold text-text">Bonifico Bancario</h3>
+            <div className="space-y-3 text-sm text-text/85">
+              <p>Effettua un bonifico diretto sul nostro IBAN.</p>
+              <p className="font-semibold">IBAN:</p>
+              <p className="font-mono text-base tracking-wide bg-accent/8 p-3 rounded-lg break-all">
+                IT76 S076 0113 5000 0000 3420 1830
+              </p>
+              <p className="text-xs text-text/60 pt-2">
+                Causale: "Donazione La Crisalide"
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
 
       <section className="space-y-5">
         <SectionHeading
@@ -209,7 +265,7 @@ function DonazioniPage() {
         </div>
       </section>
 
-      <section className="grid gap-6 rounded-[2rem] border-2 border-primary/20 bg-base p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] md:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(300px,0.9fr)] lg:items-center">
+      <section className="grid gap-6 rounded-lg border border-primary/20 bg-base p-6 shadow-lg md:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(300px,0.9fr)] lg:items-center">
         <div>
           <SectionHeading
             eyebrow="Impatto"
@@ -221,7 +277,7 @@ function DonazioniPage() {
             {impactCards.map((text) => (
               <div
                 key={text}
-                className="rounded-[1.4rem] border-2 border-primary/20 bg-background p-4 shadow-[0_6px_14px_rgba(0,0,0,0.06)]"
+                className="rounded-lg border border-primary/20 bg-background p-4 shadow-sm"
               >
                 <p className="text-sm leading-7 text-text/80">{text}</p>
               </div>
@@ -232,7 +288,7 @@ function DonazioniPage() {
         <PlaceholderImage alt="Impatto donazioni" className="h-72 md:h-80 lg:h-full lg:min-h-96" />
       </section>
 
-      <section className="mx-auto w-full max-w-2xl rounded-[2rem] border-2 border-primary/20 bg-base p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] md:p-8">
+      <section className="mx-auto w-full max-w-2xl rounded-lg border border-primary/20 bg-base p-6 shadow-lg md:p-8">
         <h2 className="mb-6 text-center text-2xl font-bold text-text md:text-3xl">Fai una donazione</h2>
 
         <div className="space-y-5">
@@ -260,7 +316,7 @@ function DonazioniPage() {
               step="0.01"
               value={donationAmount}
               onChange={(event) => setDonationAmount(event.target.value)}
-              className="w-full rounded-xl border-2 border-primary/20 bg-background px-4 py-3 text-sm text-text outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/12"
+              className="w-full rounded-lg border border-primary/20 bg-background px-4 py-3 text-sm text-text outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/12"
               placeholder="Importo personalizzato"
             />
           </div>
@@ -271,7 +327,7 @@ function DonazioniPage() {
               type="text"
               value={donationForm.nome}
               onChange={(event) => setDonationForm((current) => ({ ...current, nome: event.target.value }))}
-              className="w-full rounded-xl border-2 border-primary/20 bg-background px-4 py-3 text-sm text-text outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/12"
+              className="w-full rounded-lg border border-primary/20 bg-background px-4 py-3 text-sm text-text outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/12"
               placeholder="Il tuo nome"
             />
           </div>
@@ -282,7 +338,7 @@ function DonazioniPage() {
               type="email"
               value={donationForm.email}
               onChange={(event) => setDonationForm((current) => ({ ...current, email: event.target.value }))}
-              className="w-full rounded-xl border-2 border-primary/20 bg-background px-4 py-3 text-sm text-text outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/12"
+              className="w-full rounded-lg border border-primary/20 bg-background px-4 py-3 text-sm text-text outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/12"
               placeholder="La tua email"
             />
           </div>
@@ -310,9 +366,15 @@ function DonazioniPage() {
             </div>
           )}
 
+          <div className="rounded-lg border border-primary/20 bg-primary/5 px-4 py-3 text-xs text-text/70 leading-relaxed">
+            <p className="font-semibold text-primary mb-2">Protezione dei dati sensibili</p>
+            <p>
+              I tuoi dati personali (nome ed email) vengono utilizzati esclusivamente per elaborare la donazione e inviarti una ricevuta. Non vengono condivisi con terzi se non per le necessità del pagamento PayPal. Leggi la nostra <a href="/privacy" className="underline text-primary hover:text-primary/80">informativa sulla privacy</a> per ulteriori dettagli.
+            </p>
+          </div>
+
           <p className="text-center text-xs text-text/60">
-            PayPal crea e cattura l ordine dal backend. Lo stato della donazione viene salvato solo a pagamento
-            completato.
+            PayPal crea e cattura l'ordine dal backend. Lo stato della donazione viene salvato solo a pagamento completato.
           </p>
           {isProcessing && <p className="text-center text-xs font-semibold text-primary">Elaborazione pagamento...</p>}
         </div>
