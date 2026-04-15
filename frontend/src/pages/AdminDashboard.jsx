@@ -51,6 +51,11 @@ function AdminDashboard() {
   const [isPhotoSubmitting, setIsPhotoSubmitting] = useState(false)
   const [editingEventId, setEditingEventId] = useState(null)
 
+  // Redirect se non autenticato o non admin
+  if (!isAuthLoading && (!isAuthenticated || !isAdmin)) {
+    return <Navigate to="/" replace />
+  }
+
   useEffect(() => {
     async function loadData() {
       try {

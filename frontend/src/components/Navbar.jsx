@@ -22,6 +22,77 @@ function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { isAuthenticated, isAdmin, logout, user } = useAuth();
 
+  // Se admin, mostra navbar semplificata
+  if (isAdmin && isAuthenticated) {
+    return (
+      <nav className="rounded-lg border border-text/10 bg-base shadow-md lg:px-6 px-5 py-6">
+        <div className="flex items-center justify-between gap-4">
+          {/* Logo */}
+          <div className="flex items-center gap-4">
+            <NavLink
+              to="/admin/dashboard"
+              className="inline-flex items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
+            >
+              <img src={logo} alt="Logo" className="w-40" />
+            </NavLink>
+          </div>
+
+          {/* Desktop - Solo Esci */}
+          <div className="hidden items-center gap-2 lg:flex">
+            <button
+              type="button"
+              onClick={logout}
+              className="rounded-lg border border-text/20 px-4 py-2.5 text-xs font-semibold text-text transition-all duration-200 hover:bg-text/5 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
+            >
+              Esci
+            </button>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="flex flex-col gap-1.5 rounded-lg p-2 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 lg:hidden"
+            aria-label="Toggle menu"
+            aria-expanded={isOpen}
+          >
+            <span
+              className={`h-0.5 w-6 bg-text transition-all origin-center duration-300 ${
+                isOpen ? "rotate-45 translate-y-2" : ""
+              }`}
+            />
+            <span
+              className={`h-0.5 w-6 bg-text transition-opacity duration-300 ${
+                isOpen ? "opacity-0" : ""
+              }`}
+            />
+            <span
+              className={`h-0.5 w-6 bg-text transition-all origin-center duration-300 ${
+                isOpen ? "-rotate-45 -translate-y-2" : ""
+              }`}
+            />
+          </button>
+        </div>
+
+        {/* Mobile Navigation - Solo Esci */}
+        {isOpen && (
+          <div className="mt-6 flex flex-col gap-2 border-t border-text/10 pt-4 lg:hidden">
+            <button
+              type="button"
+              onClick={() => {
+                logout();
+                setIsOpen(false);
+              }}
+              className="rounded-lg border border-text/20 px-4 py-3 text-xs font-semibold text-text transition-all duration-200 hover:bg-text/5 w-full"
+            >
+              Esci
+            </button>
+          </div>
+        )}
+      </nav>
+    );
+  }
+
+  // Navbar normale per utenti non-admin
   return (
     <nav className="rounded-lg border border-text/10 bg-base shadow-md lg:px-6 px-5 py-6">
       <div className="flex items-center justify-between gap-4">
