@@ -213,7 +213,6 @@ function AdminDashboard() {
   }
 
   const totalDonations = donations.reduce((sum, donation) => sum + (donation.importo || 0), 0)
-  const averageDonation = donations.length > 0 ? totalDonations / donations.length : 0
 
   if (!isAuthLoading && !isAuthenticated) {
     return <Navigate to="/admin/login" replace />
@@ -501,7 +500,7 @@ function AdminDashboard() {
         <section className="rounded-[2rem] border-2 border-primary/20 bg-base p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] md:p-8">
           <h2 className="mb-6 text-xl font-bold text-slate-900 md:text-2xl">Donazioni</h2>
 
-          <div className="mb-6 grid gap-4 md:grid-cols-3">
+          <div className="mb-6 grid gap-4 md:grid-cols-2">
             <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
               <p className="text-xs font-medium text-text/60">Totale raccolto</p>
               <p className="mt-2 text-2xl font-bold text-primary">EUR {totalDonations.toFixed(2)}</p>
@@ -509,10 +508,6 @@ function AdminDashboard() {
             <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
               <p className="text-xs font-medium text-text/60">Numero donazioni</p>
               <p className="mt-2 text-2xl font-bold text-primary">{donations.length}</p>
-            </div>
-            <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
-              <p className="text-xs font-medium text-text/60">Media</p>
-              <p className="mt-2 text-2xl font-bold text-primary">EUR {averageDonation.toFixed(2)}</p>
             </div>
           </div>
 

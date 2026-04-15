@@ -38,15 +38,16 @@ function AuthPage() {
     try {
       const user = await login(loginForm)
       if (user.ruolo === 'ADMIN') {
-        setError('Gli amministratori devono accedere dall\'area riservata (/admin/login).')
-        await new Promise(res => setTimeout(res, 2000))
-        window.location.href = '/admin/login'
-      } else {
-        navigate(redirectTo, { replace: true })
+        // Logout immediatamente
+        logout()
+        setIsSubmitting(false)
+        setError('Gli amministratori devono accedere dall\'area riservata.')
+        navigate('/admin/login', { replace: true })
+        return
       }
+      navigate(redirectTo, { replace: true })
     } catch (err) {
       setError(err.message || 'Accesso non riuscito.')
-    } finally {
       setIsSubmitting(false)
     }
   }
@@ -69,17 +70,20 @@ function AuthPage() {
         email: registerForm.email,
         password: registerForm.password,
       })
-      setMessage('Profilo creato con successo. Ora puoi iscriverti agli eventi.')
+      
       if (user.ruolo === 'ADMIN') {
-        setError('Gli amministratori devono accedere dall\'area riservata (/admin/login).')
-        await new Promise(res => setTimeout(res, 2000))
-        window.location.href = '/admin/login'
-      } else {
-        navigate(redirectTo, { replace: true })
+        // Logout immediatamente
+        logout()
+        setIsSubmitting(false)
+        setError('Gli amministratori devono accedere dall\'area riservata.')
+        navigate('/admin/login', { replace: true })
+        return
       }
+      
+      setMessage('Profilo creato con successo. Ora puoi iscriverti agli eventi.')
+      navigate(redirectTo, { replace: true })
     } catch (err) {
       setError(err.message || 'Registrazione non riuscita.')
-    } finally {
       setIsSubmitting(false)
     }
   }
