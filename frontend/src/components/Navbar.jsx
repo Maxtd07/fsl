@@ -1,26 +1,26 @@
-import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser } from '@fortawesome/free-solid-svg-icons'
-import { useAuth } from '../context/AuthContext.jsx'
-import logo from '../assets/logo.png'
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { useAuth } from "../context/AuthContext.jsx";
+import logo from "../assets/logo.png";
 
 const navItems = [
-  { to: '/', label: 'Home', end: true },
-  { to: '/chi-siamo', label: 'Chi siamo' },
-  { to: '/eventi', label: 'Eventi' },
-  { to: '/galleria', label: 'Galleria' },
-  { to: '/contatti', label: 'Contatti' },
-]
+  { to: "/", label: "Home", end: true },
+  { to: "/chi-siamo", label: "Chi siamo" },
+  { to: "/eventi", label: "Eventi" },
+  { to: "/galleria", label: "Galleria" },
+  { to: "/contatti", label: "Contatti" },
+];
 
-const sostieniLink = { to: '/donazioni', label: 'Sostienici' }
+const sostieniLink = { to: "/donazioni", label: "Sostienici" };
 
 const navLinkClasses =
-  'rounded-lg border px-4 py-2.5 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2'
+  "rounded-lg border px-4 py-2.5 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2";
 
 function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
-  const { isAuthenticated, isAdmin, logout, user } = useAuth()
+  const [isOpen, setIsOpen] = useState(false);
+  const { isAuthenticated, isAdmin, logout, user } = useAuth();
 
   return (
     <nav className="rounded-lg border border-text/10 bg-base shadow-md lg:px-6 px-5 py-6">
@@ -31,12 +31,15 @@ function Navbar() {
             to="/"
             className="inline-flex items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
           >
-            <img src={logo} alt="Logo" className="w-40"/>
+            <img src={logo} alt="Logo" className="w-40" />
           </NavLink>
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden items-center justify-center gap-2 lg:flex" aria-label="Main navigation">
+        <nav
+          className="hidden items-center justify-center gap-2 lg:flex"
+          aria-label="Main navigation"
+        >
           {navItems.map((item) => (
             <NavLink
               key={item.to}
@@ -45,27 +48,27 @@ function Navbar() {
               className={({ isActive }) =>
                 `${navLinkClasses} ${
                   isActive
-                    ? 'border-primary/40 bg-primary/8 text-primary'
-                    : 'border-text/10 text-text/75 hover:border-primary/20 hover:bg-primary/5 hover:text-text'
+                    ? "border-primary/40 bg-primary/8 text-text border-4 text-lg font-semibold"
+                    : "border-text/10 text-text/75 hover:border-primary/20 hover:bg-primary/5 hover:text-text"
                 }`
               }
             >
               {item.label}
             </NavLink>
           ))}
-
-          <div className="mx-1 h-6 w-px bg-text/10" />
-
           <NavLink
             to={sostieniLink.to}
             className={({ isActive }) =>
-              `${navLinkClasses} border-accent/40 bg-accent px-5 text-white font-semibold hover:bg-accent/90 ${
-                isActive ? 'ring-3 ring-accent/40 ring-offset-2' : ''
+              `${navLinkClasses} border-accent/40 bg-accent/50 px-5 text-text/80 font-semibold hover:bg-accent/90 ${
+                isActive ? "ring-3 ring-accent/40 ring-offset-2" : ""
               }`
             }
           >
             {sostieniLink.label}
           </NavLink>
+
+          {/* Divisore */}
+          <div className="mx-1 h-6 w-px bg-text/10" />
 
           {/* Auth Section Desktop */}
           {isAuthenticated ? (
@@ -96,7 +99,7 @@ function Navbar() {
           ) : (
             <NavLink
               to="/accedi"
-              className="rounded-lg border border-accent/30 bg-accent px-4 py-2.5 text-white transition-all duration-200 hover:bg-accent/90 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-accent/40 focus-visible:ring-offset-2"
+              className="rounded-lg border border-accent/30 bg-primary px-4 py-2.5 text-white transition-all duration-200 hover:bg-accent/90 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-accent/40 focus-visible:ring-offset-2 lg:p-2"
               title="Accedi"
             >
               <FontAwesomeIcon icon={faUser} className="text-lg" />
@@ -113,15 +116,15 @@ function Navbar() {
         >
           <span
             className={`h-0.5 w-6 bg-text transition-all origin-center duration-300 ${
-              isOpen ? 'rotate-45 translate-y-2' : ''
+              isOpen ? "rotate-45 translate-y-2" : ""
             }`}
           />
           <span
-            className={`h-0.5 w-6 bg-text transition-opacity duration-300 ${isOpen ? 'opacity-0' : ''}`}
+            className={`h-0.5 w-6 bg-text transition-opacity duration-300 ${isOpen ? "opacity-0" : ""}`}
           />
           <span
             className={`h-0.5 w-6 bg-text transition-all origin-center duration-300 ${
-              isOpen ? '-rotate-45 -translate-y-2' : ''
+              isOpen ? "-rotate-45 -translate-y-2" : ""
             }`}
           />
         </button>
@@ -139,8 +142,8 @@ function Navbar() {
               className={({ isActive }) =>
                 `${navLinkClasses} text-center ${
                   isActive
-                    ? 'border-primary/40 bg-primary/10 text-primary'
-                    : 'border-text/10 text-text/75 hover:bg-primary/5'
+                    ? "border-primary/40 bg-primary/10 text-primary"
+                    : "border-text/10 text-text/75 hover:bg-primary/5"
                 }`
               }
             >
@@ -180,8 +183,8 @@ function Navbar() {
               <button
                 type="button"
                 onClick={() => {
-                  logout()
-                  setIsOpen(false)
+                  logout();
+                  setIsOpen(false);
                 }}
                 className="rounded-lg border border-text/20 px-4 py-3 text-xs font-semibold text-text transition-all duration-200 hover:bg-text/5"
               >
@@ -201,7 +204,7 @@ function Navbar() {
         </nav>
       )}
     </nav>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;
