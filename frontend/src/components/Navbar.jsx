@@ -146,6 +146,7 @@ function Navbar() {
   // Navbar normale per utenti non-admin
   return (
     <nav className={`fixed top-0 left-0 w-full rounded-b-3xl border-b border-text/10 bg-base shadow-md py-4 mx-0 mb-6 z-50 transition-transform duration-300 ease-in-out ${isVisible ? "translate-y-0" : "-translate-y-full"}`}>
+      <div className="flex items-center justify-between gap-4 px-6">
         {/* Logo */}
         <div className="flex items-center gap-4">
           <NavLink
