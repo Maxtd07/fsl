@@ -208,6 +208,10 @@ export function fetchPhotos() {
   return apiRequest('/photos')
 }
 
+export function fetchFacebookPosts() {
+  return apiRequest('/facebook/posts')
+}
+
 export function deletePhoto(photoId) {
   return deleteRequest(`/photos/${photoId}`, {
     auth: true,

@@ -39,6 +39,7 @@ public class SecurityConfig {
     .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
     .requestMatchers(HttpMethod.GET, "/api/events/**").permitAll()
     .requestMatchers(HttpMethod.GET, "/api/photos/**").permitAll()
+    .requestMatchers(HttpMethod.GET, "/api/facebook/**").permitAll()
     .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
     .requestMatchers(HttpMethod.POST, "/api/donations/create-payment", "/api/donations/capture-payment", "/api/donations").permitAll()
     .requestMatchers(HttpMethod.POST, "/api/email/contatti").permitAll()
