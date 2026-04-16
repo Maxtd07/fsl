@@ -104,7 +104,7 @@ function Navbar() {
 
   // Navbar normale per utenti non-admin
   return (
-    <nav className="rounded-lg border border-text/10 bg-base shadow-md lg:px-6 px-5 py-6">
+    <nav className="rounded-b-2xl border-b border-text/10 bg-base shadow-md lg:px-6 px-5 py-6">
       <div className="flex items-center justify-between gap-4">
         {/* Logo */}
         <div className="flex items-center gap-4">
