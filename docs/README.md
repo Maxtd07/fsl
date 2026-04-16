@@ -2,7 +2,7 @@
 <br />
 <div align="center">
 
-<h3 align="center">FSL Internship Project – Associazione La Crisalide</h3>
+<h3 align="center">FSL Internship Project – Associazione Disabili</h3>
 
 <p align="center">
 A full-stack internship project focused on building a modern and accessible website for a local association.
@@ -22,7 +22,7 @@ A full-stack internship project focused on building a modern and accessible webs
 
 This project was developed during a two-week internship (9 working days) at FSL by **Max Ten Dam** and **Daniele Soldi**.
 
-The objective is to design and build a modern, responsive, and accessible website for *Associazione La Crisalide*, enabling the organization to promote its events and activities to a broader audience, including users who do not actively use social media.
+The objective is to design and build a modern, responsive, and accessible website for a disability-focused association, enabling the organization to promote its events and activities to a broader audience, including users who do not actively use social media.
 
 The project represents an early-stage transition from static web development (HTML, CSS, JavaScript) to a structured full-stack architecture. It emphasizes separation of concerns between frontend and backend systems and introduces core architectural principles such as the Single Responsibility Principle.
 
@@ -63,7 +63,7 @@ The backend will be built with Spring Boot, using Hibernate for ORM-based data p
 
 The project is currently in an early development phase. No features have been implemented yet, and the application is not deployed.
 
-The domain `associazionelacrisalide.it` is planned but not yet registered.
+The domain `associazionedisabili.it` is planned but not yet registered.
 
 ---
 

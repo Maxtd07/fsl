@@ -3,52 +3,52 @@ import SectionHeading from '../components/SectionHeading.jsx'
 
 const privacySections = [
   {
-    eyebrow: 'Lorem section',
-    title: 'Dolor sit amet',
+    eyebrow: 'Titolare del trattamento',
+    title: 'Chi gestisce i dati',
     text:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem.',
+      "Il titolare del trattamento e l'Associazione Disabili. Per richieste privacy puoi scrivere all'indirizzo email o contattare l'associazione al numero pubblicato nella pagina contatti.",
   },
   {
-    eyebrow: 'Data flow',
-    title: 'Consectetur adipiscing',
+    eyebrow: 'Dati raccolti',
+    title: 'Quali informazioni trattiamo',
     text:
-      'Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur.',
+      "Raccogliamo nome, email, credenziali di accesso cifrate, dati relativi alle iscrizioni agli eventi e dati di pagamento strettamente necessari alla gestione delle donazioni, inclusi identificativi PayPal e stato del pagamento. Non memorizziamo numeri completi di carte di pagamento.",
   },
   {
-    eyebrow: 'Usage',
-    title: 'Sed do eiusmod',
+    eyebrow: 'Finalita',
+    title: 'Perche usiamo i dati',
     text:
-      'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+      "Usiamo i dati per creare e gestire account, consentire l'accesso all'area utente, registrare le iscrizioni agli eventi, inviare conferme e promemoria email, produrre allegati calendario .ics, amministrare le donazioni e rispondere ai messaggi inviati dal form contatti.",
   },
   {
-    eyebrow: 'Retention',
-    title: 'Tempor incididunt',
+    eyebrow: 'Base giuridica',
+    title: 'Su quale base trattiamo i dati',
     text:
-      'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      "Il trattamento avviene per eseguire servizi richiesti dall'utente, adempiere a obblighi legali e, dove necessario, sulla base del consenso espresso tramite le azioni volontarie sul sito come registrazione, iscrizione agli eventi o invio di richieste.",
   },
   {
-    eyebrow: 'Security',
-    title: 'Labore et dolore',
+    eyebrow: 'Conservazione',
+    title: 'Per quanto tempo conserviamo i dati',
     text:
-      'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.',
+      "Conserviamo i dati per il tempo necessario a gestire il rapporto con l'utente, rispettare obblighi amministrativi e garantire la tracciabilita delle donazioni. Le credenziali sono salvate in forma protetta e i dati non piu necessari vengono cancellati o anonimizzati.",
   },
   {
-    eyebrow: 'Rights',
-    title: 'Voluptatem accusantium',
+    eyebrow: 'Sicurezza',
+    title: 'Come proteggiamo le informazioni',
     text:
-      'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores.',
+      "Applichiamo misure tecniche e organizzative standard, tra cui autenticazione con token JWT, hashing delle password, accesso amministrativo protetto, validazione dei dati, limitazione dei privilegi e tracciamento dei flussi di pagamento tramite provider esterno sicuro.",
   },
   {
-    eyebrow: 'Cookies',
-    title: 'Ipsum lorem',
+    eyebrow: 'Diritti dell utente',
+    title: 'Accesso, rettifica, cancellazione e opposizione',
     text:
-      'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius.',
+      "Puoi chiedere accesso ai tuoi dati, rettifica, cancellazione, limitazione del trattamento, portabilita o opposizione, nei limiti previsti dal GDPR. Puoi anche revocare eventuali consensi e proporre reclamo all'autorita garante competente.",
   },
   {
-    eyebrow: 'Contact',
-    title: 'Finibus bonorum',
+    eyebrow: 'Cookie',
+    title: 'Uso di cookie e tecnologie simili',
     text:
-      'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti.',
+      "Il sito usa cookie tecnici e strumenti equivalenti necessari al funzionamento della sessione, della navigazione e dell'autenticazione. Eventuali strumenti di terze parti, come PayPal, possono impostare propri cookie secondo le rispettive informative.",
   },
 ]
 
@@ -56,17 +56,17 @@ function PrivacyPage() {
   return (
     <main className="space-y-8">
       <PageHero
-        eyebrow="Lorem"
-        title="Lorem ipsum dolor sit amet consectetur"
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        eyebrow="Privacy"
+        title="Informativa privacy e trattamento dati conforme al GDPR."
+        description="Questa pagina spiega in modo chiaro come raccogliamo, utilizziamo, conserviamo e proteggiamo i dati personali di utenti, iscritti agli eventi e donatori."
         tone="neutral"
       />
 
       <section className="rounded-lg border border-primary/20 bg-base p-6 shadow-lg md:p-8">
         <SectionHeading
-          eyebrow="Overview"
-          title="Lorem ipsum summary"
-          description="Consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          eyebrow="Sintesi"
+          title="Trasparenza, minimizzazione e protezione dei dati."
+          description="L'associazione tratta solo i dati necessari alla gestione del sito, delle donazioni, delle iscrizioni agli eventi e delle comunicazioni con gli utenti."
         />
 
         <div className="mt-6 grid gap-4 lg:grid-cols-2">
@@ -75,9 +75,7 @@ function PrivacyPage() {
               key={section.title}
               className="rounded-lg border border-primary/15 bg-background p-5 shadow-sm"
             >
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary">
-                {section.eyebrow}
-              </p>
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary">{section.eyebrow}</p>
               <h2 className="mt-3 text-xl font-bold text-text">{section.title}</h2>
               <p className="mt-3 text-sm leading-7 text-text/80">{section.text}</p>
             </article>
@@ -87,25 +85,22 @@ function PrivacyPage() {
 
       <section className="rounded-lg border border-secondary/30 bg-secondary/8 p-6 shadow-md md:p-8">
         <SectionHeading
-          eyebrow="Contact"
-          title="Lorem ipsum contact area"
-          description="Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam."
+          eyebrow="Contatti privacy"
+          title="Come esercitare i tuoi diritti"
+          description="Per domande, richieste di accesso o cancellazione dati puoi contattare l'associazione usando i recapiti pubblicati. La richiesta verra gestita con le procedure standard previste dal GDPR."
         />
-
         <div className="mt-6 grid gap-4 md:grid-cols-3">
           <div className="rounded-lg border border-primary/15 bg-base p-4">
             <p className="text-xs font-bold uppercase tracking-widest text-primary">Email</p>
-            <p className="mt-3 text-sm text-text/80">lorem@ipsum.org</p>
+            <p className="mt-3 text-sm text-text/80">la_crisalide@yahoo.it</p>
           </div>
-
           <div className="rounded-lg border border-primary/15 bg-base p-4">
-            <p className="text-xs font-bold uppercase tracking-widest text-primary">Phone</p>
-            <p className="mt-3 text-sm text-text/80">+00 000 000 000</p>
+            <p className="text-xs font-bold uppercase tracking-widest text-primary">Telefono</p>
+            <p className="mt-3 text-sm text-text/80">+39 347 917 7811</p>
           </div>
-
           <div className="rounded-lg border border-primary/15 bg-base p-4">
-            <p className="text-xs font-bold uppercase tracking-widest text-primary">Location</p>
-            <p className="mt-3 text-sm text-text/80">Lorem ipsum dolor sit amet</p>
+            <p className="text-xs font-bold uppercase tracking-widest text-primary">Sede</p>
+            <p className="mt-3 text-sm text-text/80">Via del Palo 10, Porto Sant'Elpidio (FM)</p>
           </div>
         </div>
       </section>

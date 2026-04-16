@@ -46,7 +46,7 @@ function HomePage() {
         const data = await fetchEvents()
         setEvents(Array.isArray(data) ? data : [])
       } catch (err) {
-        setErrorEvents(err.message || 'Lorem ipsum dolor sit amet')
+        setErrorEvents(err.message || 'Impossibile caricare gli eventi')
         setEvents([])
       } finally {
         setIsLoadingEvents(false)
@@ -63,7 +63,7 @@ function HomePage() {
         const data = await fetchPhotos()
         setPhotos(Array.isArray(data) ? data : [])
       } catch (err) {
-        console.error('Lorem ipsum error:', err)
+        console.error('Errore caricamento foto:', err)
         setPhotos([])
       } finally {
         setIsLoadingPhotos(false)
@@ -73,15 +73,17 @@ function HomePage() {
     loadPhotos()
   }, [])
 
+  // Limita a 3 eventi e 4 foto
   const displayedEvents = events.slice(0, 3)
   const displayedPhotos = photos.slice(0, 4)
 
   return (
     <main>
       <PageHero
-        eyebrow="Lorem ipsum"
-        title="Dolor sit amet consectetur adipiscing elit sed do eiusmod."
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris."
+        eyebrow="Benvenuti all'Associazione"
+        title="Valorizziamo le abilità, non le mancanze. "
+        description="L'associazione nasce con un obiettivo chiaro: accompagnare ogni persona in un percorso di crescita e trasformazione, sviluppando autonomia e consapevolezza.
+Come una farfalla che emerge dalla crisalide, crediamo che ogni individuo abbia potenzialità da far emergere e coltivare."
         tone="primary"
       />
 
@@ -90,20 +92,25 @@ function HomePage() {
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1.25fr)_minmax(280px,0.75fr)]">
           <div>
             <SectionHeading
-              eyebrow="Lorem"
-              title="Consectetur adipiscing elit"
-              description="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
+              eyebrow="Chi siamo"
+              title="una parola su di noi"
+              description="L'associazione è attiva da anni
+              nel supporto e nell’integrazione delle persone con disabilità e delle loro famiglie.
+              Fin dall’inizio, l’obiettivo è stato quello di valorizzare le abilità individuali,
+              costruendo percorsi personalizzati che tengano conto delle caratteristiche e dei bisogni di ciascuno."
             />
 
             <p className="mt-5 md:mt-6 max-w-3xl text-xs md:text-sm font-medium leading-7 text-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero.
-              Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.
-              Duis sagittis ipsum. Praesent mauris.
+              Crediamo che ogni persona abbia potenzialità da sviluppare attraverso opportunità concrete, senza fermarsi davanti alle difficoltà.
+
+              Siamo stati tra i primi in Italia a credere nella musicoterapia come strumento educativo e relazionale. Nel tempo abbiamo sviluppato attività orientate all’autonomia, aiutando i ragazzi a vivere esperienze quotidiane come spostarsi, organizzarsi e relazionarsi in modo indipendente.
+
+              Gli educatori costruiscono percorsi su misura, accompagnando ogni partecipante in un processo di crescita personale e sociale.
             </p>
 
             <div className="mt-6">
               <ActionLink to="/chi-siamo" variant="secondary" className="text-sm md:text-base">
-                Lorem ipsum
+                Scopri di piu
               </ActionLink>
             </div>
           </div>
@@ -111,19 +118,21 @@ function HomePage() {
           <div className="grid gap-5">
             <div className="rounded-lg border border-primary/20 bg-background px-4 md:px-5 py-4 md:py-5 shadow-sm">
               <p className="text-xs font-bold uppercase tracking-widest text-secondary">
-                Lorem ipsum
+                Identità e Missione
               </p>
               <p className="mt-2 md:mt-3 text-xs md:text-sm font-medium leading-6 md:leading-7 text-text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.
+                L'associazione promuove l'inclusione e l'autonomia delle persone con disabilità. Crediamo nelle capacità di ogni individuo e lavoriamo per svilupparle attraverso esperienze concrete e percorsi personalizzati.
               </p>
             </div>
 
             <div className="rounded-lg border border-secondary/30 bg-secondary/8 px-4 md:px-5 py-4 md:py-5 shadow-sm">
               <p className="text-xs font-bold uppercase tracking-widest text-secondary">
-                Dolor sit amet
+                Metodo e Attività
               </p>
               <p className="mt-2 md:mt-3 text-xs md:text-sm font-medium leading-6 md:leading-7 text-text">
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                Costruiamo percorsi su misura che favoriscono la crescita personale e l’indipendenza.
+                Attraverso laboratori, attività di gruppo e progetti di autonomia, accompagniamo ogni
+                persona nel proprio sviluppo, valorizzando le sue potenzialità.
               </p>
             </div>
           </div>
@@ -134,19 +143,19 @@ function HomePage() {
       <section className="border-t-2 border-primary/15 px-6 py-10 md:px-8 md:py-12">
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between lg:flex-nowrap">
           <SectionHeading
-            eyebrow="Lorem ipsum"
-            title="Sed ut perspiciatis unde"
-            description="Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
+            eyebrow="Prossimi eventi"
+            title="Scopri qui i nostri prossimi eventi"
+            description="organizzati dall'associazione e partecipa alle nostre iniziative per sostenere la nostra missione e condividere momenti di crescita e inclusione."
           />
 
           <ActionLink to="/eventi" variant="secondary" className="whitespace-nowrap flex-shrink-0">
-            Lorem
+            Vedi tutti
           </ActionLink>
         </div>
 
         {isLoadingEvents ? (
           <div className="text-center py-8 text-text/60">
-            <p>Lorem ipsum...</p>
+            <p>Caricamento eventi...</p>
           </div>
         ) : errorEvents ? (
           <div className="text-center py-8 text-red-600">
@@ -166,7 +175,7 @@ function HomePage() {
           </div>
         ) : (
           <div className="text-center py-8 text-text/60">
-            <p>Lorem ipsum dolor sit amet</p>
+            <p>Nessun evento disponibile al momento</p>
           </div>
         )}
       </section>
@@ -175,19 +184,19 @@ function HomePage() {
       <section className="border-t-2 border-primary/15 px-6 py-10 md:px-8 md:py-12">
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between lg:flex-nowrap">
           <SectionHeading
-            eyebrow="Lorem"
-            title="Lorem ipsum dolor sit"
-            description="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium."
+            eyebrow="Galleria"
+            title="Ultimi scatti dalla nostra community"
+            description="Momenti speciali catturati dai nostri partecipanti."
           />
 
           <ActionLink to="/galleria" variant="secondary" className="whitespace-nowrap flex-shrink-0">
-            Lorem
+            Vedi tutto
           </ActionLink>
         </div>
 
         {isLoadingPhotos ? (
           <div className="text-center py-8 text-text/60">
-            <p>Lorem ipsum...</p>
+            <p>Caricamento galleria...</p>
           </div>
         ) : displayedPhotos.length > 0 ? (
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -217,7 +226,7 @@ function HomePage() {
           </div>
         ) : (
           <div className="text-center py-8 text-text/60">
-            <p>Lorem ipsum dolor sit amet</p>
+            <p>Nessuna foto disponibile al momento</p>
           </div>
         )}
       </section>
@@ -244,33 +253,29 @@ function HomePage() {
               className="w-full h-auto max-h-[70vh] object-contain"
             />
             <div className="bg-base p-4">
-              <h2 className="text-lg font-bold text-text mb-1">
-                Lorem ipsum dolor sit amet
-              </h2>
-              <p className="text-sm text-text/75">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              </p>
+              <h2 className="text-lg font-bold text-text mb-1">{selectedPhoto.titolo}</h2>
+              <p className="text-sm text-text/75">{selectedPhoto.descrizione}</p>
             </div>
           </div>
         </div>
       )}
 
-      {/* CTA DONAZIONI */}
+      {/* DONAZIONI CTA */}
       <section className="mt-6 rounded-lg border border-primary/20 bg-background px-4 md:px-6 lg:px-8 py-10 md:py-12 lg:py-14 text-center shadow-lg">
         <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-primary">
-          Lorem
+          Sostieni
         </p>
         <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-text">
-          Lorem ipsum dolor sit amet
+          Sostieni l'Associazione
         </h2>
         <p className="mx-auto mt-4 md:mt-5 max-w-2xl text-xs md:text-sm font-medium leading-6 md:leading-7 text-text/75">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
+          Con il tuo contributo ci aiuti a realizzare progetti concreti e a offrire supporto alle famiglie. Dona in modo semplice e sicuro.
         </p>
 
         <div className="mt-6 md:mt-7 flex flex-wrap justify-center gap-2 md:gap-3">
-          <ActionLink to="/donazioni" variant="secondary">Lorem</ActionLink>
+          <ActionLink to="/donazioni" variant="secondary">Dona ora</ActionLink>
           <ActionLink to="/contatti" variant="secondary">
-            Ipsum
+            Richiedi informazioni
           </ActionLink>
         </div>
       </section>
@@ -278,20 +283,20 @@ function HomePage() {
       {/* CONTATTI CTA */}
       <section className="mt-6 rounded-lg border border-primary/20 bg-primary px-4 md:px-6 lg:px-8 py-10 md:py-12 lg:py-14 text-center text-white shadow-xl">
         <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-accent">
-          LOREM
+          CONTATTI
         </p>
 
         <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">
-          Lorem ipsum dolor sit amet
+          Siamo qui per aiutarti
         </h2>
 
         <p className="mx-auto mt-4 md:mt-5 max-w-2xl text-xs md:text-sm lg:text-base font-medium leading-6 md:leading-7 text-white/90">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.
+          Hai domande o hai bisogno di informazioni? Contattaci per ricevere supporto, chiarimenti o maggiori dettagli sulle attività e i servizi dell’associazione.
         </p>
 
         <div className="mt-6 md:mt-7 flex justify-center">
           <ActionLink to="/contatti" variant="dark">
-            Lorem
+            Scrivici
           </ActionLink>
         </div>
       </section>

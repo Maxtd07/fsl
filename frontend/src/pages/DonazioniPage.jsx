@@ -7,14 +7,14 @@ import { useAuth } from '../context/useAuth.js'
 import { capturePayment, createDonation, createPayment } from '../lib/api.js'
 
 const donationCards = [
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.',
-  'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.',
-  'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.',
+  'Inserisci l’importo che desideri donare e compila i tuoi dati nel modulo.',
+  'Conferma la donazione tramite il sistema di pagamento sicuro.',
+  'Ricevi la conferma: la tua donazione viene registrata e destinata alle attività dell’associazione.',
 ]
 
 const impactCards = [
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
-  'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.',
+  'Ogni donazione contribuisce a sostenere attività dedicate all’autonomia e alla partecipazione sociale, offrendo opportunità concrete per sviluppare competenze, indipendenza e inclusione.',
+  'Allo stesso tempo, supporta comunicazioni e iniziative per la comunità, creando momenti di incontro, condivisione e aggiornamento per rafforzare il legame tra le famiglie.',
 ]
 
 const paypalSdkCache = new Map()
@@ -33,7 +33,7 @@ function loadPayPalSdk(clientId) {
 
     if (existingScript) {
       existingScript.addEventListener('load', () => resolve(window.paypal), { once: true })
-      existingScript.addEventListener('error', () => reject(new Error('Lorem ipsum dolor sit amet')), {
+      existingScript.addEventListener('error', () => reject(new Error('Impossibile caricare PayPal SDK')), {
         once: true,
       })
       return
@@ -44,7 +44,7 @@ function loadPayPalSdk(clientId) {
     script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=EUR`
     script.async = true
     script.onload = () => resolve(window.paypal)
-    script.onerror = () => reject(new Error('Lorem ipsum dolor sit amet'))
+    script.onerror = () => reject(new Error('Impossibile caricare PayPal SDK'))
     document.body.appendChild(script)
   })
 
@@ -55,13 +55,11 @@ function loadPayPalSdk(clientId) {
 function DonazioniPage() {
   const { isAuthenticated, user } = useAuth()
   const paypalClientId = import.meta.env.VITE_PAYPAL_CLIENT_ID ?? ''
-
   const [donationAmount, setDonationAmount] = useState('25')
   const [donationForm, setDonationForm] = useState({
     nome: '',
     email: '',
   })
-
   const [isProcessing, setIsProcessing] = useState(false)
   const [message, setMessage] = useState('')
   const [paypalError, setPaypalError] = useState('')
@@ -81,7 +79,9 @@ function DonazioniPage() {
     const container = paypalButtonRef.current
 
     async function renderPayPalButton() {
-      if (!paypalClientId || !container) return
+      if (!paypalClientId || !container) {
+        return
+      }
 
       try {
         const paypal = await loadPayPalSdk(paypalClientId)
@@ -97,18 +97,17 @@ function DonazioniPage() {
             color: 'gold',
             label: 'paypal',
           },
-
           createOrder: async () => {
             const parsedAmount = Number(donationAmount)
 
             if (!donationForm.nome.trim() || !donationForm.email.trim()) {
-              setMessage('Lorem ipsum dolor sit amet, consectetur adipiscing elit.')
-              throw new Error('Invalid donor data')
+              setMessage('Compila nome ed email prima di procedere.')
+              throw new Error('Dati donatore incompleti')
             }
 
             if (!Number.isFinite(parsedAmount) || parsedAmount < 1) {
-              setMessage('Lorem ipsum dolor sit amet, minimum value required.')
-              throw new Error('Invalid amount')
+              setMessage('Inserisci un importo valido di almeno 1 euro.')
+              throw new Error('Importo non valido')
             }
 
             const payment = await createPayment({
@@ -119,7 +118,6 @@ function DonazioniPage() {
 
             return payment.orderId
           },
-
           onApprove: async (data) => {
             setIsProcessing(true)
             setMessage('')
@@ -137,22 +135,20 @@ function DonazioniPage() {
                 paymentStatus: capturedPayment.status,
               })
 
-              setMessage('Lorem ipsum dolor sit amet, donation completed successfully.')
+              setMessage('Donazione completata con successo. Grazie per il tuo sostegno.')
               setDonationAmount('25')
-
               setDonationForm((current) => ({
                 nome: isAuthenticated ? user?.nome ?? current.nome : '',
                 email: isAuthenticated ? user?.email ?? current.email : '',
               }))
             } catch (err) {
-              setMessage(err.message || 'Lorem ipsum error completing transaction.')
+              setMessage(err.message || 'Errore durante il completamento della donazione.')
             } finally {
               setIsProcessing(false)
             }
           },
-
           onError: (err) => {
-            setPaypalError(err?.message || 'Lorem ipsum PayPal transaction error.')
+            setPaypalError(err?.message || 'Errore nella transazione PayPal.')
             setIsProcessing(false)
           },
         })
@@ -162,7 +158,7 @@ function DonazioniPage() {
         }
       } catch (err) {
         if (!disposed) {
-          setPaypalError(err.message || 'Lorem ipsum initialization error.')
+          setPaypalError(err.message || 'Errore durante l inizializzazione di PayPal.')
         }
       }
     }
@@ -171,85 +167,89 @@ function DonazioniPage() {
 
     return () => {
       disposed = true
-      if (container) container.innerHTML = ''
+      if (container) {
+        container.innerHTML = ''
+      }
     }
   }, [paypalClientId, donationAmount, donationForm.email, donationForm.nome, isAuthenticated, user])
 
   return (
     <main className="space-y-8">
       <PageHero
-        eyebrow="Lorem ipsum"
-        title="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        eyebrow="Donazioni"
+        title="Sostieni le attività dell'associazione con una donazione sicura."
+        description="Scegli il metodo che preferisci: online con PayPal, bonifico bancario, conto corrente postale o dona il tuo 5 per mille."
         tone="secondary"
         actions={
           <>
-            <ActionLink to="/contatti">Lorem ipsum</ActionLink>
+            <ActionLink to="/contatti">Richiedi dettagli</ActionLink>
             <ActionLink to="/privacy" variant="secondary">
-              Lorem ipsum
+              Privacy e trattamento dati
             </ActionLink>
           </>
         }
       />
 
-      {/* PAYMENT METHODS */}
+      {/* METODI DI DONAZIONE ALTERNATIVI */}
       <section className="space-y-5 px-6 md:px-8">
         <SectionHeading
           title="Scegli come sostenerci"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+          description="Offriamo diverse modalità di donazione per adattarci alle tue preferenze."
         />
 
         <div className="grid gap-6 lg:grid-cols-3">
-          <article className="rounded-lg border border-primary/20 bg-base px-6 py-8 shadow-md">
-            <h3 className="mb-4 text-lg font-bold text-text">Lorem ipsum 5x1000</h3>
+          {/* 5x1000 */}
+          <article className="rounded-lg border border-primary/20 bg-base px-6 py-8 shadow-md hover:shadow-lg transition">
+            <h3 className="mb-4 text-lg font-bold text-text">Dona il 5 per mille</h3>
             <div className="space-y-3 text-sm text-text/85">
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <p className="font-semibold text-primary">Lorem ipsum codice fiscale:</p>
+              <p>Nella dichiarazione dei redditi, destina il 5 per mille all'Associazione Disabili.</p>
+              <p className="font-semibold text-primary">Codice Fiscale:</p>
               <p className="font-mono text-base tracking-wide bg-primary/8 p-3 rounded-lg text-text">
-                XXXX XXXX XXXX
+                90034110446
               </p>
               <p className="text-xs text-text/60 pt-2">
-                Lorem ipsum dolor sit amet, non cost information placeholder.
+                Non ti costa nulla e aiuti concretamente l'associazione.
               </p>
             </div>
           </article>
 
-          <article className="rounded-lg border border-secondary/20 bg-base px-6 py-8 shadow-md">
-            <h3 className="mb-4 text-lg font-bold text-text">Lorem ipsum postale</h3>
+          {/* Conto Corrente Postale */}
+          <article className="rounded-lg border border-secondary/20 bg-base px-6 py-8 shadow-md hover:shadow-lg transition">
+            <h3 className="mb-4 text-lg font-bold text-text">Conto Corrente Postale</h3>
             <div className="space-y-3 text-sm text-text/85">
-              <p>Lorem ipsum dolor sit amet consectetur.</p>
-              <p className="font-semibold text-secondary">Lorem ipsum numero:</p>
+              <p>Verso il conto corrente postale intestato all'Associazione Disabili.</p>
+              <p className="font-semibold text-secondary">Numero:</p>
               <p className="font-mono text-base tracking-wide bg-secondary/8 p-3 rounded-lg text-text">
-                XXXXXXXX
+                34201830
               </p>
               <p className="text-xs text-text/60 pt-2">
-                Lorem ipsum available in postal system.
+                Disponibile negli uffici postali italiani.
               </p>
             </div>
           </article>
 
-          <article className="rounded-lg border border-accent/20 bg-base px-6 py-8 shadow-md">
-            <h3 className="mb-4 text-lg font-bold text-text">Lorem ipsum bonifico</h3>
+          {/* Bonifico Bancario */}
+          <article className="rounded-lg border border-accent/20 bg-base px-6 py-8 shadow-md hover:shadow-lg transition">
+            <h3 className="mb-4 text-lg font-bold text-text">Bonifico Bancario</h3>
             <div className="space-y-3 text-sm text-text/85">
-              <p>Lorem ipsum dolor sit amet transfer method.</p>
-              <p className="font-semibold text-text">Lorem ipsum IBAN:</p>
+              <p>Effettua un bonifico diretto sul nostro IBAN.</p>
+              <p className="font-semibold text-text">IBAN:</p>
               <p className="font-mono text-base tracking-wide bg-accent/8 p-3 rounded-lg break-all text-text">
-                ITXX XXXX XXXX XXXX XXXX XXXX XXX
+                IT76 S076 0113 5000 0000 3420 1830
               </p>
               <p className="text-xs text-text/60 pt-2">
-                Lorem ipsum causale placeholder text.
+                Causale: "Donazione - Associazione Disabili"
               </p>
             </div>
           </article>
         </div>
       </section>
 
-      {/* STEPS */}
       <section className="space-y-5">
         <SectionHeading
-          eyebrow="Lorem ipsum"
-          title="Lorem ipsum flow"
-        />
+          eyebrow="Come funziona"
+          title="Un flusso standard, chiaro e tracciabile."
+          />
 
         <div className="grid gap-4 lg:grid-cols-3">
           {donationCards.map((text, index) => (
@@ -257,22 +257,19 @@ function DonazioniPage() {
               key={text}
               className="rounded-[1.6rem] border-2 border-primary/20 bg-base p-4 shadow-[0_8px_18px_rgba(0,0,0,0.08)]"
             >
-              <p className="mb-2 text-xs font-bold uppercase tracking-[0.22em] text-primary">
-                Step {index + 1}
-              </p>
+              <p className="mb-2 text-xs font-bold uppercase tracking-[0.22em] text-primary">Step {index + 1}</p>
               <p className="text-sm leading-7 text-text/80">{text}</p>
             </article>
           ))}
         </div>
       </section>
 
-      {/* IMPACT */}
       <section className="grid gap-6 rounded-lg border border-primary/20 bg-base p-6 shadow-lg md:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(300px,0.9fr)] lg:items-center">
         <div>
           <SectionHeading
-            eyebrow="Lorem ipsum"
-            title="Lorem ipsum impact"
-            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+            eyebrow="Impatto"
+            title="Ogni donazione diventa azione concreta."
+            description="Con il tuo supporto possiamo promuovere attività inclusive e laboratori educativi, offrire supporto diretto alle famiglie, organizzare eventi e momenti di condivisione e sviluppare progetti dedicati all’autonomia e alla partecipazione."
           />
 
           <div className="mt-6 grid gap-4 md:grid-cols-2">
@@ -287,21 +284,15 @@ function DonazioniPage() {
           </div>
         </div>
 
-        <PlaceholderImage alt="Lorem ipsum impact" className="h-72 md:h-80 lg:h-full lg:min-h-96" />
+        <PlaceholderImage alt="Impatto donazioni" className="h-72 md:h-80 lg:h-full lg:min-h-96" />
       </section>
 
-      {/* PAYPAL SECTION (kept, only text normalized) */}
       <section className="mx-auto w-full max-w-2xl rounded-lg border border-primary/20 bg-base p-6 shadow-lg md:p-8">
-        <h2 className="mb-6 text-center text-2xl font-bold text-text md:text-3xl">
-          Lorem ipsum donation
-        </h2>
+        <h2 className="mb-6 text-center text-2xl font-bold text-text md:text-3xl">Fai una donazione</h2>
 
         <div className="space-y-5">
           <div>
-            <label className="mb-3 block text-sm font-medium text-text">
-              Lorem ipsum amount (EUR)
-            </label>
-
+            <label className="mb-3 block text-sm font-medium text-text">Importo (EUR)</label>
             <div className="mb-4 grid grid-cols-4 gap-2">
               {['10', '25', '50', '100'].map((amount) => (
                 <button
@@ -318,41 +309,36 @@ function DonazioniPage() {
                 </button>
               ))}
             </div>
-
             <input
               type="number"
               min="1"
               step="0.01"
               value={donationAmount}
-              onChange={(e) => setDonationAmount(e.target.value)}
+              onChange={(event) => setDonationAmount(event.target.value)}
               className="w-full rounded-lg border border-primary/20 bg-background px-4 py-3 text-sm text-text outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/12"
-              placeholder="Lorem ipsum custom amount"
+              placeholder="Importo personalizzato"
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-text">Lorem ipsum name</label>
+            <label className="mb-2 block text-sm font-medium text-text">Nome</label>
             <input
               type="text"
               value={donationForm.nome}
-              onChange={(e) =>
-                setDonationForm((c) => ({ ...c, nome: e.target.value }))
-              }
+              onChange={(event) => setDonationForm((current) => ({ ...current, nome: event.target.value }))}
               className="w-full rounded-lg border border-primary/20 bg-background px-4 py-3 text-sm text-text outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/12"
-              placeholder="Lorem ipsum name"
+              placeholder="Il tuo nome"
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-text">Lorem ipsum email</label>
+            <label className="mb-2 block text-sm font-medium text-text">Email</label>
             <input
               type="email"
               value={donationForm.email}
-              onChange={(e) =>
-                setDonationForm((c) => ({ ...c, email: e.target.value }))
-              }
+              onChange={(event) => setDonationForm((current) => ({ ...current, email: event.target.value }))}
               className="w-full rounded-lg border border-primary/20 bg-background px-4 py-3 text-sm text-text outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/12"
-              placeholder="Lorem ipsum email"
+              placeholder="La tua email"
             />
           </div>
 
@@ -370,34 +356,26 @@ function DonazioniPage() {
 
           {!paypalClientId ? (
             <div className="rounded-lg border border-accent/30 bg-accent/10 px-4 py-3 text-sm font-medium text-text">
-              Lorem ipsum configuration missing
+              Configura <span className="font-semibold">VITE_PAYPAL_CLIENT_ID</span> nel frontend per visualizzare il
+              pulsante PayPal.
             </div>
           ) : (
             <div className="mt-6">
-              <div
-                ref={paypalButtonRef}
-                className="paypal-button-container"
-                style={{ minHeight: '80px' }}
-              />
+              <div ref={paypalButtonRef} className="paypal-button-container" style={{ minHeight: '80px' }} />
             </div>
           )}
 
           <div className="rounded-lg border border-primary/20 bg-primary/5 px-4 py-3 text-xs text-text/70 leading-relaxed">
-            <p className="font-semibold text-primary mb-2">Lorem ipsum privacy</p>
+            <p className="font-semibold text-primary mb-2">Protezione dei dati sensibili</p>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              I tuoi dati personali (nome ed email) vengono utilizzati esclusivamente per elaborare la donazione e inviarti una ricevuta. Non vengono condivisi con terzi se non per le necessità del pagamento PayPal. Leggi la nostra <a href="/privacy" className="underline text-primary hover:text-primary/80">informativa sulla privacy</a> per ulteriori dettagli.
             </p>
           </div>
 
           <p className="text-center text-xs text-text/60">
-            Lorem ipsum PayPal backend processing note.
+            PayPal crea e cattura l'ordine dal backend. Lo stato della donazione viene salvato solo a pagamento completato.
           </p>
-
-          {isProcessing && (
-            <p className="text-center text-xs font-semibold text-primary">
-              Lorem ipsum processing payment...
-            </p>
-          )}
+          {isProcessing && <p className="text-center text-xs font-semibold text-primary">Elaborazione pagamento...</p>}
         </div>
       </section>
     </main>

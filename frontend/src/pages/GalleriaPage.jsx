@@ -43,7 +43,7 @@ function FacebookFeed() {
           className="fb-xfbml-parse-ignore"
         >
           <a href="https://www.facebook.com/lacrisalideassociazionefamigliedisabili">
-            La Crisalide Associazione Famiglie di Disabili
+            Associazione Disabili
           </a>
         </blockquote>
       </div>
