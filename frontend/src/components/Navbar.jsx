@@ -27,8 +27,8 @@ function Navbar() {
   // Se admin, mostra navbar semplificata
   if (isAdmin && isAuthenticated) {
     return (
-      <nav className="border-b border-text/10 bg-base shadow-md px-6 py-4">
-        <div className="flex items-center justify-between gap-4">
+      <nav className="w-full border-b border-text/10 bg-base shadow-md py-4">
+        <div className="flex items-center justify-between gap-4 px-6">
           {/* Logo */}
           <div className="flex items-center gap-4">
             <NavLink
@@ -84,7 +84,7 @@ function Navbar() {
 
         {/* Mobile Navigation - Solo Esci */}
         {isOpen && (
-          <div className="mt-6 flex flex-col gap-2 border-t border-text/10 pt-4 lg:hidden">
+          <div className="mt-4 flex flex-col gap-2 border-t border-text/10 pt-4 px-6 lg:hidden">
             <button
               type="button"
               onClick={() => {
@@ -104,8 +104,8 @@ function Navbar() {
 
   // Navbar normale per utenti non-admin
   return (
-    <nav className="border-b border-text/10 bg-base shadow-md px-6 py-4">
-      <div className="flex items-center justify-between gap-4">
+    <nav className="w-full border-b border-text/10 bg-base shadow-md py-4">
+      <div className="flex items-center justify-between gap-4 px-6">
         {/* Logo */}
         <div className="flex items-center gap-4">
           <NavLink
@@ -211,9 +211,10 @@ function Navbar() {
         </button>
       </div>
 
+
       {/* Mobile Navigation */}
       {isOpen && (
-        <nav className="mt-6 flex flex-col gap-2 border-t border-text/10 pt-4 lg:hidden">
+        <nav className="mt-4 flex flex-col gap-2 border-t border-text/10 pt-4 px-6 lg:hidden">
           {navItems.map((item) => (
             <NavLink
               key={item.to}

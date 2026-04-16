@@ -7,20 +7,20 @@ const footerLinkClasses =
 
 function Footer() {
   return (
-    <footer className="w-full bg-dark px-6 py-6 text-base text-white/80">
-      <div className="mx-auto w-full">
-        <div className="mb-6 border-b border-white/10 pb-6 lg:px-0">
+    <footer className="w-full bg-dark px-6 py-3 text-base text-white/80">
+      <div className="w-full">
+        <div className="mb-3 border-b border-white/10 pb-3 lg:px-0">
           <p className="text-xs font-bold uppercase tracking-wider text-white">Associazione per l'inclusione</p>
-          <p className="mt-3 max-w-md leading-relaxed text-sm text-white/70">
+          <p className="mt-2 max-w-md leading-relaxed text-sm text-white/70">
             Sosteniamo persone con disabilita e famiglie con ascolto, orientamento, attivita inclusive e occasioni
             di partecipazione alla vita sociale.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-x-8 gap-y-6 lg:px-0">
+        <div className="grid grid-cols-2 gap-x-8 gap-y-3 lg:px-0">
           <div>
-            <p className="mb-4 text-xs font-bold uppercase tracking-wider text-white">Social e Privacy</p>
-            <div className="flex flex-col gap-3">
+            <p className="mb-2 text-xs font-bold uppercase tracking-wider text-white">Social e Privacy</p>
+            <div className="flex flex-col gap-2">
               <a className={`${footerLinkClasses} flex items-center gap-2`} href="#facebook">
                 <FontAwesomeIcon icon={faFacebook} className="text-base" />
                 <span>Facebook</span>
@@ -37,8 +37,8 @@ function Footer() {
           </div>
 
           <div className="text-right">
-            <p className="mb-4 text-xs font-bold uppercase tracking-wider text-white">Contatti</p>
-            <div className="flex flex-col items-end gap-3">
+            <p className="mb-2 text-xs font-bold uppercase tracking-wider text-white">Contatti</p>
+            <div className="flex flex-col items-end gap-2">
               <a className={`${footerLinkClasses} text-sm`} href="mailto:info@nomeassociazione.it">
                 info@nomeassociazione.it
               </a>
@@ -51,7 +51,7 @@ function Footer() {
           <div className="col-span-2 text-center text-sm text-white/60">Via Roma 123, Citta (PR) 00000</div>
         </div>
 
-        <div className="mt-6 grid gap-4 border-t border-white/10 pt-6 text-xs text-white/50 lg:grid-cols-2 lg:px-0">
+        <div className="mt-3 grid gap-2 border-t border-white/10 pt-3 text-xs text-white/50 lg:grid-cols-2 lg:px-0">
           <p>Copyright 2026 Associazione per l'inclusione. Tutti i diritti riservati.</p>
           <p className="text-left lg:text-right">Creato da Daniele Soldi e Max Ten Dam</p>
         </div>
