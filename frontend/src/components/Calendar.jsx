@@ -184,7 +184,7 @@ export function Calendar({ onDateSelected, onEventClick }) {
             <button
               onClick={handlePrevPeriod}
               className="flex items-center gap-2 rounded-lg border border-primary/30 bg-primary/8 px-3 py-2 text-sm font-semibold text-primary transition-all duration-200 hover:bg-primary/12 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40"
-              aria-label={`Período anterior`}
+              aria-label={`Periodo precedente`}
             >
               <FontAwesomeIcon icon={faChevronLeft} className="text-xs" />
               <span className="hidden sm:inline">Prec</span>
@@ -202,7 +202,7 @@ export function Calendar({ onDateSelected, onEventClick }) {
             <button
               onClick={handleNextPeriod}
               className="flex items-center gap-2 rounded-lg border border-primary/30 bg-primary/8 px-3 py-2 text-sm font-semibold text-primary transition-all duration-200 hover:bg-primary/12 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40"
-              aria-label={`Período siguiente`}
+              aria-label={`Periodo successivo`}
             >
               <span className="hidden sm:inline">Succ</span>
               <FontAwesomeIcon icon={faChevronRight} className="text-xs" />
@@ -220,6 +220,7 @@ export function Calendar({ onDateSelected, onEventClick }) {
                 : 'border border-primary/30 bg-primary/8 text-primary hover:bg-primary/12'
             } focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40`}
             aria-pressed={viewMode === 'day'}
+            aria-label="Visualizza calendario per giorno"
           >
             <FontAwesomeIcon icon={faCalendarDay} />
             <span>Giorno</span>
@@ -233,6 +234,7 @@ export function Calendar({ onDateSelected, onEventClick }) {
                 : 'border border-primary/30 bg-primary/8 text-primary hover:bg-primary/12'
             } focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40`}
             aria-pressed={viewMode === 'week'}
+            aria-label="Visualizza calendario per settimana"
           >
             <FontAwesomeIcon icon={faCalendarWeek} />
             <span>Settimana</span>
@@ -246,6 +248,7 @@ export function Calendar({ onDateSelected, onEventClick }) {
                 : 'border border-primary/30 bg-primary/8 text-primary hover:bg-primary/12'
             } focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40`}
             aria-pressed={viewMode === 'month'}
+            aria-label="Visualizza calendario per mese"
           >
             <FontAwesomeIcon icon={faCalendar} />
             <span>Mese</span>
@@ -333,6 +336,7 @@ export function Calendar({ onDateSelected, onEventClick }) {
                           ? 'border-accent/50 bg-accent/15 text-text'
                           : 'border-text/10 text-text hover:border-primary/30 hover:bg-primary/5'
                 }`}
+                aria-label={dayObj.currentMonth ? `${dayObj.day} ${new Intl.DateTimeFormat('it-IT', { month: 'long', year: 'numeric' }).format(currentDate)}${dayEvents.length > 0 ? `, ${dayEvents.length} evento${dayEvents.length > 1 ? 'i' : ''}` : ''}` : undefined}
               >
                 <div className="flex h-full flex-col">
                   <span>{dayObj.day}</span>
@@ -398,6 +402,7 @@ export function Calendar({ onDateSelected, onEventClick }) {
                       ? 'border border-accent/50 bg-accent/15'
                       : 'border border-text/10 hover:bg-text/5'
                 }`}
+                aria-label={`${dayNames[idx]} ${day.getDate()} ${new Intl.DateTimeFormat('it-IT', { month: 'long', year: 'numeric' }).format(day)}`}
               >
                 <div className="text-xs font-bold uppercase text-text/70">{dayNames[idx]}</div>
                 <div className={`text-lg font-bold ${isToday ? 'text-primary' : 'text-text'}`}>

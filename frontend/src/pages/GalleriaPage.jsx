@@ -13,7 +13,7 @@ function SocialMediaFeed() {
       <div className="text-center">
         <p className="mb-4 text-sm font-semibold text-secondary">Galleria Social Media</p>
         <p className="text-xs text-text/60 mb-4">I contenuti della galleria social verranno visualizzati qui</p>
-        <button className="px-4 py-2 bg-primary text-white rounded-lg text-sm hover:bg-primary/90 transition">
+        <button className="px-4 py-2 bg-primary text-white rounded-lg text-sm hover:bg-primary/90 transition" aria-label="Visita il nostro profilo Instagram">
           Visita il nostro profilo
         </button>
       </div>
@@ -78,6 +78,7 @@ function GalleriaPage() {
                 key={photo.id}
                 onClick={() => setSelectedPhoto(photo)}
                 className="group relative overflow-hidden rounded-lg border border-primary/20 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 text-left"
+                aria-label={`Visualizza foto: ${photo.titolo}`}
               >
                 {photo.immagine && (
                   <>
