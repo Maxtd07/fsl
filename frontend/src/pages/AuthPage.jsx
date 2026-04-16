@@ -18,8 +18,8 @@ const initialRegisterState = {
 }
 
 const modeOptions = [
-  { value: 'login', label: 'Ho gia un account' },
-  { value: 'register', label: 'Crea un account' },
+  { value: 'login', label: 'Lorem ipsum dolor' },
+  { value: 'register', label: 'Sed ut perspiciatis' },
 ]
 
 const loginFields = [
@@ -28,7 +28,7 @@ const loginFields = [
     name: 'email',
     type: 'email',
     autoComplete: 'email',
-    placeholder: 'nome@email.it',
+    placeholder: 'lorem@ipsum.it',
   },
   {
     label: 'Password',
@@ -41,32 +41,32 @@ const loginFields = [
 
 const registerFields = [
   {
-    label: 'Nome e cognome',
+    label: 'Lorem name',
     name: 'nome',
     type: 'text',
     autoComplete: 'name',
-    placeholder: 'Mario Rossi',
+    placeholder: 'Lorem Ipsum',
   },
   {
     label: 'Email',
     name: 'email',
     type: 'email',
     autoComplete: 'email',
-    placeholder: 'nome@email.it',
+    placeholder: 'dolor@sit.amet',
   },
   {
     label: 'Password',
     name: 'password',
     type: 'password',
     autoComplete: 'new-password',
-    placeholder: 'Almeno 8 caratteri',
+    placeholder: 'Minima 8 caratteri',
   },
   {
-    label: 'Conferma password',
+    label: 'Confirm lorem',
     name: 'confirmPassword',
     type: 'password',
     autoComplete: 'new-password',
-    placeholder: 'Ripeti la password',
+    placeholder: 'Ripeti ipsum',
   },
 ]
 
@@ -145,7 +145,7 @@ function AuthPage() {
     try {
       await login(loginForm)
     } catch (err) {
-      handleSubmitError(err, 'Accesso non riuscito.')
+      handleSubmitError(err, 'Lorem ipsum dolor sit amet.')
     }
   }
 
@@ -154,7 +154,7 @@ function AuthPage() {
     clearFeedback()
 
     if (registerForm.password !== registerForm.confirmPassword) {
-      setError('Le password non coincidono.')
+      setError('Lorem ipsum mismatch dolor.')
       return
     }
 
@@ -166,43 +166,43 @@ function AuthPage() {
         email: registerForm.email,
         password: registerForm.password,
       })
-      setMessage('Profilo creato con successo. Ora puoi iscriverti agli eventi.')
+      setMessage('Lorem ipsum dolor sit amet, consectetur adipiscing elit.')
     } catch (err) {
-      handleSubmitError(err, 'Registrazione non riuscita.')
+      handleSubmitError(err, 'Registratio non concluditur.')
     }
   }
 
   const formConfig =
     mode === 'login'
       ? {
-          title: 'Accesso utente',
+          title: 'Lorem accessus',
           fields: loginFields,
           values: loginForm,
           onFieldChange: updateLoginField,
           onSubmit: handleLoginSubmit,
-          submitLabel: isSubmitting ? 'Accesso in corso...' : 'Accedi',
+          submitLabel: isSubmitting ? 'Lorem...' : 'Accedi',
         }
       : {
-          title: 'Registrazione',
+          title: 'Lorem registratio',
           fields: registerFields,
           values: registerForm,
           onFieldChange: updateRegisterField,
           onSubmit: handleRegisterSubmit,
-          submitLabel: isSubmitting ? 'Creazione profilo...' : 'Registrati',
+          submitLabel: isSubmitting ? 'Creazione...' : 'Registrati',
         }
 
   return (
     <main className="space-y-8">
       <PageHero
-        eyebrow="Accesso"
-        title="Accedi o crea il tuo profilo per iscriverti agli eventi."
-        description="Il tuo account ti permette di gestire la sessione sul frontend, prenotare gli eventi e ricevere promemoria via email con allegato calendario."
+        eyebrow="Lorem"
+        title="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        description="Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Integer vitae lorem non massa facilisis."
         tone="secondary"
         actions={
           <>
-            <ActionLink to="/eventi">Vai agli eventi</ActionLink>
+            <ActionLink to="/eventi">Lorem events</ActionLink>
             <ActionLink to="/privacy" variant="secondary">
-              Privacy e GDPR
+              Lorem privacy
             </ActionLink>
           </>
         }
@@ -211,9 +211,9 @@ function AuthPage() {
       <section className="grid gap-6 rounded-[2rem] border-2 border-primary/20 bg-base p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] md:p-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(360px,1.05fr)]">
         <div className="space-y-5">
           <SectionHeading
-            eyebrow="Area utente"
-            title="Sessione sicura con JWT e iscrizione rapida agli eventi."
-            description="Usa la tua email per entrare. Se non hai ancora un profilo, puoi registrarti in pochi secondi."
+            eyebrow="Lorem area"
+            title="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+            description="Suspendisse potenti. Curabitur blandit tempus porttitor. Integer posuere erat a ante venenatis."
           />
 
           <div className="grid gap-3 md:grid-cols-2">
@@ -230,16 +230,20 @@ function AuthPage() {
           </div>
 
           <div className="rounded-[1.5rem] border border-secondary/30 bg-secondary/8 p-5">
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-secondary">Cosa ottieni</p>
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-secondary">
+              Lorem benefits
+            </p>
             <p className="mt-3 text-sm leading-7 text-text/80">
-              Dopo l&apos;accesso puoi iscriverti agli eventi, vedere la tua sessione attiva e ricevere le conferme
-              via email con file `.ics` compatibile con i calendari piu diffusi.
+              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+              Excepteur sint occaecat cupidatat non proident.
             </p>
           </div>
         </div>
 
         <div className="rounded-[1.8rem] border border-primary/12 bg-background p-6 shadow-[0_18px_40px_rgba(76,130,169,0.10)] md:p-7">
-          <p className="mb-5 text-xs font-bold uppercase tracking-[0.22em] text-primary">{formConfig.title}</p>
+          <p className="mb-5 text-xs font-bold uppercase tracking-[0.22em] text-primary">
+            {formConfig.title}
+          </p>
 
           <form className="space-y-4" onSubmit={formConfig.onSubmit}>
             {formConfig.fields.map((field) => (
@@ -257,21 +261,27 @@ function AuthPage() {
           </form>
 
           {error && (
-            <FeedbackMessage className="border border-accent/30 bg-accent/10 text-accent">{error}</FeedbackMessage>
+            <FeedbackMessage className="border border-accent/30 bg-accent/10 text-accent">
+              {error}
+            </FeedbackMessage>
           )}
 
           {message && (
-            <FeedbackMessage className="border border-green-200 bg-green-50 text-green-700">{message}</FeedbackMessage>
+            <FeedbackMessage className="border border-green-200 bg-green-50 text-green-700">
+              {message}
+            </FeedbackMessage>
           )}
 
           <p className="mt-5 text-xs text-text/60">
-            Se sei amministratore puoi usare la pagina dedicata in <span className="font-semibold">/admin/login</span>.
+            Lorem admin area: <span className="font-semibold">/admin/login</span>
           </p>
+
           <p className="mt-2 text-xs text-text/60">
-            Credenziali admin seed locali: <span className="font-semibold">admin@lacrisalide.it</span> /{' '}
+            Seed credentials: <span className="font-semibold">admin@lorem.it</span> /{' '}
             <span className="font-semibold">Admin123!</span>
           </p>
-          {user && <p className="mt-2 text-xs text-text/60">Sessione attiva per {user.nome}</p>}
+
+          {user && <p className="mt-2 text-xs text-text/60">Lorem session active: {user.nome}</p>}
         </div>
       </section>
     </main>

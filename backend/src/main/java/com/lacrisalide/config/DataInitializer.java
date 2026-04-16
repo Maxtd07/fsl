@@ -26,9 +26,9 @@ public class DataInitializer {
    if (!userRepository.existsByEmail("admin@lacrisalide.it")) {
     userRepository.save(
      User.builder()
-      .nome("Admin La Crisalide")
-      .email("admin@lacrisalide.it")
-      .password(passwordEncoder.encode("Admin123!"))
+      .nome("Admin")
+      .email("admin@admin.it")
+      .password(passwordEncoder.encode("adminadmin"))
       .ruolo(Role.ADMIN)
       .build()
     );

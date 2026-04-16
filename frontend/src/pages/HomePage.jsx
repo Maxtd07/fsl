@@ -46,7 +46,7 @@ function HomePage() {
         const data = await fetchEvents()
         setEvents(Array.isArray(data) ? data : [])
       } catch (err) {
-        setErrorEvents(err.message || 'Impossibile caricare gli eventi')
+        setErrorEvents(err.message || 'Lorem ipsum dolor sit amet')
         setEvents([])
       } finally {
         setIsLoadingEvents(false)
@@ -63,7 +63,7 @@ function HomePage() {
         const data = await fetchPhotos()
         setPhotos(Array.isArray(data) ? data : [])
       } catch (err) {
-        console.error('Errore caricamento foto:', err)
+        console.error('Lorem ipsum error:', err)
         setPhotos([])
       } finally {
         setIsLoadingPhotos(false)
@@ -73,17 +73,15 @@ function HomePage() {
     loadPhotos()
   }, [])
 
-  // Limita a 3 eventi e 4 foto
   const displayedEvents = events.slice(0, 3)
   const displayedPhotos = photos.slice(0, 4)
 
   return (
     <main>
       <PageHero
-        eyebrow="Benvenuti in La Crisalide"
-        title="Valorizziamo le abilità, non le mancanze. "
-        description="La Crisalide nasce con un obiettivo chiaro: accompagnare ogni persona in un percorso di crescita e trasformazione, sviluppando autonomia e consapevolezza.
-Come la crisalide che si trasforma in farfalla, crediamo che ogni individuo abbia potenzialità da far emergere e coltivare."
+        eyebrow="Lorem ipsum"
+        title="Dolor sit amet consectetur adipiscing elit sed do eiusmod."
+        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris."
         tone="primary"
       />
 
@@ -92,25 +90,20 @@ Come la crisalide che si trasforma in farfalla, crediamo che ogni individuo abbi
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1.25fr)_minmax(280px,0.75fr)]">
           <div>
             <SectionHeading
-              eyebrow="Chi siamo"
-              title="una parola su di noi"
-              description="La Crisalide è un’associazione attiva da oltre vent’anni
-              nel supporto e nell’integrazione delle persone con disabilità e delle loro famiglie.
-              Fin dall’inizio, l’obiettivo è stato quello di valorizzare le abilità individuali,
-              costruendo percorsi personalizzati che tengano conto delle caratteristiche e dei bisogni di ciascuno."
+              eyebrow="Lorem"
+              title="Consectetur adipiscing elit"
+              description="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
             />
 
             <p className="mt-5 md:mt-6 max-w-3xl text-xs md:text-sm font-medium leading-7 text-text">
-              Crediamo che ogni persona abbia potenzialità da sviluppare attraverso opportunità concrete, senza fermarsi davanti alle difficoltà.
-
-              Siamo stati tra i primi in Italia a credere nella musicoterapia come strumento educativo e relazionale. Nel tempo abbiamo sviluppato attività orientate all’autonomia, aiutando i ragazzi a vivere esperienze quotidiane come spostarsi, organizzarsi e relazionarsi in modo indipendente.
-
-              Gli educatori costruiscono percorsi su misura, accompagnando ogni partecipante in un processo di crescita personale e sociale.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero.
+              Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.
+              Duis sagittis ipsum. Praesent mauris.
             </p>
 
             <div className="mt-6">
               <ActionLink to="/chi-siamo" variant="secondary" className="text-sm md:text-base">
-                Scopri di piu
+                Lorem ipsum
               </ActionLink>
             </div>
           </div>
@@ -118,23 +111,19 @@ Come la crisalide che si trasforma in farfalla, crediamo che ogni individuo abbi
           <div className="grid gap-5">
             <div className="rounded-lg border border-primary/20 bg-background px-4 md:px-5 py-4 md:py-5 shadow-sm">
               <p className="text-xs font-bold uppercase tracking-widest text-secondary">
-                Identità e Missione
+                Lorem ipsum
               </p>
               <p className="mt-2 md:mt-3 text-xs md:text-sm font-medium leading-6 md:leading-7 text-text">
-                La Crisalide è un’associazione che da oltre vent’anni promuove l’inclusione e l’autonomia
-                delle persone con disabilità.Crediamo nelle capacità di ogni individuo e lavoriamo per
-                svilupparle attraverso esperienze concrete e percorsi personalizzati.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.
               </p>
             </div>
 
             <div className="rounded-lg border border-secondary/30 bg-secondary/8 px-4 md:px-5 py-4 md:py-5 shadow-sm">
               <p className="text-xs font-bold uppercase tracking-widest text-secondary">
-                Metodo e Attività
+                Dolor sit amet
               </p>
               <p className="mt-2 md:mt-3 text-xs md:text-sm font-medium leading-6 md:leading-7 text-text">
-                Costruiamo percorsi su misura che favoriscono la crescita personale e l’indipendenza.
-                Attraverso laboratori, attività di gruppo e progetti di autonomia, accompagniamo ogni
-                persona nel proprio sviluppo, valorizzando le sue potenzialità.
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
               </p>
             </div>
           </div>
@@ -145,19 +134,19 @@ Come la crisalide che si trasforma in farfalla, crediamo che ogni individuo abbi
       <section className="border-t-2 border-primary/15 px-6 py-10 md:px-8 md:py-12">
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between lg:flex-nowrap">
           <SectionHeading
-            eyebrow="Prossimi eventi"
-            title="Scopri qui i nostri prossimi eventi"
-            description="organizzati da La Crisalide e partecipa alle nostre iniziative per sostenere la nostra missione e condividere momenti di crescita e inclusione."
+            eyebrow="Lorem ipsum"
+            title="Sed ut perspiciatis unde"
+            description="Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
           />
 
           <ActionLink to="/eventi" variant="secondary" className="whitespace-nowrap flex-shrink-0">
-            Vedi tutti
+            Lorem
           </ActionLink>
         </div>
 
         {isLoadingEvents ? (
           <div className="text-center py-8 text-text/60">
-            <p>Caricamento eventi...</p>
+            <p>Lorem ipsum...</p>
           </div>
         ) : errorEvents ? (
           <div className="text-center py-8 text-red-600">
@@ -177,7 +166,7 @@ Come la crisalide che si trasforma in farfalla, crediamo che ogni individuo abbi
           </div>
         ) : (
           <div className="text-center py-8 text-text/60">
-            <p>Nessun evento disponibile al momento</p>
+            <p>Lorem ipsum dolor sit amet</p>
           </div>
         )}
       </section>
@@ -186,19 +175,19 @@ Come la crisalide che si trasforma in farfalla, crediamo che ogni individuo abbi
       <section className="border-t-2 border-primary/15 px-6 py-10 md:px-8 md:py-12">
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between lg:flex-nowrap">
           <SectionHeading
-            eyebrow="Galleria"
-            title="Ultimi scatti dalla nostra community"
-            description="Momenti speciali catturati dai nostri partecipanti."
+            eyebrow="Lorem"
+            title="Lorem ipsum dolor sit"
+            description="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium."
           />
 
           <ActionLink to="/galleria" variant="secondary" className="whitespace-nowrap flex-shrink-0">
-            Vedi tutto
+            Lorem
           </ActionLink>
         </div>
 
         {isLoadingPhotos ? (
           <div className="text-center py-8 text-text/60">
-            <p>Caricamento galleria...</p>
+            <p>Lorem ipsum...</p>
           </div>
         ) : displayedPhotos.length > 0 ? (
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -228,7 +217,7 @@ Come la crisalide che si trasforma in farfalla, crediamo che ogni individuo abbi
           </div>
         ) : (
           <div className="text-center py-8 text-text/60">
-            <p>Nessuna foto disponibile al momento</p>
+            <p>Lorem ipsum dolor sit amet</p>
           </div>
         )}
       </section>
@@ -255,29 +244,33 @@ Come la crisalide che si trasforma in farfalla, crediamo che ogni individuo abbi
               className="w-full h-auto max-h-[70vh] object-contain"
             />
             <div className="bg-base p-4">
-              <h2 className="text-lg font-bold text-text mb-1">{selectedPhoto.titolo}</h2>
-              <p className="text-sm text-text/75">{selectedPhoto.descrizione}</p>
+              <h2 className="text-lg font-bold text-text mb-1">
+                Lorem ipsum dolor sit amet
+              </h2>
+              <p className="text-sm text-text/75">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </p>
             </div>
           </div>
         </div>
       )}
 
-      {/* DONAZIONI CTA */}
+      {/* CTA DONAZIONI */}
       <section className="mt-6 rounded-lg border border-primary/20 bg-background px-4 md:px-6 lg:px-8 py-10 md:py-12 lg:py-14 text-center shadow-lg">
         <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-primary">
-          Sostieni
+          Lorem
         </p>
         <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-text">
-          Sostieni La Crisalide
+          Lorem ipsum dolor sit amet
         </h2>
         <p className="mx-auto mt-4 md:mt-5 max-w-2xl text-xs md:text-sm font-medium leading-6 md:leading-7 text-text/75">
-          Con il tuo contributo ci aiuti a realizzare progetti concreti e a offrire supporto alle famiglie. Dona in modo semplice e sicuro.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
         </p>
 
         <div className="mt-6 md:mt-7 flex flex-wrap justify-center gap-2 md:gap-3">
-          <ActionLink to="/donazioni" variant="secondary">Dona ora</ActionLink>
+          <ActionLink to="/donazioni" variant="secondary">Lorem</ActionLink>
           <ActionLink to="/contatti" variant="secondary">
-            Richiedi informazioni
+            Ipsum
           </ActionLink>
         </div>
       </section>
@@ -285,20 +278,20 @@ Come la crisalide che si trasforma in farfalla, crediamo che ogni individuo abbi
       {/* CONTATTI CTA */}
       <section className="mt-6 rounded-lg border border-primary/20 bg-primary px-4 md:px-6 lg:px-8 py-10 md:py-12 lg:py-14 text-center text-white shadow-xl">
         <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-accent">
-          CONTATTI
+          LOREM
         </p>
 
         <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">
-          Siamo qui per aiutarti
+          Lorem ipsum dolor sit amet
         </h2>
 
         <p className="mx-auto mt-4 md:mt-5 max-w-2xl text-xs md:text-sm lg:text-base font-medium leading-6 md:leading-7 text-white/90">
-          Hai domande o hai bisogno di informazioni? Contattaci per ricevere supporto, chiarimenti o maggiori dettagli sulle attività e i servizi dell’associazione.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.
         </p>
 
         <div className="mt-6 md:mt-7 flex justify-center">
           <ActionLink to="/contatti" variant="dark">
-            Scrivici
+            Lorem
           </ActionLink>
         </div>
       </section>

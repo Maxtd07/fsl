@@ -13,31 +13,31 @@ const initialFormState = {
 
 const contactCards = [
   {
-    label: 'Email',
-    text: 'la_crisalide@yahoo.it',
+    label: 'Lorem email',
+    text: 'lorem.ipsum@example.com',
   },
   {
-    label: 'Telefono',
-    text: '+39 347 917 7811',
+    label: 'Lorem phone',
+    text: '+39 000 000 0000',
   },
   {
-    label: 'Sede',
-    text: 'Via del Palo 10, Porto Sant\'Elpidio (FM) 63821',
+    label: 'Lorem address',
+    text: 'Via Lorem Ipsum 123, Dolor Sit (RM) 00000',
   },
 ]
 
 const contactFields = [
   {
-    label: 'Nome *',
+    label: 'Lorem name *',
     name: 'nome',
     type: 'text',
-    placeholder: 'Il tuo nome',
+    placeholder: 'Lorem name',
   },
   {
-    label: 'Email *',
+    label: 'Lorem email *',
     name: 'email',
     type: 'email',
-    placeholder: 'tua@email.com',
+    placeholder: 'lorem@ipsum.com',
   },
 ]
 
@@ -48,9 +48,7 @@ const submitButtonClassName =
   'inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(76,130,169,0.22)] transition duration-200 hover:bg-primary/92 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/18 focus-visible:ring-offset-2 focus-visible:ring-offset-base disabled:opacity-50'
 
 function FeedbackMessage({ message }) {
-  if (!message.text) {
-    return null
-  }
+  if (!message.text) return null
 
   const colorClassName =
     message.type === 'success'
@@ -59,7 +57,9 @@ function FeedbackMessage({ message }) {
 
   return (
     <div className={`rounded-lg border-2 p-4 ${colorClassName}`}>
-      <p className="text-sm font-medium">{message.text}</p>
+      <p className="text-sm font-medium">
+        {message.text}
+      </p>
     </div>
   )
 }
@@ -85,10 +85,16 @@ function ContattiPage() {
 
     try {
       await sendContactEmail(formData)
-      setMessage({ type: 'success', text: 'Messaggio inviato con successo. Ti contatteremo presto.' })
+      setMessage({
+        type: 'success',
+        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      })
       setFormData(initialFormState)
     } catch {
-      setMessage({ type: 'error', text: "Errore nell'invio del messaggio. Riprova piu tardi." })
+      setMessage({
+        type: 'error',
+        text: 'Lorem ipsum error sit amet, retry later.',
+      })
     } finally {
       setIsSubmitting(false)
     }
@@ -97,15 +103,15 @@ function ContattiPage() {
   return (
     <main className="space-y-8">
       <PageHero
-        eyebrow="Contatti"
-        title="Mettiti in Contatto con il Nostro Team"
-        description="Per informazioni, collaborazioni o partecipazione agli eventi, non esitare a contattarci. Saremo lieti di fornirti tutto il supporto necessario e guidarti nelle attività dell’associazione in modo chiaro e tempestivo."
+        eyebrow="Lorem"
+        title="Lorem ipsum dolor sit amet"
+        description="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium."
         tone="neutral"
         actions={
           <>
-            <ActionLink to="/eventi">Scopri eventi</ActionLink>
+            <ActionLink to="/eventi">Lorem events</ActionLink>
             <ActionLink to="/chi-siamo" variant="secondary">
-              Leggi di piu
+              Lorem ipsum
             </ActionLink>
           </>
         }
@@ -117,7 +123,9 @@ function ContattiPage() {
             key={card.label}
             className="rounded-[1.6rem] border-2 border-primary/20 bg-base p-4 shadow-[0_8px_18px_rgba(0,0,0,0.08)] md:p-5 lg:p-6"
           >
-            <p className="mb-2 text-xs font-bold uppercase tracking-[0.22em] text-primary">{card.label}</p>
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.22em] text-primary">
+              {card.label}
+            </p>
             <p className="text-xs font-medium leading-6 text-text/85 md:text-sm md:leading-7 md:text-text/80">
               {card.text}
             </p>
@@ -128,15 +136,17 @@ function ContattiPage() {
       <section className="grid gap-6 rounded-[2rem] border-2 border-primary/20 bg-base p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] md:p-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)] lg:items-center">
         <div>
           <SectionHeading
-            eyebrow="Scrivici"
-            title="Contattaci per qualsiasi domanda"
-            description="Compila il modulo qui sotto e ti contatteremo al piu presto possibile."
+            eyebrow="Lorem form"
+            title="Lorem ipsum contact section"
+            description="Aliquam erat volutpat. Curabitur blandit tempus porttitor. Integer posuere erat."
           />
 
           <form onSubmit={handleSubmit} className="mt-6 space-y-4">
             {contactFields.map((field) => (
               <label key={field.name} className="block">
-                <span className="mb-2 block text-sm font-medium text-text">{field.label}</span>
+                <span className="mb-2 block text-sm font-medium text-text">
+                  {field.label}
+                </span>
                 <input
                   {...field}
                   value={formData[field.name]}
@@ -148,12 +158,14 @@ function ContattiPage() {
             ))}
 
             <label className="block">
-              <span className="mb-2 block text-sm font-medium text-text">Messaggio *</span>
+              <span className="mb-2 block text-sm font-medium text-text">
+                Lorem message *
+              </span>
               <textarea
                 name="messaggio"
                 value={formData.messaggio}
                 onChange={updateField('messaggio')}
-                placeholder="Scrivi il tuo messaggio..."
+                placeholder="Lorem ipsum dolor sit amet..."
                 rows="4"
                 className={fieldClassName}
                 required
@@ -162,13 +174,20 @@ function ContattiPage() {
 
             <FeedbackMessage message={message} />
 
-            <button type="submit" disabled={isSubmitting} className={submitButtonClassName}>
-              {isSubmitting ? 'Invio in corso...' : 'Invia messaggio'}
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className={submitButtonClassName}
+            >
+              {isSubmitting ? 'Lorem sending...' : 'Lorem submit'}
             </button>
           </form>
         </div>
 
-        <PlaceholderImage alt="Contatti dettaglio" className="h-72 md:h-80 lg:h-full lg:min-h-96" />
+        <PlaceholderImage
+          alt="Lorem contacts"
+          className="h-72 md:h-80 lg:h-full lg:min-h-96"
+        />
       </section>
     </main>
   )

@@ -1,79 +1,79 @@
-import ActionLink from '../components/ActionLink.jsx'
-import PageHero from '../components/PageHero.jsx'
-import PlaceholderImage from '../components/PlaceholderImage.jsx'
-import SectionHeading from '../components/SectionHeading.jsx'
+import ActionLink from "../components/ActionLink.jsx";
+import PageHero from "../components/PageHero.jsx";
+import PlaceholderImage from "../components/PlaceholderImage.jsx";
+import SectionHeading from "../components/SectionHeading.jsx";
 
 const focusAreas = [
   {
-    label: 'Ascolto e sostegno',
-    text: "La Crisalide offre un servizio di ascolto delle problematiche, sostegno e consulenza per accompagnare persone con disabilita e famiglie.",
-    tone: 'primary',
+    label: "laborum proident Duis",
+    text: "reprehenderit est laborum esse culpa sed sunt cupidatat anim esse nostrud qui ullamco nisi nisi magna minim occaecat. consectetur non mollit sint id ullamco esse pariatur voluptate velit sed Duis in ut pariatur sunt exercitation ea minim.",
+    tone: "primary",
   },
   {
-    label: 'Formazione',
-    text: "Partecipa a incontri di formazione e convegni, e promuove occasioni di approfondimento su integrazione scolastica, sessualita e autismo con esperti locali e professionisti di rilievo nazionale.",
-    tone: 'secondary',
+    label: "adipiscing dolore sit",
+    text: "proident commodo ea minim ullamco proident cupidatat fugiat nisi sint ipsum incididunt anim sit cupidatat aliquip eiusmod ut exercitation non.",
+    tone: "secondary",
   },
   {
-    label: 'Rete territoriale',
-    text: "Partecipa a tavoli di concertazione e consultazione promossi dagli Enti Locali, dall'Ambito XX e dalla ASUR Marche di Fermo per portare il punto di vista delle famiglie e delle persone con disabilita.",
-    tone: 'accent',
+    label: "ad sunt est sunt in",
+    text: "mollit laborum do sit sit eiusmod nostrud elit reprehenderit ipsum incididunt sint aliquip aute culpa sed. fugiat nostrud qui incididunt consequat voluptate fugiat consequat in voluptate laboris anim aliquip dolor occaecat officia culpa esse.",
+    tone: "accent",
   },
-]
+];
 
 const serviceCards = [
   {
-    title: 'Musicoterapia',
-    text: 'Offriamo un servizio di musicoterapia con professionisti di alto livello e un setting altamente qualificato, pensato per favorire espressione, relazione e benessere.',
-    tone: 'secondary',
+    title: "mollit eiu",
+    text: "est quis cillum Duis elit mollit consectetur nostrud est incididunt nulla irure dolore laboris aliqua ex voluptate amet Duis commodo adipiscing sint culpa reprehenderit sed anim sint aliquip.",
+    tone: "secondary",
   },
   {
-    title: 'Tempo libero e autonomia',
-    text: 'Realizziamo progetti che danno valore al tempo libero dei ragazzi disabili: nel fine settimana si incontrano con educatori, assistenti e volontari per vivere il tempo libero in modo naturale e sperimentare percorsi di autonomia con un gruppo di amici.',
-    tone: 'accent',
+    title: "do aliquip do",
+    text: "proident laborum adipiscing amet sit officia elit ea eu anim exercitation ut dolore exercitation non cupidatat id. anim ut proident aliquip occaecat aliquip consequat quis culpa dolor aliquip sed lorem do laborum minim sint amet.",
+    tone: "accent",
   },
-]
+];
 
 const collaborationAreas = [
   {
-    title: 'Convegni e incontri formativi',
-    meta: 'Approfondimento',
+    title: "aliquip proident tempor",
+    meta: "anim cillum",
     description:
-      'Promuoviamo convegni e incontri dedicati alla disabilita, approfondendo temi come integrazione scolastica, sessualita e autismo con il contributo di esperti locali e professionisti di calibro nazionale.',
+      "aute esse magna aliqua elit laborum minim occaecat ea consectetur sunt reprehenderit adipiscing fugiat cupidatat magna quis. Duis reprehenderit lorem anim consequat irure ex cillum sit nisi sint deserunt fugiat veniam exercitation sint fugiat. do nulla sit ut sit aliqua esse qui culpa minim quis dolore deserunt laboris qui deserunt sit incididunt irure.",
   },
   {
-    title: 'Interventi socio-sanitari centrati sulla persona',
-    meta: 'Progetto di vita',
+    title: "cillum nulla magna",
+    meta: "aute sint",
     description:
-      "Collaboriamo con le istituzioni competenti per migliorare interventi socio-sanitari che mettano al centro la persona disabile e il suo progetto di vita, dall'integrazione scolastica ai centri diurni e residenziali, fino all'abbattimento delle barriere architettoniche.",
+      "officia eu nostrud commodo commodo cillum ex in in quis est laborum ipsum Duis ullamco adipiscing eiusmod magna. amet laboris ad consequat eu ea eu dolor aliquip cillum est labore quis eu pariatur nisi. qui ipsum ad culpa fugiat ea est consectetur adipiscing officia laboris incididunt est nulla mollit cillum sed.",
   },
   {
-    title: 'Collaborazioni con il territorio',
-    meta: 'Rete associativa',
+    title: "anim minim cillum",
+    meta: "nostrud consequat velit proident",
     description:
-      'Lavoriamo insieme ad associazioni del territorio come UNITALSI, Croce Verde, Liberi nel Vento e Anthropos per realizzare attivita teatrali, musical, nuoto e uscite in barca a vela con ragazzi disabili, volontari e familiari.',
+      "occaecat dolor fugiat fugiat sint elit consectetur dolor sint eiusmod incididunt consequat laborum adipiscing cillum esse ad aliquip mollit. culpa nulla do qui adipiscing nisi id laborum consequat id irure voluptate aliqua voluptate irure dolor consequat. enim nulla Duis sit aliquip Duis enim ex magna dolor ut est non sit sit commodo sint.",
   },
-]
+];
 
 const areaStyles = {
-  primary: 'border-primary/12 bg-base',
-  secondary: 'border-secondary/20 bg-secondary/10',
-  accent: 'border-accent/30 bg-accent/18',
-}
+  primary: "border-primary/12 bg-base",
+  secondary: "border-secondary/20 bg-secondary/10",
+  accent: "border-accent/30 bg-accent/18",
+};
 
 function AboutPage() {
   return (
     <main className="space-y-8">
       <PageHero
-        eyebrow="Chi siamo"
-        title="La Crisalide e un punto di riferimento per ascolto, inclusione e progetto di vita."
-        description="L'associazione sostiene persone con disabilità e famiglie attraverso ascolto, consulenza, formazione, servizi qualificati e una rete di collaborazioni che mette al centro la persona."
+        eyebrow="ullamco consectetur"
+        title="incididunt proident reprehenderit exercitation nisi"
+        description="culpa exercitation aliqua est reprehenderit culpa proident esse in ex nostrud id tempor consequat proident adipiscing qui lorem culpa anim"
         tone="primary"
         actions={
           <>
-            <ActionLink to="/contatti">Contattaci</ActionLink>
+            <ActionLink to="/contatti">Contactum</ActionLink>
             <ActionLink to="/donazioni" variant="secondary">
-              Sostieni il progetto
+              Sostienum
             </ActionLink>
           </>
         }
@@ -82,23 +82,23 @@ function AboutPage() {
       <section className="grid gap-10 px-6 py-10 md:px-8 md:py-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)]">
         <div>
           <SectionHeading
-            eyebrow="La Crisalide"
-            title="Ascolto, partecipazione e tutela dei diritti nella vita di tutti i giorni."
-            description="La nostra attivita unisce sostegno diretto, formazione e collaborazione con il territorio per costruire risposte piu umane, competenti e continuative."
+            eyebrow="Operatorum"
+            title="sunt do culpa consectetur quis exercitation minim sed elit nisi"
+            description="nostrud sint consectetur incididunt id quis labore anim dolore nostrud dolor irure elit consequat cupidatat velit in. laborum ea tempor consequat Duis Duis ut pariatur commodo sunt sunt occaecat Duis proident veniam nulla labore veniam. cupidatat mollit pariatur deserunt commodo sunt ad culpa non sed non magna laboris voluptate et est ipsum."
           />
           <div className="mt-5 md:mt-6 max-w-3xl space-y-3 md:space-y-4 text-xs md:text-sm font-medium leading-7 text-text/85 md:text-text/80">
             <p>
-              La Crisalide offre un servizio di ascolto delle problematiche,
-              sostegno e consulenza, accompagnando famiglie e persone con
-              disabilita nei bisogni quotidiani e nei momenti in cui serve un
-              orientamento piu chiaro.
-            </p>
-            <p>
-              Allo stesso tempo partecipa a incontri di formazione, convegni e
-              tavoli di consultazione promossi dagli Enti Locali, dall'Ambito XX
-              e dalla ASUR Marche di Fermo, contribuendo al confronto sui temi che
-              riguardano la qualita della vita e i diritti delle persone
-              disabili.
+              eu deserunt velit veniam velit ullamco aute id reprehenderit velit
+              culpa amet irure ea minim dolor id. sint dolor dolore esse culpa
+              non irure Duis ut culpa id dolor id ipsum laboris officia non
+              anim. tempor reprehenderit quis voluptate dolore fugiat officia
+              Excepteur nisi proident Excepteur tempor lorem nisi proident ad
+              esse ex. minim aliquip labore magna lorem dolore eiusmod ullamco
+              reprehenderit fugiat est aliquip eiusmod anim nulla cupidatat.
+              incididunt aute dolor est commodo labore do occaecat pariatur amet
+              esse veniam cillum enim est commodo laboris. ad officia officia
+              deserunt Excepteur sint quis id cupidatat sed laboris id do fugiat
+              amet reprehenderit.
             </p>
           </div>
         </div>
@@ -112,7 +112,9 @@ function AboutPage() {
               <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary">
                 {item.label}
               </p>
-              <p className="mt-3 text-sm font-medium leading-7 text-text/80 md:text-text/85">{item.text}</p>
+              <p className="mt-3 text-sm font-medium leading-7 text-text/80 md:text-text/85">
+                {item.text}
+              </p>
             </article>
           ))}
         </div>
@@ -120,12 +122,15 @@ function AboutPage() {
 
       <section className="border-t border-primary/12 bg-background px-6 py-10 md:px-8 md:py-12">
         <div className="grid gap-8 lg:grid-cols-[minmax(320px,0.92fr)_minmax(0,1.08fr)] lg:items-center">
-          <PlaceholderImage alt="Attivita e servizi dell'associazione" className="aspect-[4/3] w-full" />
+          <PlaceholderImage
+            alt="Attivita e servizi dell'associazione"
+            className="aspect-[4/3] w-full"
+          />
           <div>
             <SectionHeading
-              eyebrow="Servizi e progetti"
-              title="Percorsi qualificati che danno valore al benessere, al tempo libero e all'autonomia."
-              description="Accanto al sostegno e alla rappresentanza, promuoviamo esperienze concrete che aiutano ogni persona a vivere relazioni, crescita e partecipazione con maggiore serenita."
+              eyebrow="dolore do Excepteur"
+              title="est nisi nisi aliquip"
+              description="quis aliqua nostrud proident ad quis do cupidatat eiusmod ad consequat lorem ad aliqua id sunt sit. voluptate et velit est laboris deserunt anim ea proident nostrud Duis exercitation consequat dolore labore anim ea ullamco et."
             />
             <div className="mt-6 grid gap-5 md:grid-cols-2">
               {serviceCards.map((item) => (
@@ -136,7 +141,9 @@ function AboutPage() {
                   <p className="mb-2 md:mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-primary">
                     {item.title}
                   </p>
-                  <p className="mt-2 md:mt-3 text-xs md:text-sm leading-6 md:leading-7 text-text/85 md:text-text/80">{item.text}</p>
+                  <p className="mt-2 md:mt-3 text-xs md:text-sm leading-6 md:leading-7 text-text/85 md:text-text/80">
+                    {item.text}
+                  </p>
                 </article>
               ))}
             </div>
@@ -147,12 +154,12 @@ function AboutPage() {
       <section className="border-t border-primary/12 px-6 py-10 md:px-8 md:py-12">
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <SectionHeading
-            eyebrow="Rete territoriale"
-            title="Collaborazioni, advocacy e attivita condivise per una comunita piu inclusiva."
-            description="L'associazione lavora con istituzioni, professionisti e realta del territorio per trasformare i bisogni in iniziative concrete e occasioni di partecipazione."
+            eyebrow="consectetur dolor anim elit ni"
+            title="elit culpa occaecat est mollit esse Duis proident quis velit irure dol"
+            description="labore qui eu esse sint quis deserunt ea ipsum veniam incididunt Excepteur enim ut irure qui mollit quis eu nisi sint minim culpa sit mollit labore pariatur laboris in non id ex commodo dolore Duis no"
           />
           <ActionLink to="/contatti" variant="secondary">
-            Parla con noi
+            Contactum
           </ActionLink>
         </div>
 
@@ -176,7 +183,7 @@ function AboutPage() {
         </div>
       </section>
     </main>
-  )
+  );
 }
 
-export default AboutPage
+export default AboutPage;

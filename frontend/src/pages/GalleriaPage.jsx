@@ -1,24 +1,8 @@
 import { useEffect, useState } from 'react'
 import ActionLink from '../components/ActionLink.jsx'
 import PageHero from '../components/PageHero.jsx'
-import PlaceholderImage from '../components/PlaceholderImage.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
 import { fetchPhotos } from '../lib/api.js'
-
-const galleryBlocks = [
-  'h-72 md:h-80',
-  'h-60 md:h-72',
-  'h-60 md:h-72',
-  'h-72 md:h-80',
-  'h-64 md:h-72',
-  'h-64 md:h-72',
-]
-
-const galleryCards = [
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.',
-  'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.',
-  'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.',
-]
 
 /* ---------------------------
    Safe Instagram embed
@@ -71,14 +55,14 @@ function GalleriaPage() {
       {/* HERO */}
       <PageHero
         eyebrow="GALLERIA"
-        title="Scopri i momenti della nostra comunità"
-        description="Esplora foto e ricordi delle attività, degli eventi e delle iniziative dell’associazione. Ogni immagine racconta esperienze, partecipazione e condivisione."
+        title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
+        description="Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
         tone="accent"
         actions={
           <>
-            <ActionLink to="/eventi">Esplora eventi</ActionLink>
+            <ActionLink to="/eventi">Lorem ipsum</ActionLink>
             <ActionLink to="/contatti" variant="secondary">
-              Chiedi informazioni
+              Dolor sit amet
             </ActionLink>
           </>
         }
@@ -88,9 +72,9 @@ function GalleriaPage() {
       {!isLoading && photos.length > 0 && (
         <section className="space-y-5 px-6">
           <SectionHeading
-            eyebrow="Foto Caricate"
-            title="Ultimi scatti dalla nostra community"
-            description="Momenti speciali catturati dai nostri partecipanti."
+            eyebrow="Lorem"
+            title="Sed ut perspiciatis unde omnis iste natus error"
+            description="Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos."
           />
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -111,7 +95,9 @@ function GalleriaPage() {
                   </>
                 )}
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/40 to-transparent p-4">
-                  <h3 className="text-sm font-bold text-white">{photo.titolo}</h3>
+                  <h3 className="text-sm font-bold text-white">
+                    Lorem ipsum dolor
+                  </h3>
                 </div>
               </button>
             ))}
@@ -141,8 +127,12 @@ function GalleriaPage() {
               className="w-full h-auto max-h-[70vh] object-contain"
             />
             <div className="bg-base p-4">
-              <h2 className="text-lg font-bold text-text mb-1">{selectedPhoto.titolo}</h2>
-              <p className="text-sm text-text/75">{selectedPhoto.descrizione}</p>
+              <h2 className="text-lg font-bold text-text mb-1">
+                Lorem ipsum dolor sit amet
+              </h2>
+              <p className="text-sm text-text/75">
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.
+              </p>
             </div>
           </div>
         </div>
@@ -151,9 +141,9 @@ function GalleriaPage() {
       {/* INSTAGRAM */}
       <section className="border-t-2 border-primary/15 px-6 py-10 lg:py-12">
         <SectionHeading
-          eyebrow="Social"
-          title="Seguici su Instagram"
-          description="Aggiornamenti, eventi e attività in tempo reale."
+          eyebrow="Lorem ipsum"
+          title="Consectetur adipiscing elit sed do eiusmod"
+          description="Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo."
         />
 
         <div className="mt-6">

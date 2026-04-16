@@ -3,7 +3,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../context/useAuth.js";
-import logo from "../assets/logo.png";
+
+import logo from "../assets/filenotfound.jpg";
 
 const navItems = [
   { to: "/", label: "Home", end: true },
@@ -19,7 +20,7 @@ const navLinkClasses =
   "rounded-lg border px-4 py-2.5 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2";
 
 function Navbar() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const { isAuthenticated, isAdmin, logout, user } = useAuth();
 
@@ -34,7 +35,11 @@ function Navbar() {
               to="/admin/dashboard"
               className="inline-flex items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
             >
-              <img src={logo} alt="Logo" className="w-40" />
+              <img
+                src={logo}
+                alt="Logo"
+                className="h-14 w-auto object-contain"
+              />
             </NavLink>
           </div>
 
@@ -43,8 +48,8 @@ function Navbar() {
             <button
               type="button"
               onClick={() => {
-                logout()
-                navigate('/')
+                logout();
+                navigate("/");
               }}
               className="rounded-lg bg-accent px-4 py-2.5 text-xs font-bold text-white shadow-[0_8px_18px_rgba(0,0,0,0.12)] transition-all duration-200 hover:bg-accent/90 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-accent/40 focus-visible:ring-offset-2"
             >
@@ -83,9 +88,9 @@ function Navbar() {
             <button
               type="button"
               onClick={() => {
-                logout()
-                setIsOpen(false)
-                navigate('/')
+                logout();
+                setIsOpen(false);
+                navigate("/");
               }}
               className="rounded-lg bg-accent px-4 py-3 text-xs font-bold text-white shadow-[0_8px_18px_rgba(0,0,0,0.12)] transition-all duration-200 hover:bg-accent/90 w-full"
             >
@@ -107,7 +112,7 @@ function Navbar() {
             to="/"
             className="inline-flex items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
           >
-            <img src={logo} alt="Logo" className="w-40" />
+            <img src={logo} alt="Logo" className="h-14 w-auto object-contain" />
           </NavLink>
         </div>
 
