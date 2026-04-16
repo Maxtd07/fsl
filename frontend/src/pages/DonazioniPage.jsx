@@ -202,7 +202,7 @@ function DonazioniPage() {
           <article className="rounded-lg border border-primary/20 bg-base px-6 py-8 shadow-md hover:shadow-lg transition">
             <h3 className="mb-4 text-lg font-bold text-text">Dona il 5 per mille</h3>
             <div className="space-y-3 text-sm text-text/85">
-              <p>Nella dichiarazione dei redditi, destina il 5 per mille a La Crisalide.</p>
+              <p>Nella dichiarazione dei redditi, destina il 5 per mille all'Associazione Disabili.</p>
               <p className="font-semibold text-primary">Codice Fiscale:</p>
               <p className="font-mono text-base tracking-wide bg-primary/8 p-3 rounded-lg text-text">
                 90034110446
@@ -217,7 +217,7 @@ function DonazioniPage() {
           <article className="rounded-lg border border-secondary/20 bg-base px-6 py-8 shadow-md hover:shadow-lg transition">
             <h3 className="mb-4 text-lg font-bold text-text">Conto Corrente Postale</h3>
             <div className="space-y-3 text-sm text-text/85">
-              <p>Verso il conto corrente postale intestato a La Crisalide.</p>
+              <p>Verso il conto corrente postale intestato all'Associazione Disabili.</p>
               <p className="font-semibold text-secondary">Numero:</p>
               <p className="font-mono text-base tracking-wide bg-secondary/8 p-3 rounded-lg text-text">
                 34201830
@@ -238,7 +238,7 @@ function DonazioniPage() {
                 IT76 S076 0113 5000 0000 3420 1830
               </p>
               <p className="text-xs text-text/60 pt-2">
-                Causale: "Donazione La Crisalide"
+                Causale: "Donazione - Associazione Disabili"
               </p>
             </div>
           </article>

@@ -11,7 +11,7 @@ const adminLoginFields = [
     name: 'email',
     type: 'email',
     autoComplete: 'email',
-    placeholder: 'admin@lacrisalide.it',
+    placeholder: 'admin@associazionedisabili.it',
   },
   {
     label: 'Password',
@@ -32,7 +32,7 @@ function AdminLoginPage() {
   const navigate = useNavigate()
   const { isAuthenticated, isAdmin, login, logout } = useAuth()
   const [credentials, setCredentials] = useState({
-    email: 'admin@lacrisalide.it',
+    email: 'admin@associazionedisabili.it',
     password: 'Admin123!',
   })
   const [isLoading, setIsLoading] = useState(false)

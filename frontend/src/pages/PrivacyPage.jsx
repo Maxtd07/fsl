@@ -6,7 +6,7 @@ const privacySections = [
     eyebrow: 'Titolare del trattamento',
     title: 'Chi gestisce i dati',
     text:
-      "Il titolare del trattamento e Associazione La Crisalide. Per richieste privacy puoi scrivere a la_crisalide@yahoo.it o contattare l'associazione al numero pubblicato nella pagina contatti.",
+      "Il titolare del trattamento e l'Associazione Disabili. Per richieste privacy puoi scrivere all'indirizzo email o contattare l'associazione al numero pubblicato nella pagina contatti.",
   },
   {
     eyebrow: 'Dati raccolti',

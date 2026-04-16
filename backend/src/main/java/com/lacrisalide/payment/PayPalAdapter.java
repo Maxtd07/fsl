@@ -53,7 +53,7 @@ public class PayPalAdapter implements PaymentAdapter {
    "intent", "CAPTURE",
    "purchase_units", List.of(
     Map.of(
-     "description", "Donazione La Crisalide - " + request.nome(),
+     "description", "Donazione - Associazione Disabili " + request.nome(),
      "amount", Map.of(
       "currency_code", currency,
       "value", formatAmount(request.importo())

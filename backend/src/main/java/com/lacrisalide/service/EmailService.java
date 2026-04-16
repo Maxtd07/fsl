@@ -93,7 +93,7 @@ public class EmailService {
    <html>
     <body style="font-family:Arial,sans-serif;color:#1f2933;line-height:1.6;">
      <h2>Ciao %s, la tua iscrizione è confermata</h2>
-     <p>Ti aspettiamo al prossimo evento dell'Associazione La Crisalide.</p>
+     <p>Ti aspettiamo al prossimo evento dell'Associazione.</p>
      <p><strong>Evento:</strong> %s</p>
      <p><strong>Data:</strong> %s</p>
      <p><strong>Luogo:</strong> %s</p>

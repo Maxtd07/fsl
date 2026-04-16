@@ -6,7 +6,7 @@ import SectionHeading from '../components/SectionHeading.jsx'
 const focusAreas = [
   {
     label: 'Ascolto e sostegno',
-    text: "La Crisalide offre un servizio di ascolto delle problematiche, sostegno e consulenza per accompagnare persone con disabilita e famiglie.",
+    text: "L'Associazione offre un servizio di ascolto delle problematiche, sostegno e consulenza per accompagnare persone con disabilita e famiglie.",
     tone: 'primary',
   },
   {
@@ -66,7 +66,7 @@ function AboutPage() {
     <main className="space-y-8">
       <PageHero
         eyebrow="Chi siamo"
-        title="La Crisalide e un punto di riferimento per ascolto, inclusione e progetto di vita."
+        title="Un punto di riferimento per ascolto, inclusione e progetto di vita."
         description="L'associazione sostiene persone con disabilità e famiglie attraverso ascolto, consulenza, formazione, servizi qualificati e una rete di collaborazioni che mette al centro la persona."
         tone="primary"
         actions={
@@ -82,13 +82,13 @@ function AboutPage() {
       <section className="grid gap-10 px-6 py-10 md:px-8 md:py-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)]">
         <div>
           <SectionHeading
-            eyebrow="La Crisalide"
+            eyebrow="Chi Siamo"
             title="Ascolto, partecipazione e tutela dei diritti nella vita di tutti i giorni."
             description="La nostra attivita unisce sostegno diretto, formazione e collaborazione con il territorio per costruire risposte piu umane, competenti e continuative."
           />
           <div className="mt-5 md:mt-6 max-w-3xl space-y-3 md:space-y-4 text-xs md:text-sm font-medium leading-7 text-text/85 md:text-text/80">
             <p>
-              La Crisalide offre un servizio di ascolto delle problematiche,
+              L'Associazione offre un servizio di ascolto delle problematiche,
               sostegno e consulenza, accompagnando famiglie e persone con
               disabilita nei bisogni quotidiani e nei momenti in cui serve un
               orientamento piu chiaro.

@@ -23,11 +23,11 @@ public class DataInitializer {
  @Bean
  public CommandLineRunner seedInitialData() {
   return args -> {
-   if (!userRepository.existsByEmail("admin@lacrisalide.it")) {
+   if (!userRepository.existsByEmail("admin@associazionedisabili.it")) {
     userRepository.save(
      User.builder()
-      .nome("Admin La Crisalide")
-      .email("admin@lacrisalide.it")
+      .nome("Admin Associazione")
+      .email("admin@associazionedisabili.it")
       .password(passwordEncoder.encode("Admin123!"))
       .ruolo(Role.ADMIN)
       .build()
@@ -41,7 +41,7 @@ public class DataInitializer {
       .descrizione("Un pomeriggio dedicato alle famiglie con attivita creative, musica e condivisione.")
       .data(LocalDateTime.now().plusDays(7).withHour(15).withMinute(0).withSecond(0).withNano(0))
       .dataFine(LocalDateTime.now().plusDays(7).withHour(18).withMinute(0).withSecond(0).withNano(0))
-      .luogo("Centro La Crisalide, Roma")
+      .luogo("Centro associazioni disabili")
       .maxPartecipanti(40)
       .volantino(null)
       .build()

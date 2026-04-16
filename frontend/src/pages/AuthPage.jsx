@@ -268,7 +268,7 @@ function AuthPage() {
             Se sei amministratore puoi usare la pagina dedicata in <span className="font-semibold">/admin/login</span>.
           </p>
           <p className="mt-2 text-xs text-text/60">
-            Credenziali admin seed locali: <span className="font-semibold">admin@lacrisalide.it</span> /{' '}
+            Credenziali admin seed locali: <span className="font-semibold">admin@associazionedisabili.it</span> /{' '}
             <span className="font-semibold">Admin123!</span>
           </p>
           {user && <p className="mt-2 text-xs text-text/60">Sessione attiva per {user.nome}</p>}

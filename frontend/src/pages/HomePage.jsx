@@ -80,10 +80,10 @@ function HomePage() {
   return (
     <main>
       <PageHero
-        eyebrow="Benvenuti in La Crisalide"
+        eyebrow="Benvenuti all'Associazione"
         title="Valorizziamo le abilità, non le mancanze. "
-        description="La Crisalide nasce con un obiettivo chiaro: accompagnare ogni persona in un percorso di crescita e trasformazione, sviluppando autonomia e consapevolezza.
-Come la crisalide che si trasforma in farfalla, crediamo che ogni individuo abbia potenzialità da far emergere e coltivare."
+        description="L'associazione nasce con un obiettivo chiaro: accompagnare ogni persona in un percorso di crescita e trasformazione, sviluppando autonomia e consapevolezza.
+Come una farfalla che emerge dalla crisalide, crediamo che ogni individuo abbia potenzialità da far emergere e coltivare."
         tone="primary"
       />
 
@@ -94,7 +94,7 @@ Come la crisalide che si trasforma in farfalla, crediamo che ogni individuo abbi
             <SectionHeading
               eyebrow="Chi siamo"
               title="una parola su di noi"
-              description="La Crisalide è un’associazione attiva da oltre vent’anni
+              description="L'associazione è attiva da anni
               nel supporto e nell’integrazione delle persone con disabilità e delle loro famiglie.
               Fin dall’inizio, l’obiettivo è stato quello di valorizzare le abilità individuali,
               costruendo percorsi personalizzati che tengano conto delle caratteristiche e dei bisogni di ciascuno."
@@ -121,9 +121,7 @@ Come la crisalide che si trasforma in farfalla, crediamo che ogni individuo abbi
                 Identità e Missione
               </p>
               <p className="mt-2 md:mt-3 text-xs md:text-sm font-medium leading-6 md:leading-7 text-text">
-                La Crisalide è un’associazione che da oltre vent’anni promuove l’inclusione e l’autonomia
-                delle persone con disabilità.Crediamo nelle capacità di ogni individuo e lavoriamo per
-                svilupparle attraverso esperienze concrete e percorsi personalizzati.
+                L'associazione promuove l'inclusione e l'autonomia delle persone con disabilità. Crediamo nelle capacità di ogni individuo e lavoriamo per svilupparle attraverso esperienze concrete e percorsi personalizzati.
               </p>
             </div>
 
@@ -147,7 +145,7 @@ Come la crisalide che si trasforma in farfalla, crediamo che ogni individuo abbi
           <SectionHeading
             eyebrow="Prossimi eventi"
             title="Scopri qui i nostri prossimi eventi"
-            description="organizzati da La Crisalide e partecipa alle nostre iniziative per sostenere la nostra missione e condividere momenti di crescita e inclusione."
+            description="organizzati dall'associazione e partecipa alle nostre iniziative per sostenere la nostra missione e condividere momenti di crescita e inclusione."
           />
 
           <ActionLink to="/eventi" variant="secondary" className="whitespace-nowrap flex-shrink-0">
@@ -268,7 +266,7 @@ Come la crisalide che si trasforma in farfalla, crediamo che ogni individuo abbi
           Sostieni
         </p>
         <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-text">
-          Sostieni La Crisalide
+          Sostieni l'Associazione
         </h2>
         <p className="mx-auto mt-4 md:mt-5 max-w-2xl text-xs md:text-sm font-medium leading-6 md:leading-7 text-text/75">
           Con il tuo contributo ci aiuti a realizzare progetti concreti e a offrire supporto alle famiglie. Dona in modo semplice e sicuro.

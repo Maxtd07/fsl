@@ -127,7 +127,7 @@
 #### ✅ Privacy & GDPR
 
 - [x] **PrivacyPage** - Pagina privacy completa
-  - [x] Titolare del trattamento (Associazione La Crisalide)
+  - [x] Titolare del trattamento (Associazione Disabili)
   - [x] Dati raccolti (nome, email, credenziali, booking, pagamenti)
   - [x] Finalità trattamento
   - [x] Base giuridica (GDPR Art. 6)
@@ -338,7 +338,7 @@ docker-compose up -d
 
 **Backend:**
 ```properties
-logging.level.com.lacrisalide=DEBUG
+logging.level.com.associazionedisabili=DEBUG
 spring.jpa.show-sql=true
 ```
 

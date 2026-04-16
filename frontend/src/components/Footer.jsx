@@ -11,10 +11,10 @@ function Footer() {
       <div className="mx-auto w-[90vw] max-w-[90vw]">
         {/* Branding Section */}
         <div className="mb-8 border-b border-white/10 pb-8 lg:px-10">
-          <p className="text-xs font-bold uppercase tracking-wider text-white">La Crisalide</p>
+          <p className="text-xs font-bold uppercase tracking-wider text-white">Associazione Disabili</p>
           <p className="mt-3 max-w-md leading-relaxed text-sm text-white/70">
-            la Crisalide non rimane sempre statica, si trasforma, si evolve,
-            muta fino a diventare farfalla
+            Trasformiamo le sfide in opportunità, evolvendo continuamente per
+            servire meglio persone con disabilità e le loro famiglie
           </p>
         </div>
 
@@ -76,7 +76,7 @@ function Footer() {
 
         {/* Copyright */}
         <div className="mt-8 grid gap-4 border-t border-white/10 pt-8 text-xs text-white/50 lg:grid-cols-2 lg:px-10">
-          <p>Copyright 2026 Associazione La Crisalide. Tutti i diritti riservati.</p>
+          <p>Copyright 2026 Associazione Disabili. Tutti i diritti riservati.</p>
           <p className="text-left lg:text-right">Creato da Daniele Soldi e Max Ten Dam</p>
         </div>
       </div>
