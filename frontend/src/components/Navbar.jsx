@@ -144,8 +144,8 @@ function Navbar() {
   return (
 
     <motion.nav
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: isVisible ? 0 : -100, opacity: isVisible ? 1 : 0 }}
+      initial={{ y: -100}}
+      animate={{ y: isVisible ? 0 : -100}}
       transition={{ duration: 0.15, ease: "easeOut" }}
       className={`fixed top-0 left-0 w-full rounded-b-3xl border-b border-text/10 bg-base shadow-md py-4 mx-0 mb-6 z-50`}
     >

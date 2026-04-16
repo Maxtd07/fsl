@@ -231,7 +231,7 @@ function AdminDashboard() {
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <h1 className="text-3xl font-bold text-slate-900 md:text-4xl">Dashboard Admin</h1>
-            <p className="mt-2 text-sm text-slate-700">Benvenuto, {user?.nome}.</p>
+            <p className="mt-8 text-lg text-slate-700 font-semibold">Benvenuto, {user?.nome}.</p>
           </div>
         </div>
 
