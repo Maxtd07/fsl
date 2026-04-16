@@ -205,7 +205,7 @@ function DonazioniPage() {
               <p>Nella dichiarazione dei redditi, destina il 5 per mille all'Associazione Disabili.</p>
               <p className="font-semibold text-primary">Codice Fiscale:</p>
               <p className="font-mono text-base tracking-wide bg-primary/8 p-3 rounded-lg text-text">
-                90034110446
+                00000000000
               </p>
               <p className="text-xs text-text/60 pt-2">
                 Non ti costa nulla e aiuti concretamente l'associazione.
@@ -220,7 +220,7 @@ function DonazioniPage() {
               <p>Verso il conto corrente postale intestato all'Associazione Disabili.</p>
               <p className="font-semibold text-secondary">Numero:</p>
               <p className="font-mono text-base tracking-wide bg-secondary/8 p-3 rounded-lg text-text">
-                34201830
+                123456
               </p>
               <p className="text-xs text-text/60 pt-2">
                 Disponibile negli uffici postali italiani.
@@ -235,7 +235,7 @@ function DonazioniPage() {
               <p>Effettua un bonifico diretto sul nostro IBAN.</p>
               <p className="font-semibold text-text">IBAN:</p>
               <p className="font-mono text-base tracking-wide bg-accent/8 p-3 rounded-lg break-all text-text">
-                IT76 S076 0113 5000 0000 3420 1830
+                IT00 X000 0000 0000 0000 0000 0000
               </p>
               <p className="text-xs text-text/60 pt-2">
                 Causale: "Donazione - Associazione Disabili"

@@ -22,7 +22,7 @@ Questo è un **sistema full-stack completo** per la gestione di eventi con calen
 ### Backend (Spring Boot)
 
 ```
-src/main/java/com/lacrisalide/
+src/main/java/com/associazionedisabili/
 ├── config/              # Configurazioni (CORS, Security, Database)
 ├── controller/          
 │   ├── EventController      (GET /events, POST /events, filtri)

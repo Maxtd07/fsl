@@ -13,31 +13,31 @@ const initialFormState = {
 
 const contactCards = [
   {
-    label: 'Lorem email',
-    text: 'lorem.ipsum@example.com',
+    label: 'Email',
+    text: 'info@associazionedisabili.it',
   },
   {
-    label: 'Lorem phone',
-    text: '+39 000 000 0000',
+    label: 'Telefono',
+    text: '+39 123 456 789',
   },
   {
-    label: 'Lorem address',
-    text: 'Via Lorem Ipsum 123, Dolor Sit (RM) 00000',
+    label: 'Indirizzo',
+    text: 'Via Principale 123, Roma (RM) 00000',
   },
 ]
 
 const contactFields = [
   {
-    label: 'Lorem name *',
+    label: 'Nome *',
     name: 'nome',
     type: 'text',
-    placeholder: 'Lorem name',
+    placeholder: 'Inserisci il tuo nome',
   },
   {
-    label: 'Lorem email *',
+    label: 'Email *',
     name: 'email',
     type: 'email',
-    placeholder: 'lorem@ipsum.com',
+    placeholder: 'tua@email.com',
   },
 ]
 
@@ -87,13 +87,13 @@ function ContattiPage() {
       await sendContactEmail(formData)
       setMessage({
         type: 'success',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        text: 'Messaggio inviato con successo. Ti contatteremo presto!',
       })
       setFormData(initialFormState)
     } catch {
       setMessage({
         type: 'error',
-        text: 'Lorem ipsum error sit amet, retry later.',
+        text: 'Errore nell\'invio del messaggio. Riprova più tardi.',
       })
     } finally {
       setIsSubmitting(false)
@@ -103,15 +103,15 @@ function ContattiPage() {
   return (
     <main className="space-y-8">
       <PageHero
-        eyebrow="Lorem"
-        title="Lorem ipsum dolor sit amet"
-        description="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium."
+        eyebrow="Contatti"
+        title="Entra in contatto con noi"
+        description="Hai domande? Vuoi collaborare? Scrivici e ti risponderemo al più presto."
         tone="neutral"
         actions={
           <>
-            <ActionLink to="/eventi">Lorem events</ActionLink>
+            <ActionLink to="/eventi">Scopri gli eventi</ActionLink>
             <ActionLink to="/chi-siamo" variant="secondary">
-              Lorem ipsum
+              Chi siamo
             </ActionLink>
           </>
         }
@@ -136,9 +136,9 @@ function ContattiPage() {
       <section className="grid gap-6 rounded-[2rem] border-2 border-primary/20 bg-base p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] md:p-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)] lg:items-center">
         <div>
           <SectionHeading
-            eyebrow="Lorem form"
-            title="Lorem ipsum contact section"
-            description="Aliquam erat volutpat. Curabitur blandit tempus porttitor. Integer posuere erat."
+            eyebrow="Modulo contatti"
+            title="Inviaci un messaggio"
+            description="Compila il form qui sotto e ti risponderemo nel più breve tempo possibile."
           />
 
           <form onSubmit={handleSubmit} className="mt-6 space-y-4">
@@ -159,13 +159,13 @@ function ContattiPage() {
 
             <label className="block">
               <span className="mb-2 block text-sm font-medium text-text">
-                Lorem message *
+                Messaggio *
               </span>
               <textarea
                 name="messaggio"
                 value={formData.messaggio}
                 onChange={updateField('messaggio')}
-                placeholder="Lorem ipsum dolor sit amet..."
+                placeholder="Scrivi il tuo messaggio..."
                 rows="4"
                 className={fieldClassName}
                 required
@@ -179,13 +179,13 @@ function ContattiPage() {
               disabled={isSubmitting}
               className={submitButtonClassName}
             >
-              {isSubmitting ? 'Lorem sending...' : 'Lorem submit'}
+              {isSubmitting ? 'Invio in corso...' : 'Invia messaggio'}
             </button>
           </form>
         </div>
 
         <PlaceholderImage
-          alt="Lorem contacts"
+          alt="Contatti"
           className="h-72 md:h-80 lg:h-full lg:min-h-96"
         />
       </section>
