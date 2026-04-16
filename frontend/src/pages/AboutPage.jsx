@@ -1,8 +1,7 @@
 import ActionLink from '../components/ActionLink.jsx'
 import PageHero from '../components/PageHero.jsx'
-import PlaceholderImage from '../components/PlaceholderImage.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
-import picture from '../assets/6973783611_e210442b2e_o.jpg'
+import picture from '../assets/Copilot_20260416_170749.png'
 
 const focusAreas = [
   {

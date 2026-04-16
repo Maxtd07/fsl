@@ -1,7 +1,7 @@
 import ActionLink from '../components/ActionLink.jsx'
 import PageHero from '../components/PageHero.jsx'
-import PlaceholderImage from '../components/PlaceholderImage.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
+import picture from '../assets/Copilot_20260416_165313.png'
 
 const donationCards = [
   "Scegli se sostenere l'associazione con il 5 per mille o con un bonifico bancario.",
@@ -112,7 +112,7 @@ function DonazioniPage() {
           </div>
         </div>
 
-        <PlaceholderImage alt="Impatto donazioni" className="h-72 md:h-80 lg:h-full lg:min-h-96" />
+      <img src={picture} alt="Impatto donazioni" className='border-2 border-primary/80 rounded-2xl'/>
       </section>
 
       <section className="mx-auto w-full max-w-3xl rounded-lg border border-primary/20 bg-base p-6 shadow-lg md:p-8">

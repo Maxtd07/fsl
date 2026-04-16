@@ -21,7 +21,7 @@ function Footer() {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-2 gap-6 text-xs sm:grid-cols-3">
+        <div className="grid grid-cols-2 gap-6 text-xs md:grid-cols-3">
 
           {/* Social */}
           <div>

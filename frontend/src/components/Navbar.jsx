@@ -321,7 +321,7 @@ function Navbar() {
             <NavLink
               to="/accedi"
               onClick={() => setIsOpen(false)}
-              className="rounded-lg border border-accent/30 bg-accent px-4 py-3 text-center text-white transition-all duration-200 hover:bg-accent/90"
+              className="rounded-lg border border-accent/30 bg-primary/80 px-4 py-3 text-center text-white transition-all duration-200 hover:bg-accent/90"
               aria-label="Accedi alla tua area"
             >
               <FontAwesomeIcon icon={faUser} className="text-lg" />
