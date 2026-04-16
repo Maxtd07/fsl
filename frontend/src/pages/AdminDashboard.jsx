@@ -227,11 +227,11 @@ function AdminDashboard() {
 
   return (
     <main className="min-h-screen bg-background px-6 py-10 md:px-8 md:py-12">
-      <div className="mx-auto max-w-6xl space-y-8">
+      <div className="mx-auto max-w-6xl space-y-8 mt-28">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900 md:text-4xl">Dashboard Admin</h1>
-            <p className="mt-2 text-sm text-slate-700">Benvenuto, {user?.nome}.</p>
+            <h1 className=" mx-4 text-3xl font-bold text-slate-900 md:text-4xl">Dashboard Admin</h1>
+            <p className="mt-4 mx-4 text-2xl text-text font-semibold">Benvenuto, {user?.nome}.</p>
           </div>
         </div>
 

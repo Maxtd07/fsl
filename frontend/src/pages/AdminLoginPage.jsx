@@ -71,7 +71,7 @@ function AdminLoginPage() {
 
   return (
     <main className="space-y-8">
-      <section className="grid gap-8 rounded-[2rem] border border-primary/12 bg-primary/10 p-6 shadow-[0_24px_50px_rgba(76,130,169,0.08)] md:p-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(360px,1.05fr)] lg:items-center lg:gap-10">
+      <section className="grid gap-8 rounded-[2rem] mt-28 border border-primary/12 bg-primary/10 p-6 shadow-[0_24px_50px_rgba(76,130,169,0.08)] md:p-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(360px,1.05fr)] lg:items-center lg:gap-10">
         <div>
           <SectionHeading
             eyebrow="Admin"
