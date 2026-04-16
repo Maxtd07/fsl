@@ -92,15 +92,15 @@ function PrivacyPage() {
         <div className="mt-6 grid gap-4 md:grid-cols-3">
           <div className="rounded-lg border border-primary/15 bg-base p-4">
             <p className="text-xs font-bold uppercase tracking-widest text-primary">Email</p>
-            <p className="mt-3 text-sm text-text/80">la_crisalide@yahoo.it</p>
+            <p className="mt-3 text-sm text-text/80">info@example.com</p>
           </div>
           <div className="rounded-lg border border-primary/15 bg-base p-4">
             <p className="text-xs font-bold uppercase tracking-widest text-primary">Telefono</p>
-            <p className="mt-3 text-sm text-text/80">+39 347 917 7811</p>
+            <p className="mt-3 text-sm text-text/80">+39 123 456 789</p>
           </div>
           <div className="rounded-lg border border-primary/15 bg-base p-4">
             <p className="text-xs font-bold uppercase tracking-widest text-primary">Sede</p>
-            <p className="mt-3 text-sm text-text/80">Via del Palo 10, Porto Sant'Elpidio (FM)</p>
+            <p className="mt-3 text-sm text-text/80">Via Principale 123, Città (XX) 12345</p>
           </div>
         </div>
       </section>

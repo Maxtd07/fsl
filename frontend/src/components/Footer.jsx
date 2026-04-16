@@ -24,24 +24,13 @@ function Footer() {
           <div>
             <p className="mb-4 text-xs font-bold uppercase tracking-wider text-white">Social & Privacy</p>
             <div className="flex flex-col gap-3">
-              <a
-                className={`${footerLinkClasses} flex items-center gap-2`}
-                href="https://www.facebook.com/lacrisalideassociazionefamigliedisabili/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FontAwesomeIcon
-                  icon={faFacebook}
-                  className="text-base"
-                />
+              <a className={`${footerLinkClasses} text-sm`} href="#facebook">
                 <span>Facebook</span>
               </a>
 
               <a
                 className={`${footerLinkClasses} flex items-center gap-2`}
-                href="https://www.instagram.com/lacrisalide_associazione/"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#instagram"
               >
                 <FontAwesomeIcon
                   icon={faInstagram}
@@ -59,18 +48,18 @@ function Footer() {
           <div className="text-right">
             <p className="mb-4 text-xs font-bold uppercase tracking-wider text-white">Contatti</p>
             <div className="flex flex-col gap-3 items-end">
-              <a className={`${footerLinkClasses} text-sm`} href="mailto:la_crisalide@yahoo.it">
-                la_crisalide@yahoo.it
+              <a className={`${footerLinkClasses} text-sm`} href="mailto:info@example.com">
+                info@example.com
               </a>
-              <a className={`${footerLinkClasses} text-sm`} href="tel:+393479177811">
-                +39 347 917 7811
+              <a className={`${footerLinkClasses} text-sm`} href="tel:+39123456789">
+                +39 123 456 789
               </a>
             </div>
           </div>
 
           {/* Address */}
           <div className="col-span-2 text-center text-sm text-white/60">
-            Via del Palo 10, Porto Sant&apos;Elpidio (FM) 63821
+            Via Principale 123, Città (XX) 12345
           </div>
         </div>
 

@@ -5,47 +5,17 @@ import SectionHeading from '../components/SectionHeading.jsx'
 import { fetchPhotos } from '../lib/api.js'
 
 /* ---------------------------
-   Facebook page embed
+   Social Feed placeholder
 ----------------------------*/
-function FacebookFeed() {
-  useEffect(() => {
-    function parseFacebookPlugin() {
-      if (window.FB?.XFBML?.parse) {
-        window.FB.XFBML.parse()
-      }
-    }
-
-    const script = document.querySelector(
-      'script[src*="connect.facebook.net/it_IT/sdk.js"]',
-    )
-
-    parseFacebookPlugin()
-    script?.addEventListener('load', parseFacebookPlugin)
-
-    return () => {
-      script?.removeEventListener('load', parseFacebookPlugin)
-    }
-  }, [])
-
+function SocialMediaFeed() {
   return (
-    <div className="overflow-hidden rounded-3xl border border-primary/15 bg-white p-4 shadow-sm">
-      <div
-        className="fb-page"
-        data-href="https://www.facebook.com/lacrisalideassociazionefamigliedisabili"
-        data-tabs="timeline"
-        data-small-header="true"
-        data-adapt-container-width="true"
-        data-hide-cover="true"
-        data-show-facepile="true"
-      >
-        <blockquote
-          cite="https://www.facebook.com/lacrisalideassociazionefamigliedisabili"
-          className="fb-xfbml-parse-ignore"
-        >
-          <a href="https://www.facebook.com/lacrisalideassociazionefamigliedisabili">
-            Associazione Disabili
-          </a>
-        </blockquote>
+    <div className="overflow-hidden rounded-3xl border border-primary/15 bg-white p-6 shadow-sm">
+      <div className="text-center">
+        <p className="mb-4 text-sm font-semibold text-secondary">Galleria Social Media</p>
+        <p className="text-xs text-text/60 mb-4">I contenuti della galleria social verranno visualizzati qui</p>
+        <button className="px-4 py-2 bg-primary text-white rounded-lg text-sm hover:bg-primary/90 transition">
+          Visita il nostro profilo
+        </button>
       </div>
     </div>
   )
@@ -172,7 +142,7 @@ function GalleriaPage() {
         />
 
         <div className="mt-6">
-          <FacebookFeed />
+          <SocialMediaFeed />
         </div>
       </section>
     </main>
