@@ -21,24 +21,49 @@ const galleryCards = [
 ]
 
 /* ---------------------------
-   Safe Instagram embed
+   Facebook page embed
 ----------------------------*/
-function InstagramFeed() {
+function FacebookFeed() {
   useEffect(() => {
-    if (!document.querySelector('#elfsight-platform-script')) {
-      const script = document.createElement('script')
-      script.id = 'elfsight-platform-script'
-      script.src = 'https://elfsightcdn.com/platform.js'
-      script.async = true
-      document.body.appendChild(script)
+    function parseFacebookPlugin() {
+      if (window.FB?.XFBML?.parse) {
+        window.FB.XFBML.parse()
+      }
+    }
+
+    const script = document.querySelector(
+      'script[src*="connect.facebook.net/it_IT/sdk.js"]',
+    )
+
+    parseFacebookPlugin()
+    script?.addEventListener('load', parseFacebookPlugin)
+
+    return () => {
+      script?.removeEventListener('load', parseFacebookPlugin)
     }
   }, [])
 
   return (
-    <div
-      className="elfsight-app-614ff7dd-13fe-40be-841d-0b9e0c186e97"
-      data-elfsight-app-lazy
-    />
+    <div className="overflow-hidden rounded-3xl border border-primary/15 bg-white p-4 shadow-sm">
+      <div
+        className="fb-page"
+        data-href="https://www.facebook.com/lacrisalideassociazionefamigliedisabili"
+        data-tabs="timeline"
+        data-small-header="true"
+        data-adapt-container-width="true"
+        data-hide-cover="true"
+        data-show-facepile="true"
+      >
+        <blockquote
+          cite="https://www.facebook.com/lacrisalideassociazionefamigliedisabili"
+          className="fb-xfbml-parse-ignore"
+        >
+          <a href="https://www.facebook.com/lacrisalideassociazionefamigliedisabili">
+            La Crisalide Associazione Famiglie di Disabili
+          </a>
+        </blockquote>
+      </div>
+    </div>
   )
 }
 
@@ -148,16 +173,16 @@ function GalleriaPage() {
         </div>
       )}
 
-      {/* INSTAGRAM */}
+      {/* FACEBOOK */}
       <section className="border-t-2 border-primary/15 px-6 py-10 lg:py-12">
         <SectionHeading
           eyebrow="Social"
-          title="Seguici su Instagram"
+          title="Seguici su Facebook"
           description="Aggiornamenti, eventi e attività in tempo reale."
         />
 
         <div className="mt-6">
-          <InstagramFeed />
+          <FacebookFeed />
         </div>
       </section>
     </main>
