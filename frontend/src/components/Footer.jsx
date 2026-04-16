@@ -7,7 +7,7 @@ const footerLinkClasses =
 
 function Footer() {
   return (
-    <footer className="w-full bg-gradient-to-b from-dark via-dark to-dark/95 px-12 py-3 text-base text-white/80 mt-12 border-t border-white/5">
+    <footer className="w-full bg-gradient-to-b from-dark via-dark to-dark/95 px-12 py-3 text-sm text-white/80 mt-12 border-t border-white/5">
       <div className="mx-auto max-w-full">
         <div className="mb-3 border-b border-white/10 pb-3 lg:px-4">
           <p className="text-xs font-bold uppercase tracking-wider text-white">Associazione per l'inclusione</p>

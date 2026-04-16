@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
@@ -22,12 +22,53 @@ const navLinkClasses =
 function Navbar() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const { isAuthenticated, isAdmin, logout, user } = useAuth();
+
+  useEffect(() => {
+    let ticking = false;
+    
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          
+          // Mostra navbar se scroll è verso l'alto, se è vicino al top, o se scrolla poco
+          if (currentScrollY < lastScrollY || currentScrollY < 100) {
+            setIsVisible(true);
+          } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+            // Nascondi navbar se scrolla verso il basso e passa i 100px
+            setIsVisible(false);
+          }
+          
+          setLastScrollY(currentScrollY);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    const handleMouseMove = (e) => {
+      // Mostra navbar se il cursore è nei primi 100px dal top
+      if (e.clientY < 100) {
+        setIsVisible(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, [lastScrollY]);
 
   // Se admin, mostra navbar semplificata
   if (isAdmin && isAuthenticated) {
     return (
-      <nav className="w-full rounded-b-3xl border-b border-text/10 bg-base shadow-md py-4 mx-0">
+      <nav className={`fixed top-0 left-0 w-full rounded-b-3xl border-b border-text/10 bg-base shadow-md py-4 mx-0 z-50 transition-transform duration-300 ease-in-out ${isVisible ? "translate-y-0" : "-translate-y-full"}`}>
         <div className="flex items-center justify-between gap-4 px-6">
           {/* Logo */}
           <div className="flex items-center gap-4">
@@ -104,8 +145,7 @@ function Navbar() {
 
   // Navbar normale per utenti non-admin
   return (
-    <nav className="w-full rounded-b-3xl border-b border-text/10 bg-base shadow-md py-4 mx-0">
-      <div className="flex items-center justify-between gap-4 px-6">
+    <nav className={`fixed top-0 left-0 w-full rounded-b-3xl border-b border-text/10 bg-base shadow-md py-4 mx-0 mb-6 z-50 transition-transform duration-300 ease-in-out ${isVisible ? "translate-y-0" : "-translate-y-full"}`}>
         {/* Logo */}
         <div className="flex items-center gap-4">
           <NavLink
