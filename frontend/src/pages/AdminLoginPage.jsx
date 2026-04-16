@@ -11,7 +11,7 @@ const adminLoginFields = [
     name: 'email',
     type: 'email',
     autoComplete: 'email',
-    placeholder: 'admin@associazionedisabili.it',
+    placeholder: 'admin@nomeassociazione.it',
   },
   {
     label: 'Password',
@@ -32,8 +32,8 @@ function AdminLoginPage() {
   const navigate = useNavigate()
   const { isAuthenticated, isAdmin, login, logout } = useAuth()
   const [credentials, setCredentials] = useState({
-    email: 'admin@associazionedisabili.it',
-    password: 'Admin123!',
+    email: '',
+    password: '',
   })
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
@@ -76,7 +76,7 @@ function AdminLoginPage() {
           <SectionHeading
             eyebrow="Admin"
             title="Area riservata per la gestione di eventi, donazioni e contenuti."
-            description="Questa pagina usa lo stesso sistema JWT del resto dell'applicazione, con accesso consentito solo agli utenti con ruolo amministratore."
+            description="Questa sezione e dedicata alle persone autorizzate che si occupano dell'organizzazione e dell'aggiornamento del sito."
           />
 
           <div className="mt-6 flex flex-wrap gap-3">
@@ -122,13 +122,13 @@ function AdminLoginPage() {
           <div className="rounded-[1.4rem] border border-secondary/30 bg-secondary/10 p-4 md:p-5">
             <p className="mb-2 text-xs font-bold uppercase tracking-[0.22em] text-secondary">Gestione eventi</p>
             <p className="text-sm leading-7 text-text/80">
-              Crea, modifica ed elimina gli eventi visibili nel frontend, con capienza, date e calendario scaricabile.
+              Crea e aggiorna gli eventi pubblicati sul sito con date, luoghi, posti disponibili e informazioni utili.
             </p>
           </div>
           <div className="rounded-[1.4rem] border border-accent/30 bg-accent/10 p-4 md:p-5">
-            <p className="mb-2 text-xs font-bold uppercase tracking-[0.22em] text-accent">Monitoraggio donazioni</p>
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.22em] text-accent">Contenuti e donazioni</p>
             <p className="text-sm leading-7 text-text/80">
-              Consulta il totale raccolto, l'elenco dei donatori e la galleria contenuti protetta dal ruolo admin.
+              Consulta le donazioni registrate, aggiorna la galleria e mantieni ordinati i contenuti dell'area pubblica.
             </p>
           </div>
         </div>

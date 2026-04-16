@@ -38,7 +38,7 @@ function Navbar() {
               <img
                 src={logo}
                 alt="Logo"
-                className="h-20 w-auto object-contain"
+                className="h-28 w-auto object-contain"
               />
             </NavLink>
           </div>
@@ -112,7 +112,7 @@ function Navbar() {
             to="/"
             className="inline-flex items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
           >
-            <img src={logo} alt="Logo" className="h-20 w-auto object-contain" />
+            <img src={logo} alt="Logo" className="h-28 w-auto object-contain" />
           </NavLink>
         </div>
 

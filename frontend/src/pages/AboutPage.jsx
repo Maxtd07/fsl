@@ -6,52 +6,52 @@ import SectionHeading from '../components/SectionHeading.jsx'
 const focusAreas = [
   {
     label: 'Ascolto e sostegno',
-    text: "L'Associazione offre un servizio di ascolto delle problematiche, sostegno e consulenza per accompagnare persone con disabilita e famiglie.",
+    text: "Offriamo ascolto, orientamento e sostegno alle persone con disabilita e alle loro famiglie nei bisogni quotidiani e nei momenti di maggiore fragilita.",
     tone: 'primary',
   },
   {
     label: 'Formazione',
-    text: "Partecipa a incontri di formazione e convegni, e promuove occasioni di approfondimento su integrazione scolastica, sessualita e autismo con esperti locali e professionisti di rilievo nazionale.",
+    text: 'Promuoviamo incontri, laboratori e occasioni di approfondimento per crescere insieme come comunita piu consapevole, inclusiva e preparata.',
     tone: 'secondary',
   },
   {
     label: 'Rete territoriale',
-    text: "Partecipa a tavoli di concertazione e consultazione promossi dagli Enti Locali, dall'Ambito XX e dalla ASUR Marche di Fermo per portare il punto di vista delle famiglie e delle persone con disabilita.",
+    text: 'Collaboriamo con scuole, servizi, enti e realta del territorio per dare continuita ai progetti e valorizzare il punto di vista delle famiglie.',
     tone: 'accent',
   },
 ]
 
 const serviceCards = [
   {
-    title: 'Musicoterapia',
-    text: 'Offriamo un servizio di musicoterapia con professionisti di alto livello e un setting altamente qualificato, pensato per favorire espressione, relazione e benessere.',
+    title: 'Laboratori e attivita',
+    text: 'Proponiamo attivita espressive, educative e ricreative che favoriscono benessere, partecipazione, relazione e valorizzazione delle capacita personali.',
     tone: 'secondary',
   },
   {
     title: 'Tempo libero e autonomia',
-    text: 'Realizziamo progetti che danno valore al tempo libero dei ragazzi disabili: nel fine settimana si incontrano con educatori, assistenti e volontari per vivere il tempo libero in modo naturale e sperimentare percorsi di autonomia con un gruppo di amici.',
+    text: 'Accompagniamo le persone in esperienze di gruppo e percorsi di autonomia che aiutano a vivere il tempo libero con serenita, relazioni positive e maggiore indipendenza.',
     tone: 'accent',
   },
 ]
 
 const collaborationAreas = [
   {
-    title: 'Convegni e incontri formativi',
+    title: 'Incontri e momenti di confronto',
     meta: 'Approfondimento',
     description:
-      'Promuoviamo convegni e incontri dedicati alla disabilita, approfondendo temi come integrazione scolastica, sessualita e autismo con il contributo di esperti locali e professionisti di calibro nazionale.',
+      'Organizziamo momenti di dialogo e approfondimento su temi legati alla disabilita, ai diritti, al benessere e alla partecipazione alla vita sociale.',
   },
   {
-    title: 'Interventi socio-sanitari centrati sulla persona',
+    title: 'Progetti costruiti intorno alla persona',
     meta: 'Progetto di vita',
     description:
-      "Collaboriamo con le istituzioni competenti per migliorare interventi socio-sanitari che mettano al centro la persona disabile e il suo progetto di vita, dall'integrazione scolastica ai centri diurni e residenziali, fino all'abbattimento delle barriere architettoniche.",
+      'Promuoviamo percorsi che mettano al centro desideri, bisogni e qualita della vita, favorendo soluzioni piu accessibili e personalizzate.',
   },
   {
-    title: 'Collaborazioni con il territorio',
+    title: 'Collaborazioni con la comunita',
     meta: 'Rete associativa',
     description:
-      'Lavoriamo insieme ad associazioni del territorio come UNITALSI, Croce Verde, Liberi nel Vento e Anthropos per realizzare attivita teatrali, musical, nuoto e uscite in barca a vela con ragazzi disabili, volontari e familiari.',
+      'Lavoriamo insieme ad associazioni, volontari, professionisti e realta locali per creare opportunita condivise e inclusive.',
   },
 ]
 
@@ -67,7 +67,7 @@ function AboutPage() {
       <PageHero
         eyebrow="Chi siamo"
         title="Un punto di riferimento per ascolto, inclusione e progetto di vita."
-        description="L'associazione sostiene persone con disabilità e famiglie attraverso ascolto, consulenza, formazione, servizi qualificati e una rete di collaborazioni che mette al centro la persona."
+        description="L'associazione sostiene persone con disabilita e famiglie attraverso ascolto, orientamento, attivita dedicate e una rete di collaborazioni che mette al centro la persona."
         tone="primary"
         actions={
           <>
@@ -82,23 +82,18 @@ function AboutPage() {
       <section className="grid gap-10 px-6 py-10 md:px-8 md:py-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)]">
         <div>
           <SectionHeading
-            eyebrow="Chi Siamo"
+            eyebrow="Chi siamo"
             title="Ascolto, partecipazione e tutela dei diritti nella vita di tutti i giorni."
-            description="La nostra attivita unisce sostegno diretto, formazione e collaborazione con il territorio per costruire risposte piu umane, competenti e continuative."
+            description="La nostra attivita unisce sostegno diretto, formazione e collaborazione con il territorio per costruire risposte piu umane, accessibili e continuative."
           />
-          <div className="mt-5 md:mt-6 max-w-3xl space-y-3 md:space-y-4 text-xs md:text-sm font-medium leading-7 text-text/85 md:text-text/80">
+          <div className="mt-5 max-w-3xl space-y-3 text-xs font-medium leading-7 text-text/85 md:mt-6 md:space-y-4 md:text-sm md:text-text/80">
             <p>
-              L'Associazione offre un servizio di ascolto delle problematiche,
-              sostegno e consulenza, accompagnando famiglie e persone con
-              disabilita nei bisogni quotidiani e nei momenti in cui serve un
-              orientamento piu chiaro.
+              Offriamo ascolto, sostegno e orientamento, accompagnando persone con disabilita e famiglie nei bisogni
+              quotidiani e nei momenti in cui serve un confronto chiaro e affidabile.
             </p>
             <p>
-              Allo stesso tempo partecipa a incontri di formazione, convegni e
-              tavoli di consultazione promossi dagli Enti Locali, dall'Ambito XX
-              e dalla ASUR Marche di Fermo, contribuendo al confronto sui temi che
-              riguardano la qualita della vita e i diritti delle persone
-              disabili.
+              Allo stesso tempo promuoviamo occasioni di confronto, attivita e collaborazioni che aiutano a costruire
+              una comunita piu accogliente, consapevole e vicina ai diritti delle persone.
             </p>
           </div>
         </div>
@@ -109,9 +104,7 @@ function AboutPage() {
               key={item.label}
               className={`rounded-[1.5rem] border p-5 shadow-[0_14px_30px_rgba(76,130,169,0.05)] ${areaStyles[item.tone]}`}
             >
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary">
-                {item.label}
-              </p>
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary">{item.label}</p>
               <p className="mt-3 text-sm font-medium leading-7 text-text/80 md:text-text/85">{item.text}</p>
             </article>
           ))}
@@ -124,7 +117,7 @@ function AboutPage() {
           <div>
             <SectionHeading
               eyebrow="Servizi e progetti"
-              title="Percorsi qualificati che danno valore al benessere, al tempo libero e all'autonomia."
+              title="Percorsi che danno valore al benessere, al tempo libero e all'autonomia."
               description="Accanto al sostegno e alla rappresentanza, promuoviamo esperienze concrete che aiutano ogni persona a vivere relazioni, crescita e partecipazione con maggiore serenita."
             />
             <div className="mt-6 grid gap-5 md:grid-cols-2">
@@ -133,10 +126,12 @@ function AboutPage() {
                   key={item.title}
                   className={`rounded-[1.4rem] border p-5 shadow-[0_12px_26px_rgba(76,130,169,0.05)] ${areaStyles[item.tone]}`}
                 >
-                  <p className="mb-2 md:mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+                  <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-primary md:mb-3">
                     {item.title}
                   </p>
-                  <p className="mt-2 md:mt-3 text-xs md:text-sm leading-6 md:leading-7 text-text/85 md:text-text/80">{item.text}</p>
+                  <p className="mt-2 text-xs leading-6 text-text/85 md:mt-3 md:text-sm md:leading-7 md:text-text/80">
+                    {item.text}
+                  </p>
                 </article>
               ))}
             </div>
@@ -148,7 +143,7 @@ function AboutPage() {
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <SectionHeading
             eyebrow="Rete territoriale"
-            title="Collaborazioni, advocacy e attivita condivise per una comunita piu inclusiva."
+            title="Collaborazioni e attivita condivise per una comunita piu inclusiva."
             description="L'associazione lavora con istituzioni, professionisti e realta del territorio per trasformare i bisogni in iniziative concrete e occasioni di partecipazione."
           />
           <ActionLink to="/contatti" variant="secondary">
@@ -162,13 +157,11 @@ function AboutPage() {
               key={item.title}
               className="rounded-[1.75rem] border border-primary/12 bg-base p-6 shadow-[0_16px_36px_rgba(76,130,169,0.06)]"
             >
-              <p className="mb-2 md:mb-3 inline-flex rounded-full bg-accent/15 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-accent">
+              <p className="mb-2 inline-flex rounded-full bg-accent/15 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-accent md:mb-3">
                 {item.meta}
               </p>
-              <h3 className="text-base md:text-lg font-bold tracking-[-0.02em] text-text">
-                {item.title}
-              </h3>
-              <p className="mt-2 md:mt-3 text-xs md:text-sm font-medium leading-6 md:leading-7 text-text/85 md:text-text/80">
+              <h3 className="text-base font-bold tracking-[-0.02em] text-text md:text-lg">{item.title}</h3>
+              <p className="mt-2 text-xs font-medium leading-6 text-text/85 md:mt-3 md:text-sm md:leading-7 md:text-text/80">
                 {item.description}
               </p>
             </article>

@@ -73,39 +73,32 @@ function HomePage() {
     loadPhotos()
   }, [])
 
-  // Limita a 3 eventi e 4 foto
   const displayedEvents = events.slice(0, 3)
   const displayedPhotos = photos.slice(0, 4)
 
   return (
     <main>
       <PageHero
-        eyebrow="Benvenuti all'Associazione"
-        title="Valorizziamo le abilità, non le mancanze. "
-        description="L'associazione nasce con un obiettivo chiaro: accompagnare ogni persona in un percorso di crescita e trasformazione, sviluppando autonomia e consapevolezza.
-Come una farfalla che emerge dalla crisalide, crediamo che ogni individuo abbia potenzialità da far emergere e coltivare."
+        eyebrow="Benvenuti"
+        title="Una comunita che mette al centro la persona."
+        description="Sosteniamo persone con disabilita e famiglie attraverso ascolto, attivita inclusive, orientamento e opportunita di partecipazione. Ogni percorso nasce dai bisogni reali e valorizza le capacita di ciascuno."
         tone="primary"
       />
 
-      {/* CHI SIAMO */}
       <section className="px-6 py-10 md:px-8 md:py-12">
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1.25fr)_minmax(280px,0.75fr)]">
           <div>
             <SectionHeading
               eyebrow="Chi siamo"
-              title="una parola su di noi"
-              description="L'associazione è attiva da anni
-              nel supporto e nell’integrazione delle persone con disabilità e delle loro famiglie.
-              Fin dall’inizio, l’obiettivo è stato quello di valorizzare le abilità individuali,
-              costruendo percorsi personalizzati che tengano conto delle caratteristiche e dei bisogni di ciascuno."
+              title="Un'associazione vicina alle persone e alle famiglie"
+              description="Lavoriamo ogni giorno per promuovere inclusione, autonomia e qualita della vita attraverso servizi, iniziative e relazioni costruite con attenzione."
             />
 
-            <p className="mt-5 md:mt-6 max-w-3xl text-xs md:text-sm font-medium leading-7 text-text">
-              Crediamo che ogni persona abbia potenzialità da sviluppare attraverso opportunità concrete, senza fermarsi davanti alle difficoltà.
-
-              Siamo stati tra i primi in Italia a credere nella musicoterapia come strumento educativo e relazionale. Nel tempo abbiamo sviluppato attività orientate all’autonomia, aiutando i ragazzi a vivere esperienze quotidiane come spostarsi, organizzarsi e relazionarsi in modo indipendente.
-
-              Gli educatori costruiscono percorsi su misura, accompagnando ogni partecipante in un processo di crescita personale e sociale.
+            <p className="mt-5 max-w-3xl text-xs font-medium leading-7 text-text md:mt-6 md:text-sm">
+              Crediamo che ogni persona abbia risorse, desideri e possibilita da far emergere attraverso esperienze
+              concrete e relazioni significative. Per questo promuoviamo attivita educative, laboratori, momenti di
+              incontro e percorsi personalizzati che aiutano a sentirsi parte della comunita. Lavoriamo con attenzione,
+              continuita e collaborazione per offrire sostegno reale nella vita di tutti i giorni.
             </p>
 
             <div className="mt-6">
@@ -116,36 +109,31 @@ Come una farfalla che emerge dalla crisalide, crediamo che ogni individuo abbia 
           </div>
 
           <div className="grid gap-5">
-            <div className="rounded-lg border border-primary/20 bg-background px-4 md:px-5 py-4 md:py-5 shadow-sm">
-              <p className="text-xs font-bold uppercase tracking-widest text-secondary">
-                Identità e Missione
-              </p>
-              <p className="mt-2 md:mt-3 text-xs md:text-sm font-medium leading-6 md:leading-7 text-text">
-                L'associazione promuove l'inclusione e l'autonomia delle persone con disabilità. Crediamo nelle capacità di ogni individuo e lavoriamo per svilupparle attraverso esperienze concrete e percorsi personalizzati.
+            <div className="rounded-lg border border-primary/20 bg-background px-4 py-4 shadow-sm md:px-5 md:py-5">
+              <p className="text-xs font-bold uppercase tracking-widest text-secondary">Identita e missione</p>
+              <p className="mt-2 text-xs font-medium leading-6 text-text md:mt-3 md:text-sm md:leading-7">
+                Promuoviamo inclusione, ascolto e partecipazione, mettendo al centro la dignita, i diritti e le
+                capacita di ogni persona.
               </p>
             </div>
 
-            <div className="rounded-lg border border-secondary/30 bg-secondary/8 px-4 md:px-5 py-4 md:py-5 shadow-sm">
-              <p className="text-xs font-bold uppercase tracking-widest text-secondary">
-                Metodo e Attività
-              </p>
-              <p className="mt-2 md:mt-3 text-xs md:text-sm font-medium leading-6 md:leading-7 text-text">
-                Costruiamo percorsi su misura che favoriscono la crescita personale e l’indipendenza.
-                Attraverso laboratori, attività di gruppo e progetti di autonomia, accompagniamo ogni
-                persona nel proprio sviluppo, valorizzando le sue potenzialità.
+            <div className="rounded-lg border border-secondary/30 bg-secondary/8 px-4 py-4 shadow-sm md:px-5 md:py-5">
+              <p className="text-xs font-bold uppercase tracking-widest text-secondary">Metodo e attivita</p>
+              <p className="mt-2 text-xs font-medium leading-6 text-text md:mt-3 md:text-sm md:leading-7">
+                Costruiamo percorsi su misura con laboratori, attivita di gruppo e iniziative che favoriscono
+                benessere, autonomia e relazioni positive.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* EVENTI */}
       <section className="border-t-2 border-primary/15 px-6 py-10 md:px-8 md:py-12">
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between lg:flex-nowrap">
           <SectionHeading
             eyebrow="Prossimi eventi"
-            title="Scopri qui i nostri prossimi eventi"
-            description="organizzati dall'associazione e partecipa alle nostre iniziative per sostenere la nostra missione e condividere momenti di crescita e inclusione."
+            title="Scopri i prossimi appuntamenti"
+            description="Partecipa alle iniziative dell'associazione e condividi momenti di incontro, crescita e inclusione."
           />
 
           <ActionLink to="/eventi" variant="secondary" className="whitespace-nowrap flex-shrink-0">
@@ -154,11 +142,11 @@ Come una farfalla che emerge dalla crisalide, crediamo che ogni individuo abbia 
         </div>
 
         {isLoadingEvents ? (
-          <div className="text-center py-8 text-text/60">
+          <div className="py-8 text-center text-text/60">
             <p>Caricamento eventi...</p>
           </div>
         ) : errorEvents ? (
-          <div className="text-center py-8 text-red-600">
+          <div className="py-8 text-center text-red-600">
             <p>{errorEvents}</p>
           </div>
         ) : displayedEvents.length > 0 ? (
@@ -174,28 +162,27 @@ Come una farfalla che emerge dalla crisalide, crediamo che ogni individuo abbia 
             ))}
           </div>
         ) : (
-          <div className="text-center py-8 text-text/60">
+          <div className="py-8 text-center text-text/60">
             <p>Nessun evento disponibile al momento</p>
           </div>
         )}
       </section>
 
-      {/* GALLERIA */}
       <section className="border-t-2 border-primary/15 px-6 py-10 md:px-8 md:py-12">
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between lg:flex-nowrap">
           <SectionHeading
             eyebrow="Galleria"
             title="Ultimi scatti dalla nostra community"
-            description="Momenti speciali catturati dai nostri partecipanti."
+            description="Momenti condivisi durante attivita, laboratori ed eventi dell'associazione."
           />
 
           <ActionLink to="/galleria" variant="secondary" className="whitespace-nowrap flex-shrink-0">
-            Vedi tutto
+            Vedi la galleria
           </ActionLink>
         </div>
 
         {isLoadingPhotos ? (
-          <div className="text-center py-8 text-text/60">
+          <div className="py-8 text-center text-text/60">
             <p>Caricamento galleria...</p>
           </div>
         ) : displayedPhotos.length > 0 ? (
@@ -204,16 +191,12 @@ Come una farfalla che emerge dalla crisalide, crediamo che ogni individuo abbia 
               <button
                 key={photo.id}
                 onClick={() => setSelectedPhoto(photo)}
-                className="group relative overflow-hidden rounded-lg border border-primary/20 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 text-left"
+                className="group relative overflow-hidden rounded-lg border border-primary/20 text-left shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md"
               >
                 {photo.immagine ? (
                   <>
-                    <img
-                      src={photo.immagine}
-                      alt={photo.titolo}
-                      className="w-full h-64 object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
+                    <img src={photo.immagine} alt={photo.titolo} className="h-64 w-full object-cover" />
+                    <div className="absolute inset-0 bg-black/0 transition-all duration-300 group-hover:bg-black/20" />
                   </>
                 ) : (
                   <PlaceholderImage alt={photo.titolo} className="h-64 w-full" />
@@ -225,76 +208,66 @@ Come una farfalla che emerge dalla crisalide, crediamo che ogni individuo abbia 
             ))}
           </div>
         ) : (
-          <div className="text-center py-8 text-text/60">
+          <div className="py-8 text-center text-text/60">
             <p>Nessuna foto disponibile al momento</p>
           </div>
         )}
       </section>
 
-      {/* Photo Modal */}
       {selectedPhoto && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
-          onClick={() => setSelectedPhoto(null)}
-        >
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={() => setSelectedPhoto(null)}>
           <div
-            className="relative max-w-lg w-full rounded-lg overflow-hidden bg-black shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-lg overflow-hidden rounded-lg bg-black shadow-2xl"
+            onClick={(event) => event.stopPropagation()}
           >
             <button
               onClick={() => setSelectedPhoto(null)}
-              className="absolute top-4 right-4 z-10 text-white text-lg font-bold hover:opacity-70 transition"
+              className="absolute right-4 top-4 z-10 text-lg font-bold text-white transition hover:opacity-70"
             >
               x
             </button>
             <img
               src={selectedPhoto.immagine}
               alt={selectedPhoto.titolo}
-              className="w-full h-auto max-h-[70vh] object-contain"
+              className="h-auto max-h-[70vh] w-full object-contain"
             />
             <div className="bg-base p-4">
-              <h2 className="text-lg font-bold text-text mb-1">{selectedPhoto.titolo}</h2>
+              <h2 className="mb-1 text-lg font-bold text-text">{selectedPhoto.titolo}</h2>
               <p className="text-sm text-text/75">{selectedPhoto.descrizione}</p>
             </div>
           </div>
         </div>
       )}
 
-      {/* DONAZIONI CTA */}
-      <section className="mt-6 rounded-lg border border-primary/20 bg-background px-4 md:px-6 lg:px-8 py-10 md:py-12 lg:py-14 text-center shadow-lg">
-        <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-primary">
-          Sostieni
-        </p>
-        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-text">
-          Sostieni l'Associazione
-        </h2>
-        <p className="mx-auto mt-4 md:mt-5 max-w-2xl text-xs md:text-sm font-medium leading-6 md:leading-7 text-text/75">
-          Con il tuo contributo ci aiuti a realizzare progetti concreti e a offrire supporto alle famiglie. Dona in modo semplice e sicuro.
+      <section className="mt-6 rounded-lg border border-primary/20 bg-background px-4 py-10 text-center shadow-lg md:px-6 md:py-12 lg:px-8 lg:py-14">
+        <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-primary">Sostieni</p>
+        <h2 className="text-2xl font-bold tracking-tight text-text md:text-3xl lg:text-4xl">Sostieni le nostre attivita</h2>
+        <p className="mx-auto mt-4 max-w-2xl text-xs font-medium leading-6 text-text/75 md:mt-5 md:text-sm md:leading-7">
+          Con il tuo contributo ci aiuti a portare avanti progetti concreti, iniziative inclusive e servizi di
+          supporto per persone con disabilita e famiglie.
         </p>
 
-        <div className="mt-6 md:mt-7 flex flex-wrap justify-center gap-2 md:gap-3">
-          <ActionLink to="/donazioni" variant="secondary">Dona ora</ActionLink>
+        <div className="mt-6 flex flex-wrap justify-center gap-2 md:mt-7 md:gap-3">
+          <ActionLink to="/donazioni" variant="secondary">
+            Scopri come donare
+          </ActionLink>
           <ActionLink to="/contatti" variant="secondary">
             Richiedi informazioni
           </ActionLink>
         </div>
       </section>
 
-      {/* CONTATTI CTA */}
-      <section className="mt-6 rounded-lg border border-primary/20 bg-primary px-4 md:px-6 lg:px-8 py-10 md:py-12 lg:py-14 text-center text-white shadow-xl">
-        <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-accent">
-          CONTATTI
+      <section className="mt-6 rounded-lg border border-primary/20 bg-primary px-4 py-10 text-center text-white shadow-xl md:px-6 md:py-12 lg:px-8 lg:py-14">
+        <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-accent">Contatti</p>
+
+        <h2 className="text-2xl font-bold tracking-tight md:text-3xl lg:text-4xl">Siamo qui per aiutarti</h2>
+
+        <p className="mx-auto mt-4 max-w-2xl text-xs font-medium leading-6 text-white/90 md:mt-5 md:text-sm md:leading-7 lg:text-base">
+          Hai domande o hai bisogno di informazioni? Contattaci per ricevere supporto, chiarimenti o maggiori dettagli
+          sulle attivita e i servizi dell'associazione.
         </p>
 
-        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">
-          Siamo qui per aiutarti
-        </h2>
-
-        <p className="mx-auto mt-4 md:mt-5 max-w-2xl text-xs md:text-sm lg:text-base font-medium leading-6 md:leading-7 text-white/90">
-          Hai domande o hai bisogno di informazioni? Contattaci per ricevere supporto, chiarimenti o maggiori dettagli sulle attività e i servizi dell’associazione.
-        </p>
-
-        <div className="mt-6 md:mt-7 flex justify-center">
+        <div className="mt-6 flex justify-center md:mt-7">
           <ActionLink to="/contatti" variant="dark">
             Scrivici
           </ActionLink>

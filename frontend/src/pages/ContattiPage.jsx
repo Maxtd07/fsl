@@ -14,15 +14,15 @@ const initialFormState = {
 const contactCards = [
   {
     label: 'Email',
-    text: 'info@associazionedisabili.it',
+    text: 'info@nomeassociazione.it',
   },
   {
     label: 'Telefono',
-    text: '+39 123 456 789',
+    text: '+39 000 000 0000',
   },
   {
     label: 'Indirizzo',
-    text: 'Via Principale 123, Roma (RM) 00000',
+    text: 'Via Roma 123, Citta (PR) 00000',
   },
 ]
 
@@ -57,9 +57,7 @@ function FeedbackMessage({ message }) {
 
   return (
     <div className={`rounded-lg border-2 p-4 ${colorClassName}`}>
-      <p className="text-sm font-medium">
-        {message.text}
-      </p>
+      <p className="text-sm font-medium">{message.text}</p>
     </div>
   )
 }
@@ -87,13 +85,13 @@ function ContattiPage() {
       await sendContactEmail(formData)
       setMessage({
         type: 'success',
-        text: 'Messaggio inviato con successo. Ti contatteremo presto!',
+        text: 'Messaggio inviato con successo. Ti contatteremo presto.',
       })
       setFormData(initialFormState)
     } catch {
       setMessage({
         type: 'error',
-        text: 'Errore nell\'invio del messaggio. Riprova più tardi.',
+        text: 'Errore nell invio del messaggio. Riprova piu tardi.',
       })
     } finally {
       setIsSubmitting(false)
@@ -105,7 +103,7 @@ function ContattiPage() {
       <PageHero
         eyebrow="Contatti"
         title="Entra in contatto con noi"
-        description="Hai domande? Vuoi collaborare? Scrivici e ti risponderemo al più presto."
+        description="Hai bisogno di informazioni, orientamento o vuoi conoscere meglio le attivita dell'associazione? Scrivici e ti risponderemo al piu presto."
         tone="neutral"
         actions={
           <>
@@ -123,9 +121,7 @@ function ContattiPage() {
             key={card.label}
             className="rounded-[1.6rem] border-2 border-primary/20 bg-base p-4 shadow-[0_8px_18px_rgba(0,0,0,0.08)] md:p-5 lg:p-6"
           >
-            <p className="mb-2 text-xs font-bold uppercase tracking-[0.22em] text-primary">
-              {card.label}
-            </p>
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.22em] text-primary">{card.label}</p>
             <p className="text-xs font-medium leading-6 text-text/85 md:text-sm md:leading-7 md:text-text/80">
               {card.text}
             </p>
@@ -138,15 +134,13 @@ function ContattiPage() {
           <SectionHeading
             eyebrow="Modulo contatti"
             title="Inviaci un messaggio"
-            description="Compila il form qui sotto e ti risponderemo nel più breve tempo possibile."
+            description="Compila il modulo qui sotto per richiedere informazioni, supporto o un primo contatto."
           />
 
           <form onSubmit={handleSubmit} className="mt-6 space-y-4">
             {contactFields.map((field) => (
               <label key={field.name} className="block">
-                <span className="mb-2 block text-sm font-medium text-text">
-                  {field.label}
-                </span>
+                <span className="mb-2 block text-sm font-medium text-text">{field.label}</span>
                 <input
                   {...field}
                   value={formData[field.name]}
@@ -158,9 +152,7 @@ function ContattiPage() {
             ))}
 
             <label className="block">
-              <span className="mb-2 block text-sm font-medium text-text">
-                Messaggio *
-              </span>
+              <span className="mb-2 block text-sm font-medium text-text">Messaggio *</span>
               <textarea
                 name="messaggio"
                 value={formData.messaggio}
@@ -174,20 +166,13 @@ function ContattiPage() {
 
             <FeedbackMessage message={message} />
 
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className={submitButtonClassName}
-            >
+            <button type="submit" disabled={isSubmitting} className={submitButtonClassName}>
               {isSubmitting ? 'Invio in corso...' : 'Invia messaggio'}
             </button>
           </form>
         </div>
 
-        <PlaceholderImage
-          alt="Contatti"
-          className="h-72 md:h-80 lg:h-full lg:min-h-96"
-        />
+        <PlaceholderImage alt="Contatti" className="h-72 md:h-80 lg:h-full lg:min-h-96" />
       </section>
     </main>
   )
