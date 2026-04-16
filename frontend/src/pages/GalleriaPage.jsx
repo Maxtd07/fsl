@@ -50,14 +50,14 @@ function GalleriaPage() {
       {/* HERO */}
       <PageHero
         eyebrow="GALLERIA"
-        title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
-        description="Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+        title="Scopri i momenti speciali della nostra associazione"
+        description="Guarda le foto degli eventi e le attività della nostra comunità. Ogni immagine racconta una storia di crescita, condivisione e trasformazione."
         tone="accent"
         actions={
           <>
-            <ActionLink to="/eventi">Lorem ipsum</ActionLink>
+            <ActionLink to="/eventi">Scopri gli eventi</ActionLink>
             <ActionLink to="/contatti" variant="secondary">
-              Dolor sit amet
+              Contattaci
             </ActionLink>
           </>
         }
@@ -67,9 +67,9 @@ function GalleriaPage() {
       {!isLoading && photos.length > 0 && (
         <section className="space-y-5 px-6">
           <SectionHeading
-            eyebrow="Lorem"
-            title="Sed ut perspiciatis unde omnis iste natus error"
-            description="Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos."
+            eyebrow="Foto della comunità"
+            title="Momenti significativi degli eventi"
+            description="Una raccolta delle foto che documentano le attività, gli incontri e i momenti di crescita della nostra associazione."
           />
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -91,7 +91,7 @@ function GalleriaPage() {
                 )}
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/40 to-transparent p-4">
                   <h3 className="text-sm font-bold text-white">
-                    Lorem ipsum dolor
+                    {photo.titolo}
                   </h3>
                 </div>
               </button>
@@ -123,10 +123,10 @@ function GalleriaPage() {
             />
             <div className="bg-base p-4">
               <h2 className="text-lg font-bold text-text mb-1">
-                Lorem ipsum dolor sit amet
+                {selectedPhoto.titolo}
               </h2>
               <p className="text-sm text-text/75">
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.
+                {selectedPhoto.descrizione}
               </p>
             </div>
           </div>
@@ -136,9 +136,9 @@ function GalleriaPage() {
       {/* FACEBOOK */}
       <section className="border-t-2 border-primary/15 px-6 py-10 lg:py-12">
         <SectionHeading
-          eyebrow="Lorem ipsum"
-          title="Consectetur adipiscing elit sed do eiusmod"
-          description="Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo."
+          eyebrow="Seguici sui social"
+          title="Resta aggiornato con i nostri canali"
+          description="Seguici su Facebook e Instagram per ricevere gli ultimi aggiornamenti su eventi, attività e news della nostra associazione."
         />
 
         <div className="mt-6">

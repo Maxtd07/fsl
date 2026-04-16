@@ -17,8 +17,8 @@ const eventDateFormatter = new Intl.DateTimeFormat('it-IT', {
 })
 
 const viewModeOptions = [
-  { value: 'calendar', label: 'Lorem ipsum calendar' },
-  { value: 'list', label: 'Lorem ipsum list' },
+  { value: 'calendar', label: 'Calendario' },
+  { value: 'list', label: 'Lista' },
 ]
 
 function formatEventMeta(event) {
@@ -64,7 +64,7 @@ function EventiPage() {
       setEvents(Array.isArray(data) ? data : [])
       setError('')
     } catch (err) {
-      setError(err.message || 'Lorem ipsum error loading events.')
+      setError(err.message || 'Errore nel caricamento degli eventi.')
       setEvents([])
     } finally {
       setIsLoading(false)
@@ -98,7 +98,7 @@ function EventiPage() {
         setEvents(Array.isArray(data) ? data : [])
         setError('')
       } catch (err) {
-        setError(err.message || 'Lorem ipsum backend error.')
+        setError(err.message || 'Errore nel caricamento degli eventi.')
         setEvents([])
       } finally {
         setIsLoading(false)
@@ -143,15 +143,15 @@ function EventiPage() {
   return (
     <main>
       <PageHero
-        eyebrow="Lorem ipsum events"
-        title="Lorem ipsum dolor sit amet event management"
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+        eyebrow="Eventi"
+        title="Scopri e partecipa ai nostri eventi"
+        description="Unisciti alla nostra comunità e vivi esperienze significative. Consulta il calendario per trovare l'evento perfetto per te."
         tone="primary"
         actions={
           <>
-            {!isAuthenticated && <ActionLink to="/accedi">Lorem ipsum login</ActionLink>}
+            {!isAuthenticated && <ActionLink to="/accedi">Accedi o registrati</ActionLink>}
             <ActionLink to="/contatti" variant="secondary">
-              Lorem ipsum contact
+              Contattaci
             </ActionLink>
           </>
         }
@@ -161,9 +161,9 @@ function EventiPage() {
       {isAuthenticated && myBookings.length > 0 && (
         <section className="rounded-lg border border-secondary/30 bg-secondary/10 px-6 py-6 shadow-md">
           <SectionHeading
-            eyebrow="Lorem ipsum bookings"
-            title="Lorem ipsum reserved events"
-            description="Lorem ipsum summary section for user bookings."
+            eyebrow="Le tue iscrizioni"
+            title="I tuoi eventi prenotati"
+            description="Qui trovi tutti gli eventi ai quali ti sei già iscritto."
           />
 
           <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -186,7 +186,7 @@ function EventiPage() {
                   href={getEventCalendarLink(booking.eventId)}
                   className="mt-4 inline-flex text-sm font-semibold text-primary"
                 >
-                  Lorem ipsum ICS
+                  Scarica calendario (.ics)
                 </a>
               </article>
             ))}
@@ -198,8 +198,8 @@ function EventiPage() {
       <section className="border-primary/15 px-6 py-10 lg:py-12">
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <SectionHeading
-            title="Lorem ipsum events list"
-            description="Lorem ipsum browse and join events section."
+            title="Tutti gli eventi"
+            description="Sfoglia gli eventi disponibili e iscriviti a quello che più ti interessa."
           />
 
           <div className="flex gap-2">
@@ -219,7 +219,7 @@ function EventiPage() {
 
         {showLoadingState && (
           <div className="rounded-3xl border-2 border-primary/20 bg-base px-5 py-6 text-sm font-medium text-text/80">
-            Lorem ipsum loading events...
+            Caricamento eventi in corso...
           </div>
         )}
 
@@ -231,7 +231,7 @@ function EventiPage() {
 
         {showEmptyState && (
           <div className="rounded-3xl border-2 border-primary/20 bg-base px-5 py-6 text-sm font-medium text-text/80">
-            Lorem ipsum no events available.
+            Al momento non ci sono eventi disponibili.
           </div>
         )}
 
@@ -265,12 +265,12 @@ function EventiPage() {
                       <div className="p-5">
                         <div className="mb-3 flex flex-wrap gap-2">
                           <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
-                            {event.availableSeats} lorem seats
+                            {event.availableSeats} posti disponibili
                           </span>
 
                           {alreadyBooked && (
                             <span className="rounded-full bg-secondary/10 px-3 py-1 text-xs font-semibold text-secondary">
-                              Lorem ipsum booked
+                            Iscritto
                             </span>
                           )}
                         </div>

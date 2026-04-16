@@ -24,7 +24,11 @@ function Footer() {
           <div>
             <p className="mb-4 text-xs font-bold uppercase tracking-wider text-white">Social & Privacy</p>
             <div className="flex flex-col gap-3">
-              <a className={`${footerLinkClasses} text-sm`} href="#facebook">
+              <a className={`${footerLinkClasses} flex items-center gap-2`} href="#facebook">
+                <FontAwesomeIcon
+                  icon={faFacebook}
+                  className="text-base"
+                />
                 <span>Facebook</span>
               </a>
 
