@@ -18,8 +18,8 @@ const initialRegisterState = {
 }
 
 const modeOptions = [
-  { value: 'login', label: 'Ho gia un account' },
-  { value: 'register', label: 'Crea un account' },
+  { value: 'login', label: 'Ho gia un profilo' },
+  { value: 'register', label: 'Crea il tuo profilo' },
 ]
 
 const loginFields = [
@@ -166,7 +166,7 @@ function AuthPage() {
         email: registerForm.email,
         password: registerForm.password,
       })
-      setMessage('Profilo creato con successo. Ora puoi iscriverti agli eventi.')
+      setMessage('Profilo creato con successo. Ora puoi accedere alla tua area personale.')
     } catch (err) {
       handleSubmitError(err, 'Registrazione non riuscita.')
     }
@@ -175,7 +175,7 @@ function AuthPage() {
   const formConfig =
     mode === 'login'
       ? {
-          title: 'Accesso utente',
+          title: 'Accedi alla tua area',
           fields: loginFields,
           values: loginForm,
           onFieldChange: updateLoginField,
@@ -183,7 +183,7 @@ function AuthPage() {
           submitLabel: isSubmitting ? 'Accesso in corso...' : 'Accedi',
         }
       : {
-          title: 'Registrazione',
+          title: 'Crea il tuo profilo',
           fields: registerFields,
           values: registerForm,
           onFieldChange: updateRegisterField,
@@ -195,8 +195,8 @@ function AuthPage() {
     <main className="space-y-8">
       <PageHero
         eyebrow="Accesso"
-        title="Accedi o crea il tuo profilo per iscriverti agli eventi."
-        description="Il tuo account ti permette di gestire la sessione sul frontend, prenotare gli eventi e ricevere promemoria via email con allegato calendario."
+        title="Accedi alla tua area o crea il tuo profilo."
+        description="Da qui puoi consultare le tue attivita, partecipare agli eventi dell'associazione e restare aggiornato sulle iniziative in programma."
         tone="secondary"
         actions={
           <>
@@ -212,8 +212,8 @@ function AuthPage() {
         <div className="space-y-5">
           <SectionHeading
             eyebrow="Area utente"
-            title="Sessione sicura con JWT e iscrizione rapida agli eventi."
-            description="Usa la tua email per entrare. Se non hai ancora un profilo, puoi registrarti in pochi secondi."
+            title="Un accesso semplice alla tua area personale."
+            description="Usa la tua email per entrare. Se non hai ancora un profilo, puoi crearlo in pochi passaggi."
           />
 
           <div className="grid gap-3 md:grid-cols-2">
@@ -230,10 +230,10 @@ function AuthPage() {
           </div>
 
           <div className="rounded-[1.5rem] border border-secondary/30 bg-secondary/8 p-5">
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-secondary">Cosa ottieni</p>
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-secondary">Cosa trovi nella tua area</p>
             <p className="mt-3 text-sm leading-7 text-text/80">
-              Dopo l&apos;accesso puoi iscriverti agli eventi, vedere la tua sessione attiva e ricevere le conferme
-              via email con file `.ics` compatibile con i calendari piu diffusi.
+              Dopo l&apos;accesso puoi visualizzare le iniziative disponibili, gestire le tue partecipazioni e ricevere
+              le comunicazioni utili dell&apos;associazione.
             </p>
           </div>
         </div>
@@ -266,10 +266,6 @@ function AuthPage() {
 
           <p className="mt-5 text-xs text-text/60">
             Se sei amministratore puoi usare la pagina dedicata in <span className="font-semibold">/admin/login</span>.
-          </p>
-          <p className="mt-2 text-xs text-text/60">
-            Credenziali admin seed locali: <span className="font-semibold">admin@associazionedisabili.it</span> /{' '}
-            <span className="font-semibold">Admin123!</span>
           </p>
           {user && <p className="mt-2 text-xs text-text/60">Sessione attiva per {user.nome}</p>}
         </div>

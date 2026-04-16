@@ -120,10 +120,7 @@ function EventiPage() {
     initializePage()
   }, [isAuthenticated])
 
-  const bookedEventIds = useMemo(
-    () => new Set(myBookings.map((b) => b.eventId)),
-    [myBookings]
-  )
+  const bookedEventIds = useMemo(() => new Set(myBookings.map((b) => b.eventId)), [myBookings])
 
   const openModal = (event) => {
     setSelectedEvent(event)
@@ -145,11 +142,11 @@ function EventiPage() {
       <PageHero
         eyebrow="Eventi"
         title="Scopri e partecipa ai nostri eventi"
-        description="Unisciti alla nostra comunità e vivi esperienze significative. Consulta il calendario per trovare l'evento perfetto per te."
+        description="Incontri, laboratori e momenti di condivisione pensati per le persone con disabilita, le famiglie e la comunita."
         tone="primary"
         actions={
           <>
-            {!isAuthenticated && <ActionLink to="/accedi">Accedi o registrati</ActionLink>}
+            {!isAuthenticated && <ActionLink to="/accedi">Accedi alla tua area</ActionLink>}
             <ActionLink to="/contatti" variant="secondary">
               Contattaci
             </ActionLink>
@@ -157,35 +154,24 @@ function EventiPage() {
         }
       />
 
-      {/* BOOKINGS */}
       {isAuthenticated && myBookings.length > 0 && (
         <section className="rounded-lg border border-secondary/30 bg-secondary/10 px-6 py-6 shadow-md">
           <SectionHeading
             eyebrow="Le tue iscrizioni"
             title="I tuoi eventi prenotati"
-            description="Qui trovi tutti gli eventi ai quali ti sei già iscritto."
+            description="Qui trovi tutti gli eventi ai quali ti sei gia iscritto."
           />
 
           <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {myBookings.map((booking) => (
-              <article
-                key={booking.id}
-                className="rounded-lg border border-secondary/30 bg-base p-4 shadow-sm"
-              >
-                <p className="text-sm font-bold text-text">
-                  {booking.eventTitle}
-                </p>
+              <article key={booking.id} className="rounded-lg border border-secondary/30 bg-base p-4 shadow-sm">
+                <p className="text-sm font-bold text-text">{booking.eventTitle}</p>
                 <p className="mt-2 text-sm text-text/75">
-                  {booking.eventDate
-                    ? eventDateFormatter.format(new Date(booking.eventDate))
-                    : ''}
+                  {booking.eventDate ? eventDateFormatter.format(new Date(booking.eventDate)) : ''}
                 </p>
                 <p className="mt-1 text-sm text-text/75">{booking.location}</p>
 
-                <a
-                  href={getEventCalendarLink(booking.eventId)}
-                  className="mt-4 inline-flex text-sm font-semibold text-primary"
-                >
+                <a href={getEventCalendarLink(booking.eventId)} className="mt-4 inline-flex text-sm font-semibold text-primary">
                   Scarica calendario (.ics)
                 </a>
               </article>
@@ -194,12 +180,11 @@ function EventiPage() {
         </section>
       )}
 
-      {/* EVENTS */}
       <section className="border-primary/15 px-6 py-10 lg:py-12">
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <SectionHeading
             title="Tutti gli eventi"
-            description="Sfoglia gli eventi disponibili e iscriviti a quello che più ti interessa."
+            description="Sfoglia gli appuntamenti disponibili e scegli quelli piu adatti a te."
           />
 
           <div className="flex gap-2">
@@ -207,9 +192,7 @@ function EventiPage() {
               <button
                 key={option.value}
                 onClick={() => setViewMode(option.value)}
-                className={getViewModeButtonClassName(
-                  viewMode === option.value
-                )}
+                className={getViewModeButtonClassName(viewMode === option.value)}
               >
                 {option.label}
               </button>
@@ -251,11 +234,7 @@ function EventiPage() {
                       className="cursor-pointer overflow-hidden rounded-[1.4rem] border-2 border-primary/20 bg-base text-left shadow-[0_6px_14px_rgba(0,0,0,0.06)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_12px_28px_rgba(0,0,0,0.12)]"
                     >
                       {event.volantino ? (
-                        <img
-                          src={event.volantino}
-                          alt={event.titolo}
-                          className="h-48 w-full object-cover"
-                        />
+                        <img src={event.volantino} alt={event.titolo} className="h-48 w-full object-cover" />
                       ) : (
                         <div className="flex h-48 w-full items-center justify-center bg-primary/10">
                           <PlaceholderImage alt="Event" className="h-full w-full" />
@@ -270,22 +249,16 @@ function EventiPage() {
 
                           {alreadyBooked && (
                             <span className="rounded-full bg-secondary/10 px-3 py-1 text-xs font-semibold text-secondary">
-                            Iscritto
+                              Iscritto
                             </span>
                           )}
                         </div>
 
-                        <h3 className="mb-1 text-lg font-bold text-text">
-                          {event.titolo}
-                        </h3>
+                        <h3 className="mb-1 text-lg font-bold text-text">{event.titolo}</h3>
 
-                        <p className="mb-3 line-clamp-3 text-sm text-text/75">
-                          {event.descrizione}
-                        </p>
+                        <p className="mb-3 line-clamp-3 text-sm text-text/75">{event.descrizione}</p>
 
-                        <p className="text-xs text-text/60">
-                          {formatEventMeta(event)}
-                        </p>
+                        <p className="text-xs text-text/60">{formatEventMeta(event)}</p>
                       </div>
                     </button>
                   )

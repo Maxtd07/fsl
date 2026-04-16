@@ -118,7 +118,7 @@ export function EventModal({ event, isOpen, onClose, onBookingChange }) {
       const response = await createBooking(event.id)
       setIsBooked(true)
       setBookingId(response.id)
-      showTimedSuccess('Iscrizione confermata! Controlla la tua email.', 'create')
+      showTimedSuccess('Partecipazione confermata. Controlla la tua email.', 'create')
       onBookingChange?.()
     } catch (err) {
       setError(err.message || 'Errore iscrizione')
@@ -139,7 +139,7 @@ export function EventModal({ event, isOpen, onClose, onBookingChange }) {
       await deleteBooking(bookingId)
       setIsBooked(false)
       setBookingId(null)
-      showTimedSuccess('Iscrizione annullata', 'cancel')
+      showTimedSuccess('Partecipazione annullata', 'cancel')
       onBookingChange?.()
     } catch (err) {
       setError(err.message || 'Errore annullamento iscrizione')
@@ -168,7 +168,7 @@ export function EventModal({ event, isOpen, onClose, onBookingChange }) {
       <Card
         variant="elevated"
         className="max-h-[90vh] w-full max-w-md overflow-hidden"
-        onClick={(event) => event.stopPropagation()}
+        onClick={(currentEvent) => currentEvent.stopPropagation()}
       >
         <div className="flex h-full flex-col">
           <div className="flex items-center justify-between border-b border-text/10 pb-4">
@@ -233,7 +233,7 @@ export function EventModal({ event, isOpen, onClose, onBookingChange }) {
                   fullWidth
                   isLoading={isLoading}
                 >
-                  {isLoading ? 'Elaborazione...' : isBooked ? 'Cancella iscrizione' : 'Iscrivimi'}
+                  {isLoading ? 'Elaborazione...' : isBooked ? 'Cancella iscrizione' : 'Partecipa'}
                 </Button>
 
                 <button
@@ -246,12 +246,12 @@ export function EventModal({ event, isOpen, onClose, onBookingChange }) {
               </>
             ) : (
               <div className="rounded-lg border border-primary/20 bg-primary/5 p-4 text-center">
-                <p className="mb-3 text-sm text-text/70">Per iscriverti, devi essere connesso</p>
+                <p className="mb-3 text-sm text-text/70">Accedi alla tua area per partecipare a questo evento.</p>
                 <a
                   href="/accedi"
                   className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 font-semibold text-white transition-colors duration-200 hover:bg-primary/90"
                 >
-                  Accedi o registrati
+                  Accedi alla tua area
                 </a>
               </div>
             )}

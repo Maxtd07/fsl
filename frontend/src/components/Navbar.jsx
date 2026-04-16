@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { motion } from "framer-motion";
 import { useAuth } from "../context/useAuth.js";
 
 import logo from "../assets/logo.png";
@@ -22,13 +23,50 @@ const navLinkClasses =
 function Navbar() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const { isAuthenticated, isAdmin, logout, user } = useAuth();
+
+  useEffect(() => {
+    let ticking = false;
+    
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          
+          // Mostra navbar se scroll è verso l'alto o se è vicino al top
+          if (currentScrollY < lastScrollY || currentScrollY < 100) {
+            setIsVisible(true);
+          } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+            // Nascondi navbar se scrolla verso il basso e passa i 100px
+            setIsVisible(false);
+          }
+          
+          setLastScrollY(currentScrollY);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollY]);
 
   // Se admin, mostra navbar semplificata
   if (isAdmin && isAuthenticated) {
     return (
-      <nav className="rounded-lg border border-text/10 bg-base shadow-md lg:px-6 px-5 py-6">
-        <div className="flex items-center justify-between gap-4">
+      <motion.nav
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: isVisible ? 0 : -100, opacity: isVisible ? 1 : 0 }}
+        transition={{ duration: 0.15, ease: "easeOut" }}
+        className={`fixed top-0 left-0 w-full rounded-b-3xl border-b border-text/10 bg-base shadow-md py-4 mx-0 z-50`}
+      >
+        <div className="flex items-center justify-between gap-4 px-6">
           {/* Logo */}
           <div className="flex items-center gap-4">
             <NavLink
@@ -38,7 +76,7 @@ function Navbar() {
               <img
                 src={logo}
                 alt="Logo"
-                className="h-14 w-auto object-contain"
+                className="h-16 w-auto object-contain"
               />
             </NavLink>
           </div>
@@ -84,7 +122,7 @@ function Navbar() {
 
         {/* Mobile Navigation - Solo Esci */}
         {isOpen && (
-          <div className="mt-6 flex flex-col gap-2 border-t border-text/10 pt-4 lg:hidden">
+          <div className="mt-4 flex flex-col gap-2 border-t border-text/10 pt-4 px-6 lg:hidden">
             <button
               type="button"
               onClick={() => {
@@ -98,21 +136,27 @@ function Navbar() {
             </button>
           </div>
         )}
-      </nav>
+      </motion.nav>
     );
   }
 
   // Navbar normale per utenti non-admin
   return (
-    <nav className="rounded-b-2xl border-b border-text/10 bg-base shadow-md lg:px-6 px-5 py-6">
-      <div className="flex items-center justify-between gap-4">
+
+    <motion.nav
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: isVisible ? 0 : -100, opacity: isVisible ? 1 : 0 }}
+      transition={{ duration: 0.15, ease: "easeOut" }}
+      className={`fixed top-0 left-0 w-full rounded-b-3xl border-b border-text/10 bg-base shadow-md py-4 mx-0 mb-6 z-50`}
+    >
+      <div className="flex items-center justify-between gap-4 px-6">
         {/* Logo */}
         <div className="flex items-center gap-4">
           <NavLink
             to="/"
             className="inline-flex items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
           >
-            <img src={logo} alt="Logo" className="h-14 w-auto object-contain" />
+            <img src={logo} alt="Logo" className="h-16 w-auto object-contain" />
           </NavLink>
         </div>
 
@@ -211,9 +255,10 @@ function Navbar() {
         </button>
       </div>
 
+
       {/* Mobile Navigation */}
       {isOpen && (
-        <nav className="mt-6 flex flex-col gap-2 border-t border-text/10 pt-4 lg:hidden">
+        <nav className="mt-4 flex flex-col gap-2 border-t border-text/10 pt-4 px-6 lg:hidden">
           {navItems.map((item) => (
             <NavLink
               key={item.to}
@@ -284,7 +329,7 @@ function Navbar() {
           )}
         </nav>
       )}
-    </nav>
+    </motion.nav>
   );
 }
 

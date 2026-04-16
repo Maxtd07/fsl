@@ -6,37 +6,37 @@ const privacySections = [
     eyebrow: 'Titolare del trattamento',
     title: 'Chi gestisce i dati',
     text:
-      "Il titolare del trattamento e l'Associazione Disabili. Per richieste privacy puoi scrivere all'indirizzo email o contattare l'associazione al numero pubblicato nella pagina contatti.",
+      "Il titolare del trattamento e l'associazione. Per richieste relative alla privacy puoi scrivere all'indirizzo email indicato nella pagina contatti o rivolgerti alla sede associativa.",
   },
   {
     eyebrow: 'Dati raccolti',
     title: 'Quali informazioni trattiamo',
     text:
-      "Raccogliamo nome, email, credenziali di accesso cifrate, dati relativi alle iscrizioni agli eventi e dati di pagamento strettamente necessari alla gestione delle donazioni, inclusi identificativi PayPal e stato del pagamento. Non memorizziamo numeri completi di carte di pagamento.",
+      "Raccogliamo i dati necessari a gestire il sito e i servizi dell'associazione, come nome, email, credenziali di accesso, richieste inviate tramite i moduli online, adesioni agli eventi e informazioni legate alle donazioni volontarie.",
   },
   {
     eyebrow: 'Finalita',
     title: 'Perche usiamo i dati',
     text:
-      "Usiamo i dati per creare e gestire account, consentire l'accesso all'area utente, registrare le iscrizioni agli eventi, inviare conferme e promemoria email, produrre allegati calendario .ics, amministrare le donazioni e rispondere ai messaggi inviati dal form contatti.",
+      "Usiamo i dati per creare e gestire i profili utente, consentire l'accesso all'area personale, organizzare la partecipazione agli eventi, rispondere ai messaggi inviati dal sito e curare le comunicazioni dell'associazione.",
   },
   {
     eyebrow: 'Base giuridica',
     title: 'Su quale base trattiamo i dati',
     text:
-      "Il trattamento avviene per eseguire servizi richiesti dall'utente, adempiere a obblighi legali e, dove necessario, sulla base del consenso espresso tramite le azioni volontarie sul sito come registrazione, iscrizione agli eventi o invio di richieste.",
+      "Il trattamento avviene per fornire i servizi richiesti, adempiere agli obblighi previsti dalla legge e, quando necessario, sulla base del consenso espresso dall'utente.",
   },
   {
     eyebrow: 'Conservazione',
     title: 'Per quanto tempo conserviamo i dati',
     text:
-      "Conserviamo i dati per il tempo necessario a gestire il rapporto con l'utente, rispettare obblighi amministrativi e garantire la tracciabilita delle donazioni. Le credenziali sono salvate in forma protetta e i dati non piu necessari vengono cancellati o anonimizzati.",
+      "Conserviamo i dati per il tempo necessario a gestire il rapporto con l'utente, rispettare gli obblighi amministrativi e documentare le attivita associative. Quando non sono piu necessari, i dati vengono cancellati o resi anonimi.",
   },
   {
     eyebrow: 'Sicurezza',
     title: 'Come proteggiamo le informazioni',
     text:
-      "Applichiamo misure tecniche e organizzative standard, tra cui autenticazione con token JWT, hashing delle password, accesso amministrativo protetto, validazione dei dati, limitazione dei privilegi e tracciamento dei flussi di pagamento tramite provider esterno sicuro.",
+      "Adottiamo misure tecniche e organizzative adeguate per proteggere le informazioni personali, limitare gli accessi non autorizzati e garantire un uso corretto dei dati raccolti.",
   },
   {
     eyebrow: 'Diritti dell utente',
@@ -48,7 +48,7 @@ const privacySections = [
     eyebrow: 'Cookie',
     title: 'Uso di cookie e tecnologie simili',
     text:
-      "Il sito usa cookie tecnici e strumenti equivalenti necessari al funzionamento della sessione, della navigazione e dell'autenticazione. Eventuali strumenti di terze parti, come PayPal, possono impostare propri cookie secondo le rispettive informative.",
+      "Il sito utilizza cookie tecnici e strumenti equivalenti necessari al funzionamento della navigazione, dell'accesso all'area riservata e delle principali funzionalita del servizio.",
   },
 ]
 
@@ -57,24 +57,21 @@ function PrivacyPage() {
     <main className="space-y-8">
       <PageHero
         eyebrow="Privacy"
-        title="Informativa privacy e trattamento dati conforme al GDPR."
-        description="Questa pagina spiega in modo chiaro come raccogliamo, utilizziamo, conserviamo e proteggiamo i dati personali di utenti, iscritti agli eventi e donatori."
+        title="Informativa privacy sul trattamento dei dati personali."
+        description="Qui trovi una sintesi chiara di come raccogliamo, utilizziamo, conserviamo e proteggiamo i dati personali di utenti, partecipanti e sostenitori."
         tone="neutral"
       />
 
       <section className="rounded-lg border border-primary/20 bg-base p-6 shadow-lg md:p-8">
         <SectionHeading
           eyebrow="Sintesi"
-          title="Trasparenza, minimizzazione e protezione dei dati."
-          description="L'associazione tratta solo i dati necessari alla gestione del sito, delle donazioni, delle iscrizioni agli eventi e delle comunicazioni con gli utenti."
+          title="Trasparenza, attenzione e tutela dei dati."
+          description="L'associazione tratta solo i dati necessari alla gestione del sito, delle comunicazioni, delle attivita e delle donazioni."
         />
 
         <div className="mt-6 grid gap-4 lg:grid-cols-2">
           {privacySections.map((section) => (
-            <article
-              key={section.title}
-              className="rounded-lg border border-primary/15 bg-background p-5 shadow-sm"
-            >
+            <article key={section.title} className="rounded-lg border border-primary/15 bg-background p-5 shadow-sm">
               <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary">{section.eyebrow}</p>
               <h2 className="mt-3 text-xl font-bold text-text">{section.title}</h2>
               <p className="mt-3 text-sm leading-7 text-text/80">{section.text}</p>
@@ -87,20 +84,20 @@ function PrivacyPage() {
         <SectionHeading
           eyebrow="Contatti privacy"
           title="Come esercitare i tuoi diritti"
-          description="Per domande, richieste di accesso o cancellazione dati puoi contattare l'associazione usando i recapiti pubblicati. La richiesta verra gestita con le procedure standard previste dal GDPR."
+          description="Per domande o richieste di accesso, aggiornamento o cancellazione dei dati puoi usare i recapiti dell'associazione."
         />
         <div className="mt-6 grid gap-4 md:grid-cols-3">
           <div className="rounded-lg border border-primary/15 bg-base p-4">
             <p className="text-xs font-bold uppercase tracking-widest text-primary">Email</p>
-            <p className="mt-3 text-sm text-text/80">info@example.com</p>
+            <p className="mt-3 text-sm text-text/80">info@nomeassociazione.it</p>
           </div>
           <div className="rounded-lg border border-primary/15 bg-base p-4">
             <p className="text-xs font-bold uppercase tracking-widest text-primary">Telefono</p>
-            <p className="mt-3 text-sm text-text/80">+39 123 456 789</p>
+            <p className="mt-3 text-sm text-text/80">+39 000 000 0000</p>
           </div>
           <div className="rounded-lg border border-primary/15 bg-base p-4">
             <p className="text-xs font-bold uppercase tracking-widest text-primary">Sede</p>
-            <p className="mt-3 text-sm text-text/80">Via Principale 123, Città (XX) 12345</p>
+            <p className="mt-3 text-sm text-text/80">Via Roma 123, Citta (PR) 00000</p>
           </div>
         </div>
       </section>

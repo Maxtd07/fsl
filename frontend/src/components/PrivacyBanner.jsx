@@ -1,17 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 const PRIVACY_CONSENT_KEY = 'privacy_consent_v1'
 
 export function PrivacyBanner() {
-  const [showBanner, setShowBanner] = useState(false)
-
-  useEffect(() => {
-    const hasConsent = localStorage.getItem(PRIVACY_CONSENT_KEY)
-    if (!hasConsent) {
-      setShowBanner(true)
+  const [showBanner, setShowBanner] = useState(() => {
+    if (typeof window === 'undefined') {
+      return false
     }
-  }, [])
+
+    return !localStorage.getItem(PRIVACY_CONSENT_KEY)
+  })
 
   const handleConsent = (accepted) => {
     localStorage.setItem(PRIVACY_CONSENT_KEY, JSON.stringify({ accepted, date: new Date().toISOString() }))
@@ -27,17 +26,18 @@ export function PrivacyBanner() {
           <div>
             <h2 className="text-lg font-bold text-text">Privacy e Cookie</h2>
             <p className="mt-2 text-sm text-text/75">
-              Utilizziamo i tuoi dati secondo il GDPR per fornirti servizi migliori. Accettando, consenti il trattamento dei dati personali come descritto nell'informativa.
+              Utilizziamo i tuoi dati nel rispetto della normativa vigente per gestire il sito e i servizi richiesti.
+              Qui trovi una sintesi semplice di cio che trattiamo.
             </p>
           </div>
 
           <div className="space-y-2 rounded-lg border border-primary/10 bg-primary/5 p-3">
             <p className="text-xs font-semibold text-text/80">Trattiamo:</p>
             <ul className="space-y-1 text-xs text-text/70">
-              <li>• Email, nome e credenziali di accesso</li>
-              <li>• Dati di iscrizione agli eventi</li>
-              <li>• Informazioni di pagamento (solo tramite PayPal)</li>
-              <li>• Cookie tecnici per la sessione</li>
+              <li>• Nome, email e dati di accesso</li>
+              <li>• Informazioni utili per la partecipazione alle attivita</li>
+              <li>• Dati comunicati tramite i moduli del sito</li>
+              <li>• Cookie tecnici necessari al funzionamento</li>
             </ul>
           </div>
 

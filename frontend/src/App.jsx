@@ -33,12 +33,9 @@ function App() {
     <AuthProvider>
       <>
         <ScrollToTop />
+        <Navbar />
         <PrivacyBanner />
-        <div className="mx-auto flex min-h-screen w-[90vw] max-w-[90vw] flex-col p-0 md:py-0 lg:px-6">
-
-        <header className="mb-8">
-          <Navbar />
-        </header>
+        <div className="mx-auto flex min-h-screen w-[90vw] max-w-[90vw] flex-col p-0 md:py-0 lg:px-6 pt-40">
 
         <div id="main-content" tabIndex="-1" className="flex-1 focus:outline-none p-0 md:py-0 lg:px-0">
           <Routes>
