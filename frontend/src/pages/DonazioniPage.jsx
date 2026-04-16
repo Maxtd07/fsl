@@ -38,7 +38,7 @@ function DonazioniPage() {
           description="Abbiamo scelto modalita semplici e dirette, adatte a una donazione personale o familiare."
         />
 
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid gap-6 lg:grid-cols-3">
           <article className="rounded-lg border border-primary/20 bg-base px-6 py-8 shadow-md transition hover:shadow-lg">
             <h3 className="mb-4 text-lg font-bold text-text">Dona il 5 per mille</h3>
             <div className="space-y-3 text-sm text-text/85">
@@ -46,6 +46,20 @@ function DonazioniPage() {
               <p className="font-semibold text-primary">Codice Fiscale:</p>
               <p className="rounded-lg bg-primary/8 p-3 font-mono text-base tracking-wide text-text">00000000000</p>
               <p className="pt-2 text-xs text-text/60">Non ti costa nulla e aiuta concretamente le attivita associative.</p>
+            </div>
+          </article>
+
+          <article className="rounded-lg border border-secondary/20 bg-base px-6 py-8 shadow-md transition hover:shadow-lg">
+            <h3 className="mb-4 text-lg font-bold text-text">Conto corrente postale</h3>
+            <div className="space-y-3 text-sm text-text/85">
+              <p>Puoi effettuare un versamento su conto corrente postale intestato all'associazione.</p>
+              <p className="font-semibold text-secondary">Numero conto:</p>
+              <p className="rounded-lg bg-secondary/8 p-3 font-mono text-base tracking-wide text-text">
+                123456
+              </p>
+              <p className="pt-2 text-xs text-text/60">
+                Disponibile presso tutti gli uffici postali.
+              </p>
             </div>
           </article>
 

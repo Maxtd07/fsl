@@ -193,6 +193,8 @@ function EventiPage() {
                 key={option.value}
                 onClick={() => setViewMode(option.value)}
                 className={getViewModeButtonClassName(viewMode === option.value)}
+                aria-label={`Visualizza eventi in ${option.label.toLowerCase()}`}
+                aria-pressed={viewMode === option.value}
               >
                 {option.label}
               </button>
@@ -232,6 +234,7 @@ function EventiPage() {
                       key={event.id}
                       onClick={() => openModal(event)}
                       className="cursor-pointer overflow-hidden rounded-[1.4rem] border-2 border-primary/20 bg-base text-left shadow-[0_6px_14px_rgba(0,0,0,0.06)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_12px_28px_rgba(0,0,0,0.12)]"
+                      aria-label={`Visualizza dettagli evento: ${event.titolo}`}
                     >
                       {event.volantino ? (
                         <img src={event.volantino} alt={event.titolo} className="h-48 w-full object-cover" />
