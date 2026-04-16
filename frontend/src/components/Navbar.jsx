@@ -27,7 +27,7 @@ function Navbar() {
   // Se admin, mostra navbar semplificata
   if (isAdmin && isAuthenticated) {
     return (
-      <nav className="rounded-lg border border-text/10 bg-base shadow-md lg:px-6 px-5 py-6">
+      <nav className="border-b border-text/10 bg-base shadow-md px-6 py-4">
         <div className="flex items-center justify-between gap-4">
           {/* Logo */}
           <div className="flex items-center gap-4">
@@ -38,7 +38,7 @@ function Navbar() {
               <img
                 src={logo}
                 alt="Logo"
-                className="h-28 w-auto object-contain"
+                className="h-16 w-auto object-contain"
               />
             </NavLink>
           </div>
@@ -104,7 +104,7 @@ function Navbar() {
 
   // Navbar normale per utenti non-admin
   return (
-    <nav className="rounded-lg border border-text/10 bg-base shadow-md lg:px-6 px-5 py-6">
+    <nav className="border-b border-text/10 bg-base shadow-md px-6 py-4">
       <div className="flex items-center justify-between gap-4">
         {/* Logo */}
         <div className="flex items-center gap-4">
@@ -112,7 +112,7 @@ function Navbar() {
             to="/"
             className="inline-flex items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
           >
-            <img src={logo} alt="Logo" className="h-28 w-auto object-contain" />
+            <img src={logo} alt="Logo" className="h-16 w-auto object-contain" />
           </NavLink>
         </div>
 
