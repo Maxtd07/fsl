@@ -2,6 +2,7 @@ import ActionLink from '../components/ActionLink.jsx'
 import PageHero from '../components/PageHero.jsx'
 import PlaceholderImage from '../components/PlaceholderImage.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
+import picture from '../assets/6973783611_e210442b2e_o.jpg'
 
 const focusAreas = [
   {
@@ -113,7 +114,7 @@ function AboutPage() {
 
       <section className="border-t border-primary/12 bg-background px-6 py-10 md:px-8 md:py-12">
         <div className="grid gap-8 lg:grid-cols-[minmax(320px,0.92fr)_minmax(0,1.08fr)] lg:items-center">
-          <PlaceholderImage alt="Attivita e servizi dell'associazione" className="aspect-[4/3] w-full" />
+          <img src={picture} alt="img laboratorio di sport" className="border-2 border-primary rounded-2xl" />
           <div>
             <SectionHeading
               eyebrow="Servizi e progetti"

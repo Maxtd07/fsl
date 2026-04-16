@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import ActionLink from '../components/ActionLink.jsx'
 import PageHero from '../components/PageHero.jsx'
-import PlaceholderImage from '../components/PlaceholderImage.jsx'
+import picture from '../assets/Copilot_20260416_163841.png'
 import SectionHeading from '../components/SectionHeading.jsx'
 import { sendContactEmail } from '../lib/api.js'
 
@@ -172,7 +172,7 @@ function ContattiPage() {
           </form>
         </div>
 
-        <PlaceholderImage alt="Contatti" className="h-72 md:h-80 lg:h-full lg:min-h-96" />
+        <img src={picture} alt="Contatti" className="border-2 border-primary rounded-2xl image-fit" />
       </section>
     </main>
   )
