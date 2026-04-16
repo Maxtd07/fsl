@@ -63,7 +63,7 @@ function Navbar() {
       <motion.nav
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: isVisible ? 0 : -100, opacity: isVisible ? 1 : 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{ duration: 0.15, ease: "easeOut" }}
         className={`fixed top-0 left-0 w-full rounded-b-3xl border-b border-text/10 bg-base shadow-md py-4 mx-0 z-50`}
       >
         <div className="flex items-center justify-between gap-4 px-6">
@@ -145,7 +145,7 @@ function Navbar() {
     <motion.nav
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: isVisible ? 0 : -100, opacity: isVisible ? 1 : 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
+      transition={{ duration: 0.15, ease: "easeOut" }}
       className={`fixed top-0 left-0 w-full rounded-b-3xl border-b border-text/10 bg-base shadow-md py-4 mx-0 mb-6 z-50`}
     >
       <div className="flex items-center justify-between gap-4 px-6">
