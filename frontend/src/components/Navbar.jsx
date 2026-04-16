@@ -27,7 +27,7 @@ function Navbar() {
   // Se admin, mostra navbar semplificata
   if (isAdmin && isAuthenticated) {
     return (
-      <nav className="w-full border-b border-text/10 bg-base shadow-md py-4">
+      <nav className="w-full rounded-b-3xl border-b border-text/10 bg-base shadow-md py-4 mx-0">
         <div className="flex items-center justify-between gap-4 px-6">
           {/* Logo */}
           <div className="flex items-center gap-4">
@@ -104,7 +104,7 @@ function Navbar() {
 
   // Navbar normale per utenti non-admin
   return (
-    <nav className="w-full border-b border-text/10 bg-base shadow-md py-4">
+    <nav className="w-full rounded-b-3xl border-b border-text/10 bg-base shadow-md py-4 mx-0">
       <div className="flex items-center justify-between gap-4 px-6">
         {/* Logo */}
         <div className="flex items-center gap-4">
