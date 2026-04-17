@@ -4,6 +4,7 @@ import PageHero from '../components/PageHero.jsx'
 import picture from '../assets/contattaciimage.jpeg'
 import SectionHeading from '../components/SectionHeading.jsx'
 import { sendContactEmail } from '../lib/api.js'
+import { CONTACT_ADDRESS, CONTACT_EMAIL, CONTACT_PHONE, SIGNATURE_PROJECT_NAME, TEAM_NAME } from '../lib/site.js'
 
 const initialFormState = {
   nome: '',
@@ -53,7 +54,9 @@ function FeedbackMessage({ message }) {
   const colorClassName =
     message.type === 'success'
       ? 'border-green-200 bg-green-50 text-green-700'
-      : 'border-red-200 bg-red-50 text-red-700'
+      : message.type === 'warning'
+        ? 'border-amber-200 bg-amber-50 text-amber-800'
+        : 'border-red-200 bg-red-50 text-red-700'
 
   return (
     <div className={`rounded-lg border-2 p-4 ${colorClassName}`}>
@@ -82,12 +85,15 @@ function ContattiPage() {
     resetFeedback()
 
     try {
-      await sendContactEmail(formData)
+      const response = await sendContactEmail(formData)
+      const delivered = response?.delivered !== false
       setMessage({
-        type: 'success',
-        text: 'Messaggio inviato con successo. Ti contatteremo presto.',
+        type: delivered ? 'success' : 'warning',
+        text: response?.message ?? 'Messaggio inviato con successo. Ti contatteremo presto.',
       })
-      setFormData(initialFormState)
+      if (delivered) {
+        setFormData(initialFormState)
+      }
     } catch {
       setMessage({
         type: 'error',

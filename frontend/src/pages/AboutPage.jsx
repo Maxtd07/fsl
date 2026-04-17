@@ -2,6 +2,7 @@ import ActionLink from '../components/ActionLink.jsx'
 import PageHero from '../components/PageHero.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
 import picture from '../assets/aboutusimage.jpg'
+import { SIGNATURE_PROJECT_NAME, TEAM_NAME } from '../lib/site.js'
 
 const focusAreas = [
   {

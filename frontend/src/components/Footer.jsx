@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faFacebook } from "@fortawesome/free-brands-svg-icons"
 import { faFutbol } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router-dom"
+import { CONTACT_ADDRESS, CONTACT_EMAIL, CONTACT_PHONE, ORGANIZATION_NAME, SIGNATURE_PROJECT_NAME } from '../lib/site.js'
 
 const footerLinkClasses =
   "transition-colors duration-200 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-1 focus-visible:ring-offset-dark"

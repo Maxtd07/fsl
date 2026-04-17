@@ -1,0 +1,6 @@
+export const ORGANIZATION_NAME = 'ASD Soccer Dream Fermana'
+export const TEAM_NAME = 'Soccer Dream Fermana'
+export const CONTACT_EMAIL = 'soldi.daniele.08@gmail.com'
+export const CONTACT_PHONE = '+39 000 000 0000'
+export const CONTACT_ADDRESS = 'Via Roma 123, Citta (PR) 00000'
+export const SIGNATURE_PROJECT_NAME = 'Il Tetto di un Sogno'
