@@ -8,6 +8,10 @@ SELECT *
 FROM events
 ORDER BY data_evento ASC;
 
+SELECT id, tipo, titolo, data_evento, luogo
+FROM events
+ORDER BY data_evento ASC;
+
 SELECT
  b.id,
  u.nome AS utente,

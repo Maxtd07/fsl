@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public record EventResponse(
  Long id,
+ String tipo,
  String titolo,
  String descrizione,
  LocalDateTime data,

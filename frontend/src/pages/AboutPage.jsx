@@ -3,9 +3,9 @@ import ActionLink from '../components/ActionLink.jsx'
 import PageHero from '../components/PageHero.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
 import picture from '../assets/aboutusimage.jpg'
-import PlayerCard from '../components/members/PlayerCard.jsx'
+import MemberCard from '../components/members/MemberCard.jsx'
 import { fetchMembers } from '../lib/api.js'
-import { isPlayerRole, sortMembersByName } from '../lib/members.js'
+import { formatMemberPosition, MEMBER_POSITIONS, isPlayerRole, sortMembersByName } from '../lib/members.js'
 import { TEAM_NAME } from '../lib/site.js'
 
 const focusAreas = [
@@ -66,6 +66,16 @@ const areaStyles = {
   accent: 'border-accent/30 bg-accent/18',
 }
 
+function groupMembers(members, getGroupKey) {
+  return members.reduce((groups, member) => {
+    const key = getGroupKey(member)
+    const currentGroup = groups.get(key) ?? []
+    currentGroup.push(member)
+    groups.set(key, currentGroup)
+    return groups
+  }, new Map())
+}
+
 function AboutPage() {
   const [members, setMembers] = useState([])
   const [isLoadingMembers, setIsLoadingMembers] = useState(true)
@@ -88,12 +98,31 @@ function AboutPage() {
     loadMembers()
   }, [])
 
-  const { players, staff } = useMemo(() => {
+  const { playerSections, staffSections } = useMemo(() => {
     const sortedMembers = [...members].sort(sortMembersByName)
+    const players = sortedMembers.filter((member) => isPlayerRole(member.role))
+    const staff = sortedMembers.filter((member) => !isPlayerRole(member.role))
+    const groupedPlayers = groupMembers(players, (member) => member.position || 'without-position')
+    const groupedStaff = groupMembers(staff, (member) => member.role || 'Staff')
+    const playerSectionOrder = [...MEMBER_POSITIONS, 'without-position']
+    const orderedPlayerSections = playerSectionOrder
+      .map((position) => ({
+        key: position,
+        title: position === 'without-position' ? 'Ruolo non specificato' : formatMemberPosition(position),
+        members: groupedPlayers.get(position) ?? [],
+      }))
+      .filter((section) => section.members.length > 0)
+    const orderedStaffSections = [...groupedStaff.entries()]
+      .sort(([firstRole], [secondRole]) => firstRole.localeCompare(secondRole, 'it-IT', { sensitivity: 'base' }))
+      .map(([role, membersByRole]) => ({
+        key: role,
+        title: role,
+        members: membersByRole,
+      }))
 
     return {
-      players: sortedMembers.filter((member) => isPlayerRole(member.role)),
-      staff: sortedMembers.filter((member) => !isPlayerRole(member.role)),
+      playerSections: orderedPlayerSections,
+      staffSections: orderedStaffSections,
     }
   }, [members])
 
@@ -208,7 +237,7 @@ function AboutPage() {
         <SectionHeading
           eyebrow="Rosa"
           title={`I giocatori di ${TEAM_NAME}`}
-          description="La rosa viene caricata dinamicamente dal sistema membri e raggruppata usando la stessa logica di ruolo presente nell area admin."
+          description="La rosa viene caricata dinamicamente dal sistema membri e suddivisa per ruolo in campo, cosi da distinguere subito portieri, difensori, centrocampisti e attaccanti."
         />
 
         <div className="mt-6">
@@ -220,10 +249,21 @@ function AboutPage() {
             <div className="rounded-[1.75rem] border border-accent/20 bg-accent/5 px-5 py-6 text-sm font-medium text-accent">
               {membersError}
             </div>
-          ) : players.length > 0 ? (
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {players.map((player) => (
-                <PlayerCard key={player.id} member={player} />
+          ) : playerSections.length > 0 ? (
+            <div className="space-y-8">
+              {playerSections.map((section) => (
+                <div key={section.key} className="space-y-4">
+                  <div className="flex items-center gap-4">
+                    <h3 className="text-lg font-bold text-text md:text-xl">{section.title}</h3>
+                    <div className="h-px flex-1 bg-primary/12" />
+                  </div>
+
+                  <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                    {section.members.map((player) => (
+                      <MemberCard key={player.id} member={player} />
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
           ) : (
@@ -238,7 +278,7 @@ function AboutPage() {
         <SectionHeading
           eyebrow="Staff"
           title="Staff e collaboratori"
-          description="Allenatori, dirigenti e collaboratori vengono separati dai giocatori direttamente sul frontend in base al ruolo inserito dall amministratore."
+          description="Allenatori, dirigenti e collaboratori mantengono la stessa resa visiva dei giocatori e vengono ordinati per area di responsabilita."
         />
 
         <div className="mt-6">
@@ -250,22 +290,20 @@ function AboutPage() {
             <div className="rounded-[1.75rem] border border-accent/20 bg-accent/5 px-5 py-6 text-sm font-medium text-accent">
               {membersError}
             </div>
-          ) : staff.length > 0 ? (
-            <div className="overflow-hidden rounded-[1.75rem] border border-primary/15 bg-base shadow-sm">
-              {staff.map((member, index) => (
-                <div
-                  key={member.id}
-                  className={`flex flex-col gap-2 px-5 py-4 md:flex-row md:items-center md:justify-between ${
-                    index !== staff.length - 1 ? 'border-b border-primary/10' : ''
-                  }`}
-                >
-                  <div>
-                    <p className="text-base font-bold text-text">{member.name}</p>
-                    <p className="mt-1 text-sm text-text/70">{member.role}</p>
+          ) : staffSections.length > 0 ? (
+            <div className="space-y-8">
+              {staffSections.map((section) => (
+                <div key={section.key} className="space-y-4">
+                  <div className="flex items-center gap-4">
+                    <h3 className="text-lg font-bold text-text md:text-xl">{section.title}</h3>
+                    <div className="h-px flex-1 bg-primary/12" />
                   </div>
-                  <span className="inline-flex rounded-full bg-primary/8 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-primary">
-                    Staff
-                  </span>
+
+                  <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                    {section.members.map((member) => (
+                      <MemberCard key={member.id} member={member} />
+                    ))}
+                  </div>
                 </div>
               ))}
             </div>

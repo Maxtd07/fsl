@@ -19,6 +19,7 @@ public class EventService {
  private static final String EVENT_NOT_FOUND_MESSAGE = "Evento non trovato";
  private static final String INVALID_DATE_RANGE_MESSAGE = "La data di inizio deve essere prima della data di fine";
  private static final String INVALID_END_DATE_MESSAGE = "La data di fine deve essere successiva alla data di inizio";
+ private static final String INVALID_EVENT_TYPE_MESSAGE = "La tipologia evento deve essere partita o evento";
 
  private final EventRepository eventRepository;
  private final BookingRepository bookingRepository;
@@ -27,20 +28,20 @@ public class EventService {
   return toResponse(eventRepository.save(buildEvent(request)));
  }
 
- public List<EventResponse> list() {
-  return eventRepository.findAllByOrderByDataAsc().stream().map(this::toResponse).toList();
+ public List<EventResponse> list(String tipo) {
+  return eventRepository.findAllByTipoOrderByDataAsc(normalizeEventTypeFilter(tipo)).stream().map(this::toResponse).toList();
  }
 
- public List<EventResponse> getEventsByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
+ public List<EventResponse> getEventsByDateRange(LocalDateTime startDate, LocalDateTime endDate, String tipo) {
   validateDateRange(startDate, endDate);
-  return eventRepository.findByDataIsAfterAndDataIsBeforeOrderByDataAsc(startDate, endDate)
+  return eventRepository.findByDataIsAfterAndDataIsBeforeOrderByDataAsc(startDate, endDate, normalizeEventTypeFilter(tipo))
    .stream()
    .map(this::toResponse)
    .toList();
  }
 
- public List<EventResponse> getUpcomingEvents(LocalDateTime fromDate) {
-  return eventRepository.findByDataGreaterThanEqualOrderByDataAsc(fromDate)
+ public List<EventResponse> getUpcomingEvents(LocalDateTime fromDate, String tipo) {
+  return eventRepository.findByDataGreaterThanEqualOrderByDataAsc(fromDate, normalizeEventTypeFilter(tipo))
    .stream()
    .map(this::toResponse)
    .toList();
@@ -68,6 +69,7 @@ public class EventService {
   long registeredParticipants = bookingRepository.countByEventId(event.getId());
   return new EventResponse(
    event.getId(),
+   getEventTypeOrDefault(event.getTipo()),
    event.getTitolo(),
    event.getDescrizione(),
    event.getData(),
@@ -89,6 +91,7 @@ public class EventService {
 
  private void applyRequest(Event event, EventRequest request) {
   validateDates(request);
+  event.setTipo(normalizeRequiredEventType(request.tipo()));
   event.setTitolo(request.titolo().trim());
   event.setDescrizione(request.descrizione().trim());
   event.setData(request.data());
@@ -117,5 +120,41 @@ public class EventService {
   }
 
   return Math.max(0, event.getMaxPartecipanti() - registeredParticipants);
+ }
+
+ private String normalizeEventTypeFilter(String tipo) {
+  String normalized = normalizeOptionalEventType(tipo);
+  return normalized == null ? null : validateEventType(normalized);
+ }
+
+ private String normalizeRequiredEventType(String tipo) {
+  String normalized = normalizeOptionalEventType(tipo);
+  if (normalized == null) {
+   throw new BadRequestException(INVALID_EVENT_TYPE_MESSAGE);
+  }
+
+  return validateEventType(normalized);
+ }
+
+ private String getEventTypeOrDefault(String tipo) {
+  String normalized = normalizeOptionalEventType(tipo);
+  return "partita".equals(normalized) ? "partita" : "evento";
+ }
+
+ private String normalizeOptionalEventType(String tipo) {
+  if (tipo == null) {
+   return null;
+  }
+
+  String normalized = tipo.trim().toLowerCase();
+  return normalized.isBlank() ? null : normalized;
+ }
+
+ private String validateEventType(String tipo) {
+  if (!"partita".equals(tipo) && !"evento".equals(tipo)) {
+   throw new BadRequestException(INVALID_EVENT_TYPE_MESSAGE);
+  }
+
+  return tipo;
  }
 }

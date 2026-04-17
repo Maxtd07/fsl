@@ -12,8 +12,10 @@ import {
 } from '../lib/api.js'
 import AdminMembersSection from '../components/members/AdminMembersSection.jsx'
 import { useAuth } from '../context/useAuth.js'
+import { EVENT_TYPES, formatEventType, normalizeEventType } from '../lib/events.js'
 
 const emptyEventForm = {
+  tipo: 'evento',
   titolo: '',
   descrizione: '',
   data: '',
@@ -122,6 +124,7 @@ function AdminDashboard() {
 
     try {
       const payload = {
+        tipo: eventForm.tipo,
         titolo: eventForm.titolo,
         descrizione: eventForm.descrizione,
         data: eventForm.data,
@@ -154,6 +157,7 @@ function AdminDashboard() {
   const handleEditEvent = (eventItem) => {
     setEditingEventId(eventItem.id)
     setEventForm({
+      tipo: normalizeEventType(eventItem.tipo),
       titolo: eventItem.titolo,
       descrizione: eventItem.descrizione,
       data: toInputDateTime(eventItem.data),
@@ -251,6 +255,22 @@ function AdminDashboard() {
           </h2>
 
           <form onSubmit={handleEventSubmit} className="space-y-4">
+            <div>
+              <label className="mb-2 block text-sm font-medium text-text">Tipologia evento</label>
+              <select
+                value={eventForm.tipo}
+                onChange={(event) => setEventForm((current) => ({ ...current, tipo: event.target.value }))}
+                className="w-full rounded-xl border border-primary/15 bg-background px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/12"
+                required
+              >
+                {EVENT_TYPES.map((tipo) => (
+                  <option key={tipo} value={tipo}>
+                    {formatEventType(tipo)}
+                  </option>
+                ))}
+              </select>
+            </div>
+
             <div>
               <label className="mb-2 block text-sm font-medium text-text">Titolo</label>
               <input
@@ -392,6 +412,11 @@ function AdminDashboard() {
                   className="flex flex-col gap-4 rounded-xl border border-primary/20 bg-background p-4 md:flex-row md:items-center md:justify-between md:p-5"
                 >
                   <div className="flex-1">
+                    <div className="mb-2 flex flex-wrap gap-2">
+                      <span className="rounded-full border border-secondary/20 bg-secondary/10 px-3 py-1 text-xs font-semibold text-secondary">
+                        {formatEventType(eventItem.tipo)}
+                      </span>
+                    </div>
                     <h3 className="text-lg font-bold text-slate-900">{eventItem.titolo}</h3>
                     <p className="mt-1 text-sm text-slate-700">{eventItem.descrizione}</p>
                     <p className="mt-2 text-xs text-slate-600">

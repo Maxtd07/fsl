@@ -1,5 +1,5 @@
-import PlaceholderImage from '../PlaceholderImage.jsx'
 import { formatMemberPosition, getMemberDisplayValue, isPlayerRole } from '../../lib/members.js'
+import MemberPhoto from './MemberPhoto.jsx'
 
 function MemberList({ members, onEdit, onDelete, deletingMemberId }) {
   if (members.length === 0) {
@@ -23,11 +23,7 @@ function MemberList({ members, onEdit, onDelete, deletingMemberId }) {
           >
             <div className="flex flex-1 items-start gap-4">
               <div className="h-20 w-20 shrink-0 overflow-hidden rounded-2xl border border-primary/15 bg-base">
-                {member.imageUrl ? (
-                  <img src={member.imageUrl} alt={member.name} className="h-full w-full object-cover" />
-                ) : (
-                  <PlaceholderImage alt={member.name} className="h-full min-h-0 w-full rounded-none border-0 shadow-none" />
-                )}
+                <MemberPhoto src={member.imageUrl} alt={member.name} className="h-full w-full object-cover" />
               </div>
 
               <div className="flex-1">

@@ -26,6 +26,11 @@ export function formatMemberPosition(position) {
   return MEMBER_POSITION_LABELS[position] ?? position
 }
 
+export function getMemberRoleLabel(member) {
+  const role = member?.role?.trim()
+  return role ? role : '-'
+}
+
 export function getMemberDisplayValue(value) {
   if (value === null || value === undefined || value === '') {
     return '-'

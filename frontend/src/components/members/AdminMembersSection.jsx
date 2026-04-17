@@ -69,8 +69,21 @@ function AdminMembersSection() {
   }
 
   const handleImageChange = (event) => {
-    const file = event.target.files?.[0]
-    if (!file) return
+    const input = event.target
+
+    resetFeedback()
+
+    if ((input.files?.length ?? 0) > 1) {
+      setErrorMessage('Puoi caricare una sola foto per persona. Per cambiarla, sostituisci l immagine corrente.')
+      input.value = ''
+      return
+    }
+
+    const file = input.files?.[0]
+    if (!file) {
+      input.value = ''
+      return
+    }
 
     const reader = new FileReader()
     reader.onload = (loadEvent) => {
@@ -78,6 +91,7 @@ function AdminMembersSection() {
         ...current,
         imageUrl: loadEvent.target?.result ?? '',
       }))
+      input.value = ''
     }
     reader.readAsDataURL(file)
   }

@@ -1,5 +1,5 @@
-import PlaceholderImage from '../PlaceholderImage.jsx'
 import { MEMBER_POSITIONS, MEMBER_POSITION_LABELS, isPlayerRole } from '../../lib/members.js'
+import MemberPhoto from './MemberPhoto.jsx'
 
 const fieldClassName =
   'w-full rounded-xl border border-primary/15 bg-background px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/12'
@@ -86,17 +86,23 @@ function MemberAdminForm({
         <div className="space-y-3">
           <label className="mb-2 block text-sm font-medium text-text">Immagine</label>
           <div className="overflow-hidden rounded-[1.5rem] border border-primary/20 bg-base">
-            {form.imageUrl ? (
-              <img src={form.imageUrl} alt={form.name || 'Anteprima membro'} className="aspect-square w-full object-cover" />
-            ) : (
-              <PlaceholderImage alt="Membro" className="aspect-square w-full min-h-0" />
-            )}
+            <MemberPhoto
+              src={form.imageUrl}
+              alt={form.name || 'Anteprima membro'}
+              className="aspect-square w-full object-cover"
+            />
           </div>
 
           <label className="block cursor-pointer rounded-xl border-2 border-dashed border-primary/30 bg-primary/5 px-4 py-4 text-center transition hover:bg-primary/10">
-            <span className="text-sm font-medium text-primary">Carica immagine</span>
-            <input type="file" accept="image/*" onChange={onImageChange} className="hidden" />
+            <span className="text-sm font-medium text-primary">
+              {form.imageUrl ? 'Sostituisci immagine' : 'Carica immagine'}
+            </span>
+            <input type="file" accept="image/*" multiple={false} onChange={onImageChange} className="hidden" />
           </label>
+
+          <p className="text-xs text-text/60">
+            E ammessa una sola foto per persona. Se vuoi cambiarla, caricane una nuova.
+          </p>
 
           {form.imageUrl && (
             <button

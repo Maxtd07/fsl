@@ -30,24 +30,26 @@ public class EventController {
  }
 
  @GetMapping
- public List<EventResponse> list() {
-  return service.list();
+ public List<EventResponse> list(@RequestParam(required = false) String tipo) {
+  return service.list(tipo);
  }
 
  @GetMapping("/filter")
  public List<EventResponse> getEventsByDateRange(
   @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
-  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end
+  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end,
+  @RequestParam(required = false) String tipo
  ) {
-  return service.getEventsByDateRange(start, end);
+  return service.getEventsByDateRange(start, end, tipo);
  }
 
  @GetMapping("/upcoming")
  public List<EventResponse> getUpcomingEvents(
-  @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from
+  @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
+  @RequestParam(required = false) String tipo
  ) {
   LocalDateTime fromDate = from != null ? from : LocalDateTime.now();
-  return service.getUpcomingEvents(fromDate);
+  return service.getUpcomingEvents(fromDate, tipo);
  }
 
  @GetMapping("/{id}")

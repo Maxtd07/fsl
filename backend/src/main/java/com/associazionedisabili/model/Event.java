@@ -29,6 +29,9 @@ public class Event {
  @Column(name = "titolo", nullable = false, length = 180)
  private String titolo;
 
+ @Column(name = "tipo", length = 40)
+ private String tipo;
+
  @Column(name = "descrizione", nullable = false, length = 3000)
  private String descrizione;
 

@@ -9,6 +9,10 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 public record EventRequest(
+ @NotBlank(message = "La tipologia e obbligatoria")
+ @Size(max = 40, message = "La tipologia non puo superare 40 caratteri")
+ String tipo,
+
  @NotBlank(message = "Il titolo e obbligatorio")
  @Size(max = 180, message = "Il titolo non puo superare 180 caratteri")
  String titolo,

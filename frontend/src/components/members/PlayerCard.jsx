@@ -1,14 +1,10 @@
-import PlaceholderImage from '../PlaceholderImage.jsx'
 import { formatMemberPosition, getMemberDisplayValue } from '../../lib/members.js'
+import MemberPhoto from './MemberPhoto.jsx'
 
 function PlayerCard({ member }) {
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-[1.75rem] border-2 border-primary/20 bg-base shadow-[0_12px_28px_rgba(0,0,0,0.08)]">
-      {member.imageUrl ? (
-        <img src={member.imageUrl} alt={member.name} className="aspect-[4/3] w-full object-cover" />
-      ) : (
-        <PlaceholderImage alt={member.name} className="aspect-[4/3] w-full" />
-      )}
+      <MemberPhoto src={member.imageUrl} alt={member.name} className="aspect-[4/3] w-full object-cover" />
 
       <div className="flex flex-1 flex-col p-5">
         <p className="text-xs font-bold uppercase tracking-[0.22em] text-secondary">Giocatore</p>

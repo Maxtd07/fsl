@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendarDays, faClock, faMapMarkerAlt, faDownload, faTimes, faShareNodes } from '@fortawesome/free-solid-svg-icons'
 import { useAuth } from '../context/useAuth.js'
 import { createBooking, deleteBooking, fetchMyBookings, getEventCalendarLink } from '../lib/api'
+import { formatEventType } from '../lib/events'
 import Button from './Button'
 import Card from './Card'
 
@@ -300,7 +301,12 @@ export function EventModal({ event, isOpen, onClose, onBookingChange }) {
 
           <div className="flex max-h-[90vh] flex-col">
             <div className="flex items-center justify-between border-b border-text/10 px-6 pb-4 pt-6">
-              <h2 className="pr-4 text-xl font-bold text-primary">{event.titolo}</h2>
+              <div className="pr-4">
+                <span className="inline-flex rounded-full border border-secondary/20 bg-secondary/10 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-secondary">
+                  {formatEventType(event.tipo)}
+                </span>
+                <h2 className="mt-3 text-xl font-bold text-primary">{event.titolo}</h2>
+              </div>
               <button
                 onClick={onClose}
                 className="rounded-lg p-2 text-text transition-colors duration-200 hover:bg-text/10 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40"

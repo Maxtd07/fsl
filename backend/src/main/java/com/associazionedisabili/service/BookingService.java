@@ -77,6 +77,7 @@ public class BookingService {
   return new BookingResponse(
    booking.getId(),
    booking.getEvent().getId(),
+   normalizeEventType(booking.getEvent().getTipo()),
    booking.getEvent().getTitolo(),
    booking.getEvent().getData(),
    booking.getEvent().getLuogo(),
@@ -91,5 +92,10 @@ public class BookingService {
 
  private String buildCalendarLink(Booking booking) {
   return "/api/events/" + booking.getEvent().getId() + "/calendar";
+ }
+
+ private String normalizeEventType(String value) {
+  String normalized = value == null ? null : value.trim().toLowerCase();
+  return "partita".equals(normalized) ? "partita" : "evento";
  }
 }
