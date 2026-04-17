@@ -38,6 +38,7 @@ public class SecurityConfig {
    .authorizeHttpRequests(auth -> auth
     .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
     .requestMatchers(HttpMethod.GET, "/api/events/**").permitAll()
+    .requestMatchers(HttpMethod.GET, "/api/members/**").permitAll()
     .requestMatchers(HttpMethod.GET, "/api/photos/**").permitAll()
     .requestMatchers(HttpMethod.GET, "/api/facebook/**").permitAll()
     .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
@@ -47,6 +48,9 @@ public class SecurityConfig {
     .requestMatchers(HttpMethod.POST, "/api/events/**").hasRole("ADMIN")
     .requestMatchers(HttpMethod.PUT, "/api/events/**").hasRole("ADMIN")
     .requestMatchers(HttpMethod.DELETE, "/api/events/**").hasRole("ADMIN")
+    .requestMatchers(HttpMethod.POST, "/api/members/**").hasRole("ADMIN")
+    .requestMatchers(HttpMethod.PUT, "/api/members/**").hasRole("ADMIN")
+    .requestMatchers(HttpMethod.DELETE, "/api/members/**").hasRole("ADMIN")
     .requestMatchers(HttpMethod.POST, "/api/bookings/**").hasAnyRole("USER", "ADMIN")
     .requestMatchers(HttpMethod.GET, "/api/bookings/**").hasAnyRole("USER", "ADMIN")
     .requestMatchers(HttpMethod.DELETE, "/api/bookings/**").hasAnyRole("USER", "ADMIN")

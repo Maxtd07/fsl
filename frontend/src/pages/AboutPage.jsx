@@ -1,8 +1,12 @@
+import { useEffect, useMemo, useState } from 'react'
 import ActionLink from '../components/ActionLink.jsx'
 import PageHero from '../components/PageHero.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
 import picture from '../assets/aboutusimage.jpg'
-import { SIGNATURE_PROJECT_NAME, TEAM_NAME } from '../lib/site.js'
+import PlayerCard from '../components/members/PlayerCard.jsx'
+import { fetchMembers } from '../lib/api.js'
+import { isPlayerRole, sortMembersByName } from '../lib/members.js'
+import { TEAM_NAME } from '../lib/site.js'
 
 const focusAreas = [
   {
@@ -63,6 +67,36 @@ const areaStyles = {
 }
 
 function AboutPage() {
+  const [members, setMembers] = useState([])
+  const [isLoadingMembers, setIsLoadingMembers] = useState(true)
+  const [membersError, setMembersError] = useState('')
+
+  useEffect(() => {
+    async function loadMembers() {
+      try {
+        const data = await fetchMembers()
+        setMembers(Array.isArray(data) ? data : [])
+        setMembersError('')
+      } catch (error) {
+        setMembers([])
+        setMembersError(error.message || 'Impossibile caricare i membri del club.')
+      } finally {
+        setIsLoadingMembers(false)
+      }
+    }
+
+    loadMembers()
+  }, [])
+
+  const { players, staff } = useMemo(() => {
+    const sortedMembers = [...members].sort(sortMembersByName)
+
+    return {
+      players: sortedMembers.filter((member) => isPlayerRole(member.role)),
+      staff: sortedMembers.filter((member) => !isPlayerRole(member.role)),
+    }
+  }, [members])
+
   return (
     <main className="space-y-8">
       <PageHero
@@ -167,6 +201,79 @@ function AboutPage() {
               </p>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className="border-t border-primary/12 px-6 py-10 md:px-8 md:py-12">
+        <SectionHeading
+          eyebrow="Rosa"
+          title={`I giocatori di ${TEAM_NAME}`}
+          description="La rosa viene caricata dinamicamente dal sistema membri e raggruppata usando la stessa logica di ruolo presente nell area admin."
+        />
+
+        <div className="mt-6">
+          {isLoadingMembers ? (
+            <div className="rounded-[1.75rem] border border-primary/15 bg-base px-5 py-6 text-sm font-medium text-text/70">
+              Caricamento giocatori...
+            </div>
+          ) : membersError ? (
+            <div className="rounded-[1.75rem] border border-accent/20 bg-accent/5 px-5 py-6 text-sm font-medium text-accent">
+              {membersError}
+            </div>
+          ) : players.length > 0 ? (
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+              {players.map((player) => (
+                <PlayerCard key={player.id} member={player} />
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-[1.75rem] border border-primary/15 bg-base px-5 py-6 text-sm font-medium text-text/70">
+              Nessun giocatore disponibile al momento.
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section className="border-t border-primary/12 bg-background px-6 py-10 md:px-8 md:py-12">
+        <SectionHeading
+          eyebrow="Staff"
+          title="Staff e collaboratori"
+          description="Allenatori, dirigenti e collaboratori vengono separati dai giocatori direttamente sul frontend in base al ruolo inserito dall amministratore."
+        />
+
+        <div className="mt-6">
+          {isLoadingMembers ? (
+            <div className="rounded-[1.75rem] border border-primary/15 bg-base px-5 py-6 text-sm font-medium text-text/70">
+              Caricamento staff...
+            </div>
+          ) : membersError ? (
+            <div className="rounded-[1.75rem] border border-accent/20 bg-accent/5 px-5 py-6 text-sm font-medium text-accent">
+              {membersError}
+            </div>
+          ) : staff.length > 0 ? (
+            <div className="overflow-hidden rounded-[1.75rem] border border-primary/15 bg-base shadow-sm">
+              {staff.map((member, index) => (
+                <div
+                  key={member.id}
+                  className={`flex flex-col gap-2 px-5 py-4 md:flex-row md:items-center md:justify-between ${
+                    index !== staff.length - 1 ? 'border-b border-primary/10' : ''
+                  }`}
+                >
+                  <div>
+                    <p className="text-base font-bold text-text">{member.name}</p>
+                    <p className="mt-1 text-sm text-text/70">{member.role}</p>
+                  </div>
+                  <span className="inline-flex rounded-full bg-primary/8 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+                    Staff
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-[1.75rem] border border-primary/15 bg-base px-5 py-6 text-sm font-medium text-text/70">
+              Nessun membro dello staff disponibile al momento.
+            </div>
+          )}
         </div>
       </section>
     </main>

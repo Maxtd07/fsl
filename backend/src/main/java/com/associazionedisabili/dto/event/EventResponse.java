@@ -10,6 +10,7 @@ public record EventResponse(
  LocalDateTime dataFine,
  String luogo,
  Integer maxPartecipanti,
+ boolean unlimitedCapacity,
  String volantino,
  long registeredParticipants,
  long availableSeats

@@ -133,8 +133,11 @@ export function EventModal({ event, isOpen, onClose, onBookingChange }) {
   }
 
   const { date, time } = formatEventDate(event.data)
-  const isFull = event.availableSeats === 0
-  const occupancyPercent = ((event.maxPartecipanti - event.availableSeats) / event.maxPartecipanti) * 100
+  const isUnlimitedCapacity = Boolean(event.unlimitedCapacity)
+  const isFull = !isUnlimitedCapacity && event.availableSeats === 0
+  const occupancyPercent = isUnlimitedCapacity
+    ? 0
+    : ((event.maxPartecipanti - event.availableSeats) / event.maxPartecipanti) * 100
   const shareUrl = getEventShareUrl()
   const shareText = [
     event.titolo,
@@ -314,29 +317,31 @@ export function EventModal({ event, isOpen, onClose, onBookingChange }) {
                 <EventInfoRow icon={faMapMarkerAlt} label="Luogo" value={event.luogo} />
               </div>
 
-              <div>
-                {isFull ? (
-                  <div className="rounded-lg border border-accent/30 bg-accent/10 p-3">
-                    <p className="text-sm font-semibold text-accent">Evento al completo</p>
-                    <p className="mt-1 text-xs text-accent/80">Non sono disponibili posti</p>
-                  </div>
-                ) : (
-                  <div className="rounded-lg border border-secondary/30 bg-secondary/10 p-4">
-                    <div className="mb-2 flex items-center justify-between">
-                      <p className="text-xs font-semibold uppercase text-text/70">Posti disponibili</p>
-                      <p className="text-sm font-bold text-secondary">
-                        {event.availableSeats}/{event.maxPartecipanti}
-                      </p>
+              {!isUnlimitedCapacity && (
+                <div>
+                  {isFull ? (
+                    <div className="rounded-lg border border-accent/30 bg-accent/10 p-3">
+                      <p className="text-sm font-semibold text-accent">Evento al completo</p>
+                      <p className="mt-1 text-xs text-accent/80">Non sono disponibili posti</p>
                     </div>
-                    <div className="h-2 overflow-hidden rounded-full bg-text/10">
-                      <div
-                        className="h-full rounded-full bg-secondary transition-all duration-300"
-                        style={{ width: `${occupancyPercent}%` }}
-                      />
+                  ) : (
+                    <div className="rounded-lg border border-secondary/30 bg-secondary/10 p-4">
+                      <div className="mb-2 flex items-center justify-between">
+                        <p className="text-xs font-semibold uppercase text-text/70">Posti disponibili</p>
+                        <p className="text-sm font-bold text-secondary">
+                          {event.availableSeats}/{event.maxPartecipanti}
+                        </p>
+                      </div>
+                      <div className="h-2 overflow-hidden rounded-full bg-text/10">
+                        <div
+                          className="h-full rounded-full bg-secondary transition-all duration-300"
+                          style={{ width: `${occupancyPercent}%` }}
+                        />
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
+                  )}
+                </div>
+              )}
 
               <div>
                 <h3 className="mb-2 text-sm font-bold text-text">Descrizione</h3>
