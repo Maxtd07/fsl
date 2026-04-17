@@ -97,7 +97,7 @@ function ContattiPage() {
     } catch {
       setMessage({
         type: 'error',
-        text: "Errore nell'invio del messaggio. Riprova piu tardi.",
+        text: "Errore nell'invio del messaggio. Riprova più tardi.",
       })
     } finally {
       setIsSubmitting(false)
@@ -109,7 +109,7 @@ function ContattiPage() {
       <PageHero
         eyebrow="Contatti"
         title="Entra in contatto con ASD Soccer Dream Fermana"
-        description="Se vuoi conoscere meglio il progetto, partecipare a un evento o sostenere la squadra, scrivici e ti ricontatteremo al piu presto."
+        description="Se vuoi conoscere meglio il progetto, partecipare a un evento o sostenere la squadra, scrivici e ti ricontatteremo al più presto."
         tone="neutral"
         actions={
           <>
@@ -140,7 +140,7 @@ function ContattiPage() {
           <SectionHeading
             eyebrow="Modulo contatti"
             title="Inviaci un messaggio"
-            description="Compila il modulo per richiedere informazioni su attivita, eventi, partecipazione, donazioni o collaborazioni."
+            description="Compila il modulo per richiedere informazioni su attività, eventi, partecipazione, donazioni o collaborazioni."
           />
 
           <form onSubmit={handleSubmit} className="mt-6 space-y-4">

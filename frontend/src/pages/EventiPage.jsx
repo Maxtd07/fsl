@@ -263,7 +263,7 @@ function EventiPage() {
           <SectionHeading
             eyebrow="Le tue iscrizioni"
             title="I tuoi eventi prenotati"
-            description="Qui trovi tutti gli appuntamenti di Soccer Dream Fermana ai quali ti sei gia iscritto."
+            description="Qui trovi tutti gli appuntamenti di Soccer Dream Fermana ai quali ti sei già iscritto."
           />
 
           <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">

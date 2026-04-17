@@ -6,17 +6,17 @@ const privacySections = [
     eyebrow: 'Titolare del trattamento',
     title: 'Chi gestisce i dati',
     text:
-      'Il titolare del trattamento e ASD Soccer Dream Fermana. Per richieste relative alla privacy puoi usare il modulo contatti del sito oppure i recapiti pubblici indicati in questa pagina.',
+      'Il titolare del trattamento è ASD Soccer Dream Fermana. Per richieste relative alla privacy puoi usare il modulo contatti del sito oppure i recapiti pubblici indicati in questa pagina.',
   },
   {
     eyebrow: 'Dati raccolti',
     title: 'Quali informazioni trattiamo',
     text:
-      'Raccogliamo i dati necessari a gestire il sito e i servizi di ASD Soccer Dream Fermana, come nome, email, credenziali di accesso, richieste inviate tramite i moduli online, adesioni agli eventi e comunicazioni legate al sostegno delle attivita.',
+      'Raccogliamo i dati necessari a gestire il sito e i servizi di ASD Soccer Dream Fermana, come nome, email, credenziali di accesso, richieste inviate tramite i moduli online, adesioni agli eventi e comunicazioni legate al sostegno delle attività.',
   },
   {
-    eyebrow: 'Finalita',
-    title: 'Perche usiamo i dati',
+    eyebrow: 'Finalità',
+    title: 'Perché usiamo i dati',
     text:
       "Usiamo i dati per creare e gestire i profili utente, consentire l'accesso all'area personale, organizzare la partecipazione agli eventi, rispondere ai messaggi inviati dal sito e curare le comunicazioni di ASD Soccer Dream Fermana.",
   },
@@ -30,7 +30,7 @@ const privacySections = [
     eyebrow: 'Conservazione',
     title: 'Per quanto tempo conserviamo i dati',
     text:
-      "Conserviamo i dati per il tempo necessario a gestire il rapporto con l'utente, rispettare gli obblighi amministrativi e documentare le attivita associative. Quando non sono piu necessari, i dati vengono cancellati o resi anonimi.",
+      "Conserviamo i dati per il tempo necessario a gestire il rapporto con l'utente, rispettare gli obblighi amministrativi e documentare le attività associative. Quando non sono più necessari, i dati vengono cancellati o resi anonimi.",
   },
   {
     eyebrow: 'Sicurezza',
@@ -42,7 +42,7 @@ const privacySections = [
     eyebrow: "Diritti dell'utente",
     title: 'Accesso, rettifica, cancellazione e opposizione',
     text:
-      "Puoi chiedere accesso ai tuoi dati, rettifica, cancellazione, limitazione del trattamento, portabilita o opposizione, nei limiti previsti dal GDPR. Puoi anche revocare eventuali consensi e proporre reclamo all'autorita garante competente.",
+      "Puoi chiedere accesso ai tuoi dati, rettifica, cancellazione, limitazione del trattamento, portabilità o opposizione, nei limiti previsti dal GDPR. Puoi anche revocare eventuali consensi e proporre reclamo all'autorità garante competente.",
   },
   {
     eyebrow: 'Cookie',

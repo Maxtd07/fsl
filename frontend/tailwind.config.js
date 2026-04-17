@@ -16,7 +16,11 @@ export default {
         base: "#FFFFFF",      // white - containers
         dark: "#000000",      // black - dark backgrounds
         text: "#1F2933",      // softer black - default text
-        background: "#F9FAF7" // off-white - alternating rows, secondary bg
+        background: "#F9FAF7", // off-white - alternating rows, secondary bg
+        // Logo brand colors
+        "logo-yellow": "#FFEE23",
+        "logo-blue": "#1A50A0",
+        "logo-red": "#E51E19",
       },
       // Custom shadows - subtle, elegant, almost imperceptible
       boxShadow: {

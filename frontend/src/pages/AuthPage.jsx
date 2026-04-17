@@ -18,7 +18,7 @@ const initialRegisterState = {
 }
 
 const modeOptions = [
-  { value: 'login', label: 'Ho gia un profilo' },
+  { value: 'login', label: 'Ho già un profilo' },
   { value: 'register', label: 'Crea il tuo profilo' },
 ]
 
@@ -213,7 +213,7 @@ function AuthPage() {
           <SectionHeading
             eyebrow="Area utente"
             title="Un accesso semplice alla tua area personale."
-            description="Usa la tua email per entrare. Se non hai ancora un profilo, puoi crearlo in pochi passaggi e iniziare a seguire le attivita di Soccer Dream Fermana."
+            description="Usa la tua email per entrare. Se non hai ancora un profilo, puoi crearlo in pochi passaggi e iniziare a seguire le attività di Soccer Dream Fermana."
           />
 
           <div className="grid gap-3 md:grid-cols-2">

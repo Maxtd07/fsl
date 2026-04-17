@@ -121,8 +121,8 @@ function HomePage() {
     <main>
       <PageHero
         eyebrow="ASD Soccer Dream Fermana"
-        title="Calcio inclusivo, sport e comunita a misura di persona."
-        description="ASD Soccer Dream Fermana promuove attivita sportive inclusive per ragazzi con disabilita cognitive e relazionali, con base a Grottazzolina e un legame forte con il territorio fermano."
+        title="Calcio inclusivo, sport e comunità a misura di persona."
+        description="ASD Soccer Dream Fermana promuove attività sportive inclusive per ragazzi con disabilità cognitive e relazionali, con base a Grottazzolina e un legame forte con il territorio fermano."
         tone="primary"
       />
 
@@ -132,7 +132,7 @@ function HomePage() {
             <SectionHeading
               eyebrow="Chi siamo"
               title="Una squadra nata per far vivere il calcio come esperienza di inclusione."
-              description="La realta di Soccer Dream Fermana e cresciuta dal percorso Montepacini e oggi porta avanti un progetto sportivo e sociale che mette insieme ragazzi, famiglie, volontari e comunita."
+              description="La realtà di Soccer Dream Fermana è cresciuta dal percorso Montepacini e oggi porta avanti un progetto sportivo e sociale che mette insieme ragazzi, famiglie, volontari e comunità."
             />
 
             <p className="mt-5 max-w-3xl text-xs font-medium leading-7 text-text md:mt-6 md:text-sm">
@@ -143,25 +143,25 @@ function HomePage() {
 
             <div className="mt-6">
               <ActionLink to="/chi-siamo" variant="secondary" className="text-sm md:text-base">
-                Scopri di piu
+                Scopri di più
               </ActionLink>
             </div>
           </div>
 
           <div className="grid gap-5">
             <div className="rounded-lg border border-primary/20 bg-background px-4 py-4 shadow-sm md:px-5 md:py-5">
-              <p className="text-xs font-bold uppercase tracking-widest text-secondary">Identita e missione</p>
+              <p className="text-xs font-bold uppercase tracking-widest text-secondary">Identità e missione</p>
               <p className="mt-2 text-xs font-medium leading-6 text-text md:mt-3 md:text-sm md:leading-7">
-                Il calcio e lo strumento, ma il traguardo e piu grande: costruire fiducia, appartenenza e spazi in cui
+                Il calcio è lo strumento, ma il traguardo è più grande: costruire fiducia, appartenenza e spazi in cui
                 ogni ragazzo possa sentirsi accolto.
               </p>
             </div>
 
             <div className="rounded-lg border border-secondary/30 bg-secondary/8 px-4 py-4 shadow-sm md:px-5 md:py-5">
-              <p className="text-xs font-bold uppercase tracking-widest text-secondary">Metodo e attivita</p>
+              <p className="text-xs font-bold uppercase tracking-widest text-secondary">Metodo e attività</p>
               <p className="mt-2 text-xs font-medium leading-6 text-text md:mt-3 md:text-sm md:leading-7">
                 Allenamenti, trasferte, eventi, collaborazione con Fermana e progetto Insieme Fermana fanno parte di un
-                percorso che allarga le opportunita per i ragazzi e le loro famiglie.
+                percorso che allarga le opportunità per i ragazzi e le loro famiglie.
               </p>
             </div>
           </div>
@@ -173,7 +173,7 @@ function HomePage() {
           <SectionHeading
             eyebrow="Calendario"
             title="Partite ed eventi in evidenza"
-            description="La home separa gli appuntamenti sportivi dalle iniziative del club, cosi da rendere piu immediata la consultazione."
+            description="La home separa gli appuntamenti sportivi dalle iniziative del club, così da rendere più immediata la consultazione."
           />
 
           <ActionLink to="/eventi" variant="secondary" className="whitespace-nowrap flex-shrink-0">
@@ -200,7 +200,7 @@ function HomePage() {
 
             {renderEventPreviewSection({
               title: 'Prossimi eventi',
-              description: 'Incontri, iniziative e appuntamenti aperti alla comunita.',
+              description: 'Incontri, iniziative e appuntamenti aperti alla comunità.',
               items: displayedGenericEvents,
               emptyMessage: 'Nessun evento disponibile al momento.',
             })}
@@ -287,7 +287,7 @@ function HomePage() {
         <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-primary">Sostieni</p>
         <h2 className="text-2xl font-bold tracking-tight text-text md:text-3xl lg:text-4xl">Sostieni i nostri progetti</h2>
         <p className="mx-auto mt-4 max-w-2xl text-xs font-medium leading-6 text-text/75 md:mt-5 md:text-sm md:leading-7">
-          Il sostegno economico aiuta ASD Soccer Dream Fermana a rendere piu accessibili attivita, trasferte, materiali
+          Il sostegno economico aiuta ASD Soccer Dream Fermana a rendere più accessibili attività, trasferte, materiali
           e nuovi spazi legati al progetto Insieme Fermana.
         </p>
 

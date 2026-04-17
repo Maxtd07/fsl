@@ -11,17 +11,17 @@ import { TEAM_NAME } from '../lib/site.js'
 const focusAreas = [
   {
     label: 'Calcio per tutti',
-    text: 'La squadra accoglie ragazzi con disabilita diverse, valorizzando il gioco condiviso piu della prestazione e creando un ambiente sereno e partecipato.',
+    text: 'La squadra accoglie ragazzi con disabilità diverse (sindrome di Down, disturbi psichiatrici, spettro autistico), valorizzando il gioco condiviso più della prestazione e creando un ambiente sereno e partecipato dove nessuno è escluso.',
     tone: 'primary',
   },
   {
     label: 'Percorso sportivo',
-    text: 'Il progetto e passato dalla Quarta Categoria alle esperienze legate al calcio paralimpico e sperimentale, mantenendo sempre forte l obiettivo inclusivo.',
+    text: 'Nato nel 2016 come semplice sogno, il progetto è cresciuto attraverso la Quarta Categoria fino alle competizioni FIGC Calcio Paralimpico e Sperimentale, conquistando risultati importanti e partecipando a tornei internazionali.',
     tone: 'secondary',
   },
   {
     label: 'Rete territoriale',
-    text: 'Soccer Dream Fermana lavora in dialogo con famiglie, volontari, Fermana FC e realta locali per ampliare occasioni di sport, svago e autonomia.',
+    text: 'Soccer Dream Fermana lavora in dialogo con famiglie, volontari, Fermana FC e realtà locali. Il progetto "Il Tetto di un Sogno" a Grottazzolina offre laboratori, spazi di svago e occasioni di autonomia e autodeterminazione.',
     tone: 'accent',
   },
 ]
@@ -29,34 +29,52 @@ const focusAreas = [
 const serviceCards = [
   {
     title: 'Allenamenti e partite',
-    text: 'Ogni appuntamento sul campo diventa una occasione per crescere in gruppo, imparare regole condivise e vivere il calcio con entusiasmo.',
+    text: 'Ogni appuntamento sul campo diventa una occasione per crescere in gruppo, imparare regole condivise e vivere il calcio con entusiasmo. Dai campionati regionali ai tornei internazionali, la squadra partecipa regolarmente a manifestazioni che permettono ai ragazzi di fare nuove amicizie e vivere esperienze indimenticabili.',
     tone: 'secondary',
   },
   {
-    title: 'Progetto Insieme Fermana',
-    text: 'La societa ha presentato un percorso per creare una sede propria e attivare spazi di ritrovo, svago e laboratori, dalla cucina alla falegnameria.',
+    title: 'Il Tetto di un Sogno',
+    text: 'Grazie a una donazione di una palazzina su due piani a Grottazzolina, nasce il progetto per offrire laboratori (cucina, falegnameria), spazi di svago e ritrovo per le famiglie, e un appartamento per permettere ai ragazzi di vivere prime esperienze di autonomia e autodeterminazione.',
     tone: 'accent',
   },
 ]
 
 const collaborationAreas = [
   {
-    title: 'Radici nel territorio',
-    meta: 'Storia',
+    title: 'La nascita di Soccer Dream',
+    meta: 'Origini',
     description:
-      'Il nome Soccer Dream Fermana nasce dal percorso condiviso con il mondo Montepacini e dalla scelta di usare il calcio come leva di integrazione sociale.',
+      'Nel 2016 un gruppo di genitori, volontari e ragazzi con un sogno condiviso: permettere ai ragazzi con disabilità di giocare a calcio. La prima partecipazione ufficiale in un campionato CSI di calcio a 7 ha segnato l inizio di un percorso straordinario di crescita sportiva e personale.',
   },
   {
-    title: 'Collaborazione con Fermana',
-    meta: 'Partnership',
+    title: 'Il percorso competitivo',
+    meta: 'Evoluzione',
     description:
-      'La sinergia con Fermana FC ha aiutato la visibilita del progetto e ha rafforzato il messaggio che lo sport deve essere un diritto reale e non per pochi.',
+      'Dal 2017 al 2019: dalla Quarta Categoria FIGC (secondi classificati nel 2018), alla vittoria del campionato nel 2019 e partecipazione alle finali nazionali. Nel 2019 costituzione ufficiale come A.S.D. con iscrizione CONI e FIGC Divisione Calcio Paralimpico e Sperimentale, proseguendo fino ai tornei internazionali di Cagliari 2024.',
   },
   {
-    title: 'Un sorriso che conta piu del risultato',
-    meta: 'Visione',
+    title: 'Il Tetto di un Sogno: la nuova casa',
+    meta: 'Progetto',
     description:
-      'Come ha raccontato Marco Calcinaro, l obiettivo non e solo giocare: conta divertirsi, allargare il raggio d azione e far conoscere queste opportunita a piu famiglie.',
+      'A Grottazzolina il progetto per offrire ai ragazzi e alle famiglie uno spazio proprio con laboratori di cucina e falegnameria, aree di svago, e un appartamento per esperienze di autonomia. Costruito dai volontari e dalle famiglie stesse, è gestito sempre dalla comunità.',
+  },
+  {
+    title: 'Il nostro team inclusivo',
+    meta: 'Identita',
+    description:
+      'Una rosa di 22 ragazzi dai 12 ai 58 anni, con Simona, la nostra super portiera, che ne rappresenta tutta la ricchezza. Giocatori con disabilità diverse lavorano insieme, superando le barriere e mostrando che lo sport veramente inclusivo è possibile.',
+  },
+  {
+    title: 'Sostenere Soccer Dream',
+    meta: 'Come aiutare',
+    description:
+      'Cerchiamo partner che credono nella nostra causa attraverso donazioni per materiali di costruzione, finanziamenti per le attività, e collaborazioni per inserire i ragazzi nel mondo del lavoro tramite tirocini inclusione sociale (T.i.i.s.) presso aziende amiche.',
+  },
+  {
+    title: 'I sogni da inseguire',
+    meta: 'Futuro',
+    description:
+      'Partecipare al bando per la gestione del centro sportivo di Monte Urano, dove i ragazzi già si allenano, aprendo opportunità di tirocinio come custodi, responsabili delle pulizie e di una piccola attività ricettiva. Allargare il raggio d azione e far conoscere il nostro progetto a più famiglie.',
   },
 ]
 
@@ -152,12 +170,16 @@ function AboutPage() {
           />
           <div className="mt-5 max-w-3xl space-y-3 text-xs font-medium leading-7 text-text/85 md:mt-6 md:space-y-4 md:text-sm md:text-text/80">
             <p>
-              ASD Soccer Dream Fermana porta avanti attivita sportive inclusive rivolte a ragazzi con diverse
-              disabilita, creando un contesto in cui il gioco favorisce fiducia, amicizia e partecipazione.
+              Soccer Dream nasce nel 2016 da un'associazione di volontari, famiglie e ragazzi provenienti da varie esperienze sociali con in testa un sogno: dare la possibilità a questi ragazzi di giocare a calcio. La prima esperienza fu la partecipazione ad un torneo di calcio a 7 del Csi nel fermano, dove la Soccer Dream era l unica squadra con le loro caratteristiche, con cinque ragazzi e due tutor in campo.
             </p>
             <p>
-              La squadra si e fatta conoscere anche fuori regione e ha preso parte a manifestazioni dedicate
-              all inclusione, come Cagliari No Limits 2024, dove ha conquistato il primo posto nel secondo livello.
+              Nel 2017/2018 abbiamo partecipato al primo campionato della neonata Quarta Categoria con tesseramento CSI, raggiungendo il secondo posto in classifica generale. Nel campionato successivo un inaspettata vittoria, seguita dalla partecipazione alle finali nazionali in Valtellina e dalla Coppa Italia a Novara. Nel 2019 ci siamo costituiti in Asd con regolare iscrizione al Coni e alla Figc che ha creato la divisione Figc Dcps (Divisione Calcio Paralimpico e Sperimentale).
+            </p>
+            <p>
+              La squadra è composta da un gruppo disomogeneo di 22 ragazzi che vanno dai 12 ai 58 anni, età della nostra super portiera Simona. Dentro il nostro team lavorano insieme giocatori con diverse abilità e condizioni, come la sindrome di Down, disturbi psichiatrici e spettro autistico, superando le barriere. Offriamo un'opportunità sportiva inclusiva per ragazzi che, crescendo, incontrano difficoltà nell integrarsi in associazioni sportive tradizionali.
+            </p>
+            <p>
+              Oltre al calcio, i ragazzi hanno la possibilità di conoscere altri luoghi, fare nuove amicizie e vivere esperienze indimenticabili, dalle partecipazioni ai tornei estivi a Coverciano, Montecatini, San Marino, Castellarano, fino all emozione del primo viaggio in aereo durante il torneo internazionale di Cagliari nel dicembre 2024, dove abbiamo incontrato squadre blasonate come Barcellona e Liverpool.
             </p>
           </div>
         </div>
@@ -182,7 +204,7 @@ function AboutPage() {
             <SectionHeading
               eyebrow="Progetti e attivita"
               title="Un percorso che parte dal calcio e si apre a nuove esperienze."
-              description="L evoluzione del progetto punta ad allargare spazi, relazioni e attivita, per offrire ai ragazzi luoghi di crescita anche oltre il campo."
+              description="L evoluzione del progetto punta ad allargare spazi, relazioni e attività, per offrire ai ragazzi luoghi di crescita anche oltre il campo."
             />
             <div className="mt-6 grid gap-5 md:grid-cols-2">
               {serviceCards.map((item) => (
@@ -208,7 +230,7 @@ function AboutPage() {
           <SectionHeading
             eyebrow="Rete territoriale"
             title="Collaborazioni che fanno crescere Soccer Dream Fermana."
-            description="Il progetto si sviluppa con il sostegno del territorio e con partnership che aiutano a dare continuita alle attivita e visibilita ai ragazzi."
+            description="Il progetto si sviluppa con il sostegno del territorio e con partnership che aiutano a dare continuità alle attività e visibilità ai ragazzi."
           />
           <ActionLink to="/contatti" variant="secondary">
             Parla con noi
@@ -237,7 +259,7 @@ function AboutPage() {
         <SectionHeading
           eyebrow="Rosa"
           title={`I giocatori di ${TEAM_NAME}`}
-          description="La rosa viene caricata dinamicamente dal sistema membri e suddivisa per ruolo in campo, cosi da distinguere subito portieri, difensori, centrocampisti e attaccanti."
+          description="22 ragazzi dai 12 ai 58 anni (età della nostra super portiera Simona), con diverse disabilità e condizioni. Giocatori con sindrome di Down, disturbi psichiatrici e spettro autistico che lavorano insieme superando le barriere. La nostra disomogeneità è la caratteristica che ci distingue dalle altre squadre."
         />
 
         <div className="mt-6">

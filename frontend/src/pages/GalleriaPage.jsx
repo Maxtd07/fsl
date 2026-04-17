@@ -237,7 +237,7 @@ function GalleriaPage() {
           <SectionHeading
             eyebrow="Foto della squadra"
             title="Momenti significativi degli eventi"
-            description="Una raccolta di immagini che documentano attivita, partite, incontri e momenti condivisi da ASD Soccer Dream Fermana."
+            description="Una raccolta di immagini che documentano attività, partite, incontri e momenti condivisi da ASD Soccer Dream Fermana."
           />
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

@@ -75,7 +75,7 @@ function AdminLoginPage() {
           <SectionHeading
             eyebrow="Admin"
             title="Area riservata per la gestione dei contenuti di ASD Soccer Dream Fermana."
-            description="Questa sezione e dedicata alle persone autorizzate che si occupano dell organizzazione e dell aggiornamento del sito."
+            description="Questa sezione è dedicata alle persone autorizzate che si occupano dell organizzazione e dell aggiornamento del sito."
           />
 
           <div className="mt-6 flex flex-wrap gap-3">

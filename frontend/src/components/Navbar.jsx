@@ -87,7 +87,7 @@ function Navbar() {
               <img
                 src={logo}
                 alt="Logo"
-                className="-my-3 h-24 w-auto object-contain"
+                className="-my-4 h-32 w-auto object-contain"
               />
               {brandText}
             </NavLink>

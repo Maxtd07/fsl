@@ -234,7 +234,7 @@ function AdminDashboard() {
   }
 
   return (
-    <main className="min-h-screen bg-background px-6 py-10 md:px-8 md:py-12">
+    <main className="min-h-screen bg-background px-6 md:px-8">
       <div className="mx-auto max-w-6xl space-y-8 mt-28">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
