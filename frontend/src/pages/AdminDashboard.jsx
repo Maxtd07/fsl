@@ -491,41 +491,6 @@ function AdminDashboard() {
             </div>
           )}
         </section>
-
-        <section className="rounded-[2rem] border-2 border-primary/20 bg-base p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] md:p-8">
-          <h2 className="mb-6 text-xl font-bold text-slate-900 md:text-2xl">Donazioni</h2>
-
-          <div className="mb-6 grid gap-4 md:grid-cols-2">
-            <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
-              <p className="text-xs font-medium text-text/60">Totale raccolto</p>
-              <p className="mt-2 text-2xl font-bold text-primary">EUR {totalDonations.toFixed(2)}</p>
-            </div>
-            <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
-              <p className="text-xs font-medium text-text/60">Numero donazioni</p>
-              <p className="mt-2 text-2xl font-bold text-primary">{donations.length}</p>
-            </div>
-          </div>
-
-          {donations.length === 0 ? (
-            <div className="py-8 text-center text-slate-700">Nessuna donazione registrata</div>
-          ) : (
-            <div className="max-h-80 space-y-3 overflow-y-auto">
-              {donations.map((donation) => (
-                <div
-                  key={donation.id}
-                  className="flex items-center justify-between rounded-lg border border-primary/20 bg-background p-4"
-                >
-                  <div>
-                    <p className="font-medium text-slate-900">{donation.nome}</p>
-                    <p className="text-sm text-slate-700">{donation.email}</p>
-                    <p className="text-xs text-slate-600">{donation.paymentStatus}</p>
-                  </div>
-                  <p className="text-lg font-bold text-primary">EUR {donation.importo?.toFixed(2)}</p>
-                </div>
-              ))}
-            </div>
-          )}
-        </section>
       </div>
     </main>
   )

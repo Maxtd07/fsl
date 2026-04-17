@@ -27,6 +27,17 @@ function Navbar() {
   const [lastScrollY, setLastScrollY] = useState(0);
   const { isAuthenticated, isAdmin, logout, user } = useAuth();
 
+  const brandText = (
+    <div className="hidden md:flex flex-col leading-none">
+      <span className="text-[0.65rem] font-bold uppercase tracking-[0.28em] text-text">
+        ASD
+      </span>
+      <span className="mt-1 text-md font-semibold uppercase tracking-[0.12em] text-text">
+        Soccer Dream Fermana
+      </span>
+    </div>
+  );
+
   useEffect(() => {
     let ticking = false;
     
@@ -76,8 +87,9 @@ function Navbar() {
               <img
                 src={logo}
                 alt="Logo"
-                className="h-16 w-auto object-contain"
+                className="-my-3 h-24 w-auto object-contain"
               />
+              {brandText}
             </NavLink>
           </div>
 
@@ -149,16 +161,17 @@ function Navbar() {
       transition={{ duration: 0.15, ease: "easeOut" }}
       className={`fixed top-0 left-0 w-full rounded-b-3xl border-b border-text/10 bg-base shadow-md py-4 mx-0 mb-6 z-50`}
     >
-      <div className="flex items-center justify-between gap-4 px-6">
-        {/* Logo */}
-        <div className="flex items-center gap-4">
-          <NavLink
-            to="/"
-            className="inline-flex items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
-          >
-            <img src={logo} alt="Logo" className="h-16 w-auto object-contain" />
-          </NavLink>
-        </div>
+        <div className="flex items-center justify-between gap-4 px-6">
+          {/* Logo */}
+          <div className="flex items-center gap-4">
+            <NavLink
+              to="/"
+              className="inline-flex items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
+            >
+              <img src={logo} alt="Logo" className="-my-3 h-20 w-auto object-contain" />
+              {brandText}
+            </NavLink>
+          </div>
 
         {/* Desktop Navigation */}
         <nav
