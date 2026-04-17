@@ -1,4 +1,5 @@
-const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL ?? '/api').replace(/\/$/, '')
+const API_URL = (import.meta.env.VITE_API_URL ?? import.meta.env.VITE_API_BASE_URL ?? '').replace(/\/$/, '')
+const apiBaseUrl = API_URL ? `${API_URL}/api` : '/api'
 
 const DEFAULT_HEADERS = {
   Accept: 'application/json',
