@@ -132,7 +132,7 @@ function HomePage() {
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between lg:flex-nowrap">
           <SectionHeading
             eyebrow="Prossimi eventi"
-            title="Scopri i prossimi appuntamenti"
+            title="Scopri i prossimi eventi"
             description="Allenamenti, incontri e iniziative di ASD Soccer Dream Fermana per vivere il calcio come occasione di relazione e partecipazione."
           />
 

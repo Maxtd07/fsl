@@ -10,6 +10,7 @@ import {
   updateEvent,
   uploadPhoto,
 } from '../lib/api.js'
+import AdminMembersSection from '../components/members/AdminMembersSection.jsx'
 import { useAuth } from '../context/useAuth.js'
 
 const emptyEventForm = {
@@ -19,6 +20,7 @@ const emptyEventForm = {
   dataFine: '',
   luogo: '',
   maxPartecipanti: 50,
+  unlimitedCapacity: false,
   volantino: null,
   volantinoPreview: null,
 }
@@ -126,6 +128,7 @@ function AdminDashboard() {
         dataFine: eventForm.dataFine || null,
         luogo: eventForm.luogo,
         maxPartecipanti: Number(eventForm.maxPartecipanti),
+        unlimitedCapacity: eventForm.unlimitedCapacity,
         volantino: eventForm.volantinoPreview || null,
       }
 
@@ -157,6 +160,7 @@ function AdminDashboard() {
       dataFine: toInputDateTime(eventItem.dataFine),
       luogo: eventItem.luogo,
       maxPartecipanti: eventItem.maxPartecipanti,
+      unlimitedCapacity: Boolean(eventItem.unlimitedCapacity),
       volantino: null,
       volantinoPreview: eventItem.volantino,
     })
@@ -311,9 +315,21 @@ function AdminDashboard() {
                   onChange={(event) =>
                     setEventForm((current) => ({ ...current, maxPartecipanti: event.target.value }))
                   }
+                  disabled={eventForm.unlimitedCapacity}
                   className="w-full rounded-xl border border-primary/15 bg-background px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/12"
                   required
                 />
+                <label className="mt-3 flex items-center gap-3 text-sm font-medium text-text">
+                  <input
+                    type="checkbox"
+                    checked={eventForm.unlimitedCapacity}
+                    onChange={(event) =>
+                      setEventForm((current) => ({ ...current, unlimitedCapacity: event.target.checked }))
+                    }
+                    className="h-4 w-4 rounded border-primary/30 text-primary focus:ring-primary/30"
+                  />
+                  Capienza illimitata
+                </label>
               </div>
             </div>
 
@@ -382,7 +398,9 @@ function AdminDashboard() {
                       {new Date(eventItem.data).toLocaleString('it-IT')} | {eventItem.luogo}
                     </p>
                     <p className="mt-1 text-xs text-slate-600">
-                      Iscritti: {eventItem.registeredParticipants} / {eventItem.maxPartecipanti}
+                      {eventItem.unlimitedCapacity
+                        ? `Iscritti: ${eventItem.registeredParticipants} | capienza illimitata`
+                        : `Iscritti: ${eventItem.registeredParticipants} / ${eventItem.maxPartecipanti}`}
                     </p>
                   </div>
 
@@ -407,6 +425,8 @@ function AdminDashboard() {
             </div>
           )}
         </section>
+
+        <AdminMembersSection />
 
         <section className="rounded-[2rem] border-2 border-primary/20 bg-base p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] md:p-8">
           <h2 className="mb-6 text-xl font-bold text-slate-900 md:text-2xl">Aggiungi foto galleria</h2>

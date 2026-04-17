@@ -44,6 +44,9 @@ public class Event {
  @Column(name = "max_partecipanti", nullable = false)
  private Integer maxPartecipanti;
 
+ @Column(name = "unlimited_capacity", nullable = false)
+ private boolean unlimitedCapacity;
+
  @Lob
  @Column(name = "volantino")
  private String volantino;

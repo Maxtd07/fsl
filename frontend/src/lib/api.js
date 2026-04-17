@@ -118,6 +118,28 @@ export function fetchEvents() {
   return apiRequest('/events')
 }
 
+export function fetchMembers() {
+  return apiRequest('/members')
+}
+
+export function createMember(memberData) {
+  return postRequest('/members', memberData, {
+    auth: true,
+  })
+}
+
+export function updateMember(memberId, memberData) {
+  return putRequest(`/members/${memberId}`, memberData, {
+    auth: true,
+  })
+}
+
+export function deleteMember(memberId) {
+  return deleteRequest(`/members/${memberId}`, {
+    auth: true,
+  })
+}
+
 export function getEventById(eventId) {
   return apiRequest(`/events/${eventId}`)
 }

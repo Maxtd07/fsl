@@ -487,7 +487,7 @@ export function Calendar({ onDateSelected, onEventClick }) {
                               minute: '2-digit',
                             })} - {event.luogo}
                           </p>
-                          {event.availableSeats === 0 && (
+                          {!event.unlimitedCapacity && event.availableSeats === 0 && (
                             <span className="mt-2 inline-block rounded bg-accent/20 px-2 py-1 text-xs font-semibold text-accent">
                               Completo
                             </span>

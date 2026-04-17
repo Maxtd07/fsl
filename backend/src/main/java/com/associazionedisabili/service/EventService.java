@@ -71,12 +71,13 @@ public class EventService {
    event.getTitolo(),
    event.getDescrizione(),
    event.getData(),
-   event.getDataFine(),
-   event.getLuogo(),
-   event.getMaxPartecipanti(),
-   event.getVolantino(),
-   registeredParticipants,
-   calculateAvailableSeats(event, registeredParticipants)
+  event.getDataFine(),
+  event.getLuogo(),
+  event.getMaxPartecipanti(),
+   event.isUnlimitedCapacity(),
+  event.getVolantino(),
+  registeredParticipants,
+  calculateAvailableSeats(event, registeredParticipants)
   );
  }
 
@@ -94,6 +95,7 @@ public class EventService {
   event.setDataFine(request.dataFine());
   event.setLuogo(request.luogo().trim());
   event.setMaxPartecipanti(request.maxPartecipanti());
+  event.setUnlimitedCapacity(request.unlimitedCapacity());
   event.setVolantino(request.volantino());
  }
 
@@ -110,6 +112,10 @@ public class EventService {
  }
 
  private long calculateAvailableSeats(Event event, long registeredParticipants) {
+  if (event.isUnlimitedCapacity()) {
+   return Long.MAX_VALUE;
+  }
+
   return Math.max(0, event.getMaxPartecipanti() - registeredParticipants);
  }
 }

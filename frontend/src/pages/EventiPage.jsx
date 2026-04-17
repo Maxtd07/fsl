@@ -249,6 +249,7 @@ function EventiPage() {
               <div className="grid gap-6 lg:grid-cols-3">
                 {events.map((event) => {
                   const alreadyBooked = bookedEventIds.has(event.id)
+                  const showCapacity = !event.unlimitedCapacity
 
                   return (
                     <button
@@ -267,9 +268,11 @@ function EventiPage() {
 
                       <div className="p-5">
                         <div className="mb-3 flex flex-wrap gap-2">
-                          <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
-                            {event.availableSeats} posti disponibili
-                          </span>
+                          {showCapacity && (
+                            <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+                              {event.availableSeats} posti disponibili
+                            </span>
+                          )}
 
                           {alreadyBooked && (
                             <span className="rounded-full bg-secondary/10 px-3 py-1 text-xs font-semibold text-secondary">
