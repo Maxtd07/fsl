@@ -10,9 +10,9 @@ export default {
     },
     extend: {
       colors: {
-        primary: "#4C82A9",   // steel blue - primary elements, CTA, focus
-        secondary: "#8DC133", // olive/green - success, support, events
-        accent: "#FDC49B",    // sandy orange - hover, highlight, interactions
+        primary: "#0E50AB",   // steel blue - primary elements, CTA, focus
+        secondary: "#5A9638", // olive/green - success, support, events
+        accent: "#FFEE24",    // sandy orange - hover, highlight, interactions
         base: "#FFFFFF",      // white - containers
         dark: "#000000",      // black - dark backgrounds
         text: "#1F2933",      // softer black - default text
