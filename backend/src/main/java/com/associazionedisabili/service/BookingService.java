@@ -27,7 +27,7 @@ public class BookingService {
  public BookingResponse create(Long eventId, Long userId) {
   Event event = eventService.getEntityById(eventId);
   User user = userService.findById(userId);
-  validateBookingAvailability(eventId, event.getMaxPartecipanti(), userId);
+  validateBookingAvailability(eventId, event, userId);
 
   Booking booking = bookingRepository.save(buildBooking(event, user));
   return toResponse(booking, emailService.sendBookingConfirmation(user, event));
@@ -46,12 +46,12 @@ public class BookingService {
   bookingRepository.delete(findBookingById(id));
  }
 
- private void validateBookingAvailability(Long eventId, Integer maxParticipants, Long userId) {
+ private void validateBookingAvailability(Long eventId, Event event, Long userId) {
   if (bookingRepository.existsByUserIdAndEventId(userId, eventId)) {
    throw new BadRequestException(ALREADY_BOOKED_MESSAGE);
   }
 
-  if (bookingRepository.countByEventId(eventId) >= maxParticipants) {
+  if (!event.isUnlimitedCapacity() && bookingRepository.countByEventId(eventId) >= event.getMaxPartecipanti()) {
    throw new BadRequestException(EVENT_FULL_MESSAGE);
   }
  }
@@ -77,6 +77,7 @@ public class BookingService {
   return new BookingResponse(
    booking.getId(),
    booking.getEvent().getId(),
+   normalizeEventType(booking.getEvent().getTipo()),
    booking.getEvent().getTitolo(),
    booking.getEvent().getData(),
    booking.getEvent().getLuogo(),
@@ -91,5 +92,10 @@ public class BookingService {
 
  private String buildCalendarLink(Booking booking) {
   return "/api/events/" + booking.getEvent().getId() + "/calendar";
+ }
+
+ private String normalizeEventType(String value) {
+  String normalized = value == null ? null : value.trim().toLowerCase();
+  return "partita".equals(normalized) ? "partita" : "evento";
  }
 }

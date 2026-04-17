@@ -29,6 +29,9 @@ public class Event {
  @Column(name = "titolo", nullable = false, length = 180)
  private String titolo;
 
+ @Column(name = "tipo", length = 40)
+ private String tipo;
+
  @Column(name = "descrizione", nullable = false, length = 3000)
  private String descrizione;
 
@@ -43,6 +46,9 @@ public class Event {
 
  @Column(name = "max_partecipanti", nullable = false)
  private Integer maxPartecipanti;
+
+ @Column(name = "unlimited_capacity", nullable = false)
+ private boolean unlimitedCapacity;
 
  @Lob
  @Column(name = "volantino")

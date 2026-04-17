@@ -6,6 +6,7 @@ import PageHero from '../components/PageHero.jsx'
 import PlaceholderImage from '../components/PlaceholderImage.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
 import { fetchEvents, fetchPhotos } from '../lib/api.js'
+import { isGenericEvent, isMatchEvent } from '../lib/events.js'
 
 const eventDateFormatter = new Intl.DateTimeFormat('it-IT', {
   day: '2-digit',
@@ -76,6 +77,45 @@ function HomePage() {
 
   const displayedEvents = events.slice(0, 3)
   const displayedPhotos = photos.slice(0, 4)
+  const displayedMatches = events.filter(isMatchEvent).slice(0, 3)
+  const displayedGenericEvents = events.filter(isGenericEvent).slice(0, 3)
+
+  const renderEventPreviewSection = ({ title, description, items, emptyMessage }) => (
+    <div className="space-y-5">
+      <div className="flex items-center gap-4">
+        <div>
+          <h3 className="text-xl font-bold text-text">{title}</h3>
+          <p className="mt-1 text-sm text-text/70">{description}</p>
+        </div>
+        <div className="h-px flex-1 bg-primary/12" />
+      </div>
+
+      {items.length > 0 ? (
+        <div className="grid gap-6 lg:grid-cols-3">
+          {items.map((event) => (
+            <Link
+              key={event.id}
+              to={`/eventi?eventId=${encodeURIComponent(event.id)}`}
+              className="block rounded-[1.75rem] transition-transform duration-200 hover:scale-[1.01] focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40"
+              aria-label={`Apri dettagli evento: ${event.titolo}`}
+            >
+              <MediaTile
+                title={event.titolo}
+                meta={formatEventMeta(event)}
+                description={event.descrizione}
+                alt={event.titolo}
+                imageSrc={event.volantino}
+              />
+            </Link>
+          ))}
+        </div>
+      ) : (
+        <div className="rounded-[1.75rem] border border-primary/15 bg-base px-5 py-6 text-sm font-medium text-text/70">
+          {emptyMessage}
+        </div>
+      )}
+    </div>
+  )
 
   return (
     <main>
@@ -131,9 +171,9 @@ function HomePage() {
       <section className="border-t-2 border-primary/15 px-6 py-10 md:px-8 md:py-12">
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between lg:flex-nowrap">
           <SectionHeading
-            eyebrow="Prossimi eventi"
-            title="Scopri i prossimi appuntamenti"
-            description="Allenamenti, incontri e iniziative di ASD Soccer Dream Fermana per vivere il calcio come occasione di relazione e partecipazione."
+            eyebrow="Calendario"
+            title="Partite ed eventi in evidenza"
+            description="La home separa gli appuntamenti sportivi dalle iniziative del club, cosi da rendere piu immediata la consultazione."
           />
 
           <ActionLink to="/eventi" variant="secondary" className="whitespace-nowrap flex-shrink-0">
@@ -150,23 +190,20 @@ function HomePage() {
             <p>{errorEvents}</p>
           </div>
         ) : displayedEvents.length > 0 ? (
-          <div className="grid gap-6 lg:grid-cols-3">
-            {displayedEvents.map((event) => (
-              <Link
-                key={event.id}
-                to={`/eventi?eventId=${encodeURIComponent(event.id)}`}
-                className="block rounded-[1.75rem] transition-transform duration-200 hover:scale-[1.01] focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40"
-                aria-label={`Apri dettagli evento: ${event.titolo}`}
-              >
-                <MediaTile
-                  title={event.titolo}
-                  meta={formatEventMeta(event)}
-                  description={event.descrizione}
-                  alt={event.titolo}
-                  imageSrc={event.volantino}
-                />
-              </Link>
-            ))}
+          <div className="space-y-10">
+            {renderEventPreviewSection({
+              title: 'Prossime partite',
+              description: 'Le gare in programma della squadra.',
+              items: displayedMatches,
+              emptyMessage: 'Nessuna partita disponibile al momento.',
+            })}
+
+            {renderEventPreviewSection({
+              title: 'Prossimi eventi',
+              description: 'Incontri, iniziative e appuntamenti aperti alla comunita.',
+              items: displayedGenericEvents,
+              emptyMessage: 'Nessun evento disponibile al momento.',
+            })}
           </div>
         ) : (
           <div className="py-8 text-center text-text/60">

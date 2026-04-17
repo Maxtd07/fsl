@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendarDays, faClock, faMapMarkerAlt, faDownload, faTimes, faShareNodes } from '@fortawesome/free-solid-svg-icons'
 import { useAuth } from '../context/useAuth.js'
 import { createBooking, deleteBooking, fetchMyBookings, getEventCalendarLink } from '../lib/api'
+import { formatEventType } from '../lib/events'
 import Button from './Button'
 import Card from './Card'
 
@@ -133,8 +134,11 @@ export function EventModal({ event, isOpen, onClose, onBookingChange }) {
   }
 
   const { date, time } = formatEventDate(event.data)
-  const isFull = event.availableSeats === 0
-  const occupancyPercent = ((event.maxPartecipanti - event.availableSeats) / event.maxPartecipanti) * 100
+  const isUnlimitedCapacity = Boolean(event.unlimitedCapacity)
+  const isFull = !isUnlimitedCapacity && event.availableSeats === 0
+  const occupancyPercent = isUnlimitedCapacity
+    ? 0
+    : ((event.maxPartecipanti - event.availableSeats) / event.maxPartecipanti) * 100
   const shareUrl = getEventShareUrl()
   const shareText = [
     event.titolo,
@@ -297,7 +301,12 @@ export function EventModal({ event, isOpen, onClose, onBookingChange }) {
 
           <div className="flex max-h-[90vh] flex-col">
             <div className="flex items-center justify-between border-b border-text/10 px-6 pb-4 pt-6">
-              <h2 className="pr-4 text-xl font-bold text-primary">{event.titolo}</h2>
+              <div className="pr-4">
+                <span className="inline-flex rounded-full border border-secondary/20 bg-secondary/10 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-secondary">
+                  {formatEventType(event.tipo)}
+                </span>
+                <h2 className="mt-3 text-xl font-bold text-primary">{event.titolo}</h2>
+              </div>
               <button
                 onClick={onClose}
                 className="rounded-lg p-2 text-text transition-colors duration-200 hover:bg-text/10 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40"
@@ -314,29 +323,31 @@ export function EventModal({ event, isOpen, onClose, onBookingChange }) {
                 <EventInfoRow icon={faMapMarkerAlt} label="Luogo" value={event.luogo} />
               </div>
 
-              <div>
-                {isFull ? (
-                  <div className="rounded-lg border border-accent/30 bg-accent/10 p-3">
-                    <p className="text-sm font-semibold text-accent">Evento al completo</p>
-                    <p className="mt-1 text-xs text-accent/80">Non sono disponibili posti</p>
-                  </div>
-                ) : (
-                  <div className="rounded-lg border border-secondary/30 bg-secondary/10 p-4">
-                    <div className="mb-2 flex items-center justify-between">
-                      <p className="text-xs font-semibold uppercase text-text/70">Posti disponibili</p>
-                      <p className="text-sm font-bold text-secondary">
-                        {event.availableSeats}/{event.maxPartecipanti}
-                      </p>
+              {!isUnlimitedCapacity && (
+                <div>
+                  {isFull ? (
+                    <div className="rounded-lg border border-accent/30 bg-accent/10 p-3">
+                      <p className="text-sm font-semibold text-accent">Evento al completo</p>
+                      <p className="mt-1 text-xs text-accent/80">Non sono disponibili posti</p>
                     </div>
-                    <div className="h-2 overflow-hidden rounded-full bg-text/10">
-                      <div
-                        className="h-full rounded-full bg-secondary transition-all duration-300"
-                        style={{ width: `${occupancyPercent}%` }}
-                      />
+                  ) : (
+                    <div className="rounded-lg border border-secondary/30 bg-secondary/10 p-4">
+                      <div className="mb-2 flex items-center justify-between">
+                        <p className="text-xs font-semibold uppercase text-text/70">Posti disponibili</p>
+                        <p className="text-sm font-bold text-secondary">
+                          {event.availableSeats}/{event.maxPartecipanti}
+                        </p>
+                      </div>
+                      <div className="h-2 overflow-hidden rounded-full bg-text/10">
+                        <div
+                          className="h-full rounded-full bg-secondary transition-all duration-300"
+                          style={{ width: `${occupancyPercent}%` }}
+                        />
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
+                  )}
+                </div>
+              )}
 
               <div>
                 <h3 className="mb-2 text-sm font-bold text-text">Descrizione</h3>

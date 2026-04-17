@@ -114,27 +114,55 @@ export function fetchCurrentUser() {
   })
 }
 
-export function fetchEvents() {
-  return apiRequest('/events')
+export function fetchEvents(tipo) {
+  return apiRequest(
+    withQuery('/events', {
+      tipo,
+    }),
+  )
+}
+
+export function fetchMembers() {
+  return apiRequest('/members')
+}
+
+export function createMember(memberData) {
+  return postRequest('/members', memberData, {
+    auth: true,
+  })
+}
+
+export function updateMember(memberId, memberData) {
+  return putRequest(`/members/${memberId}`, memberData, {
+    auth: true,
+  })
+}
+
+export function deleteMember(memberId) {
+  return deleteRequest(`/members/${memberId}`, {
+    auth: true,
+  })
 }
 
 export function getEventById(eventId) {
   return apiRequest(`/events/${eventId}`)
 }
 
-export function getEventsByDateRange(startDate, endDate) {
+export function getEventsByDateRange(startDate, endDate, tipo) {
   return apiRequest(
     withQuery('/events/filter', {
       start: startDate.toISOString(),
       end: endDate.toISOString(),
+      tipo,
     }),
   )
 }
 
-export function getUpcomingEvents(fromDate) {
+export function getUpcomingEvents(fromDate, tipo) {
   return apiRequest(
     withQuery('/events/upcoming', {
       from: fromDate?.toISOString(),
+      tipo,
     }, { includeEmptyQuery: true }),
   )
 }

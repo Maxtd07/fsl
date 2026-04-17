@@ -1,8 +1,12 @@
+import { useEffect, useMemo, useState } from 'react'
 import ActionLink from '../components/ActionLink.jsx'
 import PageHero from '../components/PageHero.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
 import picture from '../assets/aboutusimage.jpg'
-import { SIGNATURE_PROJECT_NAME, TEAM_NAME } from '../lib/site.js'
+import MemberCard from '../components/members/MemberCard.jsx'
+import { fetchMembers } from '../lib/api.js'
+import { formatMemberPosition, MEMBER_POSITIONS, isPlayerRole, sortMembersByName } from '../lib/members.js'
+import { TEAM_NAME } from '../lib/site.js'
 
 const focusAreas = [
   {
@@ -62,7 +66,66 @@ const areaStyles = {
   accent: 'border-accent/30 bg-accent/18',
 }
 
+function groupMembers(members, getGroupKey) {
+  return members.reduce((groups, member) => {
+    const key = getGroupKey(member)
+    const currentGroup = groups.get(key) ?? []
+    currentGroup.push(member)
+    groups.set(key, currentGroup)
+    return groups
+  }, new Map())
+}
+
 function AboutPage() {
+  const [members, setMembers] = useState([])
+  const [isLoadingMembers, setIsLoadingMembers] = useState(true)
+  const [membersError, setMembersError] = useState('')
+
+  useEffect(() => {
+    async function loadMembers() {
+      try {
+        const data = await fetchMembers()
+        setMembers(Array.isArray(data) ? data : [])
+        setMembersError('')
+      } catch (error) {
+        setMembers([])
+        setMembersError(error.message || 'Impossibile caricare i membri del club.')
+      } finally {
+        setIsLoadingMembers(false)
+      }
+    }
+
+    loadMembers()
+  }, [])
+
+  const { playerSections, staffSections } = useMemo(() => {
+    const sortedMembers = [...members].sort(sortMembersByName)
+    const players = sortedMembers.filter((member) => isPlayerRole(member.role))
+    const staff = sortedMembers.filter((member) => !isPlayerRole(member.role))
+    const groupedPlayers = groupMembers(players, (member) => member.position || 'without-position')
+    const groupedStaff = groupMembers(staff, (member) => member.role || 'Staff')
+    const playerSectionOrder = [...MEMBER_POSITIONS, 'without-position']
+    const orderedPlayerSections = playerSectionOrder
+      .map((position) => ({
+        key: position,
+        title: position === 'without-position' ? 'Ruolo non specificato' : formatMemberPosition(position),
+        members: groupedPlayers.get(position) ?? [],
+      }))
+      .filter((section) => section.members.length > 0)
+    const orderedStaffSections = [...groupedStaff.entries()]
+      .sort(([firstRole], [secondRole]) => firstRole.localeCompare(secondRole, 'it-IT', { sensitivity: 'base' }))
+      .map(([role, membersByRole]) => ({
+        key: role,
+        title: role,
+        members: membersByRole,
+      }))
+
+    return {
+      playerSections: orderedPlayerSections,
+      staffSections: orderedStaffSections,
+    }
+  }, [members])
+
   return (
     <main className="space-y-8">
       <PageHero
@@ -167,6 +230,88 @@ function AboutPage() {
               </p>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className="border-t border-primary/12 px-6 py-10 md:px-8 md:py-12">
+        <SectionHeading
+          eyebrow="Rosa"
+          title={`I giocatori di ${TEAM_NAME}`}
+          description="La rosa viene caricata dinamicamente dal sistema membri e suddivisa per ruolo in campo, cosi da distinguere subito portieri, difensori, centrocampisti e attaccanti."
+        />
+
+        <div className="mt-6">
+          {isLoadingMembers ? (
+            <div className="rounded-[1.75rem] border border-primary/15 bg-base px-5 py-6 text-sm font-medium text-text/70">
+              Caricamento giocatori...
+            </div>
+          ) : membersError ? (
+            <div className="rounded-[1.75rem] border border-accent/20 bg-accent/5 px-5 py-6 text-sm font-medium text-accent">
+              {membersError}
+            </div>
+          ) : playerSections.length > 0 ? (
+            <div className="space-y-8">
+              {playerSections.map((section) => (
+                <div key={section.key} className="space-y-4">
+                  <div className="flex items-center gap-4">
+                    <h3 className="text-lg font-bold text-text md:text-xl">{section.title}</h3>
+                    <div className="h-px flex-1 bg-primary/12" />
+                  </div>
+
+                  <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                    {section.members.map((player) => (
+                      <MemberCard key={player.id} member={player} />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-[1.75rem] border border-primary/15 bg-base px-5 py-6 text-sm font-medium text-text/70">
+              Nessun giocatore disponibile al momento.
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section className="border-t border-primary/12 bg-background px-6 py-10 md:px-8 md:py-12">
+        <SectionHeading
+          eyebrow="Staff"
+          title="Staff e collaboratori"
+          description="Allenatori, dirigenti e collaboratori mantengono la stessa resa visiva dei giocatori e vengono ordinati per area di responsabilita."
+        />
+
+        <div className="mt-6">
+          {isLoadingMembers ? (
+            <div className="rounded-[1.75rem] border border-primary/15 bg-base px-5 py-6 text-sm font-medium text-text/70">
+              Caricamento staff...
+            </div>
+          ) : membersError ? (
+            <div className="rounded-[1.75rem] border border-accent/20 bg-accent/5 px-5 py-6 text-sm font-medium text-accent">
+              {membersError}
+            </div>
+          ) : staffSections.length > 0 ? (
+            <div className="space-y-8">
+              {staffSections.map((section) => (
+                <div key={section.key} className="space-y-4">
+                  <div className="flex items-center gap-4">
+                    <h3 className="text-lg font-bold text-text md:text-xl">{section.title}</h3>
+                    <div className="h-px flex-1 bg-primary/12" />
+                  </div>
+
+                  <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                    {section.members.map((member) => (
+                      <MemberCard key={member.id} member={member} />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-[1.75rem] border border-primary/15 bg-base px-5 py-6 text-sm font-medium text-text/70">
+              Nessun membro dello staff disponibile al momento.
+            </div>
+          )}
         </div>
       </section>
     </main>

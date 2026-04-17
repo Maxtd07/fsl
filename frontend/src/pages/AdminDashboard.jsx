@@ -10,15 +10,19 @@ import {
   updateEvent,
   uploadPhoto,
 } from '../lib/api.js'
+import AdminMembersSection from '../components/members/AdminMembersSection.jsx'
 import { useAuth } from '../context/useAuth.js'
+import { EVENT_TYPES, formatEventType, normalizeEventType } from '../lib/events.js'
 
 const emptyEventForm = {
+  tipo: 'evento',
   titolo: '',
   descrizione: '',
   data: '',
   dataFine: '',
   luogo: '',
   maxPartecipanti: 50,
+  unlimitedCapacity: false,
   volantino: null,
   volantinoPreview: null,
 }
@@ -120,12 +124,14 @@ function AdminDashboard() {
 
     try {
       const payload = {
+        tipo: eventForm.tipo,
         titolo: eventForm.titolo,
         descrizione: eventForm.descrizione,
         data: eventForm.data,
         dataFine: eventForm.dataFine || null,
         luogo: eventForm.luogo,
         maxPartecipanti: Number(eventForm.maxPartecipanti),
+        unlimitedCapacity: eventForm.unlimitedCapacity,
         volantino: eventForm.volantinoPreview || null,
       }
 
@@ -151,12 +157,14 @@ function AdminDashboard() {
   const handleEditEvent = (eventItem) => {
     setEditingEventId(eventItem.id)
     setEventForm({
+      tipo: normalizeEventType(eventItem.tipo),
       titolo: eventItem.titolo,
       descrizione: eventItem.descrizione,
       data: toInputDateTime(eventItem.data),
       dataFine: toInputDateTime(eventItem.dataFine),
       luogo: eventItem.luogo,
       maxPartecipanti: eventItem.maxPartecipanti,
+      unlimitedCapacity: Boolean(eventItem.unlimitedCapacity),
       volantino: null,
       volantinoPreview: eventItem.volantino,
     })
@@ -248,6 +256,22 @@ function AdminDashboard() {
 
           <form onSubmit={handleEventSubmit} className="space-y-4">
             <div>
+              <label className="mb-2 block text-sm font-medium text-text">Tipologia evento</label>
+              <select
+                value={eventForm.tipo}
+                onChange={(event) => setEventForm((current) => ({ ...current, tipo: event.target.value }))}
+                className="w-full rounded-xl border border-primary/15 bg-background px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/12"
+                required
+              >
+                {EVENT_TYPES.map((tipo) => (
+                  <option key={tipo} value={tipo}>
+                    {formatEventType(tipo)}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
               <label className="mb-2 block text-sm font-medium text-text">Titolo</label>
               <input
                 type="text"
@@ -311,9 +335,21 @@ function AdminDashboard() {
                   onChange={(event) =>
                     setEventForm((current) => ({ ...current, maxPartecipanti: event.target.value }))
                   }
+                  disabled={eventForm.unlimitedCapacity}
                   className="w-full rounded-xl border border-primary/15 bg-background px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/12"
                   required
                 />
+                <label className="mt-3 flex items-center gap-3 text-sm font-medium text-text">
+                  <input
+                    type="checkbox"
+                    checked={eventForm.unlimitedCapacity}
+                    onChange={(event) =>
+                      setEventForm((current) => ({ ...current, unlimitedCapacity: event.target.checked }))
+                    }
+                    className="h-4 w-4 rounded border-primary/30 text-primary focus:ring-primary/30"
+                  />
+                  Capienza illimitata
+                </label>
               </div>
             </div>
 
@@ -376,13 +412,20 @@ function AdminDashboard() {
                   className="flex flex-col gap-4 rounded-xl border border-primary/20 bg-background p-4 md:flex-row md:items-center md:justify-between md:p-5"
                 >
                   <div className="flex-1">
+                    <div className="mb-2 flex flex-wrap gap-2">
+                      <span className="rounded-full border border-secondary/20 bg-secondary/10 px-3 py-1 text-xs font-semibold text-secondary">
+                        {formatEventType(eventItem.tipo)}
+                      </span>
+                    </div>
                     <h3 className="text-lg font-bold text-slate-900">{eventItem.titolo}</h3>
                     <p className="mt-1 text-sm text-slate-700">{eventItem.descrizione}</p>
                     <p className="mt-2 text-xs text-slate-600">
                       {new Date(eventItem.data).toLocaleString('it-IT')} | {eventItem.luogo}
                     </p>
                     <p className="mt-1 text-xs text-slate-600">
-                      Iscritti: {eventItem.registeredParticipants} / {eventItem.maxPartecipanti}
+                      {eventItem.unlimitedCapacity
+                        ? `Iscritti: ${eventItem.registeredParticipants} | capienza illimitata`
+                        : `Iscritti: ${eventItem.registeredParticipants} / ${eventItem.maxPartecipanti}`}
                     </p>
                   </div>
 
@@ -407,6 +450,8 @@ function AdminDashboard() {
             </div>
           )}
         </section>
+
+        <AdminMembersSection />
 
         <section className="rounded-[2rem] border-2 border-primary/20 bg-base p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] md:p-8">
           <h2 className="mb-6 text-xl font-bold text-slate-900 md:text-2xl">Aggiungi foto galleria</h2>

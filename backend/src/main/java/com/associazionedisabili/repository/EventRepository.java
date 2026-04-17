@@ -12,27 +12,34 @@ public interface EventRepository extends JpaRepository<Event, Long> {
  @Query("""
   select e
   from Event e
+  where (:tipo is null or coalesce(e.tipo, 'evento') = :tipo)
   order by e.data asc
  """)
- List<Event> findAllByOrderByDataAsc();
+ List<Event> findAllByTipoOrderByDataAsc(@Param("tipo") String tipo);
 
  @Query("""
   select e
   from Event e
   where e.data > :startDate
    and e.data < :endDate
+   and (:tipo is null or coalesce(e.tipo, 'evento') = :tipo)
   order by e.data asc
  """)
  List<Event> findByDataIsAfterAndDataIsBeforeOrderByDataAsc(
   @Param("startDate") LocalDateTime startDate,
-  @Param("endDate") LocalDateTime endDate
+  @Param("endDate") LocalDateTime endDate,
+  @Param("tipo") String tipo
  );
 
  @Query("""
   select e
   from Event e
   where e.data >= :startDate
+   and (:tipo is null or coalesce(e.tipo, 'evento') = :tipo)
   order by e.data asc
  """)
- List<Event> findByDataGreaterThanEqualOrderByDataAsc(@Param("startDate") LocalDateTime startDate);
+ List<Event> findByDataGreaterThanEqualOrderByDataAsc(
+  @Param("startDate") LocalDateTime startDate,
+  @Param("tipo") String tipo
+ );
 }

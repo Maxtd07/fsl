@@ -10,7 +10,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { getEventsByDateRange } from '../lib/api'
 
-export function Calendar({ onDateSelected, onEventClick }) {
+export function Calendar({ onDateSelected, onEventClick, eventType = null }) {
   const [currentDate, setCurrentDate] = useState(new Date())
   const [viewMode, setViewMode] = useState('month') // 'day', 'week', 'month'
   const [events, setEvents] = useState([])
@@ -20,13 +20,13 @@ export function Calendar({ onDateSelected, onEventClick }) {
   // Load events when currentDate or viewMode changes
   useEffect(() => {
     loadEventsForCurrentView()
-  }, [currentDate, viewMode])
+  }, [currentDate, eventType, viewMode])
 
   const loadEventsForCurrentView = async () => {
     setLoading(true)
     try {
       const { start, end } = getDateRange()
-      const data = await getEventsByDateRange(start, end)
+      const data = await getEventsByDateRange(start, end, eventType)
       setEvents(data || [])
     } catch (error) {
       console.error('Errore caricamento eventi:', error)
@@ -171,6 +171,8 @@ export function Calendar({ onDateSelected, onEventClick }) {
       }).format(currentDate)
     }
   }
+
+  const emptyItemLabel = eventType === 'partita' ? 'partita' : 'evento'
 
   return (
     <div className="rounded-lg border border-text/10 bg-base shadow-lg">
@@ -487,15 +489,17 @@ export function Calendar({ onDateSelected, onEventClick }) {
                               minute: '2-digit',
                             })} - {event.luogo}
                           </p>
-                          {event.availableSeats === 0 && (
-                            <span className="mt-2 inline-block rounded bg-accent/20 px-2 py-1 text-xs font-semibold text-accent">
-                              Completo
+                        {!event.unlimitedCapacity && event.availableSeats === 0 && (
+                          <span className="mt-2 inline-block rounded bg-accent/20 px-2 py-1 text-xs font-semibold text-accent">
+                            Completo
                             </span>
                           )}
                         </button>
                       ))
                     ) : (
-                      <p className="text-xs text-text/40">Nessun evento</p>
+                      <p className="text-xs text-text/40">
+                        {emptyItemLabel === 'partita' ? 'Nessuna partita' : 'Nessun evento'}
+                      </p>
                     )}
                   </div>
                 </div>

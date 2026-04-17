@@ -8,6 +8,7 @@ import { fetchEvents, fetchMyBookings, getEventCalendarLink } from '../lib/api.j
 import { useAuth } from '../context/useAuth.js'
 import { Calendar } from '../components/Calendar.jsx'
 import { EventModal as EventDetailsModal } from '../components/EventModal.jsx'
+import { formatEventType, isGenericEvent, isMatchEvent } from '../lib/events.js'
 
 const eventDateFormatter = new Intl.DateTimeFormat('it-IT', {
   day: '2-digit',
@@ -124,6 +125,8 @@ function EventiPage() {
   }, [isAuthenticated])
 
   const bookedEventIds = useMemo(() => new Set(myBookings.map((b) => b.eventId)), [myBookings])
+  const matchEvents = useMemo(() => events.filter(isMatchEvent), [events])
+  const genericEvents = useMemo(() => events.filter(isGenericEvent), [events])
 
   const openModal = (event) => {
     setSelectedEvent(event)
@@ -158,6 +161,86 @@ function EventiPage() {
   const showEmptyState = !isLoading && !error && events.length === 0
   const showContent = !isLoading && !error && events.length > 0
 
+  const renderEventSection = ({ title, description, items, eventType }) => (
+    <section className="space-y-5 rounded-[2rem] border border-primary/15 bg-base p-5 shadow-[0_12px_28px_rgba(0,0,0,0.04)] md:p-6">
+      <div className="flex items-center gap-4">
+        <div>
+          <h3 className="text-xl font-bold text-text">{title}</h3>
+          <p className="mt-1 text-sm text-text/70">{description}</p>
+        </div>
+        <div className="h-px flex-1 bg-primary/12" />
+      </div>
+
+      {viewMode === 'calendar' ? (
+        items.length > 0 ? (
+          <Calendar onEventClick={openModal} eventType={eventType} />
+        ) : (
+          <div className="rounded-3xl border-2 border-primary/20 bg-background px-5 py-6 text-sm font-medium text-text/80">
+            {eventType === 'partita'
+              ? 'Nessuna partita disponibile al momento.'
+              : 'Nessun evento disponibile al momento.'}
+          </div>
+        )
+      ) : items.length > 0 ? (
+        <div className="grid gap-6 lg:grid-cols-3">
+          {items.map((event) => {
+            const alreadyBooked = bookedEventIds.has(event.id)
+            const showCapacity = !event.unlimitedCapacity
+
+            return (
+              <button
+                key={event.id}
+                onClick={() => openModal(event)}
+                className="cursor-pointer overflow-hidden rounded-[1.4rem] border-2 border-primary/20 bg-base text-left shadow-[0_6px_14px_rgba(0,0,0,0.06)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_12px_28px_rgba(0,0,0,0.12)]"
+                aria-label={`Visualizza dettagli evento: ${event.titolo}`}
+              >
+                {event.volantino ? (
+                  <img src={event.volantino} alt={event.titolo} className="h-48 w-full object-cover" />
+                ) : (
+                  <div className="flex h-48 w-full items-center justify-center bg-primary/10">
+                    <PlaceholderImage alt="Event" className="h-full w-full" />
+                  </div>
+                )}
+
+                <div className="p-5">
+                  <div className="mb-3 flex flex-wrap gap-2">
+                    <span className="rounded-full border border-secondary/20 bg-secondary/10 px-3 py-1 text-xs font-semibold text-secondary">
+                      {formatEventType(event.tipo)}
+                    </span>
+
+                    {showCapacity && (
+                      <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+                        {event.availableSeats} posti disponibili
+                      </span>
+                    )}
+
+                    {alreadyBooked && (
+                      <span className="rounded-full bg-secondary/10 px-3 py-1 text-xs font-semibold text-secondary">
+                        Iscritto
+                      </span>
+                    )}
+                  </div>
+
+                  <h3 className="mb-1 text-lg font-bold text-text">{event.titolo}</h3>
+
+                  <p className="mb-3 line-clamp-3 text-sm text-text/75">{event.descrizione}</p>
+
+                  <p className="text-xs text-text/60">{formatEventMeta(event)}</p>
+                </div>
+              </button>
+            )
+          })}
+        </div>
+      ) : (
+        <div className="rounded-3xl border-2 border-primary/20 bg-background px-5 py-6 text-sm font-medium text-text/80">
+          {eventType === 'partita'
+            ? 'Nessuna partita disponibile al momento.'
+            : 'Nessun evento disponibile al momento.'}
+        </div>
+      )}
+    </section>
+  )
+
   return (
     <main>
       <PageHero
@@ -187,6 +270,9 @@ function EventiPage() {
             {myBookings.map((booking) => (
               <article key={booking.id} className="rounded-lg border border-secondary/30 bg-base p-4 shadow-sm">
                 <p className="text-sm font-bold text-text">{booking.eventTitle}</p>
+                <p className="mt-2 inline-flex rounded-full border border-secondary/20 bg-secondary/10 px-3 py-1 text-xs font-semibold text-secondary">
+                  {formatEventType(booking.eventType)}
+                </p>
                 <p className="mt-2 text-sm text-text/75">
                   {booking.eventDate ? eventDateFormatter.format(new Date(booking.eventDate)) : ''}
                 </p>
@@ -204,8 +290,8 @@ function EventiPage() {
       <section className="border-primary/15 px-6 py-10 lg:py-12">
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <SectionHeading
-            title="Tutti gli eventi"
-            description="Sfoglia gli appuntamenti disponibili e scegli quelli piu adatti al tuo percorso con Soccer Dream Fermana."
+            title="Partite ed eventi"
+            description="Ogni appuntamento viene mostrato nella sua sezione dedicata, cosi da distinguere chiaramente calendario sportivo e iniziative del club."
           />
 
           <div className="flex gap-2">
@@ -242,54 +328,21 @@ function EventiPage() {
         )}
 
         {showContent && (
-          <>
-            {viewMode === 'calendar' ? (
-              <Calendar onEventClick={openModal} />
-            ) : (
-              <div className="grid gap-6 lg:grid-cols-3">
-                {events.map((event) => {
-                  const alreadyBooked = bookedEventIds.has(event.id)
+          <div className="space-y-8">
+            {renderEventSection({
+              title: 'Partite',
+              description: 'Le gare della squadra, con accesso rapido ai dettagli e alle prenotazioni.',
+              items: matchEvents,
+              eventType: 'partita',
+            })}
 
-                  return (
-                    <button
-                      key={event.id}
-                      onClick={() => openModal(event)}
-                      className="cursor-pointer overflow-hidden rounded-[1.4rem] border-2 border-primary/20 bg-base text-left shadow-[0_6px_14px_rgba(0,0,0,0.06)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_12px_28px_rgba(0,0,0,0.12)]"
-                      aria-label={`Visualizza dettagli evento: ${event.titolo}`}
-                    >
-                      {event.volantino ? (
-                        <img src={event.volantino} alt={event.titolo} className="h-48 w-full object-cover" />
-                      ) : (
-                        <div className="flex h-48 w-full items-center justify-center bg-primary/10">
-                          <PlaceholderImage alt="Event" className="h-full w-full" />
-                        </div>
-                      )}
-
-                      <div className="p-5">
-                        <div className="mb-3 flex flex-wrap gap-2">
-                          <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
-                            {event.availableSeats} posti disponibili
-                          </span>
-
-                          {alreadyBooked && (
-                            <span className="rounded-full bg-secondary/10 px-3 py-1 text-xs font-semibold text-secondary">
-                              Iscritto
-                            </span>
-                          )}
-                        </div>
-
-                        <h3 className="mb-1 text-lg font-bold text-text">{event.titolo}</h3>
-
-                        <p className="mb-3 line-clamp-3 text-sm text-text/75">{event.descrizione}</p>
-
-                        <p className="text-xs text-text/60">{formatEventMeta(event)}</p>
-                      </div>
-                    </button>
-                  )
-                })}
-              </div>
-            )}
-          </>
+            {renderEventSection({
+              title: 'Eventi',
+              description: 'Incontri, iniziative e appuntamenti organizzati da ASD Soccer Dream Fermana.',
+              items: genericEvents,
+              eventType: 'evento',
+            })}
+          </div>
         )}
       </section>
 
