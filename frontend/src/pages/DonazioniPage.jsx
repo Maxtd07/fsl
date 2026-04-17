@@ -1,7 +1,7 @@
 import ActionLink from '../components/ActionLink.jsx'
 import PageHero from '../components/PageHero.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
-import picture from '../assets/Copilot_20260416_165313.png'
+import picture from '../assets/sostieniimage.jpeg'
 
 const donationCards = [
   "Scegli se sostenere l'associazione con il 5 per mille o con un bonifico bancario.",
@@ -113,28 +113,6 @@ function DonazioniPage() {
         </div>
 
       <img src={picture} alt="Impatto donazioni" className='border-2 border-primary/80 rounded-2xl'/>
-      </section>
-
-      <section className="mx-auto w-full max-w-3xl rounded-lg border border-primary/20 bg-base p-6 shadow-lg md:p-8">
-        <SectionHeading
-          eyebrow="Hai bisogno di aiuto?"
-          title="Siamo disponibili per informazioni sulle donazioni."
-          description="Se desideri una ricevuta, vuoi segnalare una donazione o hai bisogno di chiarimenti sulle modalita di sostegno, puoi contattarci direttamente."
-        />
-
-        <div className="mt-6 rounded-lg border border-primary/20 bg-primary/5 px-4 py-4 text-sm leading-7 text-text/80">
-          <p>
-            Per informazioni sulle donazioni puoi scrivere a{' '}
-            <a href="mailto:info@nomeassociazione.it" className="font-semibold text-primary underline">
-              info@nomeassociazione.it
-            </a>{' '}
-            oppure visitare la pagina{' '}
-            <a href="/contatti" className="font-semibold text-primary underline">
-              contatti
-            </a>
-            .
-          </p>
-        </div>
       </section>
     </main>
   )
