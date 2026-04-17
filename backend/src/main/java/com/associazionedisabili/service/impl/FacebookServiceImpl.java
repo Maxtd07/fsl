@@ -20,7 +20,7 @@ public class FacebookServiceImpl implements FacebookService {
 
     private static final Logger logger = LoggerFactory.getLogger(FacebookServiceImpl.class);
     private static final String FACEBOOK_API_URL = "https://graph.facebook.com/v19.0";
-    private static final String POSTS_FIELDS = "id,message,full_picture,created_time,permalink_url";
+    private static final String POSTS_FIELDS = "id,message,full_picture,created_time,permalink_url,likes.summary(total_count).limit(0),comments.summary(total_count).limit(0)";
     private static final String PAGES_FIELDS = "id,name,access_token";
     private static final String ME_FIELDS = "id,name";
     private static final int PAGE_SIZE = 100;
@@ -78,6 +78,8 @@ public class FacebookServiceImpl implements FacebookService {
                 facebookPost.setFullPicture(asString(post.get("full_picture")));
                 facebookPost.setCreatedTime(asString(post.get("created_time")));
                 facebookPost.setPermalinkUrl(asString(post.get("permalink_url")));
+                facebookPost.setLikesCount(extractCount(post.get("likes")));
+                facebookPost.setCommentsCount(extractCount(post.get("comments")));
                 posts.add(facebookPost);
             }
         } catch (RestClientException e) {
@@ -207,6 +209,23 @@ public class FacebookServiceImpl implements FacebookService {
 
     private String asString(Object value) {
         return value instanceof String stringValue ? stringValue : null;
+    }
+
+    @SuppressWarnings("unchecked")
+    private Long extractCount(Object value) {
+        if (value instanceof Map<?, ?> map) {
+            Map<String, Object> mapValue = (Map<String, Object>) map;
+            Object summary = mapValue.get("summary");
+            if (summary instanceof Map<?, ?> summaryMap) {
+                Object count = ((Map<String, Object>) summaryMap).get("total_count");
+                if (count instanceof Integer intCount) {
+                    return (long) intCount;
+                } else if (count instanceof Long longCount) {
+                    return longCount;
+                }
+            }
+        }
+        return 0L;
     }
 
     private record FacebookFeedTarget(String resourceId, String accessToken) {}

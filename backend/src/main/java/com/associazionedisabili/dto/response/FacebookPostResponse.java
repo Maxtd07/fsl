@@ -13,4 +13,6 @@ public class FacebookPostResponse {
     private String fullPicture;
     private String createdTime;
     private String permalinkUrl;
+    private Long likesCount;
+    private Long commentsCount;
 }
