@@ -2,56 +2,57 @@ import ActionLink from '../components/ActionLink.jsx'
 import PageHero from '../components/PageHero.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
 import picture from '../assets/aboutusimage.jpg'
+import { SIGNATURE_PROJECT_NAME, TEAM_NAME } from '../lib/site.js'
 
 const focusAreas = [
   {
-    label: 'Ascolto e sostegno',
-    text: "Offriamo ascolto, orientamento e sostegno alle persone con disabilità e alle loro famiglie nei bisogni quotidiani e nei momenti di maggiore fragilità.",
+    label: 'Sport inclusivo',
+    text: `${TEAM_NAME} pratica calcio paralimpico con un approccio chiaro: il risultato non e mai l'obiettivo, conta giocare, stare insieme e vivere lo sport come liberta.`,
     tone: 'primary',
   },
   {
-    label: 'Formazione',
-    text: 'Promuoviamo incontri, laboratori e occasioni di approfondimento per crescere insieme come comunità più consapevole, inclusiva e preparata.',
+    label: 'Dignita e valore',
+    text: 'Ogni allenamento e ogni incontro sono pensati per dare spazio, voce e valore a ciascun ragazzo, rispettando la sua storia, i suoi tempi e il suo modo di stare al mondo.',
     tone: 'secondary',
   },
   {
-    label: 'Rete territoriale',
-    text: 'Collaboriamo con scuole, servizi, enti e realtà del territorio per dare continuità ai progetti e valorizzare il punto di vista delle famiglie.',
+    label: 'Una squadra che accoglie',
+    text: 'I nostri 22 ragazzi e adulti, dai 12 ai 58 anni, formano una famiglia allargata che si sostiene, si abbraccia, ride, sbaglia e si rialza insieme.',
     tone: 'accent',
   },
 ]
 
 const serviceCards = [
   {
-    title: 'Laboratori e attività',
-    text: 'Proponiamo attività espressive, educative e ricreative che favoriscono benessere, partecipazione, relazione e valorizzazione delle capacità personali.',
+    title: 'Crescita personale',
+    text: 'Oltre al calcio proponiamo esperienze che aiutano a sviluppare autonomia, scoprire nuove passioni, mettersi alla prova e vivere occasioni che altrimenti sarebbero difficili da incontrare.',
     tone: 'secondary',
   },
   {
-    title: 'Tempo libero e autonomia',
-    text: 'Accompagniamo le persone in esperienze di gruppo e percorsi di autonomia che aiutano a vivere il tempo libero con serenità, relazioni positive e maggiore indipendenza.',
+    title: SIGNATURE_PROJECT_NAME,
+    text: 'Portiamo avanti un progetto di vita con un piano terra dedicato a laboratori e attivita e un appartamento pensato per sperimentare la vita indipendente.',
     tone: 'accent',
   },
 ]
 
 const collaborationAreas = [
   {
-    title: 'Incontri e momenti di confronto',
-    meta: 'Approfondimento',
+    title: 'Tornei e calcio paralimpico',
+    meta: 'Sport vissuto bene',
     description:
-      'Organizziamo momenti di dialogo e approfondimento su temi legati alla disabilità, ai diritti, al benessere e alla partecipazione alla vita sociale.',
+      'Scendiamo in campo per giocare, divertirci e costruire relazioni. Ogni partita diventa un'occasione per sentirsi parte di qualcosa e crescere insieme.',
   },
   {
-    title: 'Progetti costruiti intorno alla persona',
+    title: 'Reti che fanno comunita',
+    meta: 'Collaborazioni',
+    description:
+      'Collaboriamo con associazioni, enti, realta sociali e sportive per costruire ponti, amicizie e occasioni concrete di apertura e accoglienza.',
+  },
+  {
+    title: 'Autodeterminazione e futuro',
     meta: 'Progetto di vita',
     description:
-      'Promuoviamo percorsi che mettano al centro desideri, bisogni e qualità della vita, favorendo soluzioni più accessibili e personalizzate.',
-  },
-  {
-    title: 'Collaborazioni con la comunità',
-    meta: 'Rete associativa',
-    description:
-      'Lavoriamo insieme ad associazioni, volontari, professionisti e realtà locali per creare opportunità condivise e inclusive.',
+      'Diffondiamo un modo piu umano di vivere la disabilita, in cui l'inclusione non e un favore ma un diritto e la diversita e una ricchezza.',
   },
 ]
 
@@ -66,8 +67,8 @@ function AboutPage() {
     <main className="space-y-8">
       <PageHero
         eyebrow="Chi siamo"
-        title="Un punto di riferimento per ascolto, inclusione e progetto di vita."
-        description="L'associazione sostiene persone con disabilità e famiglie attraverso ascolto, orientamento, attività dedicate e una rete di collaborazioni che mette al centro la persona."
+        title="Una squadra che mette le persone prima dello sport."
+        description="La Soccer Dream Fermana e una realta sportiva inclusiva fatta di 22 ragazzi e adulti. Quando sono insieme diventano una squadra nel senso piu bello del termine."
         tone="primary"
         actions={
           <>
@@ -83,17 +84,17 @@ function AboutPage() {
         <div>
           <SectionHeading
             eyebrow="Chi siamo"
-            title="Ascolto, partecipazione e tutela dei diritti nella vita di tutti i giorni."
-            description="La nostra attività unisce sostegno diretto, formazione e collaborazione con il territorio per costruire risposte più umane, accessibili e continuative."
+            title="La Soccer Dream Fermana e una squadra, una casa e un progetto di vita."
+            description="Non siamo una societa sportiva tradizionale: siamo un luogo dove si impara a vivere, a condividere, a rispettarsi e a crescere insieme."
           />
           <div className="mt-5 max-w-3xl space-y-3 text-xs font-medium leading-7 text-text/85 md:mt-6 md:space-y-4 md:text-sm md:text-text/80">
             <p>
-              Offriamo ascolto, sostegno e orientamento, accompagnando persone con disabilità e famiglie nei bisogni
-              quotidiani e nei momenti in cui serve un confronto chiaro e affidabile.
+              Ogni attivita nasce per mettere al centro la dignita e il valore di ciascuna persona. Alleniamo il corpo,
+              ma anche il coraggio, le relazioni, la fiducia e la gioia di sentirsi accolti.
             </p>
             <p>
-              Allo stesso tempo promuoviamo occasioni di confronto, attività e collaborazioni che aiutano a costruire
-              una comunità più accogliente, consapevole e vicina ai diritti delle persone.
+              Ovunque andiamo portiamo con noi un messaggio semplice e forte: l'inclusione e un diritto, la diversita
+              e una ricchezza, la felicita nasce nelle cose semplici fatte insieme.
             </p>
           </div>
         </div>
@@ -113,12 +114,12 @@ function AboutPage() {
 
       <section className="border-t border-primary/12 bg-background px-6 py-10 md:px-8 md:py-12">
         <div className="grid gap-8 lg:grid-cols-[minmax(320px,0.92fr)_minmax(0,1.08fr)] lg:items-center">
-          <img src={picture} alt="img laboratorio di sport" className="border-2 border-primary rounded-2xl" />
+          <img src={picture} alt="Allenamento della squadra" className="border-2 border-primary rounded-2xl" />
           <div>
             <SectionHeading
               eyebrow="Servizi e progetti"
-              title="Percorsi che danno valore al benessere, al tempo libero e all'autonomia."
-              description="Accanto al sostegno e alla rappresentanza, promuoviamo esperienze concrete che aiutano ogni persona a vivere relazioni, crescita e partecipazione con maggiore serenità."
+              title="Esperienze che fanno crescere sul campo e nella vita."
+              description="Lo sport e un mezzo per imparare a vivere, condividere, crescere e sentirsi parte di qualcosa. Per questo lavoriamo anche su autonomia, relazioni e progetto di futuro."
             />
             <div className="mt-6 grid gap-5 md:grid-cols-2">
               {serviceCards.map((item) => (
@@ -143,8 +144,8 @@ function AboutPage() {
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <SectionHeading
             eyebrow="Rete territoriale"
-            title="Collaborazioni e attività condivise per una comunità più inclusiva."
-            description="L'associazione lavora con istituzioni, professionisti e realtà del territorio per trasformare i bisogni in iniziative concrete e occasioni di partecipazione."
+            title="Ponti con il territorio per una societa piu umana."
+            description="La Soccer Dream Fermana costruisce comunita insieme ad associazioni, enti e realta locali, trasformando ogni incontro in una possibilita concreta di partecipazione."
           />
           <ActionLink to="/contatti" variant="secondary">
             Parla con noi

@@ -4,6 +4,7 @@ import PageHero from '../components/PageHero.jsx'
 import picture from '../assets/contattaciimage.jpeg'
 import SectionHeading from '../components/SectionHeading.jsx'
 import { sendContactEmail } from '../lib/api.js'
+import { CONTACT_ADDRESS, CONTACT_EMAIL, CONTACT_PHONE, SIGNATURE_PROJECT_NAME, TEAM_NAME } from '../lib/site.js'
 
 const initialFormState = {
   nome: '',
@@ -14,15 +15,15 @@ const initialFormState = {
 const contactCards = [
   {
     label: 'Email',
-    text: 'info@nomeassociazione.it',
+    text: CONTACT_EMAIL,
   },
   {
     label: 'Telefono',
-    text: '+39 000 000 0000',
+    text: CONTACT_PHONE,
   },
   {
     label: 'Indirizzo',
-    text: 'Via Roma 123, Città (PR) 00000',
+    text: CONTACT_ADDRESS,
   },
 ]
 
@@ -55,7 +56,7 @@ function FeedbackMessage({ message }) {
       ? 'border-green-200 bg-green-50 text-green-700'
       : message.type === 'warning'
         ? 'border-amber-200 bg-amber-50 text-amber-800'
-      : 'border-red-200 bg-red-50 text-red-700'
+        : 'border-red-200 bg-red-50 text-red-700'
 
   return (
     <div className={`rounded-lg border-2 p-4 ${colorClassName}`}>
@@ -96,7 +97,7 @@ function ContattiPage() {
     } catch {
       setMessage({
         type: 'error',
-        text: "Errore nell'invio del messaggio. Riprova più tardi.",
+        text: "Errore nell'invio del messaggio. Riprova piu tardi.",
       })
     } finally {
       setIsSubmitting(false)
@@ -107,8 +108,8 @@ function ContattiPage() {
     <main className="space-y-8">
       <PageHero
         eyebrow="Contatti"
-        title="Entra in contatto con noi"
-        description="Hai bisogno di informazioni, orientamento o vuoi conoscere meglio le attività dell'associazione? Scrivici e ti risponderemo al più presto."
+        title={`Entra in contatto con ${TEAM_NAME}`}
+        description={`Se vuoi conoscere la squadra, le attivita, le collaborazioni o il progetto ${SIGNATURE_PROJECT_NAME}, scrivici e ti risponderemo al piu presto.`}
         tone="neutral"
         actions={
           <>
@@ -139,7 +140,7 @@ function ContattiPage() {
           <SectionHeading
             eyebrow="Modulo contatti"
             title="Inviaci un messaggio"
-            description="Compila il modulo qui sotto per richiedere informazioni, supporto o un primo contatto."
+            description="Compila il modulo per richiedere informazioni, proporre una collaborazione o avere maggiori dettagli sui nostri progetti."
           />
 
           <form onSubmit={handleSubmit} className="mt-6 space-y-4">

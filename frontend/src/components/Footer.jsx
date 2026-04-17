@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons"
 import { Link } from "react-router-dom"
+import { CONTACT_ADDRESS, CONTACT_EMAIL, CONTACT_PHONE, ORGANIZATION_NAME, SIGNATURE_PROJECT_NAME } from '../lib/site.js'
 
 const footerLinkClasses =
   "transition-colors duration-200 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-1 focus-visible:ring-offset-dark"
@@ -9,19 +10,19 @@ function Footer() {
   return (
     <footer className="mt-10 w-full bg-dark/80 px-5 py-8 text-sm text-white/80">
       <div className="mx-auto max-w-[80vw]">
-        {/* Top Section */}
         <div className="mb-6 border-b border-white/10 pb-5">
           <p className="text-[11px] font-bold uppercase tracking-wide text-white">
-            Associazione Disabili
+            {ORGANIZATION_NAME}
           </p>
           <p className="mt-2 max-w-lg text-xs leading-relaxed text-white/70">
-            Ascolto, inclusione e partecipazione: ogni persona conta, ogni famiglia merita sostegno.
+            Sport inclusivo, relazioni vere e un progetto di vita che cresce insieme alla squadra, ogni giorno.
+          </p>
+          <p className="mt-2 max-w-lg text-[11px] leading-relaxed text-white/50">
+            Un sogno concreto: {SIGNATURE_PROJECT_NAME}.
           </p>
         </div>
 
-        {/* Grid */}
         <div className="grid grid-cols-2 gap-6 text-xs md:grid-cols-3">
-          {/* Social */}
           <div>
             <p className="mb-2 font-semibold uppercase tracking-wide text-white">
               Social
@@ -48,23 +49,21 @@ function Footer() {
             </div>
           </div>
 
-          {/* Contacts */}
           <div className="text-right md:text-center">
             <p className="mb-2 font-semibold uppercase tracking-wide text-white">
               Contatti
             </p>
             <div className="flex flex-col gap-2">
-              <a className={footerLinkClasses} href="mailto:example@mail.com">
-                info@nomeassociazione.it
+              <a className={footerLinkClasses} href={`mailto:${CONTACT_EMAIL}`}>
+                {CONTACT_EMAIL}
               </a>
-              <a className={footerLinkClasses} href="tel:+390000000000">
-                +39 000 000 000
+              <a className={footerLinkClasses} href={`tel:${CONTACT_PHONE.replace(/\s+/g, '')}`}>
+                {CONTACT_PHONE}
               </a>
             </div>
           </div>
 
-          {/* Info */}
-          <div className="col-span-2 sm:col-span-1 text-left md:text-right">
+          <div className="col-span-2 text-left sm:col-span-1 md:text-right">
             <p className="mb-2 font-semibold uppercase tracking-wide text-white">
               Info
             </p>
@@ -73,15 +72,14 @@ function Footer() {
                 Privacy Policy
               </Link>
               <p className="text-[11px]">
-                Via Roma 123, Città (PR) 00000
+                {CONTACT_ADDRESS}
               </p>
             </div>
           </div>
         </div>
 
-        {/* Bottom */}
         <div className="mt-6 flex flex-col gap-2 border-t border-white/10 pt-4 text-[11px] text-white/50 sm:flex-row sm:justify-between">
-          <p>© Associazione Disabili 2026</p>
+          <p>© {ORGANIZATION_NAME} 2026</p>
           <p>Sviluppato da Max Ten Dam e Daniele Soldi</p>
         </div>
       </div>
