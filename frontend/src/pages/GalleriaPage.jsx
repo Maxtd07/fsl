@@ -262,7 +262,7 @@ function GalleriaPage() {
           onClick={() => setSelectedFacebookPost(null)}
         >
           <div
-            className="relative w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl"
+            className="relative w-full max-w-[37rem] overflow-hidden rounded-2xl bg-white shadow-2xl"
             onClick={(event) => event.stopPropagation()}
           >
             <button

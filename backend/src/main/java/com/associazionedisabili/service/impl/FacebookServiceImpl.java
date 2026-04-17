@@ -1,17 +1,22 @@
 package com.associazionedisabili.service.impl;
 
 import com.associazionedisabili.dto.response.FacebookPostResponse;
+import com.associazionedisabili.exception.BadRequestException;
 import com.associazionedisabili.service.FacebookService;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -21,8 +26,10 @@ public class FacebookServiceImpl implements FacebookService {
     private static final Logger logger = LoggerFactory.getLogger(FacebookServiceImpl.class);
     private static final String FACEBOOK_API_URL = "https://graph.facebook.com/v19.0";
     private static final String POSTS_FIELDS = "id,message,full_picture,created_time,permalink_url,likes.summary(total_count).limit(0),comments.summary(total_count).limit(0)";
+    private static final String SAFE_POSTS_FIELDS = "id,message,full_picture,created_time,permalink_url";
     private static final String PAGES_FIELDS = "id,name,access_token";
     private static final String ME_FIELDS = "id,name";
+    private static final List<String> POSTS_ENDPOINTS = List.of("/posts", "/published_posts", "/feed");
     private static final int PAGE_SIZE = 100;
     private static final int MAX_PAGES = 50;
 
@@ -48,24 +55,38 @@ public class FacebookServiceImpl implements FacebookService {
         }
 
         try {
-            FacebookFeedTarget target = resolveFeedTarget();
-            if (target == null) {
+            List<FacebookFeedTarget> targets = resolveFeedTargets();
+            if (targets.isEmpty()) {
                 logger.warn("Unable to resolve a Facebook page from the configured token");
                 return posts;
             }
 
-            logger.info("Fetching Facebook posts for resource {}", target.resourceId());
-            List<Map<String, Object>> data = fetchAllData(
-                "/" + target.resourceId() + "/posts",
-                POSTS_FIELDS,
-                target.accessToken()
-            );
-            if (data.isEmpty()) {
-                logger.info("No items returned by /posts, falling back to /feed for resource {}", target.resourceId());
-                data = fetchAllData(
-                    "/" + target.resourceId() + "/feed",
-                    POSTS_FIELDS,
-                    target.accessToken()
+            List<String> failures = new ArrayList<>();
+            List<Map<String, Object>> data = Collections.emptyList();
+
+            for (FacebookFeedTarget target : targets) {
+                logger.info("Fetching Facebook posts for resource {} using {}", target.resourceId(), target.source());
+                try {
+                    data = fetchPostsForTarget(target);
+                } catch (FacebookApiException e) {
+                    failures.add(e.getMessage());
+                    logger.warn(
+                        "Facebook fetch failed for resource {} using {}: {}",
+                        target.resourceId(),
+                        target.source(),
+                        e.getMessage()
+                    );
+                    continue;
+                }
+
+                if (!data.isEmpty()) {
+                    break;
+                }
+            }
+
+            if (data.isEmpty() && !failures.isEmpty()) {
+                throw new BadRequestException(
+                    "Impossibile leggere i post Facebook. Verifica token pagina, ID pagina e permessi pages_show_list/pages_read_engagement/pages_read_user_content."
                 );
             }
 
@@ -82,6 +103,8 @@ public class FacebookServiceImpl implements FacebookService {
                 facebookPost.setCommentsCount(extractCount(post.get("comments")));
                 posts.add(facebookPost);
             }
+        } catch (BadRequestException e) {
+            throw e;
         } catch (RestClientException e) {
             logger.error("Error fetching Facebook posts: {}", e.getMessage(), e);
         } catch (Exception e) {
@@ -91,31 +114,90 @@ public class FacebookServiceImpl implements FacebookService {
         return posts;
     }
 
-    private FacebookFeedTarget resolveFeedTarget() {
+    private List<FacebookFeedTarget> resolveFeedTargets() {
+        List<FacebookFeedTarget> targets = new ArrayList<>();
+        Set<String> seenTargets = new HashSet<>();
+
         if (isConfigured(pageId)) {
-            return new FacebookFeedTarget(pageId.trim(), accessToken);
+            addTarget(targets, seenTargets, pageId.trim(), accessToken, "configured page id");
         }
 
-        List<Map<String, Object>> pages = extractData(executeGet("/me/accounts", PAGES_FIELDS, accessToken, 10));
+        List<Map<String, Object>> pages = readManagedPages();
         if (!pages.isEmpty()) {
-            Map<String, Object> firstPage = pages.get(0);
-            String discoveredPageId = asString(firstPage.get("id"));
-            String discoveredPageToken = asString(firstPage.get("access_token"));
-            if (isConfigured(discoveredPageId)) {
-                String effectiveToken = isConfigured(discoveredPageToken) ? discoveredPageToken : accessToken;
-                logger.info("Using Facebook page {} discovered from the provided token", discoveredPageId);
-                return new FacebookFeedTarget(discoveredPageId, effectiveToken);
+            pages.stream()
+                .sorted(Comparator.comparing(page -> isMatchingConfiguredPage(page) ? 0 : 1))
+                .forEach(page -> {
+                    String discoveredPageId = asString(page.get("id"));
+                    String discoveredPageToken = asString(page.get("access_token"));
+                    String effectiveToken = isConfigured(discoveredPageToken) ? discoveredPageToken : accessToken;
+                    String source = isMatchingConfiguredPage(page)
+                        ? "page token discovered from /me/accounts"
+                        : "page discovered from /me/accounts";
+                    addTarget(targets, seenTargets, discoveredPageId, effectiveToken, source);
+                });
+        }
+
+        if (!isConfigured(pageId)) {
+            try {
+                Map<String, Object> meResponse = executeGet("/me", ME_FIELDS, accessToken, null);
+                String meId = asString(meResponse.get("id"));
+                if (isConfigured(meId)) {
+                    addTarget(targets, seenTargets, meId, accessToken, "resource resolved from /me");
+                }
+            } catch (FacebookApiException e) {
+                logger.warn("Unable to resolve Facebook /me resource: {}", e.getMessage());
             }
         }
 
-        Map<String, Object> meResponse = executeGet("/me", ME_FIELDS, accessToken, null);
-        String meId = asString(meResponse.get("id"));
-        if (isConfigured(meId)) {
-            logger.info("Using Facebook resource {} resolved from /me", meId);
-            return new FacebookFeedTarget(meId, accessToken);
+        return targets;
+    }
+
+    private List<Map<String, Object>> fetchPostsForTarget(FacebookFeedTarget target) {
+        FacebookApiException lastError = null;
+
+        for (String endpoint : POSTS_ENDPOINTS) {
+            try {
+                List<Map<String, Object>> data = fetchEndpointWithFallback(target, endpoint);
+                if (!data.isEmpty()) {
+                    return data;
+                }
+                logger.info("No items returned by {} for resource {}", endpoint, target.resourceId());
+            } catch (FacebookApiException e) {
+                lastError = e;
+                logger.info(
+                    "Endpoint {} unavailable for resource {} using {}: {}",
+                    endpoint,
+                    target.resourceId(),
+                    target.source(),
+                    e.getMessage()
+                );
+            }
         }
 
-        return null;
+        if (lastError != null) {
+            throw lastError;
+        }
+
+        return Collections.emptyList();
+    }
+
+    private List<Map<String, Object>> fetchEndpointWithFallback(FacebookFeedTarget target, String endpoint) {
+        String path = "/" + target.resourceId() + endpoint;
+
+        try {
+            return fetchAllData(path, POSTS_FIELDS, target.accessToken());
+        } catch (FacebookApiException e) {
+            if (!requiresEngagementPermission(e)) {
+                throw e;
+            }
+
+            logger.info(
+                "Engagement fields unavailable for {} using {}. Falling back to safe post fields.",
+                path,
+                target.source()
+            );
+            return fetchAllData(path, SAFE_POSTS_FIELDS, target.accessToken());
+        }
     }
 
     private List<Map<String, Object>> fetchAllData(String path, String fields, String token) {
@@ -143,15 +225,21 @@ public class FacebookServiceImpl implements FacebookService {
     }
 
     private Map<String, Object> executeGetByUrl(String url) {
-        Map<String, Object> response = restTemplate.getForObject(url, Map.class);
+        Map<String, Object> response;
+        try {
+            response = restTemplate.getForObject(url, Map.class);
+        } catch (RestClientResponseException e) {
+            throw new FacebookApiException(e.getResponseBodyAsString(), e);
+        } catch (RestClientException e) {
+            throw new FacebookApiException(e.getMessage(), e);
+        }
 
         if (response == null) {
             return Collections.emptyMap();
         }
 
         if (response.containsKey("error")) {
-            logger.error("Facebook Graph API error: {}", response.get("error"));
-            return Collections.emptyMap();
+            throw new FacebookApiException(extractErrorMessage(response));
         }
 
         return response;
@@ -168,6 +256,15 @@ public class FacebookServiceImpl implements FacebookService {
         }
 
         return builder.toUriString();
+    }
+
+    private List<Map<String, Object>> readManagedPages() {
+        try {
+            return extractData(executeGet("/me/accounts", PAGES_FIELDS, accessToken, 25));
+        } catch (FacebookApiException e) {
+            logger.info("Unable to inspect /me/accounts with the configured token: {}", e.getMessage());
+            return Collections.emptyList();
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -203,6 +300,29 @@ public class FacebookServiceImpl implements FacebookService {
         return new ArrayList<>(uniqueItems.values());
     }
 
+    private void addTarget(
+        List<FacebookFeedTarget> targets,
+        Set<String> seenTargets,
+        String resourceId,
+        String token,
+        String source
+    ) {
+        if (!isConfigured(resourceId) || !isConfigured(token)) {
+            return;
+        }
+
+        String normalizedId = resourceId.trim();
+        String signature = normalizedId + "|" + token.trim();
+        if (seenTargets.add(signature)) {
+            targets.add(new FacebookFeedTarget(normalizedId, token.trim(), source));
+        }
+    }
+
+    private boolean isMatchingConfiguredPage(Map<String, Object> page) {
+        String configuredPageId = isConfigured(pageId) ? pageId.trim() : null;
+        return configuredPageId != null && configuredPageId.equals(asString(page.get("id")));
+    }
+
     private boolean isConfigured(String value) {
         return value != null && !value.isBlank();
     }
@@ -228,5 +348,38 @@ public class FacebookServiceImpl implements FacebookService {
         return 0L;
     }
 
-    private record FacebookFeedTarget(String resourceId, String accessToken) {}
+    @SuppressWarnings("unchecked")
+    private String extractErrorMessage(Map<String, Object> response) {
+        Object error = response.get("error");
+        if (error instanceof Map<?, ?> errorMap) {
+            Object message = ((Map<String, Object>) errorMap).get("message");
+            if (message instanceof String messageText && !messageText.isBlank()) {
+                return messageText;
+            }
+        }
+
+        return "Facebook Graph API error";
+    }
+
+    private boolean requiresEngagementPermission(FacebookApiException error) {
+        String message = error.getMessage();
+        if (!isConfigured(message)) {
+            return false;
+        }
+
+        return message.contains("pages_read_engagement")
+            || message.contains("Page Public Content Access");
+    }
+
+    private record FacebookFeedTarget(String resourceId, String accessToken, String source) {}
+
+    private static class FacebookApiException extends RuntimeException {
+        private FacebookApiException(String message) {
+            super(message);
+        }
+
+        private FacebookApiException(String message, Throwable cause) {
+            super(message, cause);
+        }
+    }
 }
