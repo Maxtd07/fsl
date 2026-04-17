@@ -89,7 +89,7 @@ function Navbar() {
                 logout();
                 navigate("/");
               }}
-              className="rounded-lg bg-accent px-4 py-2.5 text-xs font-bold text-white shadow-[0_8px_18px_rgba(0,0,0,0.12)] transition-all duration-200 hover:bg-accent/90 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-accent/40 focus-visible:ring-offset-2"
+              className="rounded-lg border border-accent bg-accent/70 px-5 py-3 text-text/80 font-semibold hover:bg-accent/90 shadow-[0_8px_18px_rgba(0,0,0,0.12)] transition-all duration-200 hover:bg-accent/90 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-accent/40 focus-visible:ring-offset-2"
             >
               Esci
             </button>
@@ -122,7 +122,7 @@ function Navbar() {
 
         {/* Mobile Navigation - Solo Esci */}
         {isOpen && (
-          <div className="mt-4 flex flex-col gap-2 border-t border-text/10 pt-4 px-6 lg:hidden">
+          <div className="mt-4 flex flex-col gap-2 px-5 text-text/80 font-semibold hover:bg-accent/90 pt-4 px-6 lg:hidden">
             <button
               type="button"
               onClick={() => {
@@ -199,16 +199,15 @@ function Navbar() {
           {isAuthenticated ? (
             <>
               <div className="mx-2 h-6 w-px bg-text/10" />
-              <NavLink
-                to="/accedi"
-                className="rounded-lg border border-secondary/30 bg-secondary/8 px-4 py-2.5 text-xs font-semibold text-secondary transition-all duration-200 hover:bg-secondary/12 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-secondary/40 focus-visible:ring-offset-2"
+              <div
+                className="rounded-lg border border-primary/30 bg-primary/8 px-4 py-2.5 text-sm font-semibold text-text transition-all duration-200 hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
               >
                 {user?.nome}
-              </NavLink>
+              </div>
               {isAdmin && (
                 <NavLink
                   to="/admin/dashboard"
-                  className="rounded-lg border border-primary/30 bg-primary/8 px-4 py-2.5 text-xs font-semibold text-primary transition-all duration-200 hover:bg-primary/12 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
+                  className="rounded-lg border border-primary/30 bg-primary/8 px-4 py-2.5 text-sm font-semibold text-text transition-all duration-200 hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
                 >
                   Dashboard
                 </NavLink>
@@ -216,7 +215,7 @@ function Navbar() {
               <button
                 type="button"
                 onClick={logout}
-                className="rounded-lg border border-text/20 px-4 py-2.5 text-xs font-semibold text-text transition-all duration-200 hover:bg-text/5 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
+                className="rounded-lg border border-accent/50 bg-accent/30 px-4 py-2.5 text-xs font-bold text-text transition-all duration-200 hover:bg-accent/80 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
               >
                 Esci
               </button>
@@ -245,7 +244,7 @@ function Navbar() {
             }`}
           />
           <span
-            className={`h-0.5 w-6 bg-text transition-opacity duration-300 ${isOpen ? "opacity-0" : ""}`}
+            className={`h-0.5 w-6 bg-text duration-300 ${isOpen ? "opacity-0" : ""}`}
           />
           <span
             className={`h-0.5 w-6 bg-text transition-all origin-center duration-300 ${
@@ -282,7 +281,7 @@ function Navbar() {
           <NavLink
             to={sostieniLink.to}
             onClick={() => setIsOpen(false)}
-            className="rounded-lg border border-accent/40 bg-accent px-4 py-3 text-center text-xs font-semibold text-white transition-all duration-200 hover:bg-accent/90"
+            className="rounded-lg border border-accent/40 bg-accent px-4 py-3 text-center text-sm font-semibold text-text transition-all duration-200 hover:bg-accent/90"
           >
             {sostieniLink.label}
           </NavLink>
@@ -293,7 +292,7 @@ function Navbar() {
               <NavLink
                 to="/accedi"
                 onClick={() => setIsOpen(false)}
-                className="rounded-lg border border-secondary/30 bg-secondary/8 px-4 py-3 text-center text-xs font-semibold text-secondary transition-all duration-200 hover:bg-secondary/12"
+                className="rounded-lg border border-primary/30 bg-primary/8 px-4 py-2 text-center text-sm font-semibold text-text transition-all duration-200 hover:bg-primary/12"
               >
                 {user?.nome}
               </NavLink>
@@ -312,7 +311,7 @@ function Navbar() {
                   logout();
                   setIsOpen(false);
                 }}
-                className="rounded-lg border border-text/20 px-4 py-3 text-xs font-semibold text-text transition-all duration-200 hover:bg-text/5"
+                className="rounded-lg border border-accent/40 bg-accent/50 px-5 text-text/80 font-semibold hover:bg-accent/90 transition-all duration-200 hover:bg-text/5"
               >
                 Esci
               </button>

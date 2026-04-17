@@ -390,14 +390,14 @@ function AdminDashboard() {
                     <button
                       type="button"
                       onClick={() => handleEditEvent(eventItem)}
-                      className="rounded-lg border border-primary/20 px-4 py-2 text-sm font-medium text-primary hover:bg-primary/5 transition"
+                      className="rounded-lg border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-medium text-text hover:bg-primary/5 transition"
                     >
                       Modifica
                     </button>
                     <button
                       type="button"
                       onClick={() => handleDeleteEvent(eventItem.id)}
-                      className="rounded-lg border border-accent/30 px-4 py-2 text-sm font-medium text-accent hover:bg-accent/10 transition"
+                      className="rounded-lg border border-accent/60 bg-accent/30 px-4 py-2 text-sm font-medium text-text hover:bg-accent/20 transition"
                     >
                       Elimina
                     </button>
