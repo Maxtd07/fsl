@@ -158,6 +158,7 @@ function HomePage() {
                 meta={formatEventMeta(event)}
                 description={event.descrizione}
                 alt={event.titolo}
+                imageSrc={event.volantino}
               />
             ))}
           </div>
