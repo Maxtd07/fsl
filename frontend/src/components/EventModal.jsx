@@ -172,7 +172,12 @@ export function EventModal({ event, isOpen, onClose, onBookingChange }) {
       const response = await createBooking(event.id)
       setIsBooked(true)
       setBookingId(response.id)
-      showTimedSuccess('Partecipazione confermata. Controlla la tua email.', 'create')
+      showTimedSuccess(
+        response?.emailSent
+          ? 'Partecipazione confermata. Controlla la tua email.'
+          : "Partecipazione confermata. Se l'email non arriva, scarica il file calendario qui sotto.",
+        'create',
+      )
       onBookingChange?.()
     } catch (err) {
       setError(err.message || 'Errore iscrizione')

@@ -26,8 +26,23 @@ public class EmailService {
  @Value("${app.mail.from}")
  private String mailFrom;
 
+ @Value("${app.mail.contact.to:}")
+ private String contactRecipient;
+
  @Value("${spring.mail.host:}")
  private String mailHost;
+
+ @Value("${spring.mail.port:0}")
+ private int mailPort;
+
+ @Value("${spring.mail.username:}")
+ private String mailUsername;
+
+ @Value("${spring.mail.password:}")
+ private String mailPassword;
+
+ @Value("${spring.mail.properties.mail.smtp.auth:true}")
+ private boolean mailAuth;
 
  public boolean sendContactEmail(ContactRequest request) {
   if (!isMailConfigured()) {
@@ -38,7 +53,7 @@ public class EmailService {
   try {
    SimpleMailMessage message = new SimpleMailMessage();
    message.setFrom(mailFrom);
-   message.setTo(mailFrom);
+   message.setTo(resolveContactRecipient());
    message.setReplyTo(request.email());
    message.setSubject("Nuovo messaggio dal sito - " + request.nome());
    message.setText("""
@@ -79,13 +94,25 @@ public class EmailService {
    mailSender.send(message);
    return true;
   } catch (Exception ex) {
-   log.warn("Invio email di promemoria non riuscito per {}", user.getEmail(), ex);
+   log.warn("Invio email di conferma non riuscito per {}", user.getEmail(), ex);
    return false;
   }
  }
 
  private boolean isMailConfigured() {
-  return mailHost != null && !mailHost.isBlank();
+  if (mailHost == null || mailHost.isBlank() || mailFrom == null || mailFrom.isBlank() || mailPort <= 0) {
+   return false;
+  }
+
+  if (!mailAuth) {
+   return true;
+  }
+
+  return mailUsername != null && !mailUsername.isBlank() && mailPassword != null && !mailPassword.isBlank();
+ }
+
+ private String resolveContactRecipient() {
+  return contactRecipient != null && !contactRecipient.isBlank() ? contactRecipient : mailFrom;
  }
 
  private String buildBookingEmailBody(User user, Event event) {

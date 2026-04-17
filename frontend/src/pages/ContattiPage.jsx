@@ -53,6 +53,8 @@ function FeedbackMessage({ message }) {
   const colorClassName =
     message.type === 'success'
       ? 'border-green-200 bg-green-50 text-green-700'
+      : message.type === 'warning'
+        ? 'border-amber-200 bg-amber-50 text-amber-800'
       : 'border-red-200 bg-red-50 text-red-700'
 
   return (
@@ -82,12 +84,15 @@ function ContattiPage() {
     resetFeedback()
 
     try {
-      await sendContactEmail(formData)
+      const response = await sendContactEmail(formData)
+      const delivered = response?.delivered !== false
       setMessage({
-        type: 'success',
-        text: 'Messaggio inviato con successo. Ti contatteremo presto.',
+        type: delivered ? 'success' : 'warning',
+        text: response?.message ?? 'Messaggio inviato con successo. Ti contatteremo presto.',
       })
-      setFormData(initialFormState)
+      if (delivered) {
+        setFormData(initialFormState)
+      }
     } catch {
       setMessage({
         type: 'error',
