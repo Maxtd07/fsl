@@ -13,16 +13,16 @@ const initialFormState = {
 
 const contactCards = [
   {
-    label: 'Email',
-    text: 'info@nomeassociazione.it',
+    label: 'Modulo online',
+    text: 'Scrivici direttamente da questa pagina per chiedere informazioni su squadra, eventi, sostegno o collaborazioni.',
   },
   {
     label: 'Telefono',
-    text: '+39 000 000 0000',
+    text: '+39 340 983 8158',
   },
   {
     label: 'Indirizzo',
-    text: 'Via Roma 123, Città (PR) 00000',
+    text: 'Via Carpenette 5, 63844 Grottazzolina (FM)',
   },
 ]
 
@@ -91,7 +91,7 @@ function ContattiPage() {
     } catch {
       setMessage({
         type: 'error',
-        text: "Errore nell'invio del messaggio. Riprova più tardi.",
+        text: "Errore nell'invio del messaggio. Riprova piu tardi.",
       })
     } finally {
       setIsSubmitting(false)
@@ -102,8 +102,8 @@ function ContattiPage() {
     <main className="space-y-8">
       <PageHero
         eyebrow="Contatti"
-        title="Entra in contatto con noi"
-        description="Hai bisogno di informazioni, orientamento o vuoi conoscere meglio le attività dell'associazione? Scrivici e ti risponderemo al più presto."
+        title="Entra in contatto con ASD Soccer Dream Fermana"
+        description="Se vuoi conoscere meglio il progetto, partecipare a un evento o sostenere la squadra, scrivici e ti ricontatteremo al piu presto."
         tone="neutral"
         actions={
           <>
@@ -134,7 +134,7 @@ function ContattiPage() {
           <SectionHeading
             eyebrow="Modulo contatti"
             title="Inviaci un messaggio"
-            description="Compila il modulo qui sotto per richiedere informazioni, supporto o un primo contatto."
+            description="Compila il modulo per richiedere informazioni su attivita, eventi, partecipazione, donazioni o collaborazioni."
           />
 
           <form onSubmit={handleSubmit} className="mt-6 space-y-4">
@@ -172,7 +172,7 @@ function ContattiPage() {
           </form>
         </div>
 
-        <img src={picture} alt="Contatti" className="border-2 border-primary rounded-2xl image-fit" />
+        <img src={picture} alt="Contatti ASD Soccer Dream Fermana" className="border-2 border-primary rounded-2xl image-fit" />
       </section>
     </main>
   )

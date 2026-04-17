@@ -5,53 +5,53 @@ import picture from '../assets/aboutusimage.jpg'
 
 const focusAreas = [
   {
-    label: 'Ascolto e sostegno',
-    text: "Offriamo ascolto, orientamento e sostegno alle persone con disabilità e alle loro famiglie nei bisogni quotidiani e nei momenti di maggiore fragilità.",
+    label: 'Calcio per tutti',
+    text: 'La squadra accoglie ragazzi con disabilita diverse, valorizzando il gioco condiviso piu della prestazione e creando un ambiente sereno e partecipato.',
     tone: 'primary',
   },
   {
-    label: 'Formazione',
-    text: 'Promuoviamo incontri, laboratori e occasioni di approfondimento per crescere insieme come comunità più consapevole, inclusiva e preparata.',
+    label: 'Percorso sportivo',
+    text: 'Il progetto e passato dalla Quarta Categoria alle esperienze legate al calcio paralimpico e sperimentale, mantenendo sempre forte l obiettivo inclusivo.',
     tone: 'secondary',
   },
   {
     label: 'Rete territoriale',
-    text: 'Collaboriamo con scuole, servizi, enti e realtà del territorio per dare continuità ai progetti e valorizzare il punto di vista delle famiglie.',
+    text: 'Soccer Dream Fermana lavora in dialogo con famiglie, volontari, Fermana FC e realta locali per ampliare occasioni di sport, svago e autonomia.',
     tone: 'accent',
   },
 ]
 
 const serviceCards = [
   {
-    title: 'Laboratori e attività',
-    text: 'Proponiamo attività espressive, educative e ricreative che favoriscono benessere, partecipazione, relazione e valorizzazione delle capacità personali.',
+    title: 'Allenamenti e partite',
+    text: 'Ogni appuntamento sul campo diventa una occasione per crescere in gruppo, imparare regole condivise e vivere il calcio con entusiasmo.',
     tone: 'secondary',
   },
   {
-    title: 'Tempo libero e autonomia',
-    text: 'Accompagniamo le persone in esperienze di gruppo e percorsi di autonomia che aiutano a vivere il tempo libero con serenità, relazioni positive e maggiore indipendenza.',
+    title: 'Progetto Insieme Fermana',
+    text: 'La societa ha presentato un percorso per creare una sede propria e attivare spazi di ritrovo, svago e laboratori, dalla cucina alla falegnameria.',
     tone: 'accent',
   },
 ]
 
 const collaborationAreas = [
   {
-    title: 'Incontri e momenti di confronto',
-    meta: 'Approfondimento',
+    title: 'Radici nel territorio',
+    meta: 'Storia',
     description:
-      'Organizziamo momenti di dialogo e approfondimento su temi legati alla disabilità, ai diritti, al benessere e alla partecipazione alla vita sociale.',
+      'Il nome Soccer Dream Fermana nasce dal percorso condiviso con il mondo Montepacini e dalla scelta di usare il calcio come leva di integrazione sociale.',
   },
   {
-    title: 'Progetti costruiti intorno alla persona',
-    meta: 'Progetto di vita',
+    title: 'Collaborazione con Fermana',
+    meta: 'Partnership',
     description:
-      'Promuoviamo percorsi che mettano al centro desideri, bisogni e qualità della vita, favorendo soluzioni più accessibili e personalizzate.',
+      'La sinergia con Fermana FC ha aiutato la visibilita del progetto e ha rafforzato il messaggio che lo sport deve essere un diritto reale e non per pochi.',
   },
   {
-    title: 'Collaborazioni con la comunità',
-    meta: 'Rete associativa',
+    title: 'Un sorriso che conta piu del risultato',
+    meta: 'Visione',
     description:
-      'Lavoriamo insieme ad associazioni, volontari, professionisti e realtà locali per creare opportunità condivise e inclusive.',
+      'Come ha raccontato Marco Calcinaro, l obiettivo non e solo giocare: conta divertirsi, allargare il raggio d azione e far conoscere queste opportunita a piu famiglie.',
   },
 ]
 
@@ -66,8 +66,8 @@ function AboutPage() {
     <main className="space-y-8">
       <PageHero
         eyebrow="Chi siamo"
-        title="Un punto di riferimento per ascolto, inclusione e progetto di vita."
-        description="L'associazione sostiene persone con disabilità e famiglie attraverso ascolto, orientamento, attività dedicate e una rete di collaborazioni che mette al centro la persona."
+        title="ASD Soccer Dream Fermana: una squadra, un progetto, una comunita."
+        description="Soccer Dream Fermana e una realta sportiva inclusiva del territorio fermano che usa il calcio per creare partecipazione, relazioni e occasioni concrete per i ragazzi."
         tone="primary"
         actions={
           <>
@@ -83,17 +83,17 @@ function AboutPage() {
         <div>
           <SectionHeading
             eyebrow="Chi siamo"
-            title="Ascolto, partecipazione e tutela dei diritti nella vita di tutti i giorni."
-            description="La nostra attività unisce sostegno diretto, formazione e collaborazione con il territorio per costruire risposte più umane, accessibili e continuative."
+            title="Sport, inclusione e appartenenza dentro e fuori dal campo."
+            description="Il progetto e cresciuto negli anni grazie a una rete fatta di famiglie, volontari, tecnici e partner del territorio, con una identita fortemente legata a Fermo e Grottazzolina."
           />
           <div className="mt-5 max-w-3xl space-y-3 text-xs font-medium leading-7 text-text/85 md:mt-6 md:space-y-4 md:text-sm md:text-text/80">
             <p>
-              Offriamo ascolto, sostegno e orientamento, accompagnando persone con disabilità e famiglie nei bisogni
-              quotidiani e nei momenti in cui serve un confronto chiaro e affidabile.
+              ASD Soccer Dream Fermana porta avanti attivita sportive inclusive rivolte a ragazzi con diverse
+              disabilita, creando un contesto in cui il gioco favorisce fiducia, amicizia e partecipazione.
             </p>
             <p>
-              Allo stesso tempo promuoviamo occasioni di confronto, attività e collaborazioni che aiutano a costruire
-              una comunità più accogliente, consapevole e vicina ai diritti delle persone.
+              La squadra si e fatta conoscere anche fuori regione e ha preso parte a manifestazioni dedicate
+              all inclusione, come Cagliari No Limits 2024, dove ha conquistato il primo posto nel secondo livello.
             </p>
           </div>
         </div>
@@ -113,12 +113,12 @@ function AboutPage() {
 
       <section className="border-t border-primary/12 bg-background px-6 py-10 md:px-8 md:py-12">
         <div className="grid gap-8 lg:grid-cols-[minmax(320px,0.92fr)_minmax(0,1.08fr)] lg:items-center">
-          <img src={picture} alt="img laboratorio di sport" className="border-2 border-primary rounded-2xl" />
+          <img src={picture} alt="Allenamento di ASD Soccer Dream Fermana" className="border-2 border-primary rounded-2xl" />
           <div>
             <SectionHeading
-              eyebrow="Servizi e progetti"
-              title="Percorsi che danno valore al benessere, al tempo libero e all'autonomia."
-              description="Accanto al sostegno e alla rappresentanza, promuoviamo esperienze concrete che aiutano ogni persona a vivere relazioni, crescita e partecipazione con maggiore serenità."
+              eyebrow="Progetti e attivita"
+              title="Un percorso che parte dal calcio e si apre a nuove esperienze."
+              description="L evoluzione del progetto punta ad allargare spazi, relazioni e attivita, per offrire ai ragazzi luoghi di crescita anche oltre il campo."
             />
             <div className="mt-6 grid gap-5 md:grid-cols-2">
               {serviceCards.map((item) => (
@@ -143,8 +143,8 @@ function AboutPage() {
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <SectionHeading
             eyebrow="Rete territoriale"
-            title="Collaborazioni e attività condivise per una comunità più inclusiva."
-            description="L'associazione lavora con istituzioni, professionisti e realtà del territorio per trasformare i bisogni in iniziative concrete e occasioni di partecipazione."
+            title="Collaborazioni che fanno crescere Soccer Dream Fermana."
+            description="Il progetto si sviluppa con il sostegno del territorio e con partnership che aiutano a dare continuita alle attivita e visibilita ai ragazzi."
           />
           <ActionLink to="/contatti" variant="secondary">
             Parla con noi

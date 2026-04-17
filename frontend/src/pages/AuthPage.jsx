@@ -18,7 +18,7 @@ const initialRegisterState = {
 }
 
 const modeOptions = [
-  { value: 'login', label: 'Ho già un profilo' },
+  { value: 'login', label: 'Ho gia un profilo' },
   { value: 'register', label: 'Crea il tuo profilo' },
 ]
 
@@ -196,7 +196,7 @@ function AuthPage() {
       <PageHero
         eyebrow="Accesso"
         title="Accedi alla tua area o crea il tuo profilo."
-        description="Da qui puoi consultare le tue attività, partecipare agli eventi dell'associazione e restare aggiornato sulle iniziative in programma."
+        description="Da qui puoi seguire gli eventi di ASD Soccer Dream Fermana, gestire le tue partecipazioni e restare aggiornato sulle iniziative della squadra."
         tone="secondary"
         actions={
           <>
@@ -213,7 +213,7 @@ function AuthPage() {
           <SectionHeading
             eyebrow="Area utente"
             title="Un accesso semplice alla tua area personale."
-            description="Usa la tua email per entrare. Se non hai ancora un profilo, puoi crearlo in pochi passaggi."
+            description="Usa la tua email per entrare. Se non hai ancora un profilo, puoi crearlo in pochi passaggi e iniziare a seguire le attivita di Soccer Dream Fermana."
           />
 
           <div className="grid gap-3 md:grid-cols-2">
@@ -233,7 +233,7 @@ function AuthPage() {
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-secondary">Cosa trovi nella tua area</p>
             <p className="mt-3 text-sm leading-7 text-text/80">
               Dopo l&apos;accesso puoi visualizzare le iniziative disponibili, gestire le tue partecipazioni e ricevere
-              le comunicazioni utili dell&apos;associazione.
+              le comunicazioni utili di ASD Soccer Dream Fermana.
             </p>
           </div>
         </div>

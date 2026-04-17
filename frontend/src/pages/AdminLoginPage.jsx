@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import ActionLink from '../components/ActionLink.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
-import PlaceholderImage from '../components/PlaceholderImage.jsx'
 import { useAuth } from '../context/useAuth.js'
 
 const adminLoginFields = [
@@ -11,7 +10,7 @@ const adminLoginFields = [
     name: 'email',
     type: 'email',
     autoComplete: 'email',
-    placeholder: 'admin@nomeassociazione.it',
+    placeholder: 'admin@soccerdreamfermana.it',
   },
   {
     label: 'Password',
@@ -75,8 +74,8 @@ function AdminLoginPage() {
         <div>
           <SectionHeading
             eyebrow="Admin"
-            title="Area riservata per la gestione di eventi, donazioni e contenuti."
-            description="Questa sezione e dedicata alle persone autorizzate che si occupano dell'organizzazione e dell'aggiornamento del sito."
+            title="Area riservata per la gestione dei contenuti di ASD Soccer Dream Fermana."
+            description="Questa sezione e dedicata alle persone autorizzate che si occupano dell organizzazione e dell aggiornamento del sito."
           />
 
           <div className="mt-6 flex flex-wrap gap-3">

@@ -23,12 +23,12 @@ public class DataInitializer {
  @Bean
  public CommandLineRunner seedInitialData() {
   return args -> {
-   if (!userRepository.existsByEmail("admin@associazionedisabili.it")) {
+   if (!userRepository.existsByEmail("admin@soccerdream.it")) {
     userRepository.save(
      User.builder()
-      .nome("Admin Associazione")
-      .email("admin@associazionedisabili.it")
-      .password(passwordEncoder.encode("Admin123!"))
+      .nome("Admin soccerdream")
+      .email("admin@soccerdream.it")
+      .password(passwordEncoder.encode("ilsognofermana"))
       .ruolo(Role.ADMIN)
       .build()
     );

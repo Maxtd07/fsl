@@ -162,8 +162,8 @@ function EventiPage() {
     <main>
       <PageHero
         eyebrow="Eventi"
-        title="Scopri e partecipa ai nostri eventi"
-        description="Incontri, laboratori e momenti di condivisione pensati per le persone con disabilità, le famiglie e la comunità."
+        title="Scopri e partecipa agli eventi di ASD Soccer Dream Fermana"
+        description="Allenamenti, incontri, trasferte e appuntamenti speciali pensati per far crescere la partecipazione dei ragazzi, delle famiglie e del territorio."
         tone="primary"
         actions={
           <>
@@ -180,7 +180,7 @@ function EventiPage() {
           <SectionHeading
             eyebrow="Le tue iscrizioni"
             title="I tuoi eventi prenotati"
-            description="Qui trovi tutti gli eventi ai quali ti sei già iscritto."
+            description="Qui trovi tutti gli appuntamenti di Soccer Dream Fermana ai quali ti sei gia iscritto."
           />
 
           <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -205,7 +205,7 @@ function EventiPage() {
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <SectionHeading
             title="Tutti gli eventi"
-            description="Sfoglia gli appuntamenti disponibili e scegli quelli più adatti a te."
+            description="Sfoglia gli appuntamenti disponibili e scegli quelli piu adatti al tuo percorso con Soccer Dream Fermana."
           />
 
           <div className="flex gap-2">

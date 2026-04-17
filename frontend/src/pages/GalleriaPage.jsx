@@ -160,18 +160,6 @@ function FacebookPostMedia({ post }) {
         </div>
       </div>
     )
-  }  if (isFacebookVideoPost(post) && post.permalinkUrl) {
-    return (
-      <div className="bg-black flex items-center justify-center" style={{ aspectRatio: '9/16', maxHeight: '60vh' }}>
-        <iframe
-          src={getFacebookVideoEmbedUrl(post)}
-          title={post.message ? `Reel Facebook: ${post.message.slice(0, 80)}` : 'Reel Facebook'}
-          style={{ width: '100%', height: '100%', border: 0 }}
-          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-          allowFullScreen
-        />
-      </div>
-    )
   }
 
   if (post.fullPicture) {
@@ -231,8 +219,8 @@ function GalleriaPage() {
     <main className="space-y-8">
       <PageHero
         eyebrow="GALLERIA"
-        title="Scopri i momenti speciali della nostra associazione"
-        description="Guarda le foto degli eventi e le attività della nostra comunità. Ogni immagine racconta una storia di crescita, condivisione e trasformazione."
+        title="Scopri i momenti speciali di ASD Soccer Dream Fermana"
+        description="Guarda foto e aggiornamenti che raccontano allenamenti, eventi, iniziative inclusive e la vita della squadra dentro e fuori dal campo."
         tone="accent"
         actions={
           <>
@@ -247,9 +235,9 @@ function GalleriaPage() {
       {!isLoadingPhotos && photos.length > 0 && (
         <section className="space-y-5 px-6">
           <SectionHeading
-            eyebrow="Foto della comunità"
+            eyebrow="Foto della squadra"
             title="Momenti significativi degli eventi"
-            description="Una raccolta delle foto che documentano le attività, gli incontri e i momenti di crescita della nostra associazione."
+            description="Una raccolta di immagini che documentano attivita, partite, incontri e momenti condivisi da ASD Soccer Dream Fermana."
           />
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -295,7 +283,7 @@ function GalleriaPage() {
               className="absolute right-2 top-2 sm:right-4 sm:top-4 z-10 flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-black/70 text-lg sm:text-xl font-bold text-white transition hover:bg-black"
               aria-label="Chiudi finestra"
             >
-              ✕
+              x
             </button>
             <img
               src={selectedPhoto.immagine}
