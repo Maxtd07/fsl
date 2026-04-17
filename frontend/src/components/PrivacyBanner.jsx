@@ -27,7 +27,7 @@ export function PrivacyBanner() {
             <h2 className="text-lg font-bold text-text">Privacy e Cookie</h2>
             <p className="mt-2 text-sm text-text/75">
               Utilizziamo i tuoi dati nel rispetto della normativa vigente per gestire il sito e i servizi richiesti.
-              Qui trovi una sintesi semplice di cio che trattiamo.
+              Qui trovi una sintesi semplice di ciò che trattiamo.
             </p>
           </div>
 
@@ -35,7 +35,7 @@ export function PrivacyBanner() {
             <p className="text-xs font-semibold text-text/80">Trattiamo:</p>
             <ul className="space-y-1 text-xs text-text/70">
               <li>• Nome, email e dati di accesso</li>
-              <li>• Informazioni utili per la partecipazione alle attivita</li>
+              <li>• Informazioni utili per la partecipazione alle attività</li>
               <li>• Dati comunicati tramite i moduli del sito</li>
               <li>• Cookie tecnici necessari al funzionamento</li>
             </ul>

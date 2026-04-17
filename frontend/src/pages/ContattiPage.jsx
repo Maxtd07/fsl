@@ -22,7 +22,7 @@ const contactCards = [
   },
   {
     label: 'Indirizzo',
-    text: 'Via Roma 123, Citta (PR) 00000',
+    text: 'Via Roma 123, Città (PR) 00000',
   },
 ]
 
@@ -91,7 +91,7 @@ function ContattiPage() {
     } catch {
       setMessage({
         type: 'error',
-        text: 'Errore nell invio del messaggio. Riprova piu tardi.',
+        text: "Errore nell'invio del messaggio. Riprova più tardi.",
       })
     } finally {
       setIsSubmitting(false)
@@ -103,7 +103,7 @@ function ContattiPage() {
       <PageHero
         eyebrow="Contatti"
         title="Entra in contatto con noi"
-        description="Hai bisogno di informazioni, orientamento o vuoi conoscere meglio le attivita dell'associazione? Scrivici e ti risponderemo al piu presto."
+        description="Hai bisogno di informazioni, orientamento o vuoi conoscere meglio le attività dell'associazione? Scrivici e ti risponderemo al più presto."
         tone="neutral"
         actions={
           <>

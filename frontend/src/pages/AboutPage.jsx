@@ -6,30 +6,30 @@ import picture from '../assets/Copilot_20260416_170749.png'
 const focusAreas = [
   {
     label: 'Ascolto e sostegno',
-    text: "Offriamo ascolto, orientamento e sostegno alle persone con disabilita e alle loro famiglie nei bisogni quotidiani e nei momenti di maggiore fragilita.",
+    text: "Offriamo ascolto, orientamento e sostegno alle persone con disabilità e alle loro famiglie nei bisogni quotidiani e nei momenti di maggiore fragilità.",
     tone: 'primary',
   },
   {
     label: 'Formazione',
-    text: 'Promuoviamo incontri, laboratori e occasioni di approfondimento per crescere insieme come comunita piu consapevole, inclusiva e preparata.',
+    text: 'Promuoviamo incontri, laboratori e occasioni di approfondimento per crescere insieme come comunità più consapevole, inclusiva e preparata.',
     tone: 'secondary',
   },
   {
     label: 'Rete territoriale',
-    text: 'Collaboriamo con scuole, servizi, enti e realta del territorio per dare continuita ai progetti e valorizzare il punto di vista delle famiglie.',
+    text: 'Collaboriamo con scuole, servizi, enti e realtà del territorio per dare continuità ai progetti e valorizzare il punto di vista delle famiglie.',
     tone: 'accent',
   },
 ]
 
 const serviceCards = [
   {
-    title: 'Laboratori e attivita',
-    text: 'Proponiamo attivita espressive, educative e ricreative che favoriscono benessere, partecipazione, relazione e valorizzazione delle capacita personali.',
+    title: 'Laboratori e attività',
+    text: 'Proponiamo attività espressive, educative e ricreative che favoriscono benessere, partecipazione, relazione e valorizzazione delle capacità personali.',
     tone: 'secondary',
   },
   {
     title: 'Tempo libero e autonomia',
-    text: 'Accompagniamo le persone in esperienze di gruppo e percorsi di autonomia che aiutano a vivere il tempo libero con serenita, relazioni positive e maggiore indipendenza.',
+    text: 'Accompagniamo le persone in esperienze di gruppo e percorsi di autonomia che aiutano a vivere il tempo libero con serenità, relazioni positive e maggiore indipendenza.',
     tone: 'accent',
   },
 ]
@@ -39,19 +39,19 @@ const collaborationAreas = [
     title: 'Incontri e momenti di confronto',
     meta: 'Approfondimento',
     description:
-      'Organizziamo momenti di dialogo e approfondimento su temi legati alla disabilita, ai diritti, al benessere e alla partecipazione alla vita sociale.',
+      'Organizziamo momenti di dialogo e approfondimento su temi legati alla disabilità, ai diritti, al benessere e alla partecipazione alla vita sociale.',
   },
   {
     title: 'Progetti costruiti intorno alla persona',
     meta: 'Progetto di vita',
     description:
-      'Promuoviamo percorsi che mettano al centro desideri, bisogni e qualita della vita, favorendo soluzioni piu accessibili e personalizzate.',
+      'Promuoviamo percorsi che mettano al centro desideri, bisogni e qualità della vita, favorendo soluzioni più accessibili e personalizzate.',
   },
   {
-    title: 'Collaborazioni con la comunita',
+    title: 'Collaborazioni con la comunità',
     meta: 'Rete associativa',
     description:
-      'Lavoriamo insieme ad associazioni, volontari, professionisti e realta locali per creare opportunita condivise e inclusive.',
+      'Lavoriamo insieme ad associazioni, volontari, professionisti e realtà locali per creare opportunità condivise e inclusive.',
   },
 ]
 
@@ -67,7 +67,7 @@ function AboutPage() {
       <PageHero
         eyebrow="Chi siamo"
         title="Un punto di riferimento per ascolto, inclusione e progetto di vita."
-        description="L'associazione sostiene persone con disabilita e famiglie attraverso ascolto, orientamento, attivita dedicate e una rete di collaborazioni che mette al centro la persona."
+        description="L'associazione sostiene persone con disabilità e famiglie attraverso ascolto, orientamento, attività dedicate e una rete di collaborazioni che mette al centro la persona."
         tone="primary"
         actions={
           <>
@@ -84,16 +84,16 @@ function AboutPage() {
           <SectionHeading
             eyebrow="Chi siamo"
             title="Ascolto, partecipazione e tutela dei diritti nella vita di tutti i giorni."
-            description="La nostra attivita unisce sostegno diretto, formazione e collaborazione con il territorio per costruire risposte piu umane, accessibili e continuative."
+            description="La nostra attività unisce sostegno diretto, formazione e collaborazione con il territorio per costruire risposte più umane, accessibili e continuative."
           />
           <div className="mt-5 max-w-3xl space-y-3 text-xs font-medium leading-7 text-text/85 md:mt-6 md:space-y-4 md:text-sm md:text-text/80">
             <p>
-              Offriamo ascolto, sostegno e orientamento, accompagnando persone con disabilita e famiglie nei bisogni
+              Offriamo ascolto, sostegno e orientamento, accompagnando persone con disabilità e famiglie nei bisogni
               quotidiani e nei momenti in cui serve un confronto chiaro e affidabile.
             </p>
             <p>
-              Allo stesso tempo promuoviamo occasioni di confronto, attivita e collaborazioni che aiutano a costruire
-              una comunita piu accogliente, consapevole e vicina ai diritti delle persone.
+              Allo stesso tempo promuoviamo occasioni di confronto, attività e collaborazioni che aiutano a costruire
+              una comunità più accogliente, consapevole e vicina ai diritti delle persone.
             </p>
           </div>
         </div>
@@ -118,7 +118,7 @@ function AboutPage() {
             <SectionHeading
               eyebrow="Servizi e progetti"
               title="Percorsi che danno valore al benessere, al tempo libero e all'autonomia."
-              description="Accanto al sostegno e alla rappresentanza, promuoviamo esperienze concrete che aiutano ogni persona a vivere relazioni, crescita e partecipazione con maggiore serenita."
+              description="Accanto al sostegno e alla rappresentanza, promuoviamo esperienze concrete che aiutano ogni persona a vivere relazioni, crescita e partecipazione con maggiore serenità."
             />
             <div className="mt-6 grid gap-5 md:grid-cols-2">
               {serviceCards.map((item) => (
@@ -143,8 +143,8 @@ function AboutPage() {
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <SectionHeading
             eyebrow="Rete territoriale"
-            title="Collaborazioni e attivita condivise per una comunita piu inclusiva."
-            description="L'associazione lavora con istituzioni, professionisti e realta del territorio per trasformare i bisogni in iniziative concrete e occasioni di partecipazione."
+            title="Collaborazioni e attività condivise per una comunità più inclusiva."
+            description="L'associazione lavora con istituzioni, professionisti e realtà del territorio per trasformare i bisogni in iniziative concrete e occasioni di partecipazione."
           />
           <ActionLink to="/contatti" variant="secondary">
             Parla con noi

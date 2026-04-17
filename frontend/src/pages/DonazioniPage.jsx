@@ -10,8 +10,8 @@ const donationCards = [
 ]
 
 const impactCards = [
-  'Ogni contributo aiuta a sostenere attivita inclusive, laboratori, incontri e servizi di supporto per persone con disabilita e famiglie.',
-  'Le donazioni rendono possibile portare avanti progetti continuativi, momenti di socialita e iniziative che favoriscono autonomia e partecipazione.',
+  'Ogni contributo aiuta a sostenere attività inclusive, laboratori, incontri e servizi di supporto per persone con disabilità e famiglie.',
+  'Le donazioni rendono possibile portare avanti progetti continuativi, momenti di socialità e iniziative che favoriscono autonomia e partecipazione.',
 ]
 
 function DonazioniPage() {
@@ -19,7 +19,7 @@ function DonazioniPage() {
     <main className="space-y-8">
       <PageHero
         eyebrow="Donazioni"
-        title="Sostieni le attivita dell'associazione."
+        title="Sostieni le attività dell'associazione."
         description="Puoi aiutarci con il tuo 5 per mille oppure con un bonifico bancario. Ogni contributo sostiene progetti, servizi e iniziative inclusive."
         tone="secondary"
         actions={
@@ -35,7 +35,7 @@ function DonazioniPage() {
       <section className="space-y-5 px-6 md:px-8">
         <SectionHeading
           title="Scegli come sostenerci"
-          description="Abbiamo scelto modalita semplici e dirette, adatte a una donazione personale o familiare."
+          description="Abbiamo scelto modalità semplici e dirette, adatte a una donazione personale o familiare."
         />
 
         <div className="grid gap-6 lg:grid-cols-3">
@@ -45,7 +45,7 @@ function DonazioniPage() {
               <p>Nella dichiarazione dei redditi puoi destinare il 5 per mille all'associazione firmando nell'apposito riquadro.</p>
               <p className="font-semibold text-primary">Codice Fiscale:</p>
               <p className="rounded-lg bg-primary/8 p-3 font-mono text-base tracking-wide text-text">00000000000</p>
-              <p className="pt-2 text-xs text-text/60">Non ti costa nulla e aiuta concretamente le attivita associative.</p>
+              <p className="pt-2 text-xs text-text/60">Non ti costa nulla e aiuta concretamente le attività associative.</p>
             </div>
           </article>
 
@@ -100,7 +100,7 @@ function DonazioniPage() {
           <SectionHeading
             eyebrow="Impatto"
             title="Ogni donazione diventa azione concreta."
-            description="Con il tuo supporto possiamo promuovere attivita inclusive, offrire supporto alle famiglie, organizzare eventi e portare avanti progetti dedicati all'autonomia e alla partecipazione."
+            description="Con il tuo supporto possiamo promuovere attività inclusive, offrire supporto alle famiglie, organizzare eventi e portare avanti progetti dedicati all'autonomia e alla partecipazione."
           />
 
           <div className="mt-6 grid gap-4 md:grid-cols-2">
@@ -119,7 +119,7 @@ function DonazioniPage() {
         <SectionHeading
           eyebrow="Hai bisogno di aiuto?"
           title="Siamo disponibili per informazioni sulle donazioni."
-          description="Se desideri una ricevuta, vuoi segnalare una donazione o hai bisogno di chiarimenti sulle modalita di sostegno, puoi contattarci direttamente."
+          description="Se desideri una ricevuta, vuoi segnalare una donazione o hai bisogno di chiarimenti sulle modalità di sostegno, puoi contattarci direttamente."
         />
 
         <div className="mt-6 rounded-lg border border-primary/20 bg-primary/5 px-4 py-4 text-sm leading-7 text-text/80">

@@ -18,6 +18,30 @@ function formatFacebookDate(value) {
   }
 }
 
+function isFacebookVideoPost(post) {
+  const permalinkUrl = post?.permalinkUrl?.toLowerCase() ?? ''
+  return permalinkUrl.includes('/reel/') || permalinkUrl.includes('/videos/')
+}
+
+function getFacebookVideoEmbedUrl(post) {
+  if (!post?.permalinkUrl) {
+    return null
+  }
+
+  return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(post.permalinkUrl)}&show_text=false&width=560`
+}
+
+function VideoBadge() {
+  return (
+    <div className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-black/70 px-3 py-1 text-xs font-semibold text-white">
+      <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M8 5.14v14l11-7-11-7z" />
+      </svg>
+      Reel
+    </div>
+  )
+}
+
 function SocialMediaFeed({ posts, isLoading, error, onPostClick }) {
   if (isLoading) {
     return (
@@ -54,7 +78,7 @@ function SocialMediaFeed({ posts, isLoading, error, onPostClick }) {
         <button
           key={post.id}
           onClick={() => onPostClick(post)}
-          className="group overflow-hidden rounded-[1.75rem] border border-primary/15 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg text-left"
+          className="group overflow-hidden rounded-[1.75rem] border border-primary/15 bg-white text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
           aria-label={`Visualizza post Facebook: ${post.message ? post.message.slice(0, 80) : 'Nuovo aggiornamento'}`}
         >
           <div className="flex h-full flex-col">
@@ -66,6 +90,7 @@ function SocialMediaFeed({ posts, isLoading, error, onPostClick }) {
                   className="h-56 w-full object-cover transition-transform duration-300 group-hover:scale-105"
                   loading="lazy"
                 />
+                {isFacebookVideoPost(post) && <VideoBadge />}
                 <div className="absolute inset-0 bg-black/0 transition-all duration-300 group-hover:bg-black/10" />
               </div>
             ) : (
@@ -76,15 +101,17 @@ function SocialMediaFeed({ posts, isLoading, error, onPostClick }) {
 
             <div className="flex flex-1 flex-col p-5">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-secondary">
-                Facebook
+                {isFacebookVideoPost(post) ? 'Facebook Reel' : 'Facebook'}
               </p>
               <h3 className="mt-3 text-lg font-bold leading-tight text-text">
                 {post.message ? post.message.slice(0, 120) : 'Nuovo aggiornamento dalla nostra pagina Facebook'}
               </h3>
               <p className="mt-3 flex-1 text-sm leading-6 text-text/75">
-                {post.message && post.message.length > 120 ? `${post.message.slice(0, 120)}...` : 'Apri il post per vedere il contenuto completo.'}
+                {post.message && post.message.length > 120
+                  ? `${post.message.slice(0, 120)}...`
+                  : 'Apri il post per vedere il contenuto completo.'}
               </p>
-              <div className="mt-4 flex gap-3 text-xs text-text/60 border-t border-primary/10 pt-3">
+              <div className="mt-4 flex gap-3 border-t border-primary/10 pt-3 text-xs text-text/60">
                 <span className="flex items-center gap-1.5">
                   <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
@@ -102,7 +129,7 @@ function SocialMediaFeed({ posts, isLoading, error, onPostClick }) {
                 <span className="text-xs font-medium uppercase tracking-[0.18em] text-text/55">
                   {formatFacebookDate(post.createdTime)}
                 </span>
-                <span className="inline-flex items-center justify-center rounded-full border border-primary/20 px-4 py-2 text-xs font-semibold text-primary bg-white group-hover:bg-primary/5 transition">
+                <span className="inline-flex items-center justify-center rounded-full border border-primary/20 bg-white px-4 py-2 text-xs font-semibold text-primary transition group-hover:bg-primary/5">
                   Visualizza
                 </span>
               </div>
@@ -112,6 +139,53 @@ function SocialMediaFeed({ posts, isLoading, error, onPostClick }) {
       ))}
     </div>
   )
+}
+
+function FacebookPostMedia({ post }) {
+  if (isFacebookVideoPost(post) && post.permalinkUrl) {
+    return (
+      <div className="bg-black flex items-center justify-center py-4">
+        <div
+          className="w-full max-w-[360px] mx-auto"
+          style={{ aspectRatio: '9/16' }}
+        >
+          <iframe
+            src={getFacebookVideoEmbedUrl(post)}
+            title={post.message ? `Reel Facebook: ${post.message.slice(0, 80)}` : 'Reel Facebook'}
+            className="w-full h-full rounded-lg"
+            style={{ border: 0 }}
+            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        </div>
+      </div>
+    )
+  }  if (isFacebookVideoPost(post) && post.permalinkUrl) {
+    return (
+      <div className="bg-black flex items-center justify-center" style={{ aspectRatio: '9/16', maxHeight: '60vh' }}>
+        <iframe
+          src={getFacebookVideoEmbedUrl(post)}
+          title={post.message ? `Reel Facebook: ${post.message.slice(0, 80)}` : 'Reel Facebook'}
+          style={{ width: '100%', height: '100%', border: 0 }}
+          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+          allowFullScreen
+        />
+      </div>
+    )
+  }
+
+  if (post.fullPicture) {
+    return (
+      <img
+        src={post.fullPicture}
+        alt={post.message ? post.message.slice(0, 80) : 'Post Facebook'}
+        className="w-full object-cover"
+        style={{ maxHeight: '45vh' }}
+      />
+    )
+  }
+
+  return null
 }
 
 function GalleriaPage() {
@@ -158,7 +232,7 @@ function GalleriaPage() {
       <PageHero
         eyebrow="GALLERIA"
         title="Scopri i momenti speciali della nostra associazione"
-        description="Guarda le foto degli eventi e le attivita della nostra comunita. Ogni immagine racconta una storia di crescita, condivisione e trasformazione."
+        description="Guarda le foto degli eventi e le attività della nostra comunità. Ogni immagine racconta una storia di crescita, condivisione e trasformazione."
         tone="accent"
         actions={
           <>
@@ -173,9 +247,9 @@ function GalleriaPage() {
       {!isLoadingPhotos && photos.length > 0 && (
         <section className="space-y-5 px-6">
           <SectionHeading
-            eyebrow="Foto della comunita"
+            eyebrow="Foto della comunità"
             title="Momenti significativi degli eventi"
-            description="Una raccolta delle foto che documentano le attivita, gli incontri e i momenti di crescita della nostra associazione."
+            description="Una raccolta delle foto che documentano le attività, gli incontri e i momenti di crescita della nostra associazione."
           />
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -209,29 +283,30 @@ function GalleriaPage() {
 
       {selectedPhoto && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 overflow-y-auto"
           onClick={() => setSelectedPhoto(null)}
         >
           <div
-            className="relative w-full max-w-lg overflow-hidden rounded-lg bg-black shadow-2xl"
+            className="relative my-auto w-full max-w-lg overflow-hidden rounded-lg bg-black shadow-2xl"
             onClick={(event) => event.stopPropagation()}
           >
             <button
               onClick={() => setSelectedPhoto(null)}
-              className="absolute right-4 top-4 z-10 text-lg font-bold text-white transition hover:opacity-70"
+              className="absolute right-2 top-2 sm:right-4 sm:top-4 z-10 flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-black/70 text-lg sm:text-xl font-bold text-white transition hover:bg-black"
+              aria-label="Chiudi finestra"
             >
-              x
+              ✕
             </button>
             <img
               src={selectedPhoto.immagine}
               alt={selectedPhoto.titolo}
               className="h-auto max-h-[70vh] w-full object-contain"
             />
-            <div className="bg-base p-4">
-              <h2 className="mb-1 text-lg font-bold text-text">
+            <div className="bg-base p-3 sm:p-4">
+              <h2 className="mb-1 text-base sm:text-lg font-bold text-text line-clamp-2">
                 {selectedPhoto.titolo}
               </h2>
-              <p className="text-sm text-text/75">
+              <p className="text-xs sm:text-sm text-text/75 line-clamp-3">
                 {selectedPhoto.descrizione}
               </p>
             </div>
@@ -258,46 +333,48 @@ function GalleriaPage() {
 
       {selectedFacebookPost && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 overflow-y-auto"
           onClick={() => setSelectedFacebookPost(null)}
         >
           <div
-            className="relative w-full max-w-[37rem] overflow-hidden rounded-2xl bg-white shadow-2xl"
+            className={`relative my-auto w-full ${isFacebookVideoPost(selectedFacebookPost) ? 'max-w-md' : 'max-w-2xl'} overflow-hidden rounded-2xl bg-white shadow-2xl`}
             onClick={(event) => event.stopPropagation()}
           >
             <button
               onClick={() => setSelectedFacebookPost(null)}
               className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-lg font-bold text-white transition hover:bg-black/80"
-              aria-label="Chiudi modal"
+              aria-label="Chiudi finestra"
             >
-              ✕
+              x
             </button>
 
-            {selectedFacebookPost.fullPicture && (
-              <img
-                src={selectedFacebookPost.fullPicture}
-                alt={selectedFacebookPost.message ? selectedFacebookPost.message.slice(0, 80) : 'Post Facebook'}
-                className="h-auto max-h-[60vh] w-full object-contain"
-              />
-            )}
+            <FacebookPostMedia post={selectedFacebookPost} />
 
-            <div className="space-y-4 bg-base p-6 md:p-8">
+            <div className="space-y-4 bg-base p-4 sm:p-6 md:p-8 overflow-y-auto max-h-[calc(100vh-120px)]">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-secondary mb-2">
-                  Facebook
+                <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-secondary">
+                  {isFacebookVideoPost(selectedFacebookPost) ? 'Facebook Reel' : 'Facebook'}
                 </p>
-                <h2 className="text-2xl font-bold text-text">
-                  {selectedFacebookPost.message ? selectedFacebookPost.message.slice(0, 100) : 'Aggiornamento dalla nostra pagina'}
+                <h2 className="text-xl sm:text-2xl font-bold text-text">
+                  {selectedFacebookPost.message
+                    ? selectedFacebookPost.message.slice(0, 100)
+                    : 'Aggiornamento dalla nostra pagina'}
                 </h2>
               </div>
 
               {selectedFacebookPost.message && (
-                <p className="text-base leading-7 text-text/80">
+                <p className="text-sm sm:text-base leading-6 sm:leading-7 text-text/80">
                   {selectedFacebookPost.message}
                 </p>
               )}
 
-              <div className="flex gap-6 py-4 border-y border-primary/15 text-sm text-text/70">
+              {isFacebookVideoPost(selectedFacebookPost) && (
+                <p className="rounded-xl sm:rounded-2xl border border-primary/15 bg-primary/5 px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm text-text/75">
+                  Se il reel non viene riprodotto nel riquadro, puoi aprirlo direttamente su Facebook dal pulsante qui sotto.
+                </p>
+              )}
+
+              <div className="flex gap-6 border-y border-primary/15 py-3 sm:py-4 text-xs sm:text-sm text-text/70">
                 <span className="flex items-center gap-2">
                   <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
@@ -312,8 +389,8 @@ function GalleriaPage() {
                 </span>
               </div>
 
-              <div className="flex items-center justify-between border-t border-primary/15 pt-4">
-                <span className="text-sm font-medium text-text/60">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 border-t border-primary/15 pt-3 sm:pt-4">
+                <span className="text-xs sm:text-sm font-medium text-text/60">
                   {formatFacebookDate(selectedFacebookPost.createdTime)}
                 </span>
                 {selectedFacebookPost.permalinkUrl && (
@@ -321,7 +398,7 @@ function GalleriaPage() {
                     href={selectedFacebookPost.permalinkUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white shadow-[0_4px_12px_rgba(76,130,169,0.3)] transition hover:bg-primary/92"
+                    className="inline-flex items-center justify-center rounded-full bg-primary px-4 sm:px-5 py-2 text-xs sm:text-sm font-semibold text-white shadow-[0_4px_12px_rgba(76,130,169,0.3)] transition hover:bg-primary/92 whitespace-nowrap"
                   >
                     Apri su Facebook
                   </a>

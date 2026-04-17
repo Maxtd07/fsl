@@ -1,8 +1,5 @@
 # Dependencies
 node_modules/
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
 
 # Build and compilation output
 dist/
@@ -78,8 +75,12 @@ Thumbs.db
 
 # Database
 *.db
+*.mv.db
+*.trace.db
 *.sqlite
 *.sqlite3
+backend/data/*
+!backend/data/.gitkeep
 
 # Temporary files
 *.tmp

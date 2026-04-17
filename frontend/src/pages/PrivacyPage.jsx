@@ -6,7 +6,7 @@ const privacySections = [
     eyebrow: 'Titolare del trattamento',
     title: 'Chi gestisce i dati',
     text:
-      "Il titolare del trattamento e l'associazione. Per richieste relative alla privacy puoi scrivere all'indirizzo email indicato nella pagina contatti o rivolgerti alla sede associativa.",
+      "Il titolare del trattamento è l'associazione. Per richieste relative alla privacy puoi scrivere all'indirizzo email indicato nella pagina contatti o rivolgerti alla sede associativa.",
   },
   {
     eyebrow: 'Dati raccolti',
@@ -15,8 +15,8 @@ const privacySections = [
       "Raccogliamo i dati necessari a gestire il sito e i servizi dell'associazione, come nome, email, credenziali di accesso, richieste inviate tramite i moduli online, adesioni agli eventi e informazioni legate alle donazioni volontarie.",
   },
   {
-    eyebrow: 'Finalita',
-    title: 'Perche usiamo i dati',
+    eyebrow: 'Finalità',
+    title: 'Perché usiamo i dati',
     text:
       "Usiamo i dati per creare e gestire i profili utente, consentire l'accesso all'area personale, organizzare la partecipazione agli eventi, rispondere ai messaggi inviati dal sito e curare le comunicazioni dell'associazione.",
   },
@@ -30,7 +30,7 @@ const privacySections = [
     eyebrow: 'Conservazione',
     title: 'Per quanto tempo conserviamo i dati',
     text:
-      "Conserviamo i dati per il tempo necessario a gestire il rapporto con l'utente, rispettare gli obblighi amministrativi e documentare le attivita associative. Quando non sono piu necessari, i dati vengono cancellati o resi anonimi.",
+      "Conserviamo i dati per il tempo necessario a gestire il rapporto con l'utente, rispettare gli obblighi amministrativi e documentare le attività associative. Quando non sono più necessari, i dati vengono cancellati o resi anonimi.",
   },
   {
     eyebrow: 'Sicurezza',
@@ -39,16 +39,16 @@ const privacySections = [
       "Adottiamo misure tecniche e organizzative adeguate per proteggere le informazioni personali, limitare gli accessi non autorizzati e garantire un uso corretto dei dati raccolti.",
   },
   {
-    eyebrow: 'Diritti dell utente',
+    eyebrow: "Diritti dell'utente",
     title: 'Accesso, rettifica, cancellazione e opposizione',
     text:
-      "Puoi chiedere accesso ai tuoi dati, rettifica, cancellazione, limitazione del trattamento, portabilita o opposizione, nei limiti previsti dal GDPR. Puoi anche revocare eventuali consensi e proporre reclamo all'autorita garante competente.",
+      "Puoi chiedere accesso ai tuoi dati, rettifica, cancellazione, limitazione del trattamento, portabilità o opposizione, nei limiti previsti dal GDPR. Puoi anche revocare eventuali consensi e proporre reclamo all'autorità garante competente.",
   },
   {
     eyebrow: 'Cookie',
     title: 'Uso di cookie e tecnologie simili',
     text:
-      "Il sito utilizza cookie tecnici e strumenti equivalenti necessari al funzionamento della navigazione, dell'accesso all'area riservata e delle principali funzionalita del servizio.",
+      "Il sito utilizza cookie tecnici e strumenti equivalenti necessari al funzionamento della navigazione, dell'accesso all'area riservata e delle principali funzionalità del servizio.",
   },
 ]
 
@@ -66,7 +66,7 @@ function PrivacyPage() {
         <SectionHeading
           eyebrow="Sintesi"
           title="Trasparenza, attenzione e tutela dei dati."
-          description="L'associazione tratta solo i dati necessari alla gestione del sito, delle comunicazioni, delle attivita e delle donazioni."
+          description="L'associazione tratta solo i dati necessari alla gestione del sito, delle comunicazioni, delle attività e delle donazioni."
         />
 
         <div className="mt-6 grid gap-4 lg:grid-cols-2">
@@ -97,7 +97,7 @@ function PrivacyPage() {
           </div>
           <div className="rounded-lg border border-primary/15 bg-base p-4">
             <p className="text-xs font-bold uppercase tracking-widest text-primary">Sede</p>
-            <p className="mt-3 text-sm text-text/80">Via Roma 123, Citta (PR) 00000</p>
+            <p className="mt-3 text-sm text-text/80">Via Roma 123, Città (PR) 00000</p>
           </div>
         </div>
       </section>

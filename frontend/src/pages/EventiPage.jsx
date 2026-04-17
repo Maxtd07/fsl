@@ -142,7 +142,7 @@ function EventiPage() {
       <PageHero
         eyebrow="Eventi"
         title="Scopri e partecipa ai nostri eventi"
-        description="Incontri, laboratori e momenti di condivisione pensati per le persone con disabilita, le famiglie e la comunita."
+        description="Incontri, laboratori e momenti di condivisione pensati per le persone con disabilità, le famiglie e la comunità."
         tone="primary"
         actions={
           <>
@@ -159,7 +159,7 @@ function EventiPage() {
           <SectionHeading
             eyebrow="Le tue iscrizioni"
             title="I tuoi eventi prenotati"
-            description="Qui trovi tutti gli eventi ai quali ti sei gia iscritto."
+            description="Qui trovi tutti gli eventi ai quali ti sei già iscritto."
           />
 
           <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -184,7 +184,7 @@ function EventiPage() {
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <SectionHeading
             title="Tutti gli eventi"
-            description="Sfoglia gli appuntamenti disponibili e scegli quelli piu adatti a te."
+            description="Sfoglia gli appuntamenti disponibili e scegli quelli più adatti a te."
           />
 
           <div className="flex gap-2">

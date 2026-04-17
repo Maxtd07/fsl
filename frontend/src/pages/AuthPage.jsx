@@ -18,7 +18,7 @@ const initialRegisterState = {
 }
 
 const modeOptions = [
-  { value: 'login', label: 'Ho gia un profilo' },
+  { value: 'login', label: 'Ho già un profilo' },
   { value: 'register', label: 'Crea il tuo profilo' },
 ]
 
@@ -196,7 +196,7 @@ function AuthPage() {
       <PageHero
         eyebrow="Accesso"
         title="Accedi alla tua area o crea il tuo profilo."
-        description="Da qui puoi consultare le tue attivita, partecipare agli eventi dell'associazione e restare aggiornato sulle iniziative in programma."
+        description="Da qui puoi consultare le tue attività, partecipare agli eventi dell'associazione e restare aggiornato sulle iniziative in programma."
         tone="secondary"
         actions={
           <>
