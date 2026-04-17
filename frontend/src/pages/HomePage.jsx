@@ -81,8 +81,8 @@ function HomePage() {
     <main>
       <PageHero
         eyebrow="Benvenuti"
-        title="Una comunita che mette al centro la persona."
-        description="Sosteniamo persone con disabilita e famiglie attraverso ascolto, attivita inclusive, orientamento e opportunita di partecipazione. Ogni percorso nasce dai bisogni reali e valorizza le capacita di ciascuno."
+        title="Una comunità che mette al centro la persona."
+        description="Sosteniamo persone con disabilità e famiglie attraverso ascolto, attività inclusive, orientamento e opportunità di partecipazione. Ogni percorso nasce dai bisogni reali e valorizza le capacità di ciascuno."
         tone="primary"
       />
 
@@ -92,36 +92,36 @@ function HomePage() {
             <SectionHeading
               eyebrow="Chi siamo"
               title="Un'associazione vicina alle persone e alle famiglie"
-              description="Lavoriamo ogni giorno per promuovere inclusione, autonomia e qualita della vita attraverso servizi, iniziative e relazioni costruite con attenzione."
+              description="Lavoriamo ogni giorno per promuovere inclusione, autonomia e qualità della vita attraverso servizi, iniziative e relazioni costruite con attenzione."
             />
 
             <p className="mt-5 max-w-3xl text-xs font-medium leading-7 text-text md:mt-6 md:text-sm">
-              Crediamo che ogni persona abbia risorse, desideri e possibilita da far emergere attraverso esperienze
-              concrete e relazioni significative. Per questo promuoviamo attivita educative, laboratori, momenti di
-              incontro e percorsi personalizzati che aiutano a sentirsi parte della comunita. Lavoriamo con attenzione,
-              continuita e collaborazione per offrire sostegno reale nella vita di tutti i giorni.
+              Crediamo che ogni persona abbia risorse, desideri e possibilità da far emergere attraverso esperienze
+              concrete e relazioni significative. Per questo promuoviamo attività educative, laboratori, momenti di
+              incontro e percorsi personalizzati che aiutano a sentirsi parte della comunità. Lavoriamo con attenzione,
+              continuità e collaborazione per offrire sostegno reale nella vita di tutti i giorni.
             </p>
 
             <div className="mt-6">
               <ActionLink to="/chi-siamo" variant="secondary" className="text-sm md:text-base">
-                Scopri di piu
+                Scopri di più
               </ActionLink>
             </div>
           </div>
 
           <div className="grid gap-5">
             <div className="rounded-lg border border-primary/20 bg-background px-4 py-4 shadow-sm md:px-5 md:py-5">
-              <p className="text-xs font-bold uppercase tracking-widest text-secondary">Identita e missione</p>
+              <p className="text-xs font-bold uppercase tracking-widest text-secondary">Identità e missione</p>
               <p className="mt-2 text-xs font-medium leading-6 text-text md:mt-3 md:text-sm md:leading-7">
-                Promuoviamo inclusione, ascolto e partecipazione, mettendo al centro la dignita, i diritti e le
-                capacita di ogni persona.
+                Promuoviamo inclusione, ascolto e partecipazione, mettendo al centro la dignità, i diritti e le
+                capacità di ogni persona.
               </p>
             </div>
 
             <div className="rounded-lg border border-secondary/30 bg-secondary/8 px-4 py-4 shadow-sm md:px-5 md:py-5">
-              <p className="text-xs font-bold uppercase tracking-widest text-secondary">Metodo e attivita</p>
+              <p className="text-xs font-bold uppercase tracking-widest text-secondary">Metodo e attività</p>
               <p className="mt-2 text-xs font-medium leading-6 text-text md:mt-3 md:text-sm md:leading-7">
-                Costruiamo percorsi su misura con laboratori, attivita di gruppo e iniziative che favoriscono
+                Costruiamo percorsi su misura con laboratori, attività di gruppo e iniziative che favoriscono
                 benessere, autonomia e relazioni positive.
               </p>
             </div>
@@ -181,7 +181,7 @@ function HomePage() {
           <SectionHeading
             eyebrow="Galleria"
             title="Ultimi scatti dalla nostra community"
-            description="Momenti condivisi durante attivita, laboratori ed eventi dell'associazione."
+            description="Momenti condivisi durante attività, laboratori ed eventi dell'associazione."
           />
 
           <ActionLink to="/galleria" variant="secondary" className="whitespace-nowrap flex-shrink-0">
@@ -249,10 +249,10 @@ function HomePage() {
 
       <section className="mt-6 rounded-lg border border-primary/20 bg-background px-4 py-10 text-center shadow-lg md:px-6 md:py-12 lg:px-8 lg:py-14">
         <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-primary">Sostieni</p>
-        <h2 className="text-2xl font-bold tracking-tight text-text md:text-3xl lg:text-4xl">Sostieni le nostre attivita</h2>
+        <h2 className="text-2xl font-bold tracking-tight text-text md:text-3xl lg:text-4xl">Sostieni le nostre attività</h2>
         <p className="mx-auto mt-4 max-w-2xl text-xs font-medium leading-6 text-text/75 md:mt-5 md:text-sm md:leading-7">
           Con il tuo contributo ci aiuti a portare avanti progetti concreti, iniziative inclusive e servizi di
-          supporto per persone con disabilita e famiglie.
+          supporto per persone con disabilità e famiglie.
         </p>
 
         <div className="mt-6 flex flex-wrap justify-center gap-2 md:mt-7 md:gap-3">
@@ -272,7 +272,7 @@ function HomePage() {
 
         <p className="mx-auto mt-4 max-w-2xl text-xs font-medium leading-6 text-white/90 md:mt-5 md:text-sm md:leading-7 lg:text-base">
           Hai domande o hai bisogno di informazioni? Contattaci per ricevere supporto, chiarimenti o maggiori dettagli
-          sulle attivita e i servizi dell'associazione.
+          sulle attività e i servizi dell'associazione.
         </p>
 
         <div className="mt-6 flex justify-center md:mt-7">

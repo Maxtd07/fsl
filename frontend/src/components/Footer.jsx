@@ -9,20 +9,18 @@ function Footer() {
   return (
     <footer className="mt-10 w-full bg-dark/80 px-5 py-8 text-sm text-white/80">
       <div className="mx-auto max-w-[80vw]">
-
         {/* Top Section */}
         <div className="mb-6 border-b border-white/10 pb-5">
           <p className="text-[11px] font-bold uppercase tracking-wide text-white">
             Associazione Disabili
           </p>
           <p className="mt-2 max-w-lg text-xs leading-relaxed text-white/70">
-            quote motivazionale o slogan dell'associazione, che trasmetta empatia e impegno verso la causa dei disabili. Può essere una frase breve ma potente che riassume la mission
+            Ascolto, inclusione e partecipazione: ogni persona conta, ogni famiglia merita sostegno.
           </p>
         </div>
 
         {/* Grid */}
         <div className="grid grid-cols-2 gap-6 text-xs md:grid-cols-3">
-
           {/* Social */}
           <div>
             <p className="mb-2 font-semibold uppercase tracking-wide text-white">
@@ -75,11 +73,10 @@ function Footer() {
                 Privacy Policy
               </Link>
               <p className="text-[11px]">
-                Via Roma 123, Citta (PR) 00000
+                Via Roma 123, Città (PR) 00000
               </p>
             </div>
           </div>
-
         </div>
 
         {/* Bottom */}
@@ -87,7 +84,6 @@ function Footer() {
           <p>© Associazione Disabili 2026</p>
           <p>Sviluppato da Max Ten Dam e Daniele Soldi</p>
         </div>
-
       </div>
     </footer>
   )
