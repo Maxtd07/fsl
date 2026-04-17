@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import ActionLink from '../components/ActionLink.jsx'
 import PageHero from '../components/PageHero.jsx'
 import PlaceholderImage from '../components/PlaceholderImage.jsx'
@@ -48,6 +49,7 @@ function getViewModeButtonClassName(isActive) {
 
 function EventiPage() {
   const { isAuthenticated } = useAuth()
+  const [searchParams, setSearchParams] = useSearchParams()
   const [events, setEvents] = useState([])
   const [myBookings, setMyBookings] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -55,6 +57,7 @@ function EventiPage() {
   const [selectedEvent, setSelectedEvent] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [viewMode, setViewMode] = useState('list')
+  const requestedEventId = searchParams.get('eventId')
 
   const loadEvents = async () => {
     setIsLoading(true)
@@ -130,7 +133,25 @@ function EventiPage() {
   const closeModal = () => {
     setIsModalOpen(false)
     setSelectedEvent(null)
+    if (requestedEventId) {
+      setSearchParams({}, { replace: true })
+    }
   }
+
+  useEffect(() => {
+    if (isLoading || !requestedEventId || events.length === 0) {
+      return
+    }
+
+    const requestedEvent = events.find((event) => String(event.id) === requestedEventId)
+
+    if (!requestedEvent) {
+      return
+    }
+
+    setSelectedEvent(requestedEvent)
+    setIsModalOpen(true)
+  }, [events, isLoading, requestedEventId])
 
   const showLoadingState = isLoading
   const showErrorState = !isLoading && Boolean(error)
