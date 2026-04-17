@@ -48,7 +48,7 @@ function PageHero({ eyebrow, title, description, actions, tone = 'primary' }) {
       </div>
 
       {/* Left Column - Eyebrow + Title */}
-      <div className="relative">
+      <div className="relative px-2">
         {eyebrow && (
           <p
             className={`mb-4 inline-flex rounded-full px-3 py-1.5 text-xs font-bold uppercase tracking-widest backdrop-blur-sm ${styles.eyebrow}`}
@@ -76,7 +76,7 @@ function PageHero({ eyebrow, title, description, actions, tone = 'primary' }) {
 
       {/* Right Column - Description on Desktop Only */}
       {description && (
-        <div className="relative hidden md:flex flex-col justify-center">
+        <div className="relative hidden md:flex flex-col justify-center px-2">
           <p className="max-w-xl text-base text-xl leading-relaxed text-text/80">
             {description}
           </p>

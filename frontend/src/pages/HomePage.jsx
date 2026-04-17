@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import ActionLink from '../components/ActionLink.jsx'
 import MediaTile from '../components/MediaTile.jsx'
 import PageHero from '../components/PageHero.jsx'
@@ -152,13 +153,20 @@ function HomePage() {
         ) : displayedEvents.length > 0 ? (
           <div className="grid gap-6 lg:grid-cols-3">
             {displayedEvents.map((event) => (
-              <MediaTile
+              <Link
                 key={event.id}
-                title={event.titolo}
-                meta={formatEventMeta(event)}
-                description={event.descrizione}
-                alt={event.titolo}
-              />
+                to={`/eventi?eventId=${encodeURIComponent(event.id)}`}
+                className="block transition-transform duration-200 hover:scale-[1.01] focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 rounded-[1.75rem]"
+                aria-label={`Apri dettagli evento: ${event.titolo}`}
+              >
+                <MediaTile
+                  title={event.titolo}
+                  meta={formatEventMeta(event)}
+                  description={event.descrizione}
+                  alt={event.titolo}
+                  imageSrc={event.volantino}
+                />
+              </Link>
             ))}
           </div>
         ) : (
