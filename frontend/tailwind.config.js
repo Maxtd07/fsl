@@ -11,8 +11,8 @@ export default {
     extend: {
       colors: {
         primary: "#0E50AB",   // steel blue - primary elements, CTA, focus
-        secondary: "#5A9638", // olive/green - success, support, events
-        accent: "#FFEE24",    // sandy orange - hover, highlight, interactions
+        secondary: "#ff0000c5", // olive/green - success, support, events
+        accent: "#f47404",    // sandy orange - hover, highlight, interactions
         base: "#FFFFFF",      // white - containers
         dark: "#000000",      // black - dark backgrounds
         text: "#1F2933",      // softer black - default text

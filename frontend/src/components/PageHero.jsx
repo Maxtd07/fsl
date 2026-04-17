@@ -32,12 +32,13 @@ const heroTones = {
   },
 }
 
-function PageHero({ eyebrow, title, description, actions, tone = 'primary' }) {
+function PageHero({ eyebrow, title, description, actions, tone = 'primary', children }) {
   const styles = heroTones[tone] ?? heroTones.primary
 
   return (
     <section
-      className={`relative overflow-hidden rounded-lg p-8 md:p-12 lg:p-16 shadow-lg md:grid md:grid-cols-2 lg:gap-8 mt-28  ${styles.surface}`}
+      className={`relative overflow-hidden rounded-lg p-8 md:p-12 lg:p-16 shadow-lg 
+      md:grid md:grid-cols-2 lg:grid-cols-3 lg:gap-8 mt-28 ${styles.surface}`}
     >
       {/* Decorative Blur Elements */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
@@ -47,8 +48,8 @@ function PageHero({ eyebrow, title, description, actions, tone = 'primary' }) {
         />
       </div>
 
-      {/* Left Column - Eyebrow + Title */}
-      <div className="relative px-2">
+      {/* Left Column */}
+      <div className="relative px-2 col-span-1">
         {eyebrow && (
           <p
             className={`mb-4 inline-flex rounded-full px-3 py-1.5 text-xs font-bold uppercase tracking-widest backdrop-blur-sm ${styles.eyebrow}`}
@@ -61,7 +62,7 @@ function PageHero({ eyebrow, title, description, actions, tone = 'primary' }) {
           {title}
         </h1>
 
-        {/* Description on Mobile, and Actions */}
+        {/* Description on Mobile */}
         <p className="mt-6 md:mt-8 max-w-2xl text-base font-medium leading-relaxed text-text/80 md:hidden">
           {description}
         </p>
@@ -74,12 +75,19 @@ function PageHero({ eyebrow, title, description, actions, tone = 'primary' }) {
         )}
       </div>
 
-      {/* Right Column - Description on Desktop Only */}
+      {/* Middle Column (desktop description) */}
       {description && (
-        <div className="relative hidden md:flex flex-col justify-center px-2">
+        <div className="relative hidden md:flex flex-col justify-center px-2 col-span-1">
           <p className="max-w-xl text-base text-xl leading-relaxed text-text/80">
             {description}
           </p>
+        </div>
+      )}
+
+      {/* Right Column (children → logo) */}
+      {children && (
+        <div className="relative flex justify-center lg:justify-end items-center px-2 col-span-1">
+          {children}
         </div>
       )}
     </section>

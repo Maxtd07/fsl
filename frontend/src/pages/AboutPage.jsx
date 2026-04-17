@@ -7,6 +7,8 @@ import MemberCard from '../components/members/MemberCard.jsx'
 import { fetchMembers } from '../lib/api.js'
 import { formatMemberPosition, MEMBER_POSITIONS, isPlayerRole, sortMembersByName } from '../lib/members.js'
 import { TEAM_NAME } from '../lib/site.js'
+import logo from '../assets/logo.png'
+
 
 const focusAreas = [
   {
@@ -159,7 +161,17 @@ function AboutPage() {
             </ActionLink>
           </>
         }
-      />
+      >
+        
+        <div className="flex justify-center md:justify-end mt-8 md:mt-0">
+          <img
+            src={logo}
+            alt="Logo Soccer Dream Fermana"
+            className="w-40 md:w-100 h-auto drop-shadow-lg"
+          />
+        </div>
+
+      </PageHero>
 
       <section className="grid gap-10 px-6 py-10 md:px-8 md:py-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)]">
         <div>
