@@ -6,6 +6,7 @@ import PlaceholderImage from '../components/PlaceholderImage.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
 import { fetchEvents, fetchMyBookings, getEventCalendarLink } from '../lib/api.js'
 import { useAuth } from '../context/useAuth.js'
+import { useFetch } from '../hooks/useFetch.js'
 import { Calendar } from '../components/Calendar.jsx'
 import { EventModal as EventDetailsModal } from '../components/EventModal.jsx'
 import { formatEventType, isGenericEvent, isMatchEvent } from '../lib/events.js'
@@ -51,78 +52,17 @@ function getViewModeButtonClassName(isActive) {
 function EventiPage() {
   const { isAuthenticated } = useAuth()
   const [searchParams, setSearchParams] = useSearchParams()
-  const [events, setEvents] = useState([])
-  const [myBookings, setMyBookings] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState('')
   const [selectedEvent, setSelectedEvent] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [viewMode, setViewMode] = useState('list')
   const requestedEventId = searchParams.get('eventId')
 
-  const loadEvents = async () => {
-    setIsLoading(true)
-
-    try {
-      const data = await fetchEvents()
-      setEvents(Array.isArray(data) ? data : [])
-      setError('')
-    } catch (err) {
-      setError(err.message || 'Errore nel caricamento degli eventi.')
-      setEvents([])
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  const loadBookings = async () => {
-    if (!isAuthenticated) {
-      setMyBookings([])
-      return
-    }
-
-    try {
-      const bookings = await fetchMyBookings()
-      setMyBookings(Array.isArray(bookings) ? bookings : [])
-    } catch {
-      setMyBookings([])
-    }
-  }
-
-  const refreshEventData = async () => {
-    await Promise.all([loadEvents(), loadBookings()])
-  }
-
-  useEffect(() => {
-    async function initializePage() {
-      setIsLoading(true)
-
-      try {
-        const data = await fetchEvents()
-        setEvents(Array.isArray(data) ? data : [])
-        setError('')
-      } catch (err) {
-        setError(err.message || 'Errore nel caricamento degli eventi.')
-        setEvents([])
-      } finally {
-        setIsLoading(false)
-      }
-
-      if (!isAuthenticated) {
-        setMyBookings([])
-        return
-      }
-
-      try {
-        const bookings = await fetchMyBookings()
-        setMyBookings(Array.isArray(bookings) ? bookings : [])
-      } catch {
-        setMyBookings([])
-      }
-    }
-
-    initializePage()
-  }, [isAuthenticated])
+  // Usa custom hook per fetch events e bookings
+  const { data: events, isLoading, error, refetch: refetchEvents } = useFetch(fetchEvents, [])
+  const { data: myBookings, refetch: refetchBookings } = useFetch(
+    isAuthenticated ? fetchMyBookings : async () => [],
+    [isAuthenticated]
+  )
 
   const bookedEventIds = useMemo(() => new Set(myBookings.map((b) => b.eventId)), [myBookings])
   const matchEvents = useMemo(() => events.filter(isMatchEvent), [events])
@@ -139,6 +79,10 @@ function EventiPage() {
     if (requestedEventId) {
       setSearchParams({}, { replace: true })
     }
+  }
+
+  const refreshEventData = async () => {
+    await Promise.all([refetchEvents(), refetchBookings()])
   }
 
   useEffect(() => {

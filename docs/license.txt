@@ -1,9 +1,7 @@
-Copyright (c) 2026 Energy & Co
+© 2026 ASD Soccer Dream Fermana. Tutti i diritti riservati.
 
-All rights reserved.
+Questo repository è pubblicamente accessibile esclusivamente per scopi di visualizzazione.
 
-This repository is publicly accessible for viewing purposes only.
+Non è concesso alcun permesso per utilizzare, copiare, modificare, unire, pubblicare, distribuire, sublicenziare o vendere qualsiasi parte di questo codebase senza il consenso scritto esplicito di ASD Soccer Dream Fermana.
 
-No permission is granted to use, copy, modify, merge, publish, distribute, sublicense, or sell any part of this codebase without explicit written consent from Your Company Name.
-
-For licensing inquiries, contact: maxtd2007@protonmail.com
+Per richieste di licenza, contattare: info@soccerdreamfermana.it

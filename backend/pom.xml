@@ -6,7 +6,7 @@
   <version>3.3.0</version>
  </parent>
 
- <groupId>com.associazionedisabili</groupId>
+ <groupId>com.soccerdreamfermana</groupId>
  <artifactId>backend</artifactId>
  <version>1.0.0</version>
 
@@ -44,8 +44,9 @@
   </dependency>
 
   <dependency>
-   <groupId>com.h2database</groupId>
-   <artifactId>h2</artifactId>
+   <groupId>com.mysql</groupId>
+   <artifactId>mysql-connector-j</artifactId>
+   <version>8.0.33</version>
    <scope>runtime</scope>
   </dependency>
 

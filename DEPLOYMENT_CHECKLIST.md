@@ -338,7 +338,7 @@ docker-compose up -d
 
 **Backend:**
 ```properties
-logging.level.com.associazionedisabili=DEBUG
+logging.level.com.soccerdreamfermana=DEBUG
 spring.jpa.show-sql=true
 ```
 

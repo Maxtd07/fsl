@@ -1,13 +1,14 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import ActionLink from '../components/ActionLink.jsx'
 import PageHero from '../components/PageHero.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
 import picture from '../assets/aboutusimage.jpg'
 import MemberCard from '../components/members/MemberCard.jsx'
 import { fetchMembers } from '../lib/api.js'
+import { useFetch } from '../hooks/useFetch.js'
 import { formatMemberPosition, MEMBER_POSITIONS, isPlayerRole, sortMembersByName } from '../lib/members.js'
 import { TEAM_NAME } from '../lib/site.js'
-import logo from '../assets/logo.png'
+
 
 
 const focusAreas = [
@@ -97,26 +98,7 @@ function groupMembers(members, getGroupKey) {
 }
 
 function AboutPage() {
-  const [members, setMembers] = useState([])
-  const [isLoadingMembers, setIsLoadingMembers] = useState(true)
-  const [membersError, setMembersError] = useState('')
-
-  useEffect(() => {
-    async function loadMembers() {
-      try {
-        const data = await fetchMembers()
-        setMembers(Array.isArray(data) ? data : [])
-        setMembersError('')
-      } catch (error) {
-        setMembers([])
-        setMembersError(error.message || 'Impossibile caricare i membri del club.')
-      } finally {
-        setIsLoadingMembers(false)
-      }
-    }
-
-    loadMembers()
-  }, [])
+  const { data: members, isLoading: isLoadingMembers, error: membersError } = useFetch(fetchMembers, [])
 
   const { playerSections, staffSections } = useMemo(() => {
     const sortedMembers = [...members].sort(sortMembersByName)
@@ -162,14 +144,6 @@ function AboutPage() {
           </>
         }
       >
-        
-        <div className="flex justify-center md:justify-end mt-8 md:mt-0">
-          <img
-            src={logo}
-            alt="Logo Soccer Dream Fermana"
-            className="w-40 md:w-100 h-auto drop-shadow-lg"
-          />
-        </div>
 
       </PageHero>
 

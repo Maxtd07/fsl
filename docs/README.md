@@ -63,7 +63,7 @@ The backend will be built with Spring Boot, using Hibernate for ORM-based data p
 
 The project is currently in an early development phase. No features have been implemented yet, and the application is not deployed.
 
-The domain `associazionedisabili.it` is planned but not yet registered.
+The domain `soccerdreamfermana.it` is planned but not yet registered.
 
 ---
 

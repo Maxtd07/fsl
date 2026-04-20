@@ -22,7 +22,7 @@ Questo è un **sistema full-stack completo** per la gestione di eventi con calen
 ### Backend (Spring Boot)
 
 ```
-src/main/java/com/associazionedisabili/
+src/main/java/com/soccerdreamfermana/
 ├── config/              # Configurazioni (CORS, Security, Database)
 ├── controller/          
 │   ├── EventController      (GET /events, POST /events, filtri)
@@ -227,7 +227,7 @@ spring.mail.host=smtp.gmail.com
 spring.mail.port=587
 spring.mail.username=your-email@gmail.com
 spring.mail.password=your-app-password
-app.mail.from=noreply@associazionedisabili.it
+app.mail.from=noreply@soccerdreamfermana.it
 ```
 
 ---

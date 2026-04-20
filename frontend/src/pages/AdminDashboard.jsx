@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import {
   createEvent,
@@ -12,6 +12,7 @@ import {
 } from '../lib/api.js'
 import AdminMembersSection from '../components/members/AdminMembersSection.jsx'
 import { useAuth } from '../context/useAuth.js'
+import { useFetch } from '../hooks/useFetch.js'
 import { EVENT_TYPES, formatEventType, normalizeEventType } from '../lib/events.js'
 
 const emptyEventForm = {
@@ -41,10 +42,25 @@ function toInputDateTime(value) {
 
 function AdminDashboard() {
   const { isAuthenticated, isAdmin, isLoading: isAuthLoading, user } = useAuth()
-  const [events, setEvents] = useState([])
-  const [photos, setPhotos] = useState([])
-  const [donations, setDonations] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [editingEventId, setEditingEventId] = useState(null)
+
+  // Fetch data con custom hooks
+  const { data: events, isLoading: isLoadingEvents, error: eventsError, setData: setEvents } = useFetch(
+    isAuthenticated && isAdmin ? fetchEvents : async () => [],
+    [isAuthenticated, isAdmin]
+  )
+  
+  const { data: photos, isLoading: isLoadingPhotos, setData: setPhotos } = useFetch(
+    isAuthenticated && isAdmin ? fetchPhotos : async () => [],
+    [isAuthenticated, isAdmin]
+  )
+  
+  const { data: donations } = useFetch(
+    isAuthenticated && isAdmin ? fetchDonations : async () => [],
+    [isAuthenticated, isAdmin]
+  )
+
+  // State per form e messaggi
   const [error, setError] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
   const [photoSuccessMessage, setPhotoSuccessMessage] = useState('')
@@ -52,34 +68,9 @@ function AdminDashboard() {
   const [photoForm, setPhotoForm] = useState(emptyPhotoForm)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isPhotoSubmitting, setIsPhotoSubmitting] = useState(false)
-  const [editingEventId, setEditingEventId] = useState(null)
 
-  // Redirect se non autenticato o non admin → vai a admin login
-  useEffect(() => {
-    async function loadData() {
-      try {
-        const [eventsData, photosData, donationsData] = await Promise.all([
-          fetchEvents(),
-          fetchPhotos(),
-          fetchDonations(),
-        ])
-
-        setEvents(Array.isArray(eventsData) ? eventsData : [])
-        setPhotos(Array.isArray(photosData) ? photosData : [])
-        setDonations(Array.isArray(donationsData) ? donationsData : [])
-      } catch (err) {
-        setError(err.message || 'Errore nel caricamento dei dati.')
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    if (isAuthenticated && isAdmin) {
-      loadData()
-    } else if (!isAuthLoading) {
-      setIsLoading(false)
-    }
-  }, [isAuthenticated, isAdmin, isAuthLoading])
+  // Loading state aggregato
+  const isLoading = isAuthLoading || (isLoadingEvents && isLoadingPhotos)
 
   const resetEventForm = () => {
     setEditingEventId(null)

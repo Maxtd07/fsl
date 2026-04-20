@@ -38,7 +38,7 @@ function PageHero({ eyebrow, title, description, actions, tone = 'primary', chil
   return (
     <section
       className={`relative overflow-hidden rounded-lg p-8 md:p-12 lg:p-16 shadow-lg 
-      md:grid md:grid-cols-2 lg:grid-cols-3 lg:gap-8 mt-28 ${styles.surface}`}
+      md:grid md:grid-cols-2 lg:gap-8 mt-28 ${styles.surface}`}
     >
       {/* Decorative Blur Elements */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">

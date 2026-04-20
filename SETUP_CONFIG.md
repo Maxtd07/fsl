@@ -48,7 +48,7 @@ spring.mail.password=xxxx xxxx xxxx xxxx  # App-specific password
 spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
 spring.mail.properties.mail.smtp.starttls.required=true
-app.mail.from=noreply@associazionedisabili.it
+app.mail.from=noreply@soccerdreamfermana.it
 
 # PayPal
 paypal.client-id=YOUR_PAYPAL_CLIENT_ID
@@ -58,7 +58,7 @@ paypal.currency=EUR
 
 # Logging
 logging.level.root=INFO
-logging.level.com.associazionedisabili=DEBUG
+logging.level.com.soccerdreamfermana=DEBUG
 ```
 
 ### 3. Configurazione Development vs Production
@@ -75,7 +75,7 @@ server.port=8080
 ```properties
 spring.jpa.hibernate.ddl-auto=validate
 spring.jpa.show-sql=false
-spring.datasource.url=jdbc:mysql://db-host:3306/associazionedisabili
+spring.datasource.url=jdbc:mysql://db-host:3306/soccerdreamfermana
 spring.datasource.username=db_user
 spring.datasource.password=db_password
 logging.level.root=WARN
@@ -209,7 +209,7 @@ services:
     image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: rootpass
-      MYSQL_DATABASE: associazionedisabili
+      MYSQL_DATABASE: soccerdreamfermana
       MYSQL_USER: lacri
       MYSQL_PASSWORD: lacripass
     ports:
@@ -231,7 +231,7 @@ services:
   backend:
     build: ./backend
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/associazionedisabili
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/soccerdreamfermana
       SPRING_DATASOURCE_USERNAME: lacri
       SPRING_DATASOURCE_PASSWORD: lacripass
       SPRING_MAIL_HOST: mailhog
@@ -314,19 +314,19 @@ Non richiede setup, incluso in pom.xml. Dati salvati in memoria.
 
 ```sql
 -- Crea database
-CREATE DATABASE associazionedisabili CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE soccerdreamfermana CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- Crea utente
 CREATE USER 'lacri'@'localhost' IDENTIFIED BY 'lacripass';
 
 -- Concedi permessi
-GRANT ALL PRIVILEGES ON associazionedisabili.* TO 'lacri'@'localhost';
+GRANT ALL PRIVILEGES ON soccerdreamfermana.* TO 'lacri'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
 Quindi in `application-prod.properties`:
 ```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/associazionedisabili
+spring.datasource.url=jdbc:mysql://localhost:3306/soccerdreamfermana
 spring.datasource.username=lacri
 spring.datasource.password=lacripass
 spring.jpa.hibernate.ddl-auto=validate

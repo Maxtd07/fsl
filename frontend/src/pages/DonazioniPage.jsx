@@ -45,7 +45,7 @@ function DonazioniPage() {
             <div className="space-y-3 text-sm text-text/85">
               <p>Nella dichiarazione dei redditi puoi destinare il 5 per mille all'associazione firmando nell'apposito riquadro.</p>
               <p className="font-semibold text-primary">Codice Fiscale:</p>
-              <p className="rounded-lg bg-primary/8 p-3 font-mono text-base tracking-wide text-text">00000000000</p>
+              <p className="rounded-lg bg-primary/8 p-3 font-mono text-base tracking-wide text-text">02395020445</p>
               <p className="pt-2 text-xs text-text/60">Non ti costa nulla e aiuta concretamente le attività associative.</p>
             </div>
           </article>
