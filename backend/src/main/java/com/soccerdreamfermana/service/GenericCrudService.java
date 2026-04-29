@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.service;
+package com.soccerdreamfermana.service;
 
 import com.soccerdreamfermana.exception.ResourceNotFoundException;
 import java.util.List;
@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Servizio CRUD generico per evitare duplicazione di logica.
  * Estendi questa classe e specifica il tipo di Entity e il tipo di Response.
  *
- * @param <T> Tipo dell'entitÃ  (Entity class)
+ * @param <T> Tipo dell'entità (Entity class)
  * @param <ID> Tipo dell'identificatore (Long, String, etc)
  * @param <REQ> Tipo della Request DTO
  * @param <RES> Tipo della Response DTO
@@ -22,7 +22,7 @@ public abstract class GenericCrudService<T, ID, REQ, RES> {
   protected final String entityNotFoundMessage;
 
   /**
-   * Crea una nuova entitÃ 
+   * Crea una nuova entità
    */
   public RES create(REQ request) {
     T entity = buildEntity(request);
@@ -30,21 +30,21 @@ public abstract class GenericCrudService<T, ID, REQ, RES> {
   }
 
   /**
-   * Recupera tutte le entitÃ 
+   * Recupera tutte le entità
    */
   public List<RES> list() {
     return repository.findAll().stream().map(this::toResponse).toList();
   }
 
   /**
-   * Recupera un'entitÃ  per ID
+   * Recupera un'entità per ID
    */
   public RES getById(ID id) {
     return toResponse(getEntityById(id));
   }
 
   /**
-   * Aggiorna un'entitÃ 
+   * Aggiorna un'entità
    */
   public RES update(ID id, REQ request) {
     T entity = getEntityById(id);
@@ -53,14 +53,14 @@ public abstract class GenericCrudService<T, ID, REQ, RES> {
   }
 
   /**
-   * Elimina un'entitÃ 
+   * Elimina un'entità
    */
   public void delete(ID id) {
     repository.delete(getEntityById(id));
   }
 
   /**
-   * Recupera l'entitÃ  o lancia eccezione
+   * Recupera l'entità o lancia eccezione
    */
   public T getEntityById(ID id) {
     return repository

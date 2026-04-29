@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.security;
+package com.soccerdreamfermana.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

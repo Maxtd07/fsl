@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.controller;
+package com.soccerdreamfermana.controller;
 
 import com.soccerdreamfermana.dto.email.ContactRequest;
 import com.soccerdreamfermana.service.EmailService;
@@ -24,7 +24,7 @@ public class EmailController {
     "delivered", delivered,
     "message", delivered
      ? "Email inviata con successo. Ti contatteremo presto!"
-     : "Richiesta ricevuta correttamente. L'invio email non Ã¨ configurato in questo ambiente."
+     : "Richiesta ricevuta correttamente. L'invio email non è configurato in questo ambiente."
    )
   );
  }

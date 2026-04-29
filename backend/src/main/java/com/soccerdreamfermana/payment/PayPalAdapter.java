@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.payment;
+package com.soccerdreamfermana.payment;
 
 import com.soccerdreamfermana.dto.donation.CapturePaymentResponse;
 import com.soccerdreamfermana.dto.donation.CreatePaymentRequest;

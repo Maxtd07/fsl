@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.dto.member;
+package com.soccerdreamfermana.dto.member;
 
 public record MemberResponse(
  Long id,

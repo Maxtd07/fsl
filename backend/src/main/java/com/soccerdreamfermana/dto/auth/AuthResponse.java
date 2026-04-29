@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.dto.auth;
+package com.soccerdreamfermana.dto.auth;
 
 public record AuthResponse(
  String token,

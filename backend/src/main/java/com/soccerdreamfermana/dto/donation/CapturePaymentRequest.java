@@ -1,9 +1,9 @@
-﻿package com.soccerdreamfermana.dto.donation;
+package com.soccerdreamfermana.dto.donation;
 
 import jakarta.validation.constraints.NotBlank;
 
 public record CapturePaymentRequest(
- @NotBlank(message = "L'orderId Ã¨ obbligatorio")
+ @NotBlank(message = "L'orderId è obbligatorio")
  String orderId
 ) {}
 

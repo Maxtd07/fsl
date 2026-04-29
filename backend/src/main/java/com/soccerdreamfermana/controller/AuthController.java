@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.controller;
+package com.soccerdreamfermana.controller;
 
 import com.soccerdreamfermana.dto.auth.AuthResponse;
 import com.soccerdreamfermana.dto.auth.LoginRequest;

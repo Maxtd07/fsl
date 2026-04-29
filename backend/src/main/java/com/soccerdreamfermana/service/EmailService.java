@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.service;
+package com.soccerdreamfermana.service;
 
 import com.soccerdreamfermana.dto.email.ContactRequest;
 import com.soccerdreamfermana.model.Event;
@@ -119,7 +119,7 @@ public class EmailService {
   return """
    <html>
     <body style="font-family:Arial,sans-serif;color:#1f2933;line-height:1.6;">
-     <h2>Ciao %s, la tua iscrizione Ã¨ confermata</h2>
+     <h2>Ciao %s, la tua iscrizione è confermata</h2>
      <p>Ti aspettiamo al prossimo evento dell'Associazione.</p>
      <p><strong>Evento:</strong> %s</p>
      <p><strong>Data:</strong> %s</p>

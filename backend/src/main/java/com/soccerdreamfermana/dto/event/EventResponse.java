@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.dto.event;
+package com.soccerdreamfermana.dto.event;
 
 import java.time.LocalDateTime;
 

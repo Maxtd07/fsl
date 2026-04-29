@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.dto;
+package com.soccerdreamfermana.dto;
 
 import java.time.LocalDateTime;
 import java.util.Map;

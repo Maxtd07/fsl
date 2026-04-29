@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.controller;
+package com.soccerdreamfermana.controller;
 
 import com.soccerdreamfermana.dto.response.FacebookPostResponse;
 import com.soccerdreamfermana.service.FacebookService;

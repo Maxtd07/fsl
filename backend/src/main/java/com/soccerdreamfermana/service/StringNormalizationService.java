@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.service;
+package com.soccerdreamfermana.service;
 
 import com.soccerdreamfermana.exception.BadRequestException;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class StringNormalizationService {
    *
    * @param value Valore da normalizzare
    * @return Stringa normalizzata (non null)
-   * @throws BadRequestException se il valore Ã¨ null o vuoto
+   * @throws BadRequestException se il valore è null o vuoto
    */
   public String normalizeRequired(String value) {
     String normalized = normalizeOptional(value);
@@ -30,7 +30,7 @@ public class StringNormalizationService {
   /**
    * Normalizza una stringa opzionale: trim + whitespace
    *
-   * @param value Valore da normalizzare (puÃ² essere null)
+   * @param value Valore da normalizzare (può essere null)
    * @return Stringa normalizzata o null se vuota
    */
   public String normalizeOptional(String value) {
@@ -47,7 +47,7 @@ public class StringNormalizationService {
    *
    * @param email Email da normalizzare
    * @return Email normalizzata (lowercase, senza spazi)
-   * @throws BadRequestException se l'email Ã¨ null o vuota
+   * @throws BadRequestException se l'email è null o vuota
    */
   public String normalizeEmail(String email) {
     String normalized = normalizeRequired(email);
@@ -62,7 +62,7 @@ public class StringNormalizationService {
    * @param allowedValues Valori consentiti (lowercase)
    * @param fieldName Nome del campo (per messaggi di errore)
    * @return Valore normalizzato e validato
-   * @throws BadRequestException se non Ã¨ uno dei valori consentiti
+   * @throws BadRequestException se non è uno dei valori consentiti
    */
   public String normalizeAndValidateEnum(
       String value, java.util.Set<String> allowedValues, String fieldName) {
@@ -70,7 +70,7 @@ public class StringNormalizationService {
     String lowerCase = normalized.toLowerCase();
 
     if (!allowedValues.contains(lowerCase)) {
-      throw new BadRequestException("Il valore " + fieldName + " non Ã¨ valido");
+      throw new BadRequestException("Il valore " + fieldName + " non è valido");
     }
 
     return lowerCase;

@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.config;
+package com.soccerdreamfermana.config;
 
 import com.soccerdreamfermana.model.Event;
 import com.soccerdreamfermana.model.Role;

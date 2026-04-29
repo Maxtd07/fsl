@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.service;
+package com.soccerdreamfermana.service;
 
 import com.soccerdreamfermana.dto.auth.AuthResponse;
 import com.soccerdreamfermana.dto.auth.LoginRequest;
@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
  private static final String USER_NOT_FOUND_MESSAGE = "Utente non trovato";
- private static final String DUPLICATE_EMAIL_MESSAGE = "Esiste giÃƒÂ  un utente registrato con questa email";
+ private static final String DUPLICATE_EMAIL_MESSAGE = "Esiste già un utente registrato con questa email";
 
  private final UserRepository userRepository;
  private final PasswordEncoder passwordEncoder;

@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.service;
+package com.soccerdreamfermana.service;
 
 import com.soccerdreamfermana.model.Event;
 import java.nio.charset.StandardCharsets;

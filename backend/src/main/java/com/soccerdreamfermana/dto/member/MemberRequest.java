@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.dto.member;
+package com.soccerdreamfermana.dto.member;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

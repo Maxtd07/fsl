@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.service;
+package com.soccerdreamfermana.service;
 
 import com.soccerdreamfermana.dto.booking.BookingResponse;
 import com.soccerdreamfermana.exception.BadRequestException;
@@ -16,8 +16,8 @@ import org.springframework.stereotype.Service;
 public class BookingService {
 
  private static final String BOOKING_NOT_FOUND_MESSAGE = "Iscrizione non trovata";
- private static final String ALREADY_BOOKED_MESSAGE = "Sei giÃƒÂ  iscritto a questo evento";
- private static final String EVENT_FULL_MESSAGE = "L'evento ÃƒÂ¨ al completo";
+ private static final String ALREADY_BOOKED_MESSAGE = "Sei già iscritto a questo evento";
+ private static final String EVENT_FULL_MESSAGE = "L'evento è al completo";
 
  private final BookingRepository bookingRepository;
  private final EventService eventService;

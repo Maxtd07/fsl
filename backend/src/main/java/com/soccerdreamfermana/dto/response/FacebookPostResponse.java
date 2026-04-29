@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.dto.response;
+package com.soccerdreamfermana.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

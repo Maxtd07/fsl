@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.model;
+package com.soccerdreamfermana.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

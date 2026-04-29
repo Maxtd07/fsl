@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.config;
+package com.soccerdreamfermana.config;
 
 import com.soccerdreamfermana.security.CustomUserDetailsService;
 import com.soccerdreamfermana.security.JwtAuthenticationFilter;
@@ -19,7 +19,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 
 @Configuration
 @EnableWebSecurity
@@ -44,7 +43,6 @@ public class SecurityConfig {
     .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
     .requestMatchers(HttpMethod.POST, "/api/donations/create-payment", "/api/donations/capture-payment", "/api/donations").permitAll()
     .requestMatchers(HttpMethod.POST, "/api/email/contatti").permitAll()
-    .requestMatchers("/h2-console/**").permitAll()
     .requestMatchers(HttpMethod.POST, "/api/events/**").hasRole("ADMIN")
     .requestMatchers(HttpMethod.PUT, "/api/events/**").hasRole("ADMIN")
     .requestMatchers(HttpMethod.DELETE, "/api/events/**").hasRole("ADMIN")
@@ -62,7 +60,6 @@ public class SecurityConfig {
     .anyRequest().authenticated())
    .authenticationProvider(authenticationProvider())
    .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-   .headers(headers -> headers.addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
    .httpBasic(httpBasic -> httpBasic.disable());
 
   return http.build();

@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.dto.event;
+package com.soccerdreamfermana.dto.event;
 
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.FutureOrPresent;

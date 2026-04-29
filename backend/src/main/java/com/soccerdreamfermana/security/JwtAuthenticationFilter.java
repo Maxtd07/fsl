@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.security;
+package com.soccerdreamfermana.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

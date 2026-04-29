@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.repository;
+package com.soccerdreamfermana.repository;
 
 import com.soccerdreamfermana.model.Member;
 import java.util.List;

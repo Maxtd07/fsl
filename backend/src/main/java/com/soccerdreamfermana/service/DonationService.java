@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.service;
+package com.soccerdreamfermana.service;
 
 import com.soccerdreamfermana.dto.donation.CapturePaymentResponse;
 import com.soccerdreamfermana.dto.donation.CreatePaymentRequest;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 public class DonationService {
 
  private static final String DONATION_NOT_FOUND_MESSAGE = "Donazione non trovata";
- private static final String INVALID_PAYMENT_STATUS_MESSAGE = "La donazione puÃƒÂ² essere salvata solo dopo una cattura completata";
+ private static final String INVALID_PAYMENT_STATUS_MESSAGE = "La donazione può essere salvata solo dopo una cattura completata";
  private static final String COMPLETED_PAYMENT_STATUS = "COMPLETED";
 
  private final DonationRepository donationRepository;

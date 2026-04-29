@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.controller;
+package com.soccerdreamfermana.controller;
 
 import com.soccerdreamfermana.dto.event.EventRequest;
 import com.soccerdreamfermana.dto.event.EventResponse;

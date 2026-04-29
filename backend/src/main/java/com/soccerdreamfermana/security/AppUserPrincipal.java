@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.security;
+package com.soccerdreamfermana.security;
 
 import com.soccerdreamfermana.model.Role;
 import com.soccerdreamfermana.model.User;

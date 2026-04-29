@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.dto.auth;
+package com.soccerdreamfermana.dto.auth;
 
 import com.soccerdreamfermana.model.Role;
 

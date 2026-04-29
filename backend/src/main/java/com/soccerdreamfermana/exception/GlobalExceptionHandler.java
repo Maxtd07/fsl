@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.exception;
+package com.soccerdreamfermana.exception;
 
 import com.soccerdreamfermana.dto.ApiErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
@@ -52,7 +52,7 @@ public class GlobalExceptionHandler {
 
  @ExceptionHandler(Exception.class)
  public ResponseEntity<ApiErrorResponse> handleGeneric(Exception ex, HttpServletRequest request) {
-  return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Si Ã¨ verificato un errore interno", request, null);
+  return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Si è verificato un errore interno", request, null);
  }
 
  private ResponseEntity<ApiErrorResponse> buildResponse(

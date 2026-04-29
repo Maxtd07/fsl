@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.model;
+package com.soccerdreamfermana.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

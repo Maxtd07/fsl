@@ -1,4 +1,4 @@
-﻿package com.soccerdreamfermana.config;
+package com.soccerdreamfermana.config;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
