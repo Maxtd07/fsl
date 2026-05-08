@@ -78,7 +78,18 @@ function Footer() {
 
         <div className="mt-6 flex flex-col gap-2 border-t border-white/10 pt-4 text-[11px] text-white/50 sm:flex-row sm:justify-between">
           <p>© 2026 Soccer Dream Fermana. Tutti i diritti riservati.</p>
-          <p>Sviluppato da Daniele Soldi e Max Ten Dam</p>
+          <p>
+            Sviluppato da{' '}
+            <a
+              className={footerLinkClasses}
+              href="https://soldidaniele.altervista.org/portfolio.html"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Daniele Soldi
+            </a>{' '}
+            e Max Ten Dam
+          </p>
         </div>
       </div>
     </footer>

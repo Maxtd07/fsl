@@ -20,6 +20,8 @@ const sostieniLink = { to: "/donazioni", label: "Sostienici" };
 const navLinkClasses =
   "rounded-lg border px-4 py-2.5 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2";
 
+const MotionNav = motion.nav;
+
 function Navbar() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
@@ -40,20 +42,18 @@ function Navbar() {
 
   useEffect(() => {
     let ticking = false;
-    
+
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
           const currentScrollY = window.scrollY;
-          
-          // Mostra navbar se scroll è verso l'alto o se è vicino al top
+
           if (currentScrollY < lastScrollY || currentScrollY < 100) {
             setIsVisible(true);
           } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
-            // Nascondi navbar se scrolla verso il basso e passa i 100px
             setIsVisible(false);
           }
-          
+
           setLastScrollY(currentScrollY);
           ticking = false;
         });
@@ -68,17 +68,15 @@ function Navbar() {
     };
   }, [lastScrollY]);
 
-  // Se admin, mostra navbar semplificata
   if (isAdmin && isAuthenticated) {
     return (
-      <motion.nav
+      <MotionNav
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: isVisible ? 0 : -100, opacity: isVisible ? 1 : 0 }}
         transition={{ duration: 0.15, ease: "easeOut" }}
-        className={`fixed top-0 left-0 w-full rounded-b-3xl border-b border-text/10 bg-base shadow-md py-4 mx-0 z-50`}
+        className="fixed top-0 left-0 z-50 mx-0 w-full rounded-b-3xl border-b border-text/10 bg-base py-2 shadow-md"
       >
         <div className="flex items-center justify-between gap-4 px-6">
-          {/* Logo */}
           <div className="flex items-center gap-4">
             <NavLink
               to="/admin/dashboard"
@@ -87,13 +85,12 @@ function Navbar() {
               <img
                 src={logo}
                 alt="Logo"
-                className="h-12 w-auto object-contain"
+                className="h-16 w-auto object-contain md:h-[4.5rem]"
               />
               {brandText}
             </NavLink>
           </div>
 
-          {/* Desktop - Solo Esci */}
           <div className="hidden items-center gap-2 lg:flex">
             <button
               type="button"
@@ -101,13 +98,12 @@ function Navbar() {
                 logout();
                 navigate("/");
               }}
-              className="rounded-lg border border-accent bg-accent/70 px-5 py-3 text-text/80 font-semibold hover:bg-accent/90 shadow-[0_8px_18px_rgba(0,0,0,0.12)] transition-all duration-200 hover:bg-accent/90 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-accent/40 focus-visible:ring-offset-2"
+              className="rounded-lg border border-accent bg-accent/70 px-5 py-3 font-semibold text-text/80 shadow-[0_8px_18px_rgba(0,0,0,0.12)] transition-all duration-200 hover:bg-accent/90 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-accent/40 focus-visible:ring-offset-2"
             >
               Esci
             </button>
           </div>
 
-          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="flex flex-col gap-1.5 rounded-lg p-2 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 lg:hidden"
@@ -132,9 +128,8 @@ function Navbar() {
           </button>
         </div>
 
-        {/* Mobile Navigation - Solo Esci */}
         {isOpen && (
-          <div className="mt-4 flex flex-col gap-2 px-5 text-text/80 font-semibold hover:bg-accent/90 pt-4 px-6 lg:hidden">
+          <div className="mt-4 flex flex-col gap-2 px-6 pt-4 lg:hidden">
             <button
               type="button"
               onClick={() => {
@@ -142,38 +137,34 @@ function Navbar() {
                 setIsOpen(false);
                 navigate("/");
               }}
-              className="rounded-lg bg-accent px-4 py-3 text-xs font-bold text-white shadow-[0_8px_18px_rgba(0,0,0,0.12)] transition-all duration-200 hover:bg-accent/90 w-full"
+              className="w-full rounded-lg bg-accent px-4 py-3 text-xs font-bold text-white shadow-[0_8px_18px_rgba(0,0,0,0.12)] transition-all duration-200 hover:bg-accent/90"
             >
               Esci
             </button>
           </div>
         )}
-      </motion.nav>
+      </MotionNav>
     );
   }
 
-  // Navbar normale per utenti non-admin
   return (
-
-    <motion.nav
-      initial={{ y: -100}}
-      animate={{ y: isVisible ? 0 : -100}}
+    <MotionNav
+      initial={{ y: -100 }}
+      animate={{ y: isVisible ? 0 : -100 }}
       transition={{ duration: 0.15, ease: "easeOut" }}
-      className={`fixed top-0 left-0 w-full rounded-b-3xl border-b border-text/10 bg-base shadow-md py-4 mx-0 mb-6 z-50`}
+      className="fixed top-0 left-0 z-50 mx-0 mb-6 w-full rounded-b-3xl border-b border-text/10 bg-base py-2 shadow-md"
     >
-        <div className="flex items-center justify-between gap-4 px-6">
-          {/* Logo */}
-          <div className="flex items-center gap-4">
-            <NavLink
-              to="/"
-              className="inline-flex items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
-            >
-              <img src={logo} alt="Logo" className="h-12 w-auto object-contain" />
-              {brandText}
-            </NavLink>
-          </div>
+      <div className="flex items-center justify-between gap-4 px-6">
+        <div className="flex items-center gap-4">
+          <NavLink
+            to="/"
+            className="inline-flex items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
+          >
+            <img src={logo} alt="Logo" className="h-16 w-auto object-contain md:h-[4.5rem]" />
+            {brandText}
+          </NavLink>
+        </div>
 
-        {/* Desktop Navigation */}
         <nav
           className="hidden items-center justify-center gap-2 lg:flex"
           aria-label="Main navigation"
@@ -186,7 +177,7 @@ function Navbar() {
               className={({ isActive }) =>
                 `${navLinkClasses} ${
                   isActive
-                    ? "border-primary/40 bg-primary/8 text-text border-4 text-lg font-semibold"
+                    ? "border-4 border-primary/40 bg-primary/8 text-lg font-semibold text-text"
                     : "border-text/10 text-text/75 hover:border-primary/20 hover:bg-primary/5 hover:text-text"
                 }`
               }
@@ -197,7 +188,7 @@ function Navbar() {
           <NavLink
             to={sostieniLink.to}
             className={({ isActive }) =>
-              `${navLinkClasses} border-accent/40 bg-accent/50 px-5 text-text/80 font-semibold hover:bg-accent/90 ${
+              `${navLinkClasses} border-accent/40 bg-accent/50 px-5 font-semibold text-text/80 hover:bg-accent/90 ${
                 isActive ? "ring-3 ring-accent/40 ring-offset-2" : ""
               }`
             }
@@ -205,16 +196,12 @@ function Navbar() {
             {sostieniLink.label}
           </NavLink>
 
-          {/* Divisore */}
           <div className="mx-1 h-6 w-px bg-text/10" />
 
-          {/* Auth Section Desktop */}
           {isAuthenticated ? (
             <>
               <div className="mx-2 h-6 w-px bg-text/10" />
-              <div
-                className="rounded-lg border border-primary/30 bg-primary/8 px-4 py-2.5 text-sm font-semibold text-text transition-all duration-200 hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
-              >
+              <div className="rounded-lg border border-primary/30 bg-primary/8 px-4 py-2.5 text-sm font-semibold text-text transition-all duration-200 hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2">
                 {user?.nome}
               </div>
               {isAdmin && (
@@ -244,7 +231,6 @@ function Navbar() {
           )}
         </nav>
 
-        {/* Mobile Menu Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="flex flex-col gap-1.5 rounded-lg p-2 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 lg:hidden"
@@ -267,10 +253,8 @@ function Navbar() {
         </button>
       </div>
 
-
-      {/* Mobile Navigation */}
       {isOpen && (
-        <nav className="mt-4 flex flex-col gap-2 border-t border-text/10 pt-4 px-6 lg:hidden">
+        <nav className="mt-4 flex flex-col gap-2 border-t border-text/10 px-6 pt-4 lg:hidden">
           {navItems.map((item) => (
             <NavLink
               key={item.to}
@@ -299,7 +283,6 @@ function Navbar() {
             {sostieniLink.label}
           </NavLink>
 
-          {/* Auth Section Mobile */}
           {isAuthenticated ? (
             <>
               <NavLink
@@ -324,7 +307,7 @@ function Navbar() {
                   logout();
                   setIsOpen(false);
                 }}
-                className="rounded-lg border border-accent/40 bg-accent/50 px-5 text-text/80 font-semibold hover:bg-accent/90 transition-all duration-200 hover:bg-text/5"
+                className="rounded-lg border border-accent/40 bg-accent/50 px-5 font-semibold text-text/80 transition-all duration-200 hover:bg-accent/90"
               >
                 Esci
               </button>
@@ -341,7 +324,7 @@ function Navbar() {
           )}
         </nav>
       )}
-    </motion.nav>
+    </MotionNav>
   );
 }
 

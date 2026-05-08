@@ -1,6 +1,8 @@
-import { Route, Routes, useLocation, Navigate } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { AnimatePresence } from 'framer-motion'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import Footer from './components/Footer.jsx'
+import IntroSplash from './components/IntroSplash.jsx'
 import Navbar from './components/Navbar.jsx'
 import { PrivacyBanner } from './components/PrivacyBanner.jsx'
 import AdminLoginPage from './pages/AdminLoginPage.jsx'
@@ -17,27 +19,45 @@ import { AuthProvider } from './context/AuthContext.jsx'
 
 function ScrollToTop() {
   const location = useLocation()
-  
+
   useEffect(() => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     })
   }, [location.pathname])
-  
+
   return null
 }
 
-function App() {
-  return (
-    <AuthProvider>
-      <>
-        <ScrollToTop />
-        <Navbar />
-        <PrivacyBanner />
-        <div className="mx-auto flex min-h-screen w-[90vw] max-w-[90vw] flex-col p-0 md:py-0 lg:px-6">
+function AppContent() {
+  const location = useLocation()
+  const [showIntro, setShowIntro] = useState(() => !location.pathname.startsWith('/admin'))
 
-        <div id="main-content" tabIndex="-1" className="flex-1 focus:outline-none p-0 md:py-0 lg:px-0">
+  useEffect(() => {
+    if (!showIntro) {
+      return undefined
+    }
+
+    const timer = window.setTimeout(() => {
+      setShowIntro(false)
+    }, 3000) 
+
+    return () => {
+      window.clearTimeout(timer)
+    }
+  }, [showIntro])
+
+  return (
+    <>
+      <AnimatePresence>
+        {showIntro ? <IntroSplash /> : null}
+      </AnimatePresence>
+      <ScrollToTop />
+      <Navbar />
+      <PrivacyBanner />
+      <div className="mx-auto flex min-h-screen w-[90vw] max-w-[90vw] flex-col p-0 md:py-0 lg:px-6">
+        <div id="main-content" tabIndex="-1" className="flex-1 p-0 focus:outline-none md:py-0 lg:px-0">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
@@ -53,9 +73,15 @@ function App() {
           </Routes>
         </div>
       </div>
-
-    <Footer />
+      <Footer />
     </>
+  )
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
     </AuthProvider>
   )
 }
