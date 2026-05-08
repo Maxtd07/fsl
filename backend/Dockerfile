@@ -1,10 +1,16 @@
-FROM maven:3.9.9-eclipse-temurin-17 AS build
-WORKDIR /app
-COPY . .
-RUN find src -name "*.java" -exec sed -i '1s/^\xEF\xBB\xBF//' {} \;
-RUN mvn clean package -DskipTests
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
 
-FROM eclipse-temurin:17-jdk
+COPY Backend.csproj ./
+RUN dotnet restore ./Backend.csproj
+
+COPY . ./
+RUN dotnet publish ./Backend.csproj -c Release -o /app/publish --no-restore
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
-CMD ["java", "-jar", "app.jar"]
+ENV ASPNETCORE_URLS=http://+:8080
+EXPOSE 8080
+
+COPY --from=build /app/publish ./
+ENTRYPOINT ["dotnet", "SoccerDreamFermana.Backend.dll"]

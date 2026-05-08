@@ -1,0 +1,15 @@
+bin/
+obj/
+target/
+.env
+src/main/java/
+src/test/
+pom.xml
+build.log
+*.db
+*.trace.db
+*.user
+*.suo
+.vs/
+.vscode/
+node_modules/
