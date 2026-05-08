@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.WeakKeyException;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
@@ -20,7 +21,7 @@ public class JwtService {
  private final long expirationMs;
 
  public JwtService(
-  @Value("${app.jwt.secret}") String secret,
+  @Value("${app.jwt.secret:}") String secret,
   @Value("${app.jwt.expiration-ms}") long expirationMs
  ) {
   this.signingKey = buildSigningKey(secret);
@@ -63,13 +64,27 @@ public class JwtService {
  }
 
  private Key buildSigningKey(String secret) {
+  if (secret == null || secret.isBlank()) {
+   throw new IllegalStateException(
+    "APP_JWT_SECRET non configurato. Imposta una secret JWT di almeno 32 byte (256 bit)."
+   );
+  }
+
   byte[] keyBytes;
   try {
    keyBytes = Decoders.BASE64.decode(secret);
   } catch (IllegalArgumentException ex) {
    keyBytes = secret.getBytes(StandardCharsets.UTF_8);
   }
-  return Keys.hmacShaKeyFor(keyBytes);
+
+  try {
+   return Keys.hmacShaKeyFor(keyBytes);
+  } catch (WeakKeyException ex) {
+   throw new IllegalStateException(
+    "APP_JWT_SECRET non valido. Usa una secret di almeno 32 byte oppure una stringa Base64 equivalente.",
+    ex
+   );
+  }
  }
 }
 
