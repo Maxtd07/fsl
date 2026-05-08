@@ -26,19 +26,19 @@ public sealed class BookingController(BookingService bookingService) : Controlle
     [HttpGet("event/{eventId:long}")]
     public Task<IReadOnlyList<BookingResponse>> GetByEvent(long eventId, CancellationToken cancellationToken)
     {
-        return bookingService.GetByEventAsync(eventId, cancellationToken);
+        return bookingService.GetByEventAsync(eventId, User.ToUserSnapshot(), cancellationToken);
     }
 
     [HttpGet("user/{userId:long}")]
     public Task<IReadOnlyList<BookingResponse>> GetByUser(long userId, CancellationToken cancellationToken)
     {
-        return bookingService.GetByUserAsync(userId, cancellationToken);
+        return bookingService.GetByUserAsync(userId, User.ToUserSnapshot(), cancellationToken);
     }
 
     [HttpDelete("{id:long}")]
     public async Task<IActionResult> Delete(long id, CancellationToken cancellationToken)
     {
-        await bookingService.DeleteAsync(id, cancellationToken);
+        await bookingService.DeleteAsync(id, User.ToUserSnapshot(), cancellationToken);
         return NoContent();
     }
 }

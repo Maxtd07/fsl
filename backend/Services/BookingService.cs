@@ -16,6 +16,7 @@ public sealed class BookingService(
     private const string BookingNotFoundMessage = "Iscrizione non trovata";
     private const string AlreadyBookedMessage = "Sei gia iscritto a questo evento";
     private const string EventFullMessage = "L'evento e al completo";
+    private const string BookingAccessDeniedMessage = "Non hai i permessi necessari per gestire questa iscrizione";
 
     public async Task<BookingResponse> CreateAsync(long eventId, long userId, CancellationToken cancellationToken)
     {
@@ -43,8 +44,13 @@ public sealed class BookingService(
         return bookings.Select(booking => ToResponse(booking, false)).ToList();
     }
 
-    public async Task<IReadOnlyList<BookingResponse>> GetByEventAsync(long eventId, CancellationToken cancellationToken)
+    public async Task<IReadOnlyList<BookingResponse>> GetByEventAsync(
+        long eventId,
+        User requester,
+        CancellationToken cancellationToken
+    )
     {
+        EnsureAdmin(requester);
         await eventService.GetEntityByIdAsync(eventId, cancellationToken);
 
         var bookings = await db.Bookings
@@ -58,9 +64,21 @@ public sealed class BookingService(
         return bookings.Select(booking => ToResponse(booking, false)).ToList();
     }
 
-    public async Task DeleteAsync(long id, CancellationToken cancellationToken)
+    public async Task<IReadOnlyList<BookingResponse>> GetByUserAsync(
+        long requestedUserId,
+        User requester,
+        CancellationToken cancellationToken
+    )
     {
-        db.Bookings.Remove(await FindBookingByIdAsync(id, cancellationToken));
+        EnsureOwnerOrAdmin(requestedUserId, requester);
+        return await GetByUserAsync(requestedUserId, cancellationToken);
+    }
+
+    public async Task DeleteAsync(long id, User requester, CancellationToken cancellationToken)
+    {
+        var booking = await FindBookingByIdAsync(id, cancellationToken);
+        EnsureOwnerOrAdmin(booking.UserId, requester);
+        db.Bookings.Remove(booking);
         await db.SaveChangesAsync(cancellationToken);
     }
 
@@ -87,6 +105,22 @@ public sealed class BookingService(
     {
         return await db.Bookings.FindAsync(new object?[] { id }, cancellationToken)
             ?? throw new ResourceNotFoundException(BookingNotFoundMessage);
+    }
+
+    private static void EnsureAdmin(User requester)
+    {
+        if (requester.Ruolo != Role.ADMIN)
+        {
+            throw new ForbiddenAccessException(BookingAccessDeniedMessage);
+        }
+    }
+
+    private static void EnsureOwnerOrAdmin(long ownerUserId, User requester)
+    {
+        if (requester.Ruolo != Role.ADMIN && requester.Id != ownerUserId)
+        {
+            throw new ForbiddenAccessException(BookingAccessDeniedMessage);
+        }
     }
 
     private static BookingResponse ToResponse(Booking booking, bool emailSent)

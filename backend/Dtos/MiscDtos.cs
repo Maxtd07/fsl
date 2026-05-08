@@ -3,16 +3,16 @@ using System.ComponentModel.DataAnnotations;
 namespace SoccerDreamFermana.Backend.Dtos;
 
 public sealed record ContactRequest(
-    [property: Required(ErrorMessage = "Il nome e obbligatorio")]
-    [property: MaxLength(120, ErrorMessage = "Il nome non puo superare 120 caratteri")]
+    [Required(ErrorMessage = "Il nome e obbligatorio")]
+    [MaxLength(120, ErrorMessage = "Il nome non puo superare 120 caratteri")]
     string Nome,
 
-    [property: Required(ErrorMessage = "L'email e obbligatoria")]
-    [property: EmailAddress(ErrorMessage = "Inserisci un indirizzo email valido")]
+    [Required(ErrorMessage = "L'email e obbligatoria")]
+    [EmailAddress(ErrorMessage = "Inserisci un indirizzo email valido")]
     string Email,
 
-    [property: Required(ErrorMessage = "Il messaggio e obbligatorio")]
-    [property: MaxLength(5000, ErrorMessage = "Il messaggio non puo superare 5000 caratteri")]
+    [Required(ErrorMessage = "Il messaggio e obbligatorio")]
+    [MaxLength(5000, ErrorMessage = "Il messaggio non puo superare 5000 caratteri")]
     string Messaggio
 );
 

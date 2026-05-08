@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 namespace SoccerDreamFermana.Backend.Dtos;
 
 public sealed record BookingRequest(
-    [property: Required(ErrorMessage = "L'id dell'evento e obbligatorio")]
+    [Required(ErrorMessage = "L'id dell'evento e obbligatorio")]
     long EventId
 );
 

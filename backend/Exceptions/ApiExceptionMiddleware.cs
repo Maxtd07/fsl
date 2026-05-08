@@ -23,6 +23,7 @@ public sealed class ApiExceptionMiddleware(RequestDelegate next, ILogger<ApiExce
         {
             ResourceNotFoundException => (StatusCodes.Status404NotFound, exception.Message),
             BadRequestException => (StatusCodes.Status400BadRequest, exception.Message),
+            ForbiddenAccessException => (StatusCodes.Status403Forbidden, exception.Message),
             UnauthorizedAccessException => (StatusCodes.Status401Unauthorized, "Credenziali non valide"),
             _ => (StatusCodes.Status500InternalServerError, "Si e verificato un errore interno")
         };
