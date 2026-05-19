@@ -168,49 +168,29 @@ function AboutPage() {
             {/* Corpo */}
             <div className="mt-6 space-y-5 text-sm leading-8 text-text/72 md:text-[15px]">
               <p>
-                La prima esperienza è stata la partecipazione a un torneo CSI di
-                calcio a 7 nel fermano. Successivamente, con la nascita della
-                Quarta Categoria FIGC, la squadra ha preso parte al torneo
-                regionale e a numerosi eventi sportivi in tutta Italia, fino alla
-                partecipazione alla Lega Unica Calcio a 8.
+                La Soccer Dream Fermana con sede a Grottazzolina nasce nel 2016 per realizzare il sogno di giocare a calcio di un gruppo di ragazzi con disabilità che gia si conoscevano per varie esperienze trascorse  nel sociale e nello sport. La prima esperienza è stata la partecipazione ad un torneo Csi di calcio a 7 nel fermano. Poi con la nascita della Quarta categoria campionato Figc la partecipazione al torneo regionale e a vari tornei in tutta la penisola compresa la Sardegna. Per ultimo in questo anno l'iscrizione al torneo regionale con finali nazionali della Lega Unica Calcio a 8.
               </p>
 
               <p>
-                La caratteristica che rende unica questa squadra è semplice:
-                <strong className="font-semibold text-text">
-                  {' '}giocano tutti.
-                </strong>{' '}
-                Dai 15 ai 58 anni, senza guardare al tipo di disabilità ma alla
-                voglia di stare insieme, conoscere persone nuove e condividere
-                esperienze.
+
+                La caratteristica di questa squadra è di far giocare al calcio tutti i ragazzi/e da 15 a 58 anni senza guardare al tipo di disabilità convinti che questa sia la ricchezza più grande. Non conta la disabilità o le diversità ma la voglia di stare insieme , di conoscere nuove persone e nuovi posti.
               </p>
 
               <p>
-                Essendo un’associazione fatta di ragazzi, famiglie e volontari,
-                Soccer Dream Fermana ha sempre avuto un obiettivo più ampio del
-                solo calcio: migliorare la qualità della vita dei ragazzi,
-                rafforzare autonomie e creare opportunità concrete di inclusione
-                lavorativa.
+                La nostra essendo una associazione di ragazzi famiglie e volontari oltre al calcio ha sempre avuto l'obiettivo del miglioramento della vita dei nostri ragazzi, l'acquisizione di nuove sicurezze, la possibilità per qualcuno di essere inseriti a livello lavorativo tramite tirocini di inclusione  sociale che poi si tramuteranno in contratti di lavoro veri e propri.
               </p>
 
               <p>
-                Attraverso tirocini di inclusione sociale e la gestione del centro
-                sportivo di Monte Urano, vogliamo costruire occasioni reali di
-                crescita personale e professionale, dal supporto alla struttura
-                fino a piccole attività operative.
+                In virtù di questi progetti abbiamo ottenuto la gestione di un centro sportivo a Monte Urano con l'obiettivo di dare nel tempo a qualche ragazzo la possibilità di svolgere un tirocinio per varie attività, dal custode della struttura a responsabili di un piccolo bar da aprire nella struttura stessa.
               </p>
 
               <p>
-                A Grottazzolina, la nostra sede ospita spazi per incontri,
-                laboratori di cucina e pasticceria e un appartamento dedicato
-                all’autonomia, dove i ragazzi possono iniziare a costruire passo
-                dopo passo una vita sempre più indipendente.
+                La nostra sede nel Comune di Grottazzolina ci è stata data in comodato gratuito dalla famiglia Lupi. Al piano terra la sede della squadra con la sala trofei e riunioni e un grande cucinone dove i ragazzi partecipano a corsi di cucina e pasticceria e al piano superiore un appartamento a se per poter offrire ai ragazzi la possibilità di costruirsi a poco a poco una vita indipendente per far sviluppare le indubbie capacità che hanno.
               </p>
 
               <p className="italic text-text/65">
-                Abbiamo fatto tanta strada, ma il cammino è ancora lungo.
-                Vi aspettiamo per percorrerne un pezzo insieme, con amicizia e il
-                sorriso nell’anima.
+                Sono sogni importanti che hanno bisogno di costanza, lavoro e soprattutto amore verso questi ragazzi che ci danno tanto.
+                Ne abbiamo fatta di strada ma il cammino è ancora lungo....vi aspettiamo per un pezzo di strada in amicizia col  sorriso nell'anima.
               </p>
             </div>
 
@@ -227,7 +207,7 @@ function AboutPage() {
           </div>
         </div>
 
-        <div className="space-y-5 lg:mt-40">
+        <div className="space-y-5 lg:mt-70">
           {focusAreas.map((item) => (
             <article
               key={item.label}
