@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import ActionLink from '../components/ActionLink.jsx'
 import MediaTile from '../components/MediaTile.jsx'
-import PageHero from '../components/PageHero.jsx'
 import PlaceholderImage from '../components/PlaceholderImage.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
+import heroTeamImage from '../assets/homepage.jpeg'
 import { fetchEvents, fetchPhotos } from '../lib/api.js'
 import { isGenericEvent, isMatchEvent } from '../lib/events.js'
 
@@ -119,12 +120,46 @@ function HomePage() {
 
   return (
     <main>
-      <PageHero
-        eyebrow="ASD Soccer Dream Fermana"
-        title="Calcio inclusivo, sport e comunità a misura di persona."
-        description="ASD Soccer Dream Fermana promuove attività sportive inclusive per ragazzi con disabilità cognitive e relazionali, con base a Grottazzolina e un legame forte con il territorio fermano."
-        tone="primary"
-      />
+      <section
+        className="relative left-1/2 min-h-[25vh] md:min-h-[90vh] w-screen -translate-x-1/2 overflow-hidden"
+      >
+        {/* Background image */}
+        <div
+          className="absolute inset-0 bg-cover bg-[position:center_top] md:bg-center"
+          style={{
+            backgroundImage: `url(${heroTeamImage})`,
+          }}
+        />
+
+        {/* Overlay arancione */}
+        <div className="absolute inset-0 bg-[rgba(244,116,4,0.45)]" />
+
+        {/* Overlay scuro */}
+        <div className="absolute inset-0 bg-black/25" />
+
+        {/* Content */}
+        <div className="relative z-10 flex min-h-[25vh] md:min-h-[90vh] items-center justify-center px-6 pb-20 pt-28 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.75, ease: 'easeOut' }}
+            className="mx-auto max-w-5xl text-white"
+          >
+            <h1 className="text-2xl font-black leading-tight tracking-tight drop-shadow-[0_8px_24px_rgba(0,0,0,0.35)] sm:text-3xl md:text-6xl lg:text-7xl">
+              Il calcio che unisce i sogni
+            </h1>
+
+            <p className="mx-auto mt-6 max-w-2xl text-xs font-semibold leading-6 text-white/92 drop-shadow-[0_4px_14px_rgba(0,0,0,0.28)] sm:text-sm md:text-2xl">
+              NON SARÀ MAI SOLO UN GIOCO
+            </p>
+          </motion.div>
+        </div>
+
+        {/* Curva sotto */}
+        <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-10 h-20 overflow-hidden">
+          <div className="absolute -bottom-16 left-1/2 h-32 w-[130vw] -translate-x-1/2 rounded-[50%] bg-background" />
+        </div>
+      </section>
 
       <section className="px-6 py-10 md:px-8 md:py-12">
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1.25fr)_minmax(280px,0.75fr)]">
@@ -132,7 +167,7 @@ function HomePage() {
             <SectionHeading
               eyebrow="Chi siamo"
               title="Una squadra nata per far vivere il calcio come esperienza di inclusione."
-              description="La realtà di Soccer Dream Fermana è cresciuta dal percorso Montepacini e oggi porta avanti un progetto sportivo e sociale che mette insieme ragazzi, famiglie, volontari e comunità."
+              description="La realtà di Soccer Dream Fermana oggi porta avanti un progetto sportivo e sociale che mette insieme ragazzi, famiglie, volontari e comunità."
             />
 
             <p className="mt-5 max-w-3xl text-xs font-medium leading-7 text-text md:mt-6 md:text-sm">
@@ -160,7 +195,7 @@ function HomePage() {
             <div className="rounded-lg border border-secondary/30 bg-secondary/8 px-4 py-4 shadow-sm md:px-5 md:py-5">
               <p className="text-xs font-bold uppercase tracking-widest text-secondary">Metodo e attività</p>
               <p className="mt-2 text-xs font-medium leading-6 text-text md:mt-3 md:text-sm md:leading-7">
-                Allenamenti, trasferte, eventi, collaborazione con Fermana e progetto Insieme Fermana fanno parte di un
+                Allenamenti, trasferte, eventi fanno parte di un
                 percorso che allarga le opportunità per i ragazzi e le loro famiglie.
               </p>
             </div>

@@ -8,25 +8,47 @@ import {
   faCalendarWeek,
   faCalendar,
 } from '@fortawesome/free-solid-svg-icons'
+
 import { getEventsByDateRange } from '../lib/api'
 
 export function Calendar({ onDateSelected, onEventClick, eventType = null }) {
   const [currentDate, setCurrentDate] = useState(new Date())
-  const [viewMode, setViewMode] = useState('month') // 'day', 'week', 'month'
+  const [viewMode, setViewMode] = useState('month')
   const [events, setEvents] = useState([])
   const [loading, setLoading] = useState(false)
   const [selectedDate, setSelectedDate] = useState(null)
 
-  // Load events when currentDate or viewMode changes
+  // MOBILE DETECTION
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 640)
+
+  useEffect(() => {
+    const onResize = () => {
+      setIsMobile(window.innerWidth < 640)
+    }
+
+    window.addEventListener('resize', onResize)
+
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  // AUTO SWITCH SU MOBILE
+  useEffect(() => {
+    if (isMobile && viewMode === 'month') {
+      setViewMode('week')
+    }
+  }, [isMobile])
+
   useEffect(() => {
     loadEventsForCurrentView()
   }, [currentDate, eventType, viewMode])
 
   const loadEventsForCurrentView = async () => {
     setLoading(true)
+
     try {
       const { start, end } = getDateRange()
       const data = await getEventsByDateRange(start, end, eventType)
+
       setEvents(data || [])
     } catch (error) {
       console.error('Errore caricamento eventi:', error)
@@ -38,19 +60,21 @@ export function Calendar({ onDateSelected, onEventClick, eventType = null }) {
 
   const getDateRange = () => {
     let start, end
+
     if (viewMode === 'day') {
       start = new Date(currentDate)
       start.setHours(0, 0, 0, 0)
+
       end = new Date(currentDate)
       end.setHours(23, 59, 59, 999)
     } else if (viewMode === 'week') {
       start = getWeekStart(currentDate)
       end = getWeekEnd(currentDate)
     } else {
-      // month
       start = getMonthStart(currentDate)
       end = getMonthEnd(currentDate)
     }
+
     return { start, end }
   }
 
@@ -71,17 +95,22 @@ export function Calendar({ onDateSelected, onEventClick, eventType = null }) {
 
   const getWeekStart = (date) => {
     const d = new Date(date)
+
     const day = d.getDay()
-    const diff = d.getDate() - day + (day === 0 ? -6 : 1) // Monday start
+    const diff = d.getDate() - day + (day === 0 ? -6 : 1)
+
     d.setDate(diff)
     d.setHours(0, 0, 0, 0)
+
     return d
   }
 
   const getWeekEnd = (date) => {
     const d = getWeekStart(date)
+
     d.setDate(d.getDate() + 6)
     d.setHours(23, 59, 59, 999)
+
     return d
   }
 
@@ -95,6 +124,7 @@ export function Calendar({ onDateSelected, onEventClick, eventType = null }) {
 
   const isSameDay = (date1, date2) => {
     if (!date1 || !date2) return false
+
     return (
       date1.getDate() === date2.getDate() &&
       date1.getMonth() === date2.getMonth() &&
@@ -118,6 +148,7 @@ export function Calendar({ onDateSelected, onEventClick, eventType = null }) {
 
   const handlePrevPeriod = () => {
     const d = new Date(currentDate)
+
     if (viewMode === 'month') {
       d.setMonth(d.getMonth() - 1)
     } else if (viewMode === 'week') {
@@ -125,11 +156,13 @@ export function Calendar({ onDateSelected, onEventClick, eventType = null }) {
     } else {
       d.setDate(d.getDate() - 1)
     }
+
     setCurrentDate(d)
   }
 
   const handleNextPeriod = () => {
     const d = new Date(currentDate)
+
     if (viewMode === 'month') {
       d.setMonth(d.getMonth() + 1)
     } else if (viewMode === 'week') {
@@ -137,6 +170,7 @@ export function Calendar({ onDateSelected, onEventClick, eventType = null }) {
     } else {
       d.setDate(d.getDate() + 1)
     }
+
     setCurrentDate(d)
   }
 
@@ -145,57 +179,68 @@ export function Calendar({ onDateSelected, onEventClick, eventType = null }) {
   }
 
   const handleDateClick = (day) => {
-    const selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day)
+    const selectedDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      day
+    )
+
     setSelectedDate(selectedDate)
+
     onDateSelected?.(selectedDate)
   }
 
   const formatMonthYear = (date) => {
-    return new Intl.DateTimeFormat('it-IT', { month: 'long', year: 'numeric' }).format(date)
+    return new Intl.DateTimeFormat('it-IT', {
+      month: 'long',
+      year: 'numeric',
+    }).format(date)
   }
 
   const formatDateRange = () => {
     if (viewMode === 'month') {
       return formatMonthYear(currentDate)
-    } else if (viewMode === 'week') {
+    }
+
+    if (viewMode === 'week') {
       const start = getWeekStart(currentDate)
+
       const end = new Date(start)
       end.setDate(end.getDate() + 6)
-      return `${start.getDate()} ${formatMonthYear(start).split(' ')[0]} - ${end.getDate()} ${formatMonthYear(end)}`
-    } else {
-      return new Intl.DateTimeFormat('it-IT', {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-      }).format(currentDate)
-    }
-  }
 
-  const emptyItemLabel = eventType === 'partita' ? 'partita' : 'evento'
+      return `${start.getDate()} ${
+        formatMonthYear(start).split(' ')[0]
+      } - ${end.getDate()} ${formatMonthYear(end)}`
+    }
+
+    return new Intl.DateTimeFormat('it-IT', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    }).format(currentDate)
+  }
 
   return (
     <div className="rounded-lg border border-text/10 bg-base shadow-lg">
-      {/* Header - Navigation & View Controls */}
-      <div className="border-b border-text/10 p-6">
+      {/* HEADER */}
+      <div className="border-b border-text/10 p-3 sm:p-6">
         <div className="mb-4 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
-          <h2 className="text-2xl font-bold text-text">{formatDateRange()}</h2>
+          <h2 className="truncate text-sm font-bold text-text sm:text-2xl">
+            {formatDateRange()}
+          </h2>
 
-          {/* Navigation Buttons */}
           <div className="flex gap-2">
             <button
               onClick={handlePrevPeriod}
-              className="flex items-center gap-2 rounded-lg border border-primary/30 bg-primary/8 px-3 py-2 text-sm font-semibold text-primary transition-all duration-200 hover:bg-primary/12 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40"
-              aria-label={`Periodo precedente`}
+              className="flex items-center gap-2 rounded-lg border border-primary/30 bg-primary/8 px-3 py-2 text-sm font-semibold text-primary"
             >
               <FontAwesomeIcon icon={faChevronLeft} className="text-xs" />
-              <span className="hidden sm:inline">Prec</span>
             </button>
 
             <button
               onClick={handleToday}
-              className="flex items-center gap-2 rounded-lg border border-primary/30 bg-primary/8 px-3 py-2 text-sm font-semibold text-primary transition-all duration-200 hover:bg-primary/12 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40"
-              aria-label="Vai a oggi"
+              className="flex items-center gap-2 rounded-lg border border-primary/30 bg-primary/8 px-3 py-2 text-sm font-semibold text-primary"
             >
               <FontAwesomeIcon icon={faClock} className="text-xs" />
               <span>Oggi</span>
@@ -203,70 +248,69 @@ export function Calendar({ onDateSelected, onEventClick, eventType = null }) {
 
             <button
               onClick={handleNextPeriod}
-              className="flex items-center gap-2 rounded-lg border border-primary/30 bg-primary/8 px-3 py-2 text-sm font-semibold text-primary transition-all duration-200 hover:bg-primary/12 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40"
-              aria-label={`Periodo successivo`}
+              className="flex items-center gap-2 rounded-lg border border-primary/30 bg-primary/8 px-3 py-2 text-sm font-semibold text-primary"
             >
-              <span className="hidden sm:inline">Succ</span>
               <FontAwesomeIcon icon={faChevronRight} className="text-xs" />
             </button>
           </div>
         </div>
 
-        {/* View Mode Selector */}
+        {/* VIEW MODES */}
         <div className="flex gap-2">
           <button
             onClick={() => setViewMode('day')}
-            className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200 ${
+            className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold ${
               viewMode === 'day'
-                ? 'bg-primary text-white shadow-md'
-                : 'border border-primary/30 bg-primary/8 text-primary hover:bg-primary/12'
-            } focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40`}
-            aria-pressed={viewMode === 'day'}
-            aria-label="Visualizza calendario per giorno"
+                ? 'bg-primary text-white'
+                : 'border border-primary/30 bg-primary/8 text-primary'
+            }`}
           >
             <FontAwesomeIcon icon={faCalendarDay} />
-            <span>Giorno</span>
+            <span className="hidden sm:inline">Giorno</span>
           </button>
 
           <button
             onClick={() => setViewMode('week')}
-            className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200 ${
+            className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold ${
               viewMode === 'week'
-                ? 'bg-primary text-white shadow-md'
-                : 'border border-primary/30 bg-primary/8 text-primary hover:bg-primary/12'
-            } focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40`}
-            aria-pressed={viewMode === 'week'}
-            aria-label="Visualizza calendario per settimana"
+                ? 'bg-primary text-white'
+                : 'border border-primary/30 bg-primary/8 text-primary'
+            }`}
           >
             <FontAwesomeIcon icon={faCalendarWeek} />
-            <span>Settimana</span>
+            <span className="hidden sm:inline">Settimana</span>
           </button>
 
-          <button
-            onClick={() => setViewMode('month')}
-            className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200 ${
-              viewMode === 'month'
-                ? 'bg-primary text-white shadow-md'
-                : 'border border-primary/30 bg-primary/8 text-primary hover:bg-primary/12'
-            } focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40`}
-            aria-pressed={viewMode === 'month'}
-            aria-label="Visualizza calendario per mese"
-          >
-            <FontAwesomeIcon icon={faCalendar} />
-            <span>Mese</span>
-          </button>
+          {!isMobile && (
+            <button
+              onClick={() => setViewMode('month')}
+              className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold ${
+                viewMode === 'month'
+                  ? 'bg-primary text-white'
+                  : 'border border-primary/30 bg-primary/8 text-primary'
+              }`}
+            >
+              <FontAwesomeIcon icon={faCalendar} />
+              <span className="hidden sm:inline">Mese</span>
+            </button>
+          )}
         </div>
       </div>
 
-      {/* Calendar Content */}
-      <div className="p-6">
+      {/* CONTENT */}
+      <div className="p-3 sm:p-6">
         {loading && (
           <div className="flex h-96 items-center justify-center">
             <p className="text-text/50">Caricamento eventi...</p>
           </div>
         )}
 
-        {!loading && viewMode === 'month' && <MonthView />}
+        {!loading && viewMode === 'month' && (
+          <div className="overflow-x-auto">
+            <MonthView />
+          </div>
+        )}
+
         {!loading && viewMode === 'week' && <WeekView />}
         {!loading && viewMode === 'day' && <DayView />}
       </div>
@@ -275,92 +319,120 @@ export function Calendar({ onDateSelected, onEventClick, eventType = null }) {
 
   // MONTH VIEW
   function MonthView() {
-    const daysOfWeek = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab']
+    const daysOfWeek = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom']
+
     const daysInMonth = getDaysInMonth(currentDate)
-    const firstDay = getFirstDayOfMonth(currentDate)
+
+    // FIX LUNEDÌ
+    const firstDay = (getFirstDayOfMonth(currentDate) + 6) % 7
+
     const calendarDays = []
 
     const prevMonthDays = getDaysInMonth(
       new Date(currentDate.getFullYear(), currentDate.getMonth() - 1)
     )
+
     for (let i = firstDay - 1; i >= 0; i--) {
-      calendarDays.push({ day: prevMonthDays - i, currentMonth: false })
+      calendarDays.push({
+        day: prevMonthDays - i,
+        currentMonth: false,
+      })
     }
 
     for (let i = 1; i <= daysInMonth; i++) {
-      calendarDays.push({ day: i, currentMonth: true })
+      calendarDays.push({
+        day: i,
+        currentMonth: true,
+      })
     }
 
     const remainingDays = 42 - calendarDays.length
+
     for (let i = 1; i <= remainingDays; i++) {
-      calendarDays.push({ day: i, currentMonth: false })
+      calendarDays.push({
+        day: i,
+        currentMonth: false,
+      })
     }
 
     return (
-      <div className="space-y-3">
-        {/* Days of week header */}
-        <div className="grid grid-cols-7 gap-2">
+      <div className="space-y-1 sm:space-y-3">
+        {/* HEADER */}
+        <div className="grid grid-cols-7 gap-px sm:gap-2">
           {daysOfWeek.map((day) => (
-            <div key={day} className="rounded py-2 text-center text-xs font-bold uppercase text-text/50">
-              {day}
+            <div
+              key={day}
+              className="rounded py-1 text-center text-[9px] font-bold uppercase text-text/50 sm:py-2 sm:text-xs"
+            >
+              <span className="sm:hidden">{day[0]}</span>
+              <span className="hidden sm:inline">{day}</span>
             </div>
           ))}
         </div>
 
-        {/* Calendar days grid */}
-        <div className="grid grid-cols-7 gap-2">
+        {/* GRID */}
+        <div className="grid grid-cols-7 gap-px sm:gap-2">
           {calendarDays.map((dayObj, idx) => {
-            const dayEvents = dayObj.currentMonth ? getEventsForDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), dayObj.day)) : []
-            const isToday =
-              dayObj.currentMonth &&
-              isSameDay(new Date(), new Date(currentDate.getFullYear(), currentDate.getMonth(), dayObj.day))
-            const isSelected =
-              dayObj.currentMonth &&
-              selectedDate &&
-              isSameDay(
-                selectedDate,
-                new Date(currentDate.getFullYear(), currentDate.getMonth(), dayObj.day)
-              )
+            const dayEvents = dayObj.currentMonth
+              ? getEventsForDate(
+                  new Date(
+                    currentDate.getFullYear(),
+                    currentDate.getMonth(),
+                    dayObj.day
+                  )
+                )
+              : []
 
             return (
               <button
                 key={idx}
-                onClick={() => dayObj.currentMonth && handleDateClick(dayObj.day)}
-                disabled={!dayObj.currentMonth}
-                className={`group relative aspect-square rounded-lg border p-2 text-sm font-semibold transition-all duration-200 ${
-                  !dayObj.currentMonth
-                    ? 'bg-background text-text/30 border-transparent cursor-default'
-                    : dayEvents.length > 0
-                      ? 'border-secondary/40 bg-secondary/10 text-text hover:border-secondary hover:bg-secondary/15'
-                      : isToday
-                        ? 'border-primary/60 bg-primary/15 text-primary'
-                        : isSelected
-                          ? 'border-accent/50 bg-accent/15 text-text'
-                          : 'border-text/10 text-text hover:border-primary/30 hover:bg-primary/5'
-                }`}
-                aria-label={dayObj.currentMonth ? `${dayObj.day} ${new Intl.DateTimeFormat('it-IT', { month: 'long', year: 'numeric' }).format(currentDate)}${dayEvents.length > 0 ? `, ${dayEvents.length} evento${dayEvents.length > 1 ? 'i' : ''}` : ''}` : undefined}
+                onClick={() =>
+                  dayObj.currentMonth && handleDateClick(dayObj.day)
+                }
+                className={`
+                  group relative
+                  min-h-[56px]
+                  sm:aspect-square
+                  rounded-lg
+                  border
+                  p-1
+                  text-[10px]
+                  font-semibold
+                  transition-all
+                  sm:p-2
+                  sm:text-sm
+
+                  ${
+                    dayObj.currentMonth
+                      ? 'border-text/10 bg-background text-text'
+                      : 'border-transparent bg-background text-text/30'
+                  }
+                `}
               >
-                <div className="flex h-full flex-col">
-                  <span>{dayObj.day}</span>
-                  {dayObj.currentMonth && dayEvents.length > 0 && (
-                    <div className="mt-auto flex flex-wrap gap-0.5">
-                      {dayEvents.slice(0, 2).map((event, i) => (
-                        <div
-                          key={i}
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            onEventClick?.(event)
-                          }}
-                          className="cursor-pointer rounded bg-secondary/50 px-1 py-0.5 text-xs font-bold text-white truncate w-full hover:bg-secondary transition-colors duration-200"
-                          title={event.titolo}
-                        >
-                          {event.titolo.substring(0, 8)}
-                        </div>
-                      ))}
-                      {dayEvents.length > 2 && (
-                        <span className="text-xs text-secondary/70 font-bold">+{dayEvents.length - 2}</span>
-                      )}
-                    </div>
+                <div className="flex h-full flex-col items-center justify-between">
+                  <span className="text-[11px] sm:text-sm">
+                    {dayObj.day}
+                  </span>
+
+                  {dayEvents.length > 0 && (
+                    <>
+                      {/* MOBILE */}
+                      <div className="mt-auto flex justify-center sm:hidden">
+                        <div className="h-1.5 w-1.5 rounded-full bg-secondary" />
+                      </div>
+
+                      {/* DESKTOP */}
+                      <div className="mt-auto hidden w-full flex-wrap gap-0.5 sm:flex">
+                        {dayEvents.slice(0, 2).map((event) => (
+                          <div
+                            key={event.id}
+                            className="w-full truncate rounded bg-secondary/50 px-1 py-0.5 text-xs font-bold text-white"
+                          >
+                            {event.titolo.substring(0, 8)}
+                          </div>
+                        ))}
+                      </div>
+                    </>
                   )}
                 </div>
               </button>
@@ -374,71 +446,37 @@ export function Calendar({ onDateSelected, onEventClick, eventType = null }) {
   // WEEK VIEW
   function WeekView() {
     const weekStart = getWeekStart(currentDate)
+
     const daysOfWeek = []
 
     for (let i = 0; i < 7; i++) {
       const d = new Date(weekStart)
       d.setDate(d.getDate() + i)
+
       daysOfWeek.push(d)
     }
 
     const dayNames = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom']
 
     return (
-      <div className="space-y-3">
-        {/* Week header */}
-        <div className="grid grid-cols-7 gap-2">
-          {daysOfWeek.map((day, idx) => {
-            const isToday = isSameDay(day, new Date())
-            return (
-              <button
+      <div className="overflow-x-auto">
+        <div className="min-w-[480px] space-y-3">
+          <div className="grid grid-cols-7 gap-2">
+            {daysOfWeek.map((day, idx) => (
+              <div
                 key={idx}
-                onClick={() => {
-                  setSelectedDate(day)
-                  onDateSelected?.(day)
-                }}
-                className={`rounded-lg p-3 text-center transition-all duration-200 ${
-                  isToday
-                    ? 'border border-primary/60 bg-primary/15'
-                    : selectedDate && isSameDay(selectedDate, day)
-                      ? 'border border-accent/50 bg-accent/15'
-                      : 'border border-text/10 hover:bg-text/5'
-                }`}
-                aria-label={`${dayNames[idx]} ${day.getDate()} ${new Intl.DateTimeFormat('it-IT', { month: 'long', year: 'numeric' }).format(day)}`}
+                className="rounded-lg border border-text/10 p-2 text-center sm:p-3"
               >
-                <div className="text-xs font-bold uppercase text-text/70">{dayNames[idx]}</div>
-                <div className={`text-lg font-bold ${isToday ? 'text-primary' : 'text-text'}`}>
+                <div className="text-xs font-bold uppercase text-text/70">
+                  {dayNames[idx]}
+                </div>
+
+                <div className="text-base font-bold sm:text-lg">
                   {day.getDate()}
                 </div>
-              </button>
-            )
-          })}
-        </div>
-
-        {/* Events for each day (compact view) */}
-        <div className="mt-4 grid grid-cols-7 gap-2">
-          {daysOfWeek.map((day, idx) => {
-            const dayEvents = getEventsForDate(day)
-            return (
-              <div key={idx} className="rounded-lg border border-text/10 bg-background p-2 min-h-24">
-                <div className="space-y-1">
-                  {dayEvents.slice(0, 2).map((event) => (
-                    <button
-                      key={event.id}
-                      onClick={() => onEventClick?.(event)}
-                      className="w-full rounded bg-secondary/50 px-2 py-1 text-xs font-bold text-white truncate hover:bg-secondary transition-colors duration-200"
-                      title={event.titolo}
-                    >
-                      {event.titolo.substring(0, 10)}
-                    </button>
-                  ))}
-                  {dayEvents.length > 2 && (
-                    <div className="text-xs text-secondary/70 px-1 font-bold">+{dayEvents.length - 2}</div>
-                  )}
-                </div>
               </div>
-            )
-          })}
+            ))}
+          </div>
         </div>
       </div>
     )
@@ -450,7 +488,6 @@ export function Calendar({ onDateSelected, onEventClick, eventType = null }) {
 
     return (
       <div className="space-y-2">
-        {/* Day header */}
         <div className="mb-4 rounded-lg border border-primary/20 bg-primary/5 p-4">
           <h3 className="font-bold text-text">
             {new Intl.DateTimeFormat('it-IT', {
@@ -462,45 +499,33 @@ export function Calendar({ onDateSelected, onEventClick, eventType = null }) {
           </h3>
         </div>
 
-        {/* Timeline */}
-        <div className="space-y-2 max-h-96 overflow-y-auto">
+        {/* FIX MOBILE HEIGHT */}
+        <div className="max-h-[70vh] space-y-2 overflow-y-auto">
           {hours.map((hour) => {
             const hourEvents = getEventsForDateAndHour(currentDate, hour)
-            const bgClass = hour % 2 === 0 ? 'bg-base' : 'bg-background'
 
             return (
-              <div key={hour} className={`${bgClass} rounded-lg border border-text/10 p-3`}>
+              <div
+                key={hour}
+                className="rounded-lg border border-text/10 p-3"
+              >
                 <div className="flex items-start gap-4">
                   <div className="min-w-12 text-sm font-bold text-text/60">
                     {String(hour).padStart(2, '0')}:00
                   </div>
+
                   <div className="flex-1 space-y-2">
-                    {hourEvents.length > 0 ? (
-                      hourEvents.map((event) => (
-                        <button
-                          key={event.id}
-                          onClick={() => onEventClick?.(event)}
-                          className="w-full rounded-lg border border-secondary/40 bg-secondary/10 p-2 text-left transition-all duration-200 hover:border-secondary hover:bg-secondary/15"
-                        >
-                          <p className="font-bold text-secondary text-sm">{event.titolo}</p>
-                          <p className="text-xs text-text/60">
-                            {new Date(event.data).toLocaleTimeString('it-IT', {
-                              hour: '2-digit',
-                              minute: '2-digit',
-                            })} - {event.luogo}
-                          </p>
-                        {!event.unlimitedCapacity && event.availableSeats === 0 && (
-                          <span className="mt-2 inline-block rounded bg-accent/20 px-2 py-1 text-xs font-semibold text-accent">
-                            Completo
-                            </span>
-                          )}
-                        </button>
-                      ))
-                    ) : (
-                      <p className="text-xs text-text/40">
-                        {emptyItemLabel === 'partita' ? 'Nessuna partita' : 'Nessun evento'}
-                      </p>
-                    )}
+                    {hourEvents.map((event) => (
+                      <button
+                        key={event.id}
+                        onClick={() => onEventClick?.(event)}
+                        className="w-full rounded-lg border border-secondary/40 bg-secondary/10 p-2 text-left"
+                      >
+                        <p className="text-sm font-bold text-secondary">
+                          {event.titolo}
+                        </p>
+                      </button>
+                    ))}
                   </div>
                 </div>
               </div>

@@ -13,24 +13,69 @@ public sealed class EmailService(
     ILogger<EmailService> logger
 )
 {
-    private readonly string? _mailFrom = ConfigurationReader.Get(configuration, "APP_MAIL_FROM", "Mail:From");
-    private readonly string? _contactRecipient = ConfigurationReader.Get(configuration, "APP_MAIL_CONTACT_TO", "Mail:ContactTo");
-    private readonly string? _mailHost = ConfigurationReader.Get(configuration, "MAIL_HOST", "Mail:Host");
-    private readonly int _mailPort = int.TryParse(ConfigurationReader.Get(configuration, "MAIL_PORT", "Mail:Port"), out var port)
+    private static readonly string[] MailFromKeys = ["APP_MAIL_FROM", "MAIL_FROM", "SMTP_FROM", "Mail:From"];
+    private static readonly string[] ContactMailFromKeys =
+    [
+        "APP_MAIL_CONTACT_FROM",
+        "APP_CONTACT_MAIL_FROM",
+        "MAIL_CONTACT_FROM",
+        "CONTACT_MAIL_FROM",
+        "Mail:ContactFrom"
+    ];
+    private static readonly string[] ContactRecipientKeys =
+    [
+        "APP_MAIL_CONTACT_TO",
+        "MAIL_CONTACT_TO",
+        "CONTACT_MAIL_TO",
+        "Mail:ContactTo"
+    ];
+    private static readonly string[] MailHostKeys = ["MAIL_HOST", "SMTP_HOST", "Mail:Host"];
+    private static readonly string[] MailPortKeys = ["MAIL_PORT", "SMTP_PORT", "Mail:Port"];
+    private static readonly string[] MailUsernameKeys = ["MAIL_USERNAME", "SMTP_USERNAME", "Mail:Username"];
+    private static readonly string[] MailPasswordKeys =
+    [
+        "MAIL_PASSWORD",
+        "APP_MAIL_PASSWORD",
+        "SMTP_PASSWORD",
+        "Mail:Password"
+    ];
+    private static readonly string[] MailAuthKeys = ["MAIL_SMTP_AUTH", "SMTP_AUTH", "Mail:SmtpAuth"];
+    private static readonly string[] StartTlsKeys =
+    [
+        "MAIL_SMTP_STARTTLS",
+        "MAIL_SMTP_STARTTLS_ENABLE",
+        "SMTP_STARTTLS",
+        "SMTP_STARTTLS_ENABLE",
+        "Mail:StartTls"
+    ];
+    private static readonly string[] SslKeys =
+    [
+        "MAIL_SMTP_SSL_ENABLE",
+        "MAIL_SSL_ENABLE",
+        "SMTP_SSL",
+        "SMTP_SSL_ENABLE",
+        "Mail:Ssl"
+    ];
+
+    private readonly string? _mailFrom = ConfigurationReader.GetAny(configuration, MailFromKeys);
+    private readonly string? _contactMailFrom = ConfigurationReader.GetAny(configuration, ContactMailFromKeys);
+    private readonly string? _contactRecipient = ConfigurationReader.GetAny(configuration, ContactRecipientKeys);
+    private readonly string? _mailHost = ConfigurationReader.GetAny(configuration, MailHostKeys);
+    private readonly int _mailPort = int.TryParse(ConfigurationReader.GetAny(configuration, MailPortKeys), out var port)
         ? port
         : 587;
-    private readonly string? _mailUsername = ConfigurationReader.Get(configuration, "MAIL_USERNAME", "Mail:Username");
-    private readonly string? _mailPassword = ConfigurationReader.Get(configuration, "MAIL_PASSWORD", "Mail:Password");
-    private readonly bool _mailAuth = bool.TryParse(ConfigurationReader.Get(configuration, "MAIL_SMTP_AUTH", "Mail:SmtpAuth"), out var auth)
+    private readonly string? _mailUsername = ConfigurationReader.GetAny(configuration, MailUsernameKeys);
+    private readonly string? _mailPassword = ConfigurationReader.GetAny(configuration, MailPasswordKeys);
+    private readonly bool _mailAuth = bool.TryParse(ConfigurationReader.GetAny(configuration, MailAuthKeys), out var auth)
         ? auth
         : true;
-    private readonly bool _startTls = bool.TryParse(ConfigurationReader.Get(configuration, "MAIL_SMTP_STARTTLS", "Mail:StartTls"), out var startTls)
+    private readonly bool _startTls = bool.TryParse(ConfigurationReader.GetAny(configuration, StartTlsKeys), out var startTls)
         ? startTls
         : true;
-    private readonly bool _ssl = bool.TryParse(ConfigurationReader.Get(configuration, "MAIL_SMTP_SSL_ENABLE", "Mail:Ssl"), out var ssl)
+    private readonly bool _ssl = bool.TryParse(ConfigurationReader.GetAny(configuration, SslKeys), out var ssl)
         && ssl;
 
-    public async Task<bool> SendContactEmailAsync(ContactRequest request, CancellationToken cancellationToken)
+    public async Task<ContactEmailResult> SendContactEmailAsync(ContactRequest request, CancellationToken cancellationToken)
     {
         if (!IsMailConfigured())
         {
@@ -40,11 +85,11 @@ public sealed class EmailService(
                 request.Email,
                 request.Messaggio
             );
-            return false;
+            return ContactEmailResult.NotConfigured;
         }
 
         var message = new MimeMessage();
-        message.From.Add(MailboxAddress.Parse(_mailFrom!));
+        message.From.Add(MailboxAddress.Parse(ResolveContactSender()));
         message.To.Add(MailboxAddress.Parse(ResolveContactRecipient()));
         message.ReplyTo.Add(MailboxAddress.Parse(request.Email));
         message.Subject = "Nuovo messaggio dal sito - " + request.Nome;
@@ -61,7 +106,9 @@ public sealed class EmailService(
             """
         };
 
-        return await SendAsync(message, cancellationToken);
+        return await SendAsync(message, cancellationToken)
+            ? ContactEmailResult.Sent
+            : ContactEmailResult.Failed;
     }
 
     public async Task<bool> SendBookingConfirmationAsync(User user, Event item, CancellationToken cancellationToken)
@@ -83,6 +130,30 @@ public sealed class EmailService(
         message.From.Add(MailboxAddress.Parse(_mailFrom!));
         message.To.Add(MailboxAddress.Parse(user.Email));
         message.Subject = "Iscrizione confermata: " + item.Titolo;
+        message.Body = builder.ToMessageBody();
+
+        return await SendAsync(message, cancellationToken);
+    }
+
+    public async Task<bool> SendBookingReminderAsync(User user, Event item, CancellationToken cancellationToken)
+    {
+        if (!IsMailConfigured())
+        {
+            logger.LogInformation("SMTP non configurato. Promemoria evento non inviato a {Email}", user.Email);
+            return false;
+        }
+
+        var builder = new BodyBuilder { HtmlBody = BuildReminderEmailBody(user, item) };
+        builder.Attachments.Add(
+            calendarInviteService.BuildFileName(item),
+            calendarInviteService.BuildEventInvite(item),
+            ContentType.Parse("text/calendar")
+        );
+
+        var message = new MimeMessage();
+        message.From.Add(MailboxAddress.Parse(_mailFrom!));
+        message.To.Add(MailboxAddress.Parse(user.Email));
+        message.Subject = "Promemoria evento: " + item.Titolo;
         message.Body = builder.ToMessageBody();
 
         return await SendAsync(message, cancellationToken);
@@ -121,17 +192,78 @@ public sealed class EmailService(
 
     private bool IsMailConfigured()
     {
-        if (string.IsNullOrWhiteSpace(_mailHost) || string.IsNullOrWhiteSpace(_mailFrom) || _mailPort <= 0)
+        return GetMissingConfiguration().Count == 0;
+    }
+
+    public object GetConfigurationStatus()
+    {
+        return new
         {
-            return false;
+            configured = IsMailConfigured(),
+            missing = GetMissingConfiguration(),
+            host = string.IsNullOrWhiteSpace(_mailHost) ? null : _mailHost,
+            port = _mailPort,
+            from = string.IsNullOrWhiteSpace(_mailFrom) ? null : _mailFrom,
+            contactFrom = string.IsNullOrWhiteSpace(_contactMailFrom) ? null : _contactMailFrom,
+            contactTo = string.IsNullOrWhiteSpace(_contactRecipient) ? null : _contactRecipient,
+            usernameConfigured = !string.IsNullOrWhiteSpace(_mailUsername),
+            passwordConfigured = !string.IsNullOrWhiteSpace(_mailPassword),
+            smtpAuth = _mailAuth,
+            startTls = _startTls,
+            ssl = _ssl
+        };
+    }
+
+    private IReadOnlyList<string> GetMissingConfiguration()
+    {
+        var missing = new List<string>();
+
+        if (string.IsNullOrWhiteSpace(_mailHost))
+        {
+            missing.Add(DescribeKeys(MailHostKeys));
         }
 
-        return !_mailAuth || (!string.IsNullOrWhiteSpace(_mailUsername) && !string.IsNullOrWhiteSpace(_mailPassword));
+        if (string.IsNullOrWhiteSpace(_mailFrom))
+        {
+            missing.Add(DescribeKeys(MailFromKeys));
+        }
+
+        if (_mailPort <= 0)
+        {
+            missing.Add(DescribeKeys(MailPortKeys));
+        }
+
+        if (_mailAuth && string.IsNullOrWhiteSpace(_mailUsername))
+        {
+            missing.Add(DescribeKeys(MailUsernameKeys));
+        }
+
+        if (_mailAuth && string.IsNullOrWhiteSpace(_mailPassword))
+        {
+            missing.Add(DescribeKeys(MailPasswordKeys));
+        }
+
+        return missing;
+    }
+
+    private static string DescribeKeys(IEnumerable<string> keys)
+    {
+        return string.Join(" / ", keys);
     }
 
     private string ResolveContactRecipient()
     {
         return string.IsNullOrWhiteSpace(_contactRecipient) ? _mailFrom! : _contactRecipient;
+    }
+
+    private string ResolveContactSender()
+    {
+        if (!string.IsNullOrWhiteSpace(_contactMailFrom))
+        {
+            return _contactMailFrom;
+        }
+
+        return ResolveContactRecipient();
     }
 
     private static string BuildBookingEmailBody(User user, Event item)
@@ -150,4 +282,28 @@ public sealed class EmailService(
         </html>
         """;
     }
+
+    private static string BuildReminderEmailBody(User user, Event item)
+    {
+        return $"""
+        <html>
+         <body style="font-family:Arial,sans-serif;color:#1f2933;line-height:1.6;">
+          <h2>Ciao {user.Nome}, ti ricordiamo il prossimo appuntamento</h2>
+          <p>Hai un'iscrizione attiva a questo evento di ASD Soccer Dream Fermana.</p>
+          <p><strong>Evento:</strong> {item.Titolo}</p>
+          <p><strong>Data:</strong> {item.Data}</p>
+          <p><strong>Luogo:</strong> {item.Luogo}</p>
+          <p><strong>Dettagli:</strong> {item.Descrizione}</p>
+          <p>In allegato trovi di nuovo il file calendario <strong>.ics</strong>.</p>
+         </body>
+        </html>
+        """;
+    }
+}
+
+public enum ContactEmailResult
+{
+    Sent,
+    NotConfigured,
+    Failed
 }

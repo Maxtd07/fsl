@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { motion } from "framer-motion";
@@ -24,17 +24,20 @@ const MotionNav = motion.nav;
 
 function Navbar() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [hasScrolled, setHasScrolled] = useState(false);
   const { isAuthenticated, isAdmin, logout, user } = useAuth();
+  const isHomeAtTop = location.pathname === "/" && !hasScrolled && !isOpen;
 
   const brandText = (
-    <div className="hidden md:flex flex-col leading-none">
-      <span className="text-[0.65rem] font-bold uppercase tracking-[0.28em] text-text">
+    <div className="hidden md:flex flex-col leading-tight">
+      <span className={`text-[0.55rem] font-bold uppercase tracking-[0.28em] ${isHomeAtTop ? "text-white/85" : "text-text"}`}>
         ASD
       </span>
-      <span className="mt-1 text-md font-semibold uppercase tracking-[0.12em] text-text">
+      <span className={`text-sm font-semibold uppercase tracking-[0.12em] ${isHomeAtTop ? "text-white" : "text-text"}`}>
         Soccer Dream Fermana
       </span>
     </div>
@@ -47,6 +50,7 @@ function Navbar() {
       if (!ticking) {
         window.requestAnimationFrame(() => {
           const currentScrollY = window.scrollY;
+          setHasScrolled(currentScrollY > 40);
 
           if (currentScrollY < lastScrollY || currentScrollY < 100) {
             setIsVisible(true);
@@ -61,6 +65,7 @@ function Navbar() {
       }
     };
 
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
@@ -150,17 +155,27 @@ function Navbar() {
   return (
     <MotionNav
       initial={{ y: -100 }}
-      animate={{ y: isVisible ? 0 : -100 }}
+      animate={{ y: location.pathname === "/" ? 0 : isVisible ? 0 : -100 }}
       transition={{ duration: 0.15, ease: "easeOut" }}
-      className="fixed top-0 left-0 z-50 mx-0 mb-6 w-full rounded-b-3xl border-b border-text/10 bg-base py-2 shadow-md"
+      className={`fixed top-0 left-0 z-50 mx-0 mb-6 w-full transition-all duration-300 ${
+        isHomeAtTop
+          ? "bg-transparent py-3 shadow-none"
+          : "border-b border-text/10 bg-base/95 py-2 shadow-md backdrop-blur-md md:rounded-b-3xl"
+      }`}
     >
-      <div className="flex items-center justify-between gap-4 px-6">
+      <div className="flex items-center justify-between gap-4 px-4 sm:px-6">
         <div className="flex items-center gap-4">
           <NavLink
             to="/"
             className="inline-flex items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
           >
-            <img src={logo} alt="Logo" className="h-16 w-auto object-contain md:h-[4.5rem]" />
+            <img
+              src={logo}
+              alt="Logo"
+              className={`w-auto object-contain transition-all duration-300 drop-shadow-lg ${
+                isHomeAtTop ? "h-20 md:h-24" : "h-16 md:h-24"
+              }`}
+            />
             {brandText}
           </NavLink>
         </div>
@@ -176,9 +191,13 @@ function Navbar() {
               end={item.end}
               className={({ isActive }) =>
                 `${navLinkClasses} ${
-                  isActive
-                    ? "border-4 border-primary/40 bg-primary/8 text-lg font-semibold text-text"
-                    : "border-text/10 text-text/75 hover:border-primary/20 hover:bg-primary/5 hover:text-text"
+                  isHomeAtTop
+                    ? isActive
+                      ? "border-white/60 bg-white/15 text-lg font-semibold text-white"
+                      : "border-white/25 text-white/90 hover:border-white/50 hover:bg-white/10 hover:text-white"
+                    : isActive
+                      ? "border-4 border-primary/40 bg-primary/8 text-lg font-semibold text-text"
+                      : "border-text/10 text-text/75 hover:border-primary/20 hover:bg-primary/5 hover:text-text"
                 }`
               }
             >
@@ -188,7 +207,11 @@ function Navbar() {
           <NavLink
             to={sostieniLink.to}
             className={({ isActive }) =>
-              `${navLinkClasses} border-accent/40 bg-accent/50 px-5 font-semibold text-text/80 hover:bg-accent/90 ${
+              `${navLinkClasses} px-5 font-semibold ${
+                isHomeAtTop
+                  ? "border-white/35 bg-white/15 text-white hover:bg-white/25"
+                  : "border-accent/40 bg-accent/50 text-text/80 hover:bg-accent/90"
+              } ${
                 isActive ? "ring-3 ring-accent/40 ring-offset-2" : ""
               }`
             }
@@ -196,7 +219,7 @@ function Navbar() {
             {sostieniLink.label}
           </NavLink>
 
-          <div className="mx-1 h-6 w-px bg-text/10" />
+          <div className={`mx-1 h-6 w-px ${isHomeAtTop ? "bg-white/25" : "bg-text/10"}`} />
 
           {isAuthenticated ? (
             <>
@@ -223,7 +246,11 @@ function Navbar() {
           ) : (
             <NavLink
               to="/accedi"
-              className="rounded-lg border border-accent/30 bg-primary/80 px-4 py-2.5 text-white transition-all duration-200 hover:bg-primary focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-accent/40 focus-visible:ring-offset-2 lg:p-2"
+              className={`rounded-lg border px-4 py-2.5 text-white transition-all duration-200 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-accent/40 focus-visible:ring-offset-2 lg:p-2 ${
+                isHomeAtTop
+                  ? "border-white/30 bg-white/15 hover:bg-white/25"
+                  : "border-accent/30 bg-primary/80 hover:bg-primary"
+              }`}
               aria-label="Accedi alla tua area"
             >
               <FontAwesomeIcon icon={faUser} className="text-lg" />
@@ -233,20 +260,24 @@ function Navbar() {
 
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex flex-col gap-1.5 rounded-lg p-2 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 lg:hidden"
+          className={`flex h-11 w-11 flex-col items-center justify-center gap-1.5 rounded-full border transition-colors duration-200 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40 lg:hidden ${
+            isHomeAtTop
+              ? "border-white/35 bg-black/15 backdrop-blur-sm"
+              : "border-primary/15 bg-background/90 shadow-sm"
+          }`}
           aria-label="Toggle menu"
           aria-expanded={isOpen}
         >
-          <span
-            className={`h-0.5 w-6 bg-text transition-all origin-center duration-300 ${
+            <span
+            className={`h-0.5 w-6 transition-all origin-center duration-300 ${isHomeAtTop ? "bg-white" : "bg-text"} ${
               isOpen ? "rotate-45 translate-y-2" : ""
             }`}
           />
           <span
-            className={`h-0.5 w-6 bg-text duration-300 ${isOpen ? "opacity-0" : ""}`}
+            className={`h-0.5 w-6 duration-300 ${isHomeAtTop ? "bg-white" : "bg-text"} ${isOpen ? "opacity-0" : ""}`}
           />
           <span
-            className={`h-0.5 w-6 bg-text transition-all origin-center duration-300 ${
+            className={`h-0.5 w-6 transition-all origin-center duration-300 ${isHomeAtTop ? "bg-white" : "bg-text"} ${
               isOpen ? "-rotate-45 -translate-y-2" : ""
             }`}
           />
@@ -254,7 +285,7 @@ function Navbar() {
       </div>
 
       {isOpen && (
-        <nav className="mt-4 flex flex-col gap-2 border-t border-text/10 px-6 pt-4 lg:hidden">
+        <nav className="mx-4 mt-3 flex flex-col gap-2 rounded-2xl border border-text/10 bg-base/97 px-4 py-4 shadow-xl backdrop-blur-md lg:hidden">
           {navItems.map((item) => (
             <NavLink
               key={item.to}

@@ -109,6 +109,13 @@ export function EventModal({ event, isOpen, onClose, onBookingChange }) {
   const [bookingId, setBookingId] = useState(null)
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(null)
+  const [currentFlyer, setCurrentFlyer] = useState(0)
+
+  useEffect(() => {
+    if (isOpen) {
+      setCurrentFlyer(0)
+    }
+  }, [event?.id, isOpen])
 
   useEffect(() => {
     if (!isOpen || !isAuthenticated || !event) {
@@ -132,6 +139,16 @@ export function EventModal({ event, isOpen, onClose, onBookingChange }) {
   if (!isOpen || !event) {
     return null
   }
+
+  const flyers =
+    Array.isArray(event.volantini) && event.volantini.length > 0
+      ? event.volantini
+      : event.volantino
+        ? [event.volantino]
+        : []
+
+  const activeFlyerIndex = flyers.length > 0 ? Math.min(currentFlyer, flyers.length - 1) : 0
+  const activeFlyer = flyers[activeFlyerIndex]
 
   const { date, time } = formatEventDate(event.data)
   const isUnlimitedCapacity = Boolean(event.unlimitedCapacity)
@@ -157,6 +174,14 @@ export function EventModal({ event, isOpen, onClose, onBookingChange }) {
     setTimeout(() => {
       setSuccess(null)
     }, successTimeoutByAction[action])
+  }
+
+  const handlePreviousFlyer = () => {
+    setCurrentFlyer((prev) => Math.max(prev - 1, 0))
+  }
+
+  const handleNextFlyer = () => {
+    setCurrentFlyer((prev) => Math.min(prev + 1, flyers.length - 1))
   }
 
   const handleBooking = async () => {
@@ -228,9 +253,9 @@ export function EventModal({ event, isOpen, onClose, onBookingChange }) {
       if (navigator.share) {
         let shared = false
 
-        if (event.volantino) {
+        if (activeFlyer) {
           try {
-            const file = await buildShareFile(event.volantino, event.titolo)
+            const file = await buildShareFile(activeFlyer, event.titolo)
             if (file && (!navigator.canShare || navigator.canShare({ files: [file] }))) {
               await navigator.share({
                 title: event.titolo,
@@ -283,24 +308,52 @@ export function EventModal({ event, isOpen, onClose, onBookingChange }) {
       <Card
         variant="elevated"
         padding={false}
-        className={`max-h-[90vh] w-full overflow-hidden ${event.volantino ? 'max-w-5xl' : 'max-w-md'}`}
+        className={`max-h-[90vh] w-full overflow-y-auto ${flyers.length > 0 ? 'max-w-5xl' : 'max-w-md'}`}
         onClick={(currentEvent) => currentEvent.stopPropagation()}
       >
-        <div className={event.volantino ? 'grid lg:grid-cols-[minmax(280px,0.88fr)_minmax(0,1.12fr)]' : ''}>
-          {event.volantino && (
+        <div className={flyers.length > 0 ? 'grid lg:grid-cols-[minmax(280px,0.88fr)_minmax(0,1.12fr)]' : ''}>
+          {flyers.length > 0 && (
             <div className="border-b border-text/10 bg-background lg:border-b-0 lg:border-r lg:border-text/10">
-              <div className="flex h-full items-center justify-center p-4 sm:p-5">
+              <div className="flex h-full flex-col items-center justify-center gap-3 p-4 sm:p-5">
                 <img
-                  src={event.volantino}
-                  alt={`Volantino evento: ${event.titolo}`}
-                  className="w-full rounded-xl border border-primary/10 bg-white object-contain shadow-sm max-h-[42vh] lg:max-h-[82vh]"
+                  src={activeFlyer}
+                  alt={`Volantino ${activeFlyerIndex + 1}: ${event.titolo}`}
+                  className="w-full rounded-xl border border-primary/10 bg-white object-contain shadow-sm max-h-[28vh] sm:max-h-[36vh] lg:max-h-[82vh]"
                 />
+
+                {flyers.length > 1 && (
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={handlePreviousFlyer}
+                      disabled={activeFlyerIndex === 0}
+                      className="rounded-lg border border-text/10 px-3 py-1 text-sm font-semibold text-text transition-colors hover:bg-text/5 disabled:cursor-not-allowed disabled:opacity-40"
+                      aria-label="Volantino precedente"
+                    >
+                      ←
+                    </button>
+
+                    <span className="text-xs font-semibold text-text/60">
+                      {activeFlyerIndex + 1} / {flyers.length}
+                    </span>
+
+                    <button
+                      type="button"
+                      onClick={handleNextFlyer}
+                      disabled={activeFlyerIndex === flyers.length - 1}
+                      className="rounded-lg border border-text/10 px-3 py-1 text-sm font-semibold text-text transition-colors hover:bg-text/5 disabled:cursor-not-allowed disabled:opacity-40"
+                      aria-label="Volantino successivo"
+                    >
+                      →
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           )}
 
-          <div className="flex max-h-[90vh] flex-col">
-            <div className="flex items-center justify-between border-b border-text/10 px-6 pb-4 pt-6">
+          <div className="flex flex-col">
+            <div className="flex items-center justify-between border-b border-text/10 px-4 pb-3 pt-4 sm:px-6 sm:pb-4 sm:pt-6">
               <div className="pr-4">
                 <span className="inline-flex rounded-full border border-secondary/20 bg-secondary/10 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-secondary">
                   {formatEventType(event.tipo)}
@@ -308,6 +361,7 @@ export function EventModal({ event, isOpen, onClose, onBookingChange }) {
                 <h2 className="mt-3 text-xl font-bold text-primary">{event.titolo}</h2>
               </div>
               <button
+                type="button"
                 onClick={onClose}
                 className="rounded-lg p-2 text-text transition-colors duration-200 hover:bg-text/10 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40"
                 aria-label="Chiudi finestra"
@@ -316,7 +370,7 @@ export function EventModal({ event, isOpen, onClose, onBookingChange }) {
               </button>
             </div>
 
-            <div className="flex-1 space-y-4 overflow-y-auto px-6 py-4">
+            <div className="flex-1 space-y-4 overflow-y-auto px-4 py-4 sm:px-6">
               <div className="space-y-3">
                 <EventInfoRow icon={faCalendarDays} label="Data" value={date} />
                 <EventInfoRow icon={faClock} label="Orario" value={time} />
@@ -358,8 +412,9 @@ export function EventModal({ event, isOpen, onClose, onBookingChange }) {
               {success && <FeedbackMessage tone="success">OK: {success}</FeedbackMessage>}
             </div>
 
-            <div className="flex-shrink-0 space-y-3 border-t border-text/10 px-6 py-4">
+            <div className="flex-shrink-0 space-y-3 border-t border-text/10 px-4 py-3 sm:px-6 sm:py-4">
               <button
+                type="button"
                 onClick={handleShareEvent}
                 className="flex w-full items-center justify-center gap-2 rounded-lg border border-primary/30 bg-primary/8 px-4 py-2.5 text-sm font-semibold text-primary transition-all duration-200 hover:bg-primary/12 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40"
               >
@@ -381,6 +436,7 @@ export function EventModal({ event, isOpen, onClose, onBookingChange }) {
                   </Button>
 
                   <button
+                    type="button"
                     onClick={handleDownloadCalendar}
                     className="flex w-full items-center justify-center gap-2 rounded-lg border border-primary/30 bg-primary/8 px-4 py-2.5 text-sm font-semibold text-primary transition-all duration-200 hover:bg-primary/12 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40"
                   >
@@ -401,6 +457,7 @@ export function EventModal({ event, isOpen, onClose, onBookingChange }) {
               )}
 
               <button
+                type="button"
                 onClick={onClose}
                 className="w-full rounded-lg border border-text/10 px-4 py-2.5 text-sm font-semibold text-text/70 transition-colors duration-200 hover:bg-text/5 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/40"
               >

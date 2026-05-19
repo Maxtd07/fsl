@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 
-import logo from '../assets/logo.png'
+import introLogo from '../assets/logo.webp'
 
 const MotionDiv = motion.div
 
@@ -37,9 +37,9 @@ function IntroSplash() {
           className="relative"
         >
           <img
-            src={logo}
+            src={introLogo}
             alt="Logo Soccer Dream Fermana"
-            className="relative h-[min(72vw,22rem)] w-[min(72vw,22rem)] rounded-full object-cover shadow-[0_28px_70px_rgba(31,41,51,0.22)] ring-4 ring-white sm:h-[min(62vw,28rem)] sm:w-[min(62vw,28rem)] lg:h-[min(50vw,34rem)] lg:w-[min(50vw,34rem)]"
+            className="relative h-[min(72vw,44vh,22rem)] w-[min(72vw,44vh,22rem)] rounded-full object-cover shadow-[0_28px_70px_rgba(31,41,51,0.22)] ring-4 ring-white sm:h-[min(48vw,42vh,24rem)] sm:w-[min(48vw,42vh,24rem)] lg:h-[min(34vw,44vh,28rem)] lg:w-[min(34vw,44vh,28rem)]"
           />
         </MotionDiv>
 
@@ -56,7 +56,7 @@ function IntroSplash() {
             Soccer Dream Fermana
           </h1>
           <p className="mx-auto max-w-md text-sm font-medium text-text/65 sm:text-base">
-            Inclusione, sport e comunita.
+            NON SARA' MAI SOLO UN GIOCO!
           </p>
         </MotionDiv>
       </div>

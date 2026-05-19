@@ -11,9 +11,11 @@ using SoccerDreamFermana.Backend.Payments;
 using SoccerDreamFermana.Backend.Security;
 using SoccerDreamFermana.Backend.Services;
 
-LoadEnvFrom(".");
-LoadEnvFrom("..");
-LoadEnvFrom("backend");
+LoadEnvFrom(Directory.GetCurrentDirectory());
+LoadEnvFrom(Path.Combine(Directory.GetCurrentDirectory(), ".."));
+LoadEnvFrom(AppContext.BaseDirectory);
+LoadEnvFrom(Path.Combine(AppContext.BaseDirectory, ".."));
+LoadEnvFrom(Path.Combine(Directory.GetCurrentDirectory(), "backend"));
 
 var builder = WebApplication.CreateBuilder(args);
 var port = Environment.GetEnvironmentVariable("PORT");
@@ -145,21 +147,33 @@ builder.Services.AddScoped<CalendarInviteService>();
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddScoped<FacebookService>();
 builder.Services.AddScoped<IPaymentAdapter, PayPalAdapter>();
+builder.Services.AddHostedService<BookingReminderWorker>();
 
 var app = builder.Build();
 
 app.UseMiddleware<ApiExceptionMiddleware>();
 app.UseCors("Frontend");
+
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapGet("/health", () => Results.Ok(new { status = "ok" })).AllowAnonymous();
 app.MapControllers();
+app.MapFallbackToFile("index.html");
 
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    await db.Database.EnsureCreatedAsync();
-    await SeedData.InitializeAsync(scope.ServiceProvider);
+    try
+    {
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        await db.Database.EnsureCreatedAsync();
+    }
+    catch (Exception ex) when (app.Environment.IsDevelopment())
+    {
+        app.Logger.LogWarning(ex, "Database unavailable during development startup. API endpoints that do not require the database will remain available.");
+    }
 }
 
 await app.RunAsync();
@@ -195,7 +209,7 @@ static void LoadEnvFrom(string directory)
 
         var key = line[..separatorIndex].Trim();
         var value = line[(separatorIndex + 1)..].Trim().Trim('"');
-        if (!string.IsNullOrWhiteSpace(key) && Environment.GetEnvironmentVariable(key) is null)
+        if (!string.IsNullOrWhiteSpace(key))
         {
             Environment.SetEnvironmentVariable(key, value);
         }

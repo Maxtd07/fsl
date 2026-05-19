@@ -8,4 +8,5 @@ public sealed class Booking
     public long EventId { get; set; }
     public Event Event { get; set; } = null!;
     public DateTime CreatedAt { get; set; }
+    public DateTime? ReminderSentAt { get; set; }
 }

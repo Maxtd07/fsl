@@ -44,11 +44,13 @@ CREATE TABLE IF NOT EXISTS bookings (
   user_id BIGINT NOT NULL,
   event_id BIGINT NOT NULL,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  reminder_sent_at DATETIME,
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   UNIQUE KEY uk_booking_user_event (user_id, event_id),
   INDEX idx_bookings_user_id (user_id),
   INDEX idx_bookings_event_id (event_id),
   INDEX idx_bookings_created_at (created_at),
+  INDEX idx_bookings_reminder_sent_at (reminder_sent_at),
   CONSTRAINT fk_bookings_users FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT fk_bookings_events FOREIGN KEY (event_id) REFERENCES events (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

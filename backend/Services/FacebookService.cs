@@ -11,14 +11,23 @@ public sealed class FacebookService(
     ILogger<FacebookService> logger
 )
 {
-    private const string FacebookApiUrl = "https://graph.facebook.com/v19.0";
-    private const string PostsFields = "id,message,full_picture,created_time,permalink_url,likes.summary(total_count).limit(0),comments.summary(total_count).limit(0)";
-    private const string SafePostsFields = "id,message,full_picture,created_time,permalink_url";
+    private const string DefaultApiVersion = "v23.0";
+    private const int DefaultPostLimit = 12;
+    private const int MaxPostLimit = 100;
+    private const string PostsFields = "id,message,full_picture,created_time,permalink_url,attachments{type,url,title,description,media,subattachments{type,url,title,description,media}}";
     private const string PagesFields = "id,name,access_token";
     private const string MeFields = "id,name";
     private static readonly string[] PostsEndpoints = ["/posts", "/published_posts", "/feed"];
     private readonly string? _pageId = ConfigurationReader.Get(configuration, "FACEBOOK_PAGE_ID", "Facebook:PageId");
     private readonly string? _accessToken = ConfigurationReader.Get(configuration, "FACEBOOK_ACCESS_TOKEN", "Facebook:AccessToken");
+    private readonly int _postLimit = ReadPositiveInt(
+        ConfigurationReader.Get(configuration, "FACEBOOK_POST_LIMIT", "Facebook:PostLimit"),
+        DefaultPostLimit,
+        MaxPostLimit
+    );
+    private readonly string _facebookApiUrl = BuildApiUrl(
+        ConfigurationReader.Get(configuration, "FACEBOOK_API_VERSION", "Facebook:ApiVersion")
+    );
 
     public async Task<IReadOnlyList<FacebookPostResponse>> GetFacebookPostsAsync(CancellationToken cancellationToken)
     {
@@ -61,16 +70,13 @@ public sealed class FacebookService(
 
             if (data.Count == 0 && failures.Count > 0)
             {
-                throw new BadRequestException(
-                    "Impossibile leggere i post Facebook. Verifica token pagina, ID pagina e permessi pages_show_list/pages_read_engagement/pages_read_user_content."
+                logger.LogWarning(
+                    "Facebook posts unavailable with the current token/page configuration. Returning an empty feed."
                 );
+                return [];
             }
 
             return data.Select(ToResponse).ToList();
-        }
-        catch (BadRequestException)
-        {
-            throw;
         }
         catch (Exception ex)
         {
@@ -87,6 +93,7 @@ public sealed class FacebookService(
         if (IsConfigured(_pageId))
         {
             AddTarget(targets, seenTargets, _pageId!, _accessToken!, "configured page id");
+            return targets;
         }
 
         var pages = await ReadManagedPagesAsync(cancellationToken);
@@ -127,7 +134,13 @@ public sealed class FacebookService(
         {
             try
             {
-                var data = await FetchEndpointWithFallbackAsync(target, endpoint, cancellationToken);
+                var data = await FetchAllDataAsync(
+                    "/" + target.ResourceId + endpoint,
+                    PostsFields,
+                    target.AccessToken,
+                    _postLimit,
+                    cancellationToken
+                );
                 if (data.Count > 0)
                 {
                     return data;
@@ -148,37 +161,19 @@ public sealed class FacebookService(
         return [];
     }
 
-    private async Task<List<JsonElement>> FetchEndpointWithFallbackAsync(
-        FacebookFeedTarget target,
-        string endpoint,
-        CancellationToken cancellationToken
-    )
-    {
-        var path = "/" + target.ResourceId + endpoint;
-
-        try
-        {
-            return await FetchAllDataAsync(path, PostsFields, target.AccessToken, cancellationToken);
-        }
-        catch (FacebookApiException ex) when (RequiresEngagementPermission(ex))
-        {
-            logger.LogInformation("Engagement fields unavailable for {Path}. Falling back to safe post fields.", path);
-            return await FetchAllDataAsync(path, SafePostsFields, target.AccessToken, cancellationToken);
-        }
-    }
-
     private async Task<List<JsonElement>> FetchAllDataAsync(
         string path,
         string fields,
         string token,
+        int maxResults,
         CancellationToken cancellationToken
     )
     {
         var results = new List<JsonElement>();
-        var nextUrl = BuildUrl(path, fields, token, 100);
+        var nextUrl = BuildUrl(path, fields, token, Math.Min(maxResults, MaxPostLimit));
         var pageCount = 0;
 
-        while (IsConfigured(nextUrl) && pageCount < 50)
+        while (IsConfigured(nextUrl) && pageCount < 5 && results.Count < maxResults)
         {
             pageCount++;
             var response = await ExecuteGetByUrlAsync(nextUrl!, cancellationToken);
@@ -186,7 +181,7 @@ public sealed class FacebookService(
             nextUrl = ExtractNextUrl(response);
         }
 
-        return DeduplicateById(results);
+        return DeduplicateById(results).Take(maxResults).ToList();
     }
 
     private async Task<List<JsonElement>> ReadManagedPagesAsync(CancellationToken cancellationToken)
@@ -233,7 +228,7 @@ public sealed class FacebookService(
         return root;
     }
 
-    private static string BuildUrl(string path, string fields, string token, int? limit)
+    private string BuildUrl(string path, string fields, string token, int? limit)
     {
         var query = new Dictionary<string, string?>
         {
@@ -246,9 +241,31 @@ public sealed class FacebookService(
             query["limit"] = limit.Value.ToString();
         }
 
-        return FacebookApiUrl + path + "?" + string.Join("&", query.Select(pair =>
+        return _facebookApiUrl + path + "?" + string.Join("&", query.Select(pair =>
             $"{Uri.EscapeDataString(pair.Key)}={Uri.EscapeDataString(pair.Value ?? "")}"
         ));
+    }
+
+    private static string BuildApiUrl(string? configuredVersion)
+    {
+        var version = configuredVersion?.Trim();
+        if (!IsConfigured(version))
+        {
+            version = DefaultApiVersion;
+        }
+        else if (char.IsDigit(version![0]))
+        {
+            version = "v" + version;
+        }
+
+        return $"https://graph.facebook.com/{version}";
+    }
+
+    private static int ReadPositiveInt(string? value, int fallback, int max)
+    {
+        return int.TryParse(value, out var parsed) && parsed > 0
+            ? Math.Min(parsed, max)
+            : fallback;
     }
 
     private static List<JsonElement> ExtractData(JsonElement response)
@@ -312,33 +329,95 @@ public sealed class FacebookService(
 
     private static FacebookPostResponse ToResponse(JsonElement post)
     {
+        var media = ExtractMedia(post);
+
         return new FacebookPostResponse(
             ReadString(post, "id"),
             ReadString(post, "message"),
             ReadString(post, "full_picture"),
             ReadString(post, "created_time"),
             ReadString(post, "permalink_url"),
-            ExtractCount(post, "likes"),
-            ExtractCount(post, "comments")
+            ReadAttachmentType(post),
+            media
         );
     }
 
-    private static long ExtractCount(JsonElement post, string property)
+    private static IReadOnlyList<FacebookMediaResponse> ExtractMedia(JsonElement post)
     {
-        if (!post.TryGetProperty(property, out var value)
-            || !value.TryGetProperty("summary", out var summary)
-            || !summary.TryGetProperty("total_count", out var count))
+        var media = new List<FacebookMediaResponse>();
+
+        if (post.TryGetProperty("attachments", out var attachments)
+            && attachments.TryGetProperty("data", out var attachmentData)
+            && attachmentData.ValueKind == JsonValueKind.Array)
         {
-            return 0;
+            foreach (var attachment in attachmentData.EnumerateArray())
+            {
+                if (attachment.TryGetProperty("subattachments", out var subattachments)
+                    && subattachments.TryGetProperty("data", out var subattachmentData)
+                    && subattachmentData.ValueKind == JsonValueKind.Array)
+                {
+                    media.AddRange(subattachmentData.EnumerateArray().Select(ToMediaResponse));
+                    continue;
+                }
+
+                media.Add(ToMediaResponse(attachment));
+            }
         }
 
-        return count.ValueKind == JsonValueKind.Number && count.TryGetInt64(out var result) ? result : 0;
+        if (media.Count == 0 && IsConfigured(ReadString(post, "full_picture")))
+        {
+            media.Add(new FacebookMediaResponse(
+                null,
+                ReadString(post, "permalink_url"),
+                ReadString(post, "full_picture"),
+                null,
+                null,
+                null,
+                null
+            ));
+        }
+
+        return media
+            .Where(item => IsConfigured(item.ImageUrl) || IsConfigured(item.Url))
+            .ToList();
     }
 
-    private static bool RequiresEngagementPermission(FacebookApiException error)
+    private static FacebookMediaResponse ToMediaResponse(JsonElement attachment)
     {
-        return error.Message.Contains("pages_read_engagement", StringComparison.OrdinalIgnoreCase)
-            || error.Message.Contains("Page Public Content Access", StringComparison.OrdinalIgnoreCase);
+        var image = ReadImage(attachment);
+        return new FacebookMediaResponse(
+            ReadString(attachment, "type"),
+            ReadString(attachment, "url"),
+            image.Url,
+            image.Width,
+            image.Height,
+            ReadString(attachment, "title"),
+            ReadString(attachment, "description")
+        );
+    }
+
+    private static string? ReadAttachmentType(JsonElement post)
+    {
+        return post.TryGetProperty("attachments", out var attachments)
+            && attachments.TryGetProperty("data", out var data)
+            && data.ValueKind == JsonValueKind.Array
+            ? data.EnumerateArray().Select(item => ReadString(item, "type")).FirstOrDefault(IsConfigured)
+            : null;
+    }
+
+    private static FacebookImage ReadImage(JsonElement attachment)
+    {
+        if (!attachment.TryGetProperty("media", out var media)
+            || !media.TryGetProperty("image", out var image))
+        {
+            return new FacebookImage(null, null, null);
+        }
+
+        return new FacebookImage(
+            ReadString(image, "src"),
+            ReadInt(image, "width"),
+            ReadInt(image, "height")
+        );
     }
 
     private static string ExtractErrorMessage(JsonElement error)
@@ -353,12 +432,23 @@ public sealed class FacebookService(
             : null;
     }
 
+    private static int? ReadInt(JsonElement element, string property)
+    {
+        return element.TryGetProperty(property, out var value)
+            && value.ValueKind == JsonValueKind.Number
+            && value.TryGetInt32(out var result)
+                ? result
+                : null;
+    }
+
     private static bool IsConfigured(string? value)
     {
         return !string.IsNullOrWhiteSpace(value);
     }
 
     private sealed record FacebookFeedTarget(string ResourceId, string AccessToken, string Source);
+
+    private sealed record FacebookImage(string? Url, int? Width, int? Height);
 
     private sealed class FacebookApiException(string message) : Exception(message);
 }

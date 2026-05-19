@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import ActionLink from '../components/ActionLink.jsx'
 import PageHero from '../components/PageHero.jsx'
-import picture from '../assets/contattaciimage.jpeg'
+import picture from '../assets/contattaciimage.png'
 import SectionHeading from '../components/SectionHeading.jsx'
 import { sendContactEmail } from '../lib/api.js'
 import { CONTACT_ADDRESS, CONTACT_EMAIL, CONTACT_PHONE, SIGNATURE_PROJECT_NAME, TEAM_NAME } from '../lib/site.js'

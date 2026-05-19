@@ -14,17 +14,17 @@ import { TEAM_NAME } from '../lib/site.js'
 const focusAreas = [
   {
     label: 'Calcio per tutti',
-    text: 'La squadra accoglie ragazzi con disabilità diverse (sindrome di Down, disturbi psichiatrici, spettro autistico), valorizzando il gioco condiviso più della prestazione e creando un ambiente sereno e partecipato dove nessuno è escluso.',
+    text: 'La squadra accoglie ragazzi con disabilità diverse (sindrome di Down, disturbi psichiatrici, disturbo dello spettro autistico), valorizzando il gioco condiviso più della prestazione e creando un ambiente sereno e partecipato dove nessuno è escluso.',
     tone: 'primary',
   },
   {
     label: 'Percorso sportivo',
-    text: 'Nato nel 2016 come semplice sogno, il progetto è cresciuto attraverso la Quarta Categoria fino alle competizioni FIGC Calcio Paralimpico e Sperimentale, conquistando risultati importanti e partecipando a tornei internazionali.',
+    text: 'Nato nel 2016 come semplice sogno, il progetto è cresciuto attraverso la Quarta Categoria fino alle competizioni FIGC Calcio Paralimpico e Sperimentale e da quest’anno partecipa alla lega unica della lega calcio a 8, conquistando risultati importanti e partecipando a tornei internazionali.',
     tone: 'secondary',
   },
   {
     label: 'Rete territoriale',
-    text: 'Soccer Dream Fermana lavora in dialogo con famiglie, volontari, Fermana FC e realtà locali. Il progetto "Il Tetto di un Sogno" a Grottazzolina offre laboratori, spazi di svago e occasioni di autonomia e autodeterminazione.',
+    text: 'Soccer Dream Fermana lavora in dialogo con famiglie, volontari, Fermana FC e realtà locali. Il progetto "Il Tetto di un Sogno" a Grottazzolina offre laboratori, spazi di svago e occasioni di autonomia e autodeterminazione. Abbiamo ottenuto dal comune di monte Urano la gestione di un centro sportivo con spazi sia al coperto che all aperto, primo caso per un ASD delle nostre caratteristiche.',
     tone: 'accent',
   },
 ]
@@ -63,7 +63,7 @@ const collaborationAreas = [
   },
   {
     title: 'Il nostro team inclusivo',
-    meta: 'Identita',
+    meta: 'Identità',
     description:
       'Una rosa di 22 ragazzi dai 12 ai 58 anni, con Simona, la nostra super portiera, che ne rappresenta tutta la ricchezza. Giocatori con disabilità diverse lavorano insieme, superando le barriere e mostrando che lo sport veramente inclusivo è possibile.',
   },
@@ -132,7 +132,7 @@ function AboutPage() {
     <main className="space-y-8">
       <PageHero
         eyebrow="Chi siamo"
-        title="ASD Soccer Dream Fermana: una squadra, un progetto, una comunita."
+        title="ASD Soccer Dream Fermana: una squadra, un progetto, una comunità."
         description="Soccer Dream Fermana e una realta sportiva inclusiva del territorio fermano che usa il calcio per creare partecipazione, relazioni e occasioni concrete per i ragazzi."
         tone="primary"
         actions={
@@ -152,25 +152,82 @@ function AboutPage() {
           <SectionHeading
             eyebrow="Chi siamo"
             title="Sport, inclusione e appartenenza dentro e fuori dal campo."
-            description="Il progetto e cresciuto negli anni grazie a una rete fatta di famiglie, volontari, tecnici e partner del territorio, con una identita fortemente legata a Fermo e Grottazzolina."
+            description=""
           />
-          <div className="mt-5 max-w-3xl space-y-3 text-xs font-medium leading-7 text-text/85 md:mt-6 md:space-y-4 md:text-sm md:text-text/80">
-            <p>
-              Soccer Dream nasce nel 2016 da un'associazione di volontari, famiglie e ragazzi provenienti da varie esperienze sociali con in testa un sogno: dare la possibilità a questi ragazzi di giocare a calcio. La prima esperienza fu la partecipazione ad un torneo di calcio a 7 del Csi nel fermano, dove la Soccer Dream era l unica squadra con le loro caratteristiche, con cinque ragazzi e due tutor in campo.
+          <div className="mt-6 max-w-[100ch] space-y-8">
+            {/* Intro forte */}
+            <p className="text-base leading-8 text-text/85 md:text-lg md:leading-9">
+              La <strong className="font-semibold text-text">
+                Soccer Dream Fermana
+              </strong>{' '}
+              nasce nel 2016 a Grottazzolina per realizzare il sogno di giocare a
+              calcio di un gruppo di ragazzi con disabilità che già condividevano
+              esperienze nel sociale e nello sport.
             </p>
-            <p>
-              Nel 2017/2018 abbiamo partecipato al primo campionato della neonata Quarta Categoria con tesseramento CSI, raggiungendo il secondo posto in classifica generale. Nel campionato successivo un inaspettata vittoria, seguita dalla partecipazione alle finali nazionali in Valtellina e dalla Coppa Italia a Novara. Nel 2019 ci siamo costituiti in Asd con regolare iscrizione al Coni e alla Figc che ha creato la divisione Figc Dcps (Divisione Calcio Paralimpico e Sperimentale).
-            </p>
-            <p>
-              La squadra è composta da un gruppo disomogeneo di 22 ragazzi che vanno dai 12 ai 58 anni, età della nostra super portiera Simona. Dentro il nostro team lavorano insieme giocatori con diverse abilità e condizioni, come la sindrome di Down, disturbi psichiatrici e spettro autistico, superando le barriere. Offriamo un'opportunità sportiva inclusiva per ragazzi che, crescendo, incontrano difficoltà nell integrarsi in associazioni sportive tradizionali.
-            </p>
-            <p>
-              Oltre al calcio, i ragazzi hanno la possibilità di conoscere altri luoghi, fare nuove amicizie e vivere esperienze indimenticabili, dalle partecipazioni ai tornei estivi a Coverciano, Montecatini, San Marino, Castellarano, fino all emozione del primo viaggio in aereo durante il torneo internazionale di Cagliari nel dicembre 2024, dove abbiamo incontrato squadre blasonate come Barcellona e Liverpool.
-            </p>
+
+            {/* Corpo */}
+            <div className="mt-6 space-y-5 text-sm leading-8 text-text/72 md:text-[15px]">
+              <p>
+                La prima esperienza è stata la partecipazione a un torneo CSI di
+                calcio a 7 nel fermano. Successivamente, con la nascita della
+                Quarta Categoria FIGC, la squadra ha preso parte al torneo
+                regionale e a numerosi eventi sportivi in tutta Italia, fino alla
+                partecipazione alla Lega Unica Calcio a 8.
+              </p>
+
+              <p>
+                La caratteristica che rende unica questa squadra è semplice:
+                <strong className="font-semibold text-text">
+                  {' '}giocano tutti.
+                </strong>{' '}
+                Dai 15 ai 58 anni, senza guardare al tipo di disabilità ma alla
+                voglia di stare insieme, conoscere persone nuove e condividere
+                esperienze.
+              </p>
+
+              <p>
+                Essendo un’associazione fatta di ragazzi, famiglie e volontari,
+                Soccer Dream Fermana ha sempre avuto un obiettivo più ampio del
+                solo calcio: migliorare la qualità della vita dei ragazzi,
+                rafforzare autonomie e creare opportunità concrete di inclusione
+                lavorativa.
+              </p>
+
+              <p>
+                Attraverso tirocini di inclusione sociale e la gestione del centro
+                sportivo di Monte Urano, vogliamo costruire occasioni reali di
+                crescita personale e professionale, dal supporto alla struttura
+                fino a piccole attività operative.
+              </p>
+
+              <p>
+                A Grottazzolina, la nostra sede ospita spazi per incontri,
+                laboratori di cucina e pasticceria e un appartamento dedicato
+                all’autonomia, dove i ragazzi possono iniziare a costruire passo
+                dopo passo una vita sempre più indipendente.
+              </p>
+
+              <p className="italic text-text/65">
+                Abbiamo fatto tanta strada, ma il cammino è ancora lungo.
+                Vi aspettiamo per percorrerne un pezzo insieme, con amicizia e il
+                sorriso nell’anima.
+              </p>
+            </div>
+
+            {/* Firma */}
+            <div className="mt-8 border-l border-primary/25 pl-4">
+              <span className="block text-[11px] uppercase tracking-[0.22em] text-text/40">
+                Il presidente
+              </span>
+
+              <span className="font-serif text-[28px] italic text-primary/80">
+                Andrea Palazzetti
+              </span>
+            </div>
           </div>
         </div>
 
-        <div className="space-y-5">
+        <div className="space-y-5 lg:mt-40">
           {focusAreas.map((item) => (
             <article
               key={item.label}

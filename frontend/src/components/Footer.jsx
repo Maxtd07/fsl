@@ -88,12 +88,18 @@ function Footer() {
             >
               Daniele Soldi
             </a>{' '}
-            e Max Ten Dam
+            e <a
+              className={footerLinkClasses}
+              href="https://mtied.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Max Jan Ten Dam
+            </a>
           </p>
         </div>
       </div>
     </footer>
   )
 }
-
 export default Footer

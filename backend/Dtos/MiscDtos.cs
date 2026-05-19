@@ -16,12 +16,22 @@ public sealed record ContactRequest(
     string Messaggio
 );
 
+public sealed record FacebookMediaResponse(
+    string? Type,
+    string? Url,
+    string? ImageUrl,
+    int? Width,
+    int? Height,
+    string? Title,
+    string? Description
+);
+
 public sealed record FacebookPostResponse(
     string? Id,
     string? Message,
     string? FullPicture,
     string? CreatedTime,
     string? PermalinkUrl,
-    long LikesCount,
-    long CommentsCount
+    string? AttachmentType,
+    IReadOnlyList<FacebookMediaResponse> Media
 );

@@ -66,6 +66,7 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
             entity.Property(booking => booking.UserId).HasColumnName("user_id").IsRequired();
             entity.Property(booking => booking.EventId).HasColumnName("event_id").IsRequired();
             entity.Property(booking => booking.CreatedAt).HasColumnName("created_at").IsRequired();
+            entity.Property(booking => booking.ReminderSentAt).HasColumnName("reminder_sent_at");
             entity.HasOne(booking => booking.User)
                 .WithMany(user => user.Bookings)
                 .HasForeignKey(booking => booking.UserId)
@@ -80,6 +81,7 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
             entity.HasIndex(booking => booking.UserId).HasDatabaseName("idx_bookings_user_id");
             entity.HasIndex(booking => booking.EventId).HasDatabaseName("idx_bookings_event_id");
             entity.HasIndex(booking => booking.CreatedAt).HasDatabaseName("idx_bookings_created_at");
+            entity.HasIndex(booking => booking.ReminderSentAt).HasDatabaseName("idx_bookings_reminder_sent_at");
         });
 
         modelBuilder.Entity<Member>(entity =>
