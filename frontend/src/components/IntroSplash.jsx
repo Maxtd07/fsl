@@ -20,9 +20,9 @@ function IntroSplash() {
       initial={{ opacity: 1 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0, transition: { duration: 0.35, ease: 'easeInOut' } }}
-      className="fixed inset-0 z-[80] flex items-center justify-center bg-white px-6"
+      className="fixed inset-0 z-[80] flex items-center justify-center overflow-hidden bg-white px-4 sm:px-6"
     >
-      <div className="flex flex-col items-center text-center">
+      <div className="flex w-full max-w-[calc(100vw-2rem)] flex-col items-center text-center sm:max-w-[calc(100vw-3rem)]">
         <MotionDiv
           initial={{ scale: 0.08, opacity: 0, filter: 'blur(10px)' }}
           animate={{
@@ -39,7 +39,7 @@ function IntroSplash() {
           <img
             src={introLogo}
             alt="Logo Soccer Dream Fermana"
-            className="relative h-[min(72vw,44vh,22rem)] w-[min(72vw,44vh,22rem)] rounded-full object-cover shadow-[0_28px_70px_rgba(31,41,51,0.22)] ring-4 ring-white sm:h-[min(48vw,42vh,24rem)] sm:w-[min(48vw,42vh,24rem)] lg:h-[min(34vw,44vh,28rem)] lg:w-[min(34vw,44vh,28rem)]"
+            className="relative h-[min(68vw,44vh,20rem)] max-h-[calc(100svh-12rem)] w-[min(68vw,44vh,20rem)] max-w-[calc(100vw-2rem)] rounded-full object-cover shadow-[0_28px_70px_rgba(31,41,51,0.22)] ring-4 ring-white sm:h-[min(48vw,42vh,24rem)] sm:w-[min(48vw,42vh,24rem)] sm:max-w-[calc(100vw-3rem)] lg:h-[min(34vw,44vh,28rem)] lg:w-[min(34vw,44vh,28rem)]"
           />
         </MotionDiv>
 
@@ -52,7 +52,7 @@ function IntroSplash() {
           <p className="text-[0.7rem] font-black uppercase tracking-[0.38em] text-primary/80 sm:text-xs">
             ASD
           </p>
-          <h1 className="text-xl font-black uppercase tracking-[0.14em] text-text sm:text-3xl">
+          <h1 className="max-w-full text-lg font-black uppercase tracking-[0.1em] text-text sm:text-3xl sm:tracking-[0.14em]">
             Soccer Dream Fermana
           </h1>
           <p className="mx-auto max-w-md text-sm font-medium text-text/65 sm:text-base">

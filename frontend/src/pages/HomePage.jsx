@@ -9,6 +9,8 @@ import heroTeamImage from '../assets/homepage.jpeg'
 import { fetchEvents, fetchPhotos } from '../lib/api.js'
 import { isGenericEvent, isMatchEvent } from '../lib/events.js'
 
+const MotionDiv = motion.div
+
 const eventDateFormatter = new Intl.DateTimeFormat('it-IT', {
   day: '2-digit',
   month: 'long',
@@ -121,7 +123,7 @@ function HomePage() {
   return (
     <main>
       <section
-        className="relative left-1/2 min-h-[25vh] md:min-h-[90vh] w-screen -translate-x-1/2 overflow-hidden"
+        className="relative left-1/2 min-h-[25vh] w-[100dvw] max-w-[100vw] -translate-x-1/2 overflow-hidden md:min-h-[90vh]"
       >
         {/* Background image */}
         <div
@@ -139,7 +141,7 @@ function HomePage() {
 
         {/* Content */}
         <div className="relative z-10 flex min-h-[25vh] md:min-h-[90vh] items-center justify-center px-6 pb-20 pt-28 text-center">
-          <motion.div
+          <MotionDiv
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.75, ease: 'easeOut' }}
@@ -152,7 +154,7 @@ function HomePage() {
             <p className="mx-auto mt-6 max-w-2xl text-xs font-semibold leading-6 text-white/92 drop-shadow-[0_4px_14px_rgba(0,0,0,0.28)] sm:text-sm md:text-2xl">
               NON SARÀ MAI SOLO UN GIOCO
             </p>
-          </motion.div>
+          </MotionDiv>
         </div>
 
         {/* Curva sotto */}
